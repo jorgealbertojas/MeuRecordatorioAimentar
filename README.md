@@ -1,2 +1,0 @@
-# MeuRecordatorioAimentar
-Meu Recordatório Alimentar
