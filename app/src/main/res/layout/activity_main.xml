@@ -9,10 +9,83 @@
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:id="@+id/entrevistado"
+        android:text="Hello World!" />
+
+    <TextView
+        android:id="@+id/aliemnto"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
         android:text="Hello World!"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintTop_toBottomOf="@+id/entrevistado" />
+
+    <TextView
+        android:id="@+id/preparacao"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Hello World!"
+        app:layout_constraintTop_toBottomOf="@+id/aliemnto" />
+
+    <TextView
+        android:id="@+id/medida"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Hello World!"
+        app:layout_constraintTop_toBottomOf="@+id/preparacao" />
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/adicao"
+        android:text="Hello World!"
+        app:layout_constraintTop_toBottomOf="@+id/medida"/>
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/local"
+        android:text="Hello World!"
+        app:layout_constraintTop_toBottomOf="@+id/adicao"/>
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/unidade"
+        android:text="Hello World!"
+        app:layout_constraintTop_toBottomOf="@+id/local"/>
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/ocasiao_consumo"
+        android:text="Hello World!"
+        app:layout_constraintTop_toBottomOf="@+id/unidade"/>
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/quantidade"
+        android:text="Hello World!"
+        app:layout_constraintTop_toBottomOf="@+id/ocasiao_consumo"/>
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/hora"
+        android:text="Hello World!"
+        app:layout_constraintTop_toBottomOf="@+id/quantidade"/>
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/usuario"
+        android:text="Hello World!"
+        app:layout_constraintTop_toBottomOf="@+id/hora"/>
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/hora_coleta"
+        android:text="Hello World!"
+        app:layout_constraintTop_toBottomOf="@+id/usuario"/>
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/dia_coleta"
+        android:text="Hello World!"
+        app:layout_constraintTop_toBottomOf="@+id/hora_coleta"/>
+
 
 </android.support.constraint.ConstraintLayout>

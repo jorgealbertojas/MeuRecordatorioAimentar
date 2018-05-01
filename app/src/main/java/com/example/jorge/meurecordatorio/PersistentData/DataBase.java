@@ -60,18 +60,18 @@ public class DataBase extends SQLiteOpenHelper {
         db.execSQL(" DROP TABLE IF EXISTS " + DbCreate.TABLE_UNIDADE_ALIMENTO );
         db.execSQL(" DROP TABLE IF EXISTS " + DbCreate.TABLE_ADICAO_ALIMENTO );
 
-        db.execSQL(DbCreate.TABLE_ALIMENTO);
-        db.execSQL(DbCreate.TABLE_PREPARACAO);
-        db.execSQL(DbCreate.TABLE_UNIDADE);
-        db.execSQL(DbCreate.TABLE_ADICAO);
-        db.execSQL(DbCreate.TABLE_OCASIAO_CONSUMO);
-        db.execSQL(DbCreate.TABLE_LOCAL);
-        db.execSQL(DbCreate.TABLE_ALIMENTACAO);
-        db.execSQL(DbCreate.TABLE_USUARIO);
-        db.execSQL(DbCreate.TABLE_ENTREVISTADO);
-        db.execSQL(DbCreate.TABLE_PREPARACAO_ALIMENTO);
-        db.execSQL(DbCreate.TABLE_UNIDADE_ALIMENTO);
-        db.execSQL(DbCreate.TABLE_ADICAO_ALIMENTO);
+        db.execSQL(DbCreate.CREATE_TABLE_ALIMENTO);
+        db.execSQL(DbCreate.CREATE_TABLE_PREPARACAO);
+        db.execSQL(DbCreate.CREATE_TABLE_UNIDADE);
+        db.execSQL(DbCreate.CREATE_TABLE_ADICAO);
+        db.execSQL(DbCreate.CREATE_TABLE_OCASIAO_CONSUMO);
+        db.execSQL(DbCreate.CREATE_TABLE_LOCAL);
+        db.execSQL(DbCreate.CREATE_TABLE_ALIMENTACAO);
+        db.execSQL(DbCreate.CREATE_TABLE_USUARIO);
+        db.execSQL(DbCreate.CREATE_TABLE_ENTREVISTADO);
+        db.execSQL(DbCreate.CREATE_TABLE_PREPARACAO_ALIMENTO);
+        db.execSQL(DbCreate.CREATE_TABLE_UNIDADE_ALIMENTO);
+        db.execSQL(DbCreate.CREATE_TABLE_ADICAO_ALIMENTO);
 
 
     }
@@ -85,7 +85,6 @@ public class DataBase extends SQLiteOpenHelper {
 
 
         for (int i = 0; i < alimentoList.size() ; i++) {
-            // Insert PullRequest
             ContentValues obj = new ContentValues();
             obj.put(Field.FIELD_ALIMENTO_ID, alimentoList.get(i).getAlimento_id());
             obj.put(Field.FIELD_ALIMENTO, alimentoList.get(i).getAlimento());
@@ -98,7 +97,6 @@ public class DataBase extends SQLiteOpenHelper {
 
 
         for (int i = 0; i < preparacaoList.size() ; i++) {
-            // Insert PullRequest
             ContentValues obj = new ContentValues();
             obj.put(Field.FIELD_PREPARACAO_ID, preparacaoList.get(i).getPreparacao_id());
             obj.put(Field.FIELD_PREPARACAO, preparacaoList.get(i).getPreparacao());
@@ -111,7 +109,6 @@ public class DataBase extends SQLiteOpenHelper {
 
 
         for (int i = 0; i < unidadeList.size() ; i++) {
-            // Insert PullRequest
             ContentValues obj = new ContentValues();
             obj.put(Field.FIELD_UNIDADE_ID, unidadeList.get(i).getUnidade_id());
             obj.put(Field.FIELD_UNIDADE, unidadeList.get(i).getUnidade());
@@ -124,7 +121,6 @@ public class DataBase extends SQLiteOpenHelper {
 
 
         for (int i = 0; i < adicaoList.size() ; i++) {
-            // Insert PullRequest
             ContentValues obj = new ContentValues();
             obj.put(Field.FIELD_ADICAO_ID, adicaoList.get(i).getAdicao_id());
             obj.put(Field.FIELD_ADICAO, adicaoList.get(i).getAdicao());
@@ -137,7 +133,6 @@ public class DataBase extends SQLiteOpenHelper {
 
 
         for (int i = 0; i < ocasiaoConsumoList.size() ; i++) {
-            // Insert PullRequest
             ContentValues obj = new ContentValues();
             obj.put(Field.FIELD_OCASIAO_CONSUMO_ID, ocasiaoConsumoList.get(i).getOcasiao_consumo_id());
             obj.put(Field.FIELD_OCASIAO_CONSUMO, ocasiaoConsumoList.get(i).getOcasiao_consumo());
@@ -150,7 +145,6 @@ public class DataBase extends SQLiteOpenHelper {
 
 
         for (int i = 0; i < localList.size() ; i++) {
-            // Insert PullRequest
             ContentValues obj = new ContentValues();
             obj.put(Field.FIELD_LOCAL_ID, localList.get(i).getLocal_id());
             obj.put(Field.FIELD_LOCAL, localList.get(i).getLocal());
@@ -163,7 +157,6 @@ public class DataBase extends SQLiteOpenHelper {
 
 
         for (int i = 0; i < usuarioList.size() ; i++) {
-            // Insert PullRequest
             ContentValues obj = new ContentValues();
             obj.put(Field.FIELD_USUARIO, usuarioList.get(i).getUsuario());
             obj.put(Field.FIELD_SENHA, usuarioList.get(i).getSenha());
@@ -176,7 +169,6 @@ public class DataBase extends SQLiteOpenHelper {
 
 
         for (int i = 0; i < entrevistadoList.size() ; i++) {
-            // Insert PullRequest
             ContentValues obj = new ContentValues();
             obj.put(Field.FIELD_ENTREVISTADO_ID, entrevistadoList.get(i).getEntrevistado_id());
             obj.put(Field.FIELD_ENTREVISTADO, entrevistadoList.get(i).getEntrevistado());
@@ -189,7 +181,6 @@ public class DataBase extends SQLiteOpenHelper {
 
 
         for (int i = 0; i < preparacaoAlimentoList.size() ; i++) {
-            // Insert PullRequest
             ContentValues obj = new ContentValues();
             obj.put(Field.FIELD_PREPARACAO_PREPARACAO_ID, preparacaoAlimentoList.get(i).getPreparacao_preparacao_id());
             obj.put(Field.FIELD_PREPARACAO_ALIMENTO_ID, preparacaoAlimentoList.get(i).getPreparacao_alimento_id());
@@ -202,7 +193,6 @@ public class DataBase extends SQLiteOpenHelper {
 
 
         for (int i = 0; i < unidadeAlimentoList.size() ; i++) {
-            // Insert PullRequest
             ContentValues obj = new ContentValues();
             obj.put(Field.FIELD_UNIDADE_UNIDADE_ID, unidadeAlimentoList.get(i).getUnidade_unidade_id());
             obj.put(Field.FIELD_UNIDADE_ALIMENTO_ID, unidadeAlimentoList.get(i).getUnidade_alimento_id());
@@ -215,7 +205,6 @@ public class DataBase extends SQLiteOpenHelper {
 
 
         for (int i = 0; i < unidadeList.size() ; i++) {
-            // Insert PullRequest
             ContentValues obj = new ContentValues();
             obj.put(Field.FIELD_ADICAO_ADICAO_ID, unidadeList.get(i).getAdicao_adicao_id());
             obj.put(Field.FIELD_ADICAO_ALIMENTO_ID, unidadeList.get(i).getAdicao_alimento_id());
@@ -224,6 +213,54 @@ public class DataBase extends SQLiteOpenHelper {
         }
     }
 
+
+    public void insertTABLE_ALIMENTACAO(List<Alimentacao> alimentacaoList){
+
+
+        for (int i = 0; i < alimentacaoList.size() ; i++) {
+            ContentValues obj = new ContentValues();
+            obj.put(Field.FIELD_ALIMENTACAO_ID, alimentacaoList.get(i).getAlimentacao_id());
+            obj.put(Field.FIELD_ALIMENTACAO_ALIMENTO_ID, alimentacaoList.get(i).getAlimentacao_alimento_id());
+            obj.put(Field.FIELD_ALIMENTACAO_PREPARACAO_ID, alimentacaoList.get(i).getAlimentacao_preparacao_id());
+            obj.put(Field.FIELD_ALIMENTACAO_LOCAL_ID, alimentacaoList.get(i).getAlimentacao_local_id());
+            obj.put(Field.FIELD_ALIMENTACAO_UNIDADE_ID, alimentacaoList.get(i).getAlimentacao_unidade_id());
+            obj.put(Field.FIELD_ALIMENTACAO_OCASIAO_CONSUMO_ID, alimentacaoList.get(i).getAlimentacao_ocasiao_consumo_id());
+            obj.put(Field.FIELD_ALIMENTACAO_ADICAO_ID, alimentacaoList.get(i).getAlimentacao_adicao_id());
+            obj.put(Field.FIELD_ALIMENTACAO_QUANTIDADE, alimentacaoList.get(i).getAlimentacao_quantidade());
+            obj.put(Field.FIELD_ALIMENTACAO_HORA, alimentacaoList.get(i).getAlimentacao_hora());
+            obj.put(Field.FIELD_ALIMENTACAO_USUARIO, alimentacaoList.get(i).getAlimentacao_usuario());
+            obj.put(Field.FIELD_ALIMENTACAO_ENTREVISTADO_ID, alimentacaoList.get(i).getAlimentacao_entrevistador_id());
+            obj.put(Field.FIELD_ALIMENTACAO_HORA_COLETA, alimentacaoList.get(i).getAlimentacao_hora_coleta());
+            obj.put(Field.FIELD_ALIMENTACAO_DIA_COLETA, alimentacaoList.get(i).getAlimentacao_dia_coleta());
+            this.onInsert(context,obj, DbCreate.TABLE_ALIMENTACAO);
+
+        }
+    }
+
+    public void updateTABLE_ALIMENTACAO(List<Alimentacao> alimentacaoList){
+
+
+        for (int i = 0; i < alimentacaoList.size() ; i++) {
+
+            mDb = this.getWritableDatabase();
+
+            mDb.execSQL(" update " + DbCreate.TABLE_ALIMENTACAO + " set " +
+                    Field.FIELD_ALIMENTACAO_ALIMENTO_ID + " = " + alimentacaoList.get(i).getAlimentacao_alimento_id()  +
+                    " ," + Field.FIELD_ALIMENTACAO_PREPARACAO_ID + " = " + alimentacaoList.get(i).getAlimentacao_preparacao_id().toString() +
+                    " ," + Field.FIELD_ALIMENTACAO_LOCAL_ID + " = " + alimentacaoList.get(i).getAlimentacao_local_id().toString() +
+                    " ," + Field.FIELD_ALIMENTACAO_UNIDADE_ID + " = " + alimentacaoList.get(i).getAlimentacao_unidade_id().toString() +
+                    " ," + Field.FIELD_ALIMENTACAO_OCASIAO_CONSUMO_ID + " = " + alimentacaoList.get(i).getAlimentacao_ocasiao_consumo_id().toString() +
+                    " ," + Field.FIELD_ALIMENTACAO_ADICAO_ID + " = " + alimentacaoList.get(i).getAlimentacao_adicao_id().toString() +
+                    " ," + Field.FIELD_ALIMENTACAO_QUANTIDADE + " = " + alimentacaoList.get(i).getAlimentacao_quantidade().toString() +
+                    " ," + Field.FIELD_ALIMENTACAO_HORA + " = " + alimentacaoList.get(i).getAlimentacao_hora().toString() +
+                    " ," + Field.FIELD_ALIMENTACAO_USUARIO + " = " + alimentacaoList.get(i).getAlimentacao_usuario().toString() +
+                    " ," + Field.FIELD_ALIMENTACAO_ENTREVISTADO_ID + " = " + alimentacaoList.get(i).getAlimentacao_entrevistador_id().toString() +
+                    " ," + Field.FIELD_ALIMENTACAO_HORA_COLETA + " = " + alimentacaoList.get(i).getAlimentacao_hora_coleta().toString() +
+                    " ," + Field.FIELD_ALIMENTACAO_DIA_COLETA + " = " + alimentacaoList.get(i).getAlimentacao_dia_coleta().toString() +
+                    " where " + Field.FIELD_ALIMENTACAO_ID + " = " + alimentacaoList.get(i).getAlimentacao_id());
+
+        }
+    }
 
 
 
