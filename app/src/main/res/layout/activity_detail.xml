@@ -1,0 +1,100 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context="com.example.jorge.meurecordatorio.DetailActivity">
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/entrevistado"
+        android:text="Hello World!" />
+
+    <TextView
+        android:id="@+id/aliemnto"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Hello World!"
+        app:layout_constraintTop_toBottomOf="@+id/entrevistado" />
+
+    <TextView
+        android:id="@+id/preparacao"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Hello World!"
+        app:layout_constraintTop_toBottomOf="@+id/aliemnto" />
+
+    <TextView
+        android:id="@+id/medida"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Hello World!"
+        app:layout_constraintTop_toBottomOf="@+id/preparacao" />
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/adicao"
+        android:text="Hello World!"
+        app:layout_constraintTop_toBottomOf="@+id/medida"/>
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/local"
+        android:text="Hello World!"
+        app:layout_constraintTop_toBottomOf="@+id/adicao"/>
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/unidade"
+        android:text="Hello World!"
+        app:layout_constraintTop_toBottomOf="@+id/local"/>
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/ocasiao_consumo"
+        android:text="Hello World!"
+        app:layout_constraintTop_toBottomOf="@+id/unidade"/>
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/quantidade"
+        android:text="Hello World!"
+        app:layout_constraintTop_toBottomOf="@+id/ocasiao_consumo"/>
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/hora"
+        android:text="Hello World!"
+        app:layout_constraintTop_toBottomOf="@+id/quantidade"/>
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/usuario"
+        android:text="Hello World!"
+        app:layout_constraintTop_toBottomOf="@+id/hora"/>
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/hora_coleta"
+        android:text="Hello World!"
+        app:layout_constraintTop_toBottomOf="@+id/usuario"/>
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/dia_coleta"
+        android:text="Hello World!"
+        app:layout_constraintTop_toBottomOf="@+id/hora_coleta"/>
+
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="80dp"
+        android:background="@color/colorPrimaryDark"
+        app:layout_constraintBottom_toBottomOf="parent">
+
+
+    </RelativeLayout>
+
+</android.support.constraint.ConstraintLayout>

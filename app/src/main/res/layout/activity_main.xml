@@ -6,86 +6,42 @@
     android:layout_height="match_parent"
     tools:context="com.example.jorge.meurecordatorio.MainActivity">
 
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:id="@+id/entrevistado"
-        android:text="Hello World!" />
+    <FrameLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+        <android.support.v7.widget.RecyclerView
+            android:id="@+id/rv_alimento"
+            android:layout_width="fill_parent"
+            android:layout_height="fill_parent"/>
 
-    <TextView
-        android:id="@+id/aliemnto"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Hello World!"
-        app:layout_constraintTop_toBottomOf="@+id/entrevistado" />
 
-    <TextView
-        android:id="@+id/preparacao"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Hello World!"
-        app:layout_constraintTop_toBottomOf="@+id/aliemnto" />
+        <ProgressBar
+            android:id="@+id/pb_loading_indicator"
+            android:layout_height="42dp"
+            android:layout_width="42dp"
+            android:layout_gravity="center"
+            android:visibility="invisible" />
+    </FrameLayout>
 
-    <TextView
-        android:id="@+id/medida"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Hello World!"
-        app:layout_constraintTop_toBottomOf="@+id/preparacao" />
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:id="@+id/adicao"
-        android:text="Hello World!"
-        app:layout_constraintTop_toBottomOf="@+id/medida"/>
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:id="@+id/local"
-        android:text="Hello World!"
-        app:layout_constraintTop_toBottomOf="@+id/adicao"/>
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:id="@+id/unidade"
-        android:text="Hello World!"
-        app:layout_constraintTop_toBottomOf="@+id/local"/>
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:id="@+id/ocasiao_consumo"
-        android:text="Hello World!"
-        app:layout_constraintTop_toBottomOf="@+id/unidade"/>
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:id="@+id/quantidade"
-        android:text="Hello World!"
-        app:layout_constraintTop_toBottomOf="@+id/ocasiao_consumo"/>
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:id="@+id/hora"
-        android:text="Hello World!"
-        app:layout_constraintTop_toBottomOf="@+id/quantidade"/>
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:id="@+id/usuario"
-        android:text="Hello World!"
-        app:layout_constraintTop_toBottomOf="@+id/hora"/>
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:id="@+id/hora_coleta"
-        android:text="Hello World!"
-        app:layout_constraintTop_toBottomOf="@+id/usuario"/>
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:id="@+id/dia_coleta"
-        android:text="Hello World!"
-        app:layout_constraintTop_toBottomOf="@+id/hora_coleta"/>
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="80dp"
+        android:background="@color/colorPrimaryDark"
+        app:layout_constraintBottom_toBottomOf="parent">
+
+        <TextView
+            android:id="@+id/TextViewAdiciona"
+            android:layout_width="150dp"
+            android:layout_height="70dp"
+            android:layout_alignParentLeft="true"
+            android:layout_alignParentStart="true"
+            android:layout_centerVertical="true"
+            android:text="Adiciona novo Aliemnto"
+            android:textAlignment="center"
+            android:layout_marginLeft="143dp"
+            android:layout_marginStart="143dp"
+/>
+    </RelativeLayout>
 
 
 </android.support.constraint.ConstraintLayout>

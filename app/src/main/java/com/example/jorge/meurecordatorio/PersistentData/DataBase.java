@@ -290,6 +290,33 @@ public class DataBase extends SQLiteOpenHelper {
 
     }
 
+    public List<Alimento> getListAlimento(String partNome) {
+
+        List<Alimento> alimentoList = new ArrayList<Alimento>();
+
+        mDb = this.getWritableDatabase();
+
+        Cursor cursor = mDb.rawQuery(DbSelect.GET_ALIMENTO + " WHERE "+ Field.FIELD_ALIMENTO + " LIKE '%" + partNome + "%'",null);
+        cursor.moveToFirst();
+        while(!cursor.isAfterLast() ){
+            Alimento alimento = new Alimento();
+
+            try {
+                alimento.setAlimento_id(cursor.getString(cursor.getColumnIndex(Field.FIELD_ALIMENTO_ID)));
+                alimento.setAlimento(cursor.getString(cursor.getColumnIndex(Field.FIELD_ALIMENTO)));
+
+            } catch (Exception e) {
+                System.out.println(e.getMessage());
+            }
+            alimentoList.add(alimento);
+            cursor.moveToNext();
+        }
+        cursor.close();
+        return alimentoList;
+
+    }
+
+
     public List<Preparacao> getListPreparacao() {
 
         List<Preparacao> preparacaoList = new ArrayList<Preparacao>();
