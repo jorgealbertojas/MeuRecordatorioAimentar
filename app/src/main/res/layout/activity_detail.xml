@@ -9,20 +9,39 @@
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:id="@+id/entrevistado_hint"
+        android:textSize="@dimen/padding_text"
+        android:textColor="@color/colorAccent"
+        android:text="Entrevistado" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
         android:id="@+id/entrevistado"
+        android:padding="@dimen/padding_text"
         android:text="Hello World!" />
     <TextView
         android:id="@+id/entrevistado_nome"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="Hello World!"
+        android:padding="@dimen/padding_text"
         app:layout_constraintStart_toEndOf="@+id/entrevistado"
 />
 
     <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/alimento_hint"
+        app:layout_constraintTop_toBottomOf="@+id/entrevistado"
+        android:textColor="@color/colorAccent"
+        android:textSize="@dimen/padding_text"
+        android:text="Alimento" />
+    <TextView
         android:id="@+id/alimento"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:padding="@dimen/padding_text"
         android:text="Hello World!"
         app:layout_constraintTop_toBottomOf="@+id/entrevistado" />
 
@@ -30,13 +49,23 @@
         android:id="@+id/alimento_nome"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:padding="@dimen/padding_text"
         android:text="Hello World!"
         app:layout_constraintStart_toEndOf="@+id/alimento"
         app:layout_constraintTop_toBottomOf="@+id/entrevistado"/>
 
     <TextView
+        android:id="@+id/preparacao_hint"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Preparação"
+        android:textColor="@color/colorAccent"
+        android:textSize="@dimen/padding_text"
+        app:layout_constraintTop_toBottomOf="@+id/alimento" />
+    <TextView
         android:id="@+id/preparacao"
         android:layout_width="wrap_content"
+        android:padding="@dimen/padding_text"
         android:layout_height="wrap_content"
         android:text="Hello World!"
         app:layout_constraintTop_toBottomOf="@+id/alimento" />
@@ -44,14 +73,23 @@
         android:id="@+id/preparacao_nome"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:padding="@dimen/padding_text"
         android:text="Hello World!"
         app:layout_constraintStart_toEndOf="@+id/preparacao"
         app:layout_constraintTop_toBottomOf="@+id/alimento"/>
 
-
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:textColor="@color/colorAccent"
+        android:textSize="@dimen/padding_text"
+        android:id="@+id/adicao_hint"
+        android:text="Adição"
+        app:layout_constraintTop_toBottomOf="@+id/preparacao"/>
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:padding="@dimen/padding_text"
         android:id="@+id/adicao"
         android:text="Hello World!"
         app:layout_constraintTop_toBottomOf="@+id/preparacao"/>
@@ -59,12 +97,23 @@
         android:id="@+id/adicao_nome"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:padding="@dimen/padding_text"
         android:text="Hello World!"
         app:layout_constraintStart_toEndOf="@+id/adicao"
         app:layout_constraintTop_toBottomOf="@+id/preparacao"/>
+
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:id="@+id/local_hint"
+        android:text="Local"
+        android:textColor="@color/colorAccent"
+        android:textSize="@dimen/padding_text"
+        app:layout_constraintTop_toBottomOf="@+id/adicao"/>
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:padding="@dimen/padding_text"
         android:id="@+id/local"
         android:text="Hello World!"
         app:layout_constraintTop_toBottomOf="@+id/adicao"/>
@@ -72,63 +121,132 @@
         android:id="@+id/local_nome"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:padding="@dimen/padding_text"
         android:text="Hello World!"
         app:layout_constraintStart_toEndOf="@+id/local"
         app:layout_constraintTop_toBottomOf="@+id/adicao"/>
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/unidade_hint"
+        android:text="Unidade"
+        android:textColor="@color/colorAccent"
+        android:textSize="@dimen/padding_text"
+        app:layout_constraintTop_toBottomOf="@+id/local"/>
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:id="@+id/unidade"
         android:text="Hello World!"
+        android:padding="@dimen/padding_text"
         app:layout_constraintTop_toBottomOf="@+id/local"/>
 
     <TextView
         android:id="@+id/unidade_nome"
         android:layout_width="wrap_content"
+        android:padding="@dimen/padding_text"
         android:layout_height="wrap_content"
         android:text="Hello World!"
         app:layout_constraintStart_toEndOf="@+id/unidade"
         app:layout_constraintTop_toBottomOf="@+id/local" />
+
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:textColor="@color/colorAccent"
+        android:textSize="@dimen/padding_text"
+        android:id="@+id/ocasiao_consumo_hint"
+        android:text="Ocasião de consumo"
+        app:layout_constraintTop_toBottomOf="@+id/unidade"/>
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:padding="@dimen/padding_text"
         android:id="@+id/ocasiao_consumo"
         android:text="Hello World!"
         app:layout_constraintTop_toBottomOf="@+id/unidade"/>
+
     <TextView
         android:id="@+id/ocasiao_consumo_nome"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:padding="@dimen/padding_text"
         android:text="Hello World!"
         app:layout_constraintStart_toEndOf="@+id/ocasiao_consumo"
         app:layout_constraintTop_toBottomOf="@+id/unidade"/>
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:textColor="@color/colorAccent"
+        android:textSize="@dimen/padding_text"
+        android:id="@+id/quantidade_hint"
+        android:text="Quantidade"
+        app:layout_constraintTop_toBottomOf="@+id/ocasiao_consumo"/>
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:padding="@dimen/padding_text"
         android:id="@+id/quantidade"
         android:text="Hello World!"
         app:layout_constraintTop_toBottomOf="@+id/ocasiao_consumo"/>
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:textColor="@color/colorAccent"
+        android:textSize="@dimen/padding_text"
+        android:id="@+id/hora_hint"
+        android:text="Hora"
+        app:layout_constraintTop_toBottomOf="@+id/quantidade"/>
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:padding="@dimen/padding_text"
         android:id="@+id/hora"
         android:text="Hello World!"
         app:layout_constraintTop_toBottomOf="@+id/quantidade"/>
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:textColor="@color/colorAccent"
+        android:textSize="@dimen/padding_text"
+        android:id="@+id/usuario_hint"
+        android:text="Usuário"
+        app:layout_constraintTop_toBottomOf="@+id/hora"/>
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:padding="@dimen/padding_text"
         android:id="@+id/usuario"
         android:text="Hello World!"
         app:layout_constraintTop_toBottomOf="@+id/hora"/>
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:textColor="@color/colorAccent"
+        android:textSize="@dimen/padding_text"
+        android:id="@+id/hora_coleta_hint"
+        android:text="Hora da coleta"
+        app:layout_constraintTop_toBottomOf="@+id/usuario"/>
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:padding="@dimen/padding_text"
         android:id="@+id/hora_coleta"
         android:text="Hello World!"
         app:layout_constraintTop_toBottomOf="@+id/usuario"/>
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:id="@+id/dia_coleta_hint"
+        android:textColor="@color/colorAccent"
+        android:textSize="@dimen/padding_text"
+        android:text="Hello World!"
+        app:layout_constraintTop_toBottomOf="@+id/hora_coleta"/>
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:padding="@dimen/padding_text"
         android:id="@+id/dia_coleta"
         android:text="Hello World!"
         app:layout_constraintTop_toBottomOf="@+id/hora_coleta"/>
@@ -139,7 +257,15 @@
         android:layout_height="80dp"
         android:background="@color/colorPrimaryDark"
         app:layout_constraintBottom_toBottomOf="parent">
-
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:padding="@dimen/padding_text"
+            android:id="@+id/tv_salvar_alimento"
+            android:layout_centerVertical="true"
+            android:layout_centerInParent="true"
+            android:text="Salvar Alimento"
+/>
 
     </RelativeLayout>
 

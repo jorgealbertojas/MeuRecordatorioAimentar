@@ -2,6 +2,7 @@
 package com.example.jorge.meurecordatorio;
 
 import android.content.Intent;
+import android.database.sqlite.SQLiteDatabase;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
@@ -13,13 +14,22 @@ import com.example.jorge.meurecordatorio.Generica.LocalActivity;
 import com.example.jorge.meurecordatorio.Generica.OcasiaoConsumoActivity;
 import com.example.jorge.meurecordatorio.Generica.PreparacaoActivity;
 import com.example.jorge.meurecordatorio.Generica.UnidadeActivity;
+import com.example.jorge.meurecordatorio.Model.Alimentacao;
+import com.example.jorge.meurecordatorio.PersistentData.DataBase;
+import com.example.jorge.meurecordatorio.PersistentData.DbInstance;
 import com.example.jorge.meurecordatorio.Utilite.Modulo;
+
+import java.util.ArrayList;
+import java.util.List;
+
 import static com.example.jorge.meurecordatorio.MainActivity.PUT_EXTRA_ALIMENTO;
 import static com.example.jorge.meurecordatorio.MainActivity.PUT_EXTRA_ENTREVISTADO;
 import static com.example.jorge.meurecordatorio.MainActivity.PUT_EXTRA_USUARIO;
 
 public class DetailActivity extends AppCompatActivity {
 
+    private SQLiteDatabase mDb;
+    private DataBase mDataBase;
 
     String mEntrevistado;
     String mUsuario;
@@ -42,6 +52,8 @@ public class DetailActivity extends AppCompatActivity {
     TextView ocasiaoConsumo;
     TextView ocasiaoConsumo_nome;
 
+    TextView tv_salvar_alimento;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -51,6 +63,11 @@ public class DetailActivity extends AppCompatActivity {
          * Get putExtra for Activity Main .
          */
         Bundle extras = getIntent().getExtras();
+
+        mDataBase = new DataBase(this);
+        mDb = mDataBase.getReadableDatabase();
+
+        DbInstance.getInstance(this);
 
         mEntrevistado = extras.getString(PUT_EXTRA_ENTREVISTADO);
         mUsuario = extras.getString(PUT_EXTRA_USUARIO);
@@ -196,6 +213,34 @@ public class DetailActivity extends AppCompatActivity {
             public void onClick(View arg0) {
                 try {
                     showOcasiaoConsumo();
+                } catch (Exception e) {
+                    // TODO: handle exception
+                }
+            }
+        });
+
+
+        tv_salvar_alimento = (TextView)  findViewById(R.id.tv_salvar_alimento);
+        tv_salvar_alimento.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View arg0) {
+                try {
+                    mDataBase = new DataBase(getApplicationContext());
+                    mDb = mDataBase.getReadableDatabase();
+
+                    List<Alimentacao> alimentacaoList = new ArrayList<Alimentacao>();
+                    Alimentacao alimentacao = new Alimentacao();
+                    alimentacao.setAlimentacao_entrevistador_id(mEntrevistado);
+                    alimentacao.setAlimentacao_alimento_id(alimento.getText().toString());
+                    alimentacao.setAlimentacao_preparacao_id(preparacao.getText().toString());
+                    alimentacao.setAlimentacao_adicao_id(adicao.getText().toString());
+                    alimentacao.setAlimentacao_local_id(local.getText().toString());
+                    alimentacao.setAlimentacao_unidade_id(unidade.getText().toString());
+                    alimentacao.setAlimentacao_ocasiao_consumo_id(ocasiaoConsumo.getText().toString());
+                    //alimentacao.setAlimentacao_quantidade();
+                    alimentacaoList.add(alimentacao);
+
+                    mDataBase.insertTABLE_ALIMENTACAO(alimentacaoList);
                 } catch (Exception e) {
                     // TODO: handle exception
                 }

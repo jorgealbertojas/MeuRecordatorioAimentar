@@ -5,12 +5,15 @@ import android.content.Intent;
 import android.database.sqlite.SQLiteDatabase;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.View;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.jorge.meurecordatorio.Adapter.AdicaoAdapter;
+import com.example.jorge.meurecordatorio.Adapter.AlimentacaoAdapter;
 import com.example.jorge.meurecordatorio.Adapter.AlimentoAdapter;
 import com.example.jorge.meurecordatorio.Adapter.EntrevistadoAdapter;
 import com.example.jorge.meurecordatorio.Adapter.LocalAdapter;
@@ -30,6 +33,7 @@ import com.example.jorge.meurecordatorio.Interface.InterfaceUnidadeAlimento;
 import com.example.jorge.meurecordatorio.Interface.InterfaceUsuario;
 import com.example.jorge.meurecordatorio.Model.Adicao;
 import com.example.jorge.meurecordatorio.Model.AdicaoAlimento;
+import com.example.jorge.meurecordatorio.Model.Alimentacao;
 import com.example.jorge.meurecordatorio.Model.Alimento;
 import com.example.jorge.meurecordatorio.Model.Entrevistado;
 import com.example.jorge.meurecordatorio.Model.ListWrapper;
@@ -63,6 +67,8 @@ public class MainActivity extends AppCompatActivity {
     public final static String PUT_EXTRA_ENTREVISTADO = "PUT_EXTRA_ENTREVISTADO";
     public final static String PUT_EXTRA_USUARIO = "PUT_EXTRA_USUARIO";
     public final static String PUT_EXTRA_ALIMENTO = "PUT_EXTRA_ALIMENTO";
+
+    public RecyclerView mRecyclerView;
 
     private InterfaceAdicao mInterfaceADICAO;
     AdicaoAdapter mAdapterADICAO;
@@ -100,12 +106,25 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        mDataBase = new DataBase(this);
-        mDb = mDataBase.getReadableDatabase();
-        mDataBase.onCreate(mDb);
-        DbInstance.getInstance(this);
+        if (savedInstanceState == null){
+            mDataBase = new DataBase(this);
+            mDb = mDataBase.getReadableDatabase();
+            mDataBase.onCreate(mDb);
+            DbInstance.getInstance(this);
 
-        getJson();
+            getJson();
+        }
+
+        /**
+         * use RecyclerView for list the PullRequest .
+         */
+        mRecyclerView = (RecyclerView) findViewById(R.id.rv_alimento);
+        mRecyclerView.setHasFixedSize(true);
+        mRecyclerView.setLayoutManager(new LinearLayoutManager(this));
+
+        mDataBase = new DataBase(this);
+
+       // iniciaRecyclerView();
 
         TextView TextViewAdiciona = (TextView) findViewById(R.id.TextViewAdiciona);
         TextViewAdiciona.setOnClickListener(new View.OnClickListener() {
@@ -126,6 +145,12 @@ public class MainActivity extends AppCompatActivity {
 
 
 
+    }
+
+    @Override
+    protected void onResume() {
+        iniciaRecyclerView();
+        super.onResume();
     }
 
     private void getJson(){
@@ -766,7 +791,14 @@ public class MainActivity extends AppCompatActivity {
         }
     };
 
+    private void iniciaRecyclerView(){
+        List<Alimentacao> dataPersistent = new ArrayList<>();
+        dataPersistent = mDataBase.getListAlimentacao();
 
+        if (dataPersistent.size()>0) {
+            mRecyclerView.setAdapter(new AlimentacaoAdapter(dataPersistent));
+        }
+    }
 
 
 

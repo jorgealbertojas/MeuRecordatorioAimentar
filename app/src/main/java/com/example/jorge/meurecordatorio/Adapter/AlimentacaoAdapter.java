@@ -64,6 +64,15 @@ public class AlimentacaoAdapter extends RecyclerView.Adapter<AlimentacaoAdapter.
         /** get field of the main for show recyclerView**/
         public ViewHolder(View v) {
             super(v);
+
+            tv_alimento = (TextView) v.findViewById(R.id.tv_alimento);
+            tv_preparacao  = (TextView) v.findViewById(R.id.tv_preparacao);
+            tv_local  = (TextView) v.findViewById(R.id.tv_local);
+            tv_unidade  = (TextView) v.findViewById(R.id.tv_unidade);
+            iv_incompleto = (ImageView) v.findViewById(R.id.iv_incompleto);
+            iv_completo = (ImageView) v.findViewById(R.id.iv_completo);
+            tv_hora  = (TextView) v.findViewById(R.id.tv_hora);
+
             v.setOnClickListener(this);
         }
 
@@ -90,6 +99,8 @@ public class AlimentacaoAdapter extends RecyclerView.Adapter<AlimentacaoAdapter.
         mContext = parent.getContext();
 
 
+
+
         return new ViewHolder(v);
     }
 
@@ -103,6 +114,8 @@ public class AlimentacaoAdapter extends RecyclerView.Adapter<AlimentacaoAdapter.
      //   final int newColor = res.getColor(R.color.colorYellow);
      //   holder.mForks.setColorFilter(newColor, PorterDuff.Mode.SRC_ATOP);
      //   holder.mStar.setColorFilter(newColor, PorterDuff.Mode.SRC_ATOP);
+
+
 
         /** Create filed bind hold full **/
 
