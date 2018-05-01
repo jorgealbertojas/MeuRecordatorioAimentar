@@ -16,25 +16,25 @@ public class DbSelect {
             " SELECT "
                     + Field.FIELD_PREPARACAO_ID  + ","
                     + Field.FIELD_PREPARACAO +
-                    " FROM " + DbCreate.TABLE_PREPARACAO ;
+                    " FROM " + DbCreate.TABLE_PREPARACAO + " P, " + DbCreate.TABLE_PREPARACAO_ALIMENTO  + " PA WHERE P." + Field.FIELD_PREPARACAO_ID + " = PA." + Field.FIELD_PREPARACAO_PREPARACAO_ID    ;
 
     public static String GET_UNIDADE =
             " SELECT "
                     + Field.FIELD_UNIDADE_ID  + ","
                     + Field.FIELD_UNIDADE +
-                    " FROM " + DbCreate.TABLE_UNIDADE ;
+                    " FROM " + DbCreate.TABLE_UNIDADE + " U, " + DbCreate.TABLE_UNIDADE_ALIMENTO  + " UA WHERE U." + Field.FIELD_UNIDADE_ID + " = UA." + Field.FIELD_UNIDADE_UNIDADE_ID    ;
 
     public static String GET_ADICAO =
             " SELECT "
                     + Field.FIELD_ADICAO_ID  + ","
                     + Field.FIELD_ADICAO +
-                    " FROM " + DbCreate.TABLE_ADICAO ;
+                    " FROM " + DbCreate.TABLE_ADICAO + " A, " + DbCreate.TABLE_ADICAO_ALIMENTO  + " AA WHERE A." + Field.FIELD_ADICAO_ID + " = AA." + Field.FIELD_ADICAO_ADICAO_ID    ;
 
     public static String GET_OCASIAO_CONSUMO =
             " SELECT "
                     + Field.FIELD_OCASIAO_CONSUMO_ID  + ","
                     + Field.FIELD_OCASIAO_CONSUMO +
-                    " FROM " + DbCreate.TABLE_OCASIAO_CONSUMO ;
+                    " FROM " + DbCreate.TABLE_OCASIAO_CONSUMO;
 
     public static String GET_LOCAL =
             " SELECT "

@@ -4,19 +4,16 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context="com.example.jorge.meurecordatorio.AlimentoActivity">
+    tools:context="com.example.jorge.meurecordatorio.Generica.AlimentoActivity">
  <EditText
      android:layout_width="match_parent"
      android:id="@+id/tv_buscar"
-     android:hint="Entre com o nome"
+     android:hint="Digite nome aqui para filtrar"
      android:layout_height="50dp" />
     <FrameLayout
         android:layout_width="match_parent"
         app:layout_constraintTop_toBottomOf="@+id/tv_buscar"
-
         android:layout_height="wrap_content">
-
-
         <ProgressBar
             android:id="@+id/pb_loading_indicator"
             android:layout_height="42dp"

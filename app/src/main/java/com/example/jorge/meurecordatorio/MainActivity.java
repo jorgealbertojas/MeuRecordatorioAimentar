@@ -2,14 +2,11 @@ package com.example.jorge.meurecordatorio;
 
 import android.content.Context;
 import android.content.Intent;
-import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
-import android.widget.Button;
-import android.widget.ImageButton;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -46,7 +43,7 @@ import com.example.jorge.meurecordatorio.Model.Usuario;
 import com.example.jorge.meurecordatorio.PersistentData.DataBase;
 import com.example.jorge.meurecordatorio.PersistentData.DbInstance;
 import com.example.jorge.meurecordatorio.Utilite.Common;
-import com.example.jorge.meurecordatorio.Utilite.url;
+import com.example.jorge.meurecordatorio.Utilite.Url;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 
@@ -65,6 +62,7 @@ public class MainActivity extends AppCompatActivity {
     private DataBase mDataBase;
     public final static String PUT_EXTRA_ENTREVISTADO = "PUT_EXTRA_ENTREVISTADO";
     public final static String PUT_EXTRA_USUARIO = "PUT_EXTRA_USUARIO";
+    public final static String PUT_EXTRA_ALIMENTO = "PUT_EXTRA_ALIMENTO";
 
     private InterfaceAdicao mInterfaceADICAO;
     AdicaoAdapter mAdapterADICAO;
@@ -137,37 +135,37 @@ public class MainActivity extends AppCompatActivity {
          */
         if (Common.isOnline(getSystemService(Context.CONNECTIVITY_SERVICE))) {
 
-            create_API_ADICAO(url.BASE_URL_ADICAO);
+            create_API_ADICAO(Url.BASE_URL_ADICAO);
             mInterfaceADICAO.getAdicao().enqueue(ADICAOCallback);
 
-            create_API_ALIMENTO(url.BASE_URL_ALIMENTO);
+            create_API_ALIMENTO(Url.BASE_URL_ALIMENTO);
             mInterfaceALIMENTO.getAlimento().enqueue(ALIMENTOCallback);
 
-            create_API_ENTREVISTADO(url.BASE_URL_ENTREVISTADOR);
+            create_API_ENTREVISTADO(Url.BASE_URL_ENTREVISTADOR);
             mInterfaceENTREVISTADO.getentrevistado().enqueue(ENTREVISTADOCallback);
 
-            create_API_LOCAL(url.BASE_URL_LOCAL);
+            create_API_LOCAL(Url.BASE_URL_LOCAL);
             mInterfaceLOCAL.getLocal().enqueue(LOCALCallback);
 
-            create_API_OCASIAO_CONSUMO(url.BASE_URL_OCASIAO_CONSUMO);
+            create_API_OCASIAO_CONSUMO(Url.BASE_URL_OCASIAO_CONSUMO);
             mInterfaceOCASIAO_CONSUMO.getOcasoioConsumo().enqueue(OCASIAO_CONSUMOCallback);
 
-            create_API_PREPARACAO(url.BASE_URL_PREPARACAO);
+            create_API_PREPARACAO(Url.BASE_URL_PREPARACAO);
             mInterfacePREPARACAO.getPreparacao().enqueue(PREPARACAOCallback);
 
-            create_API_PREPARACAO_ALIMENTO(url.BASE_URL_PREPARACAO_PREPARACAO);
+            create_API_PREPARACAO_ALIMENTO(Url.BASE_URL_PREPARACAO_PREPARACAO);
             mInterfacePREPARACAO_ALIMENTO.getPreparacaoAliemnto().enqueue(PREPARACAO_ALIMENTOCallback);
 
-            create_API_UNIDADE(url.BASE_URL_UNIDADE);
+            create_API_UNIDADE(Url.BASE_URL_UNIDADE);
             mInterfaceUNIDADE.getUnidade().enqueue(UNIDADECallback);
 
-            create_API_UNIADE_ALIMENTO(url.BASE_URL_UNIDADE_UNIDADE);
+            create_API_UNIADE_ALIMENTO(Url.BASE_URL_UNIDADE_UNIDADE);
             mInterfaceUNIDADE_ALIMENTO.getUniadeAliemnto().enqueue(UNIDADE_ALIMENTOCallback);
 
-            create_API_USUARIO(url.BASE_URL_USUARIO);
+            create_API_USUARIO(Url.BASE_URL_USUARIO);
             mInterfaceUSUARIO.getUsuario().enqueue(USUSARIOCallback);
 
-            create_API_ADICAO_ALIMENTO(url.BASE_URL_ADICAO_ADICAO);
+            create_API_ADICAO_ALIMENTO(Url.BASE_URL_ADICAO_ADICAO);
             mInterfaceADICAO_ALIMENTO.getAdicaoAlimento().enqueue(ADICAO_ALIMENTOCallback);
         } else {
             Context context = getApplicationContext();

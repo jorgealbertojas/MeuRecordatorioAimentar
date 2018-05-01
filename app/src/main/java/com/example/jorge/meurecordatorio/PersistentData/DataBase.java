@@ -343,13 +343,116 @@ public class DataBase extends SQLiteOpenHelper {
 
     }
 
+    public List<Preparacao> getListPreparacao(String alimento, String partNome) {
+
+        List<Preparacao> preparacaoList = new ArrayList<Preparacao>();
+
+        mDb = this.getWritableDatabase();
+
+        Cursor cursor = mDb.rawQuery(DbSelect.GET_PREPARACAO + " AND UA." + Field.FIELD_UNIDADE_UNIDADE_ID + " = " + alimento + " AND U."+ Field.FIELD_UNIDADE + " LIKE '%" + partNome + "%'",null);
+        cursor.moveToFirst();
+        while(!cursor.isAfterLast() ){
+            Preparacao preparacao = new Preparacao();
+
+            try {
+                preparacao.setPreparacao_id(cursor.getString(cursor.getColumnIndex(Field.FIELD_PREPARACAO_ID)));
+                preparacao.setPreparacao(cursor.getString(cursor.getColumnIndex(Field.FIELD_PREPARACAO)));
+
+            } catch (Exception e) {
+                System.out.println(e.getMessage());
+            }
+            preparacaoList.add(preparacao);
+            cursor.moveToNext();
+        }
+        cursor.close();
+        return preparacaoList;
+
+    }
+
+    public List<Preparacao> getListPreparacao(String partNome) {
+
+        List<Preparacao> preparacaoList = new ArrayList<Preparacao>();
+
+        mDb = this.getWritableDatabase();
+
+        Cursor cursor = mDb.rawQuery(DbSelect.GET_PREPARACAO + " AND P."+ Field.FIELD_PREPARACAO + " LIKE '%" + partNome + "%'",null);
+        cursor.moveToFirst();
+        while(!cursor.isAfterLast() ){
+            Preparacao preparacao = new Preparacao();
+
+            try {
+                preparacao.setPreparacao_id(cursor.getString(cursor.getColumnIndex(Field.FIELD_PREPARACAO_ID)));
+                preparacao.setPreparacao(cursor.getString(cursor.getColumnIndex(Field.FIELD_PREPARACAO)));
+
+            } catch (Exception e) {
+                System.out.println(e.getMessage());
+            }
+            preparacaoList.add(preparacao);
+            cursor.moveToNext();
+        }
+        cursor.close();
+        return preparacaoList;
+
+    }
+
     public List<Unidade> getListUnidade() {
+        List<Unidade> unidadeList = new ArrayList<Unidade>();
+
+        mDb = this.getWritableDatabase();
+
+        Cursor cursor = mDb.rawQuery(DbSelect.GET_UNIDADE ,null);
+        cursor.moveToFirst();
+        while(!cursor.isAfterLast() ){
+            Unidade unidade = new Unidade();
+
+            try {
+                unidade.setUnidade_id(cursor.getString(cursor.getColumnIndex(Field.FIELD_UNIDADE_ID)));
+                unidade.setUnidade(cursor.getString(cursor.getColumnIndex(Field.FIELD_UNIDADE)));
+
+            } catch (Exception e) {
+                System.out.println(e.getMessage());
+            }
+            unidadeList.add(unidade);
+            cursor.moveToNext();
+        }
+        cursor.close();
+        return unidadeList;
+
+    }
+
+    public List<Unidade> getListUnidade(String alimento) {
+        List<Unidade> unidadeList = new ArrayList<Unidade>();
+
+        mDb = this.getWritableDatabase();
+
+        Cursor cursor = mDb.rawQuery(DbSelect.GET_UNIDADE + " AND UA." + Field.FIELD_UNIDADE_UNIDADE_ID + " = " + alimento,null);
+        cursor.moveToFirst();
+        while(!cursor.isAfterLast() ){
+            Unidade unidade = new Unidade();
+
+            try {
+                unidade.setUnidade_id(cursor.getString(cursor.getColumnIndex(Field.FIELD_UNIDADE_ID)));
+                unidade.setUnidade(cursor.getString(cursor.getColumnIndex(Field.FIELD_UNIDADE)));
+
+            } catch (Exception e) {
+                System.out.println(e.getMessage());
+            }
+            unidadeList.add(unidade);
+            cursor.moveToNext();
+        }
+        cursor.close();
+        return unidadeList;
+
+    }
+
+
+    public List<Unidade> getListUnidade(String alimento, String partNome) {
 
         List<Unidade> unidadeList = new ArrayList<Unidade>();
 
         mDb = this.getWritableDatabase();
 
-        Cursor cursor = mDb.rawQuery(DbSelect.GET_UNIDADE,null);
+        Cursor cursor = mDb.rawQuery(DbSelect.GET_UNIDADE + " AND UA." + Field.FIELD_UNIDADE_UNIDADE_ID + " = " + alimento + " AND U."+ Field.FIELD_UNIDADE + " LIKE '%" + partNome + "%'",null);
         cursor.moveToFirst();
         while(!cursor.isAfterLast() ){
             Unidade unidade = new Unidade();
@@ -395,6 +498,58 @@ public class DataBase extends SQLiteOpenHelper {
 
     }
 
+    public List<Adicao> getListAdicao(String alimento, String partNome) {
+
+        List<Adicao> adicaoList = new ArrayList<Adicao>();
+
+        mDb = this.getWritableDatabase();
+
+        Cursor cursor = mDb.rawQuery(DbSelect.GET_ADICAO + " AND AA." + Field.FIELD_ADICAO_ADICAO_ID + " = " + alimento + " AND A."+ Field.FIELD_ADICAO + " LIKE '%" + partNome + "%'",null);
+        cursor.moveToFirst();
+        while(!cursor.isAfterLast() ){
+            Adicao adicao = new Adicao();
+
+            try {
+                adicao.setAdicao_id(cursor.getString(cursor.getColumnIndex(Field.FIELD_ADICAO_ID)));
+                adicao.setAdicao(cursor.getString(cursor.getColumnIndex(Field.FIELD_ADICAO)));
+
+            } catch (Exception e) {
+                System.out.println(e.getMessage());
+            }
+            adicaoList.add(adicao);
+            cursor.moveToNext();
+        }
+        cursor.close();
+        return adicaoList;
+
+    }
+
+    public List<Adicao> getListAdicao(String alimento) {
+
+        List<Adicao> adicaoList = new ArrayList<Adicao>();
+
+        mDb = this.getWritableDatabase();
+
+        Cursor cursor = mDb.rawQuery(DbSelect.GET_ADICAO + " AND AA." + Field.FIELD_ADICAO_ADICAO_ID + " = " + alimento,null);
+        cursor.moveToFirst();
+        while(!cursor.isAfterLast() ){
+            Adicao adicao = new Adicao();
+
+            try {
+                adicao.setAdicao_id(cursor.getString(cursor.getColumnIndex(Field.FIELD_ADICAO_ID)));
+                adicao.setAdicao(cursor.getString(cursor.getColumnIndex(Field.FIELD_ADICAO)));
+
+            } catch (Exception e) {
+                System.out.println(e.getMessage());
+            }
+            adicaoList.add(adicao);
+            cursor.moveToNext();
+        }
+        cursor.close();
+        return adicaoList;
+
+    }
+
     public List<OcasiaoConsumo> getListOcasiaoConsumo() {
 
         List<OcasiaoConsumo> ocasiaoConsumoList = new ArrayList<OcasiaoConsumo>();
@@ -421,6 +576,34 @@ public class DataBase extends SQLiteOpenHelper {
 
     }
 
+
+
+    public List<OcasiaoConsumo> getListOcasiaoConsumo(String partNome) {
+
+        List<OcasiaoConsumo> ocasiaoConsumoList = new ArrayList<OcasiaoConsumo>();
+
+        mDb = this.getWritableDatabase();
+
+        Cursor cursor = mDb.rawQuery(DbSelect.GET_OCASIAO_CONSUMO + " WHERE "+ Field.FIELD_OCASIAO_CONSUMO + " LIKE '%" + partNome + "%'",null);
+        cursor.moveToFirst();
+        while(!cursor.isAfterLast() ){
+            OcasiaoConsumo ocasiaoConsumo = new OcasiaoConsumo();
+
+            try {
+                ocasiaoConsumo.setOcasiao_consumo_id(cursor.getString(cursor.getColumnIndex(Field.FIELD_OCASIAO_CONSUMO_ID)));
+                ocasiaoConsumo.setOcasiao_consumo(cursor.getString(cursor.getColumnIndex(Field.FIELD_OCASIAO_CONSUMO)));
+
+            } catch (Exception e) {
+                System.out.println(e.getMessage());
+            }
+            ocasiaoConsumoList.add(ocasiaoConsumo);
+            cursor.moveToNext();
+        }
+        cursor.close();
+        return ocasiaoConsumoList;
+
+    }
+
     public List<Local> getListLocal() {
 
         List<Local> localList = new ArrayList<Local>();
@@ -428,6 +611,33 @@ public class DataBase extends SQLiteOpenHelper {
         mDb = this.getWritableDatabase();
 
         Cursor cursor = mDb.rawQuery(DbSelect.GET_LOCAL,null);
+        cursor.moveToFirst();
+        while(!cursor.isAfterLast() ){
+            Local local = new Local();
+
+            try {
+                local.setLocal_id(cursor.getString(cursor.getColumnIndex(Field.FIELD_LOCAL_ID)));
+                local.setLocal(cursor.getString(cursor.getColumnIndex(Field.FIELD_LOCAL)));
+
+            } catch (Exception e) {
+                System.out.println(e.getMessage());
+            }
+            localList.add(local);
+            cursor.moveToNext();
+        }
+        cursor.close();
+        return localList;
+
+    }
+
+
+    public List<Local> getListLocal(String partNome) {
+
+        List<Local> localList = new ArrayList<Local>();
+
+        mDb = this.getWritableDatabase();
+
+        Cursor cursor = mDb.rawQuery(DbSelect.GET_LOCAL + " where "+ Field.FIELD_LOCAL + " LIKE '%" + partNome + "%'",null);
         cursor.moveToFirst();
         while(!cursor.isAfterLast() ){
             Local local = new Local();

@@ -4,7 +4,7 @@ package com.example.jorge.meurecordatorio.Utilite;
  * Created by jorge on 30/04/2018.
  */
 
-public class url {
+public class Url {
 
     public final static String BASE_URL_ALIMENTO = "https://private-e0c34-xalimento.apiary-mock.com/";
 

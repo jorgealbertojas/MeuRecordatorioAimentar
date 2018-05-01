@@ -19,7 +19,12 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".AlimentoActivity" />
+        <activity android:name=".Generica.AlimentoActivity" />
+        <activity android:name=".Generica.UnidadeActivity" />
+        <activity android:name=".Generica.LocalActivity" />
+        <activity android:name=".Generica.PreparacaoActivity" />
+        <activity android:name=".Generica.OcasiaoConsumoActivity" />
+        <activity android:name=".Generica.AdicaoActivity" />
         <activity android:name=".DetailActivity"></activity>
     </application>
 

@@ -1,19 +1,17 @@
-package com.example.jorge.meurecordatorio;
+package com.example.jorge.meurecordatorio.Generica;
 
-import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.text.Editable;
 import android.text.TextWatcher;
 import android.widget.EditText;
-import android.widget.TextView;
 
-import com.example.jorge.meurecordatorio.Adapter.AlimentacaoAdapter;
 import com.example.jorge.meurecordatorio.Adapter.AlimentoAdapter;
-import com.example.jorge.meurecordatorio.Model.Alimentacao;
 import com.example.jorge.meurecordatorio.Model.Alimento;
 import com.example.jorge.meurecordatorio.PersistentData.DataBase;
+import com.example.jorge.meurecordatorio.R;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -31,7 +29,7 @@ public class AlimentoActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_alimento);
+        setContentView(R.layout.activity_generico);
 
         /**
          * Get putExtra for Activity Main .
@@ -70,12 +68,11 @@ public class AlimentoActivity extends AppCompatActivity {
             public void onTextChanged(CharSequence s, int start,
                                       int before, int count) {
 
+
                 if (!tv_buscar.getText().toString().equals("")) {
                     List<Alimento> dataPersistent = new ArrayList<>();
                     dataPersistent = mDataBase.getListAlimento(tv_buscar.getText().toString());iniciaRecyclerView();
-                   // if (dataPersistent.size() > 0) {
-                        mRecyclerView.setAdapter(new AlimentoAdapter(dataPersistent));
-                   // }
+                    mRecyclerView.setAdapter(new AlimentoAdapter(dataPersistent));
                 }else{
                     iniciaRecyclerView();
                 }

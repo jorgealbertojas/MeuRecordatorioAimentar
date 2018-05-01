@@ -1,5 +1,6 @@
 package com.example.jorge.meurecordatorio.Adapter;
 
+import android.app.Activity;
 import android.content.Context;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
@@ -7,9 +8,11 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
+import com.example.jorge.meurecordatorio.MainActivity;
 import com.example.jorge.meurecordatorio.Model.Adicao;
 import com.example.jorge.meurecordatorio.Model.Alimento;
 import com.example.jorge.meurecordatorio.R;
+import com.example.jorge.meurecordatorio.Utilite.Modulo;
 
 import java.util.List;
 
@@ -63,7 +66,13 @@ public class AlimentoAdapter extends RecyclerView.Adapter<AlimentoAdapter.ViewHo
         public void onClick(View view) {
             int adapterPosition = getAdapterPosition();
             Alimento object = data.get(adapterPosition);
-            mClickHandler.onClick(object);
+
+            Modulo.OPCAO = "ALIMENTO";
+            Modulo.NOME = object.getAlimento();
+            Modulo.ID = object.getAlimento_id();
+
+            ((Activity) mContext).finish();
+
 
         }
     }

@@ -1,10 +1,12 @@
 package com.example.jorge.meurecordatorio.Model;
 
+import java.io.Serializable;
+
 /**
  * Created by jorge on 28/04/2018.
  */
 
-public class AdicaoAlimento {
+public class AdicaoAlimento implements Serializable {
     private String adicao_adicao_id;
     private String adicao_alimento_id;
 
