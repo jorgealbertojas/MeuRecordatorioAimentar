@@ -221,15 +221,22 @@ public class DataBase extends SQLiteOpenHelper {
             ContentValues obj = new ContentValues();
             obj.put(Field.FIELD_ALIMENTACAO_ID, alimentacaoList.get(i).getAlimentacao_id());
             obj.put(Field.FIELD_ALIMENTACAO_ALIMENTO_ID, alimentacaoList.get(i).getAlimentacao_alimento_id());
+            obj.put(Field.FIELD_ALIMENTACAO_ALIMENTO, alimentacaoList.get(i).getAlimentacao_alimento());
             obj.put(Field.FIELD_ALIMENTACAO_PREPARACAO_ID, alimentacaoList.get(i).getAlimentacao_preparacao_id());
+            obj.put(Field.FIELD_ALIMENTACAO_PREPARACAO, alimentacaoList.get(i).getAlimentacao_preparacao());
             obj.put(Field.FIELD_ALIMENTACAO_LOCAL_ID, alimentacaoList.get(i).getAlimentacao_local_id());
+            obj.put(Field.FIELD_ALIMENTACAO_LOCAL, alimentacaoList.get(i).getAlimentacao_local());
             obj.put(Field.FIELD_ALIMENTACAO_UNIDADE_ID, alimentacaoList.get(i).getAlimentacao_unidade_id());
+            obj.put(Field.FIELD_ALIMENTACAO_UNIDADE, alimentacaoList.get(i).getAlimentacao_unidade());
             obj.put(Field.FIELD_ALIMENTACAO_OCASIAO_CONSUMO_ID, alimentacaoList.get(i).getAlimentacao_ocasiao_consumo_id());
+            obj.put(Field.FIELD_ALIMENTACAO_OCASIAO_CONSUMO, alimentacaoList.get(i).getAlimentacao_ocasiao_consumo());
             obj.put(Field.FIELD_ALIMENTACAO_ADICAO_ID, alimentacaoList.get(i).getAlimentacao_adicao_id());
+            obj.put(Field.FIELD_ALIMENTACAO_ADICAO, alimentacaoList.get(i).getAlimentacao_adicao());
             obj.put(Field.FIELD_ALIMENTACAO_QUANTIDADE, alimentacaoList.get(i).getAlimentacao_quantidade());
             obj.put(Field.FIELD_ALIMENTACAO_HORA, alimentacaoList.get(i).getAlimentacao_hora());
             obj.put(Field.FIELD_ALIMENTACAO_USUARIO, alimentacaoList.get(i).getAlimentacao_usuario());
-            obj.put(Field.FIELD_ALIMENTACAO_ENTREVISTADO_ID, alimentacaoList.get(i).getAlimentacao_entrevistador_id());
+            obj.put(Field.FIELD_ALIMENTACAO_ENTREVISTADO_ID, alimentacaoList.get(i).getAlimentacao_entrevistado_id());
+            obj.put(Field.FIELD_ALIMENTACAO_ENTREVISTADO, alimentacaoList.get(i).getAlimentacao_entrevistado());
             obj.put(Field.FIELD_ALIMENTACAO_HORA_COLETA, alimentacaoList.get(i).getAlimentacao_hora_coleta());
             obj.put(Field.FIELD_ALIMENTACAO_DIA_COLETA, alimentacaoList.get(i).getAlimentacao_dia_coleta());
             this.onInsert(context,obj, DbCreate.TABLE_ALIMENTACAO);
@@ -247,14 +254,20 @@ public class DataBase extends SQLiteOpenHelper {
             mDb.execSQL(" update " + DbCreate.TABLE_ALIMENTACAO + " set " +
                     Field.FIELD_ALIMENTACAO_ALIMENTO_ID + " = " + alimentacaoList.get(i).getAlimentacao_alimento_id()  +
                     " ," + Field.FIELD_ALIMENTACAO_PREPARACAO_ID + " = " + alimentacaoList.get(i).getAlimentacao_preparacao_id().toString() +
+                    " ," + Field.FIELD_ALIMENTACAO_PREPARACAO + " = " + alimentacaoList.get(i).getAlimentacao_preparacao().toString() +
                     " ," + Field.FIELD_ALIMENTACAO_LOCAL_ID + " = " + alimentacaoList.get(i).getAlimentacao_local_id().toString() +
+                    " ," + Field.FIELD_ALIMENTACAO_LOCAL + " = " + alimentacaoList.get(i).getAlimentacao_local().toString() +
                     " ," + Field.FIELD_ALIMENTACAO_UNIDADE_ID + " = " + alimentacaoList.get(i).getAlimentacao_unidade_id().toString() +
+                    " ," + Field.FIELD_ALIMENTACAO_UNIDADE + " = " + alimentacaoList.get(i).getAlimentacao_unidade().toString() +
                     " ," + Field.FIELD_ALIMENTACAO_OCASIAO_CONSUMO_ID + " = " + alimentacaoList.get(i).getAlimentacao_ocasiao_consumo_id().toString() +
+                    " ," + Field.FIELD_ALIMENTACAO_OCASIAO_CONSUMO + " = " + alimentacaoList.get(i).getAlimentacao_ocasiao_consumo().toString() +
                     " ," + Field.FIELD_ALIMENTACAO_ADICAO_ID + " = " + alimentacaoList.get(i).getAlimentacao_adicao_id().toString() +
+                    " ," + Field.FIELD_ALIMENTACAO_ADICAO + " = " + alimentacaoList.get(i).getAlimentacao_adicao().toString() +
                     " ," + Field.FIELD_ALIMENTACAO_QUANTIDADE + " = " + alimentacaoList.get(i).getAlimentacao_quantidade().toString() +
                     " ," + Field.FIELD_ALIMENTACAO_HORA + " = " + alimentacaoList.get(i).getAlimentacao_hora().toString() +
                     " ," + Field.FIELD_ALIMENTACAO_USUARIO + " = " + alimentacaoList.get(i).getAlimentacao_usuario().toString() +
-                    " ," + Field.FIELD_ALIMENTACAO_ENTREVISTADO_ID + " = " + alimentacaoList.get(i).getAlimentacao_entrevistador_id().toString() +
+                    " ," + Field.FIELD_ALIMENTACAO_ENTREVISTADO_ID + " = " + alimentacaoList.get(i).getAlimentacao_entrevistado_id().toString() +
+                    " ," + Field.FIELD_ALIMENTACAO_ENTREVISTADO + " = " + alimentacaoList.get(i).getAlimentacao_entrevistado().toString() +
                     " ," + Field.FIELD_ALIMENTACAO_HORA_COLETA + " = " + alimentacaoList.get(i).getAlimentacao_hora_coleta().toString() +
                     " ," + Field.FIELD_ALIMENTACAO_DIA_COLETA + " = " + alimentacaoList.get(i).getAlimentacao_dia_coleta().toString() +
                     " where " + Field.FIELD_ALIMENTACAO_ID + " = " + alimentacaoList.get(i).getAlimentacao_id());
@@ -801,15 +814,22 @@ public class DataBase extends SQLiteOpenHelper {
             try {
                 alimentacao.setAlimentacao_id(cursor.getString(cursor.getColumnIndex(Field.FIELD_ALIMENTACAO_ID)));
                 alimentacao.setAlimentacao_alimento_id(cursor.getString(cursor.getColumnIndex(Field.FIELD_ALIMENTACAO_ALIMENTO_ID)));
+                alimentacao.setAlimentacao_alimento(cursor.getString(cursor.getColumnIndex(Field.FIELD_ALIMENTACAO_ALIMENTO)));
                 alimentacao.setAlimentacao_preparacao_id(cursor.getString(cursor.getColumnIndex(Field.FIELD_ALIMENTACAO_PREPARACAO_ID)));
+                alimentacao.setAlimentacao_preparacao(cursor.getString(cursor.getColumnIndex(Field.FIELD_ALIMENTACAO_PREPARACAO)));
                 alimentacao.setAlimentacao_local_id(cursor.getString(cursor.getColumnIndex(Field.FIELD_ALIMENTACAO_LOCAL_ID)));
+                alimentacao.setAlimentacao_local(cursor.getString(cursor.getColumnIndex(Field.FIELD_ALIMENTACAO_LOCAL)));
                 alimentacao.setAlimentacao_unidade_id(cursor.getString(cursor.getColumnIndex(Field.FIELD_ALIMENTACAO_UNIDADE_ID)));
+                alimentacao.setAlimentacao_unidade(cursor.getString(cursor.getColumnIndex(Field.FIELD_ALIMENTACAO_UNIDADE)));
                 alimentacao.setAlimentacao_ocasiao_consumo_id(cursor.getString(cursor.getColumnIndex(Field.FIELD_ALIMENTACAO_OCASIAO_CONSUMO_ID)));
+                alimentacao.setAlimentacao_ocasiao_consumo(cursor.getString(cursor.getColumnIndex(Field.FIELD_ALIMENTACAO_OCASIAO_CONSUMO)));
                 alimentacao.setAlimentacao_adicao_id(cursor.getString(cursor.getColumnIndex(Field.FIELD_ALIMENTACAO_ADICAO_ID)));
+                alimentacao.setAlimentacao_adicao(cursor.getString(cursor.getColumnIndex(Field.FIELD_ALIMENTACAO_ADICAO)));
                 alimentacao.setAlimentacao_quantidade(cursor.getString(cursor.getColumnIndex(Field.FIELD_ALIMENTACAO_QUANTIDADE)));
                 alimentacao.setAlimentacao_hora(cursor.getString(cursor.getColumnIndex(Field.FIELD_ALIMENTACAO_HORA)));
                 alimentacao.setAlimentacao_usuario(cursor.getString(cursor.getColumnIndex(Field.FIELD_ALIMENTACAO_USUARIO)));
-                alimentacao.setAlimentacao_entrevistador_id(cursor.getString(cursor.getColumnIndex(Field.FIELD_ALIMENTACAO_ENTREVISTADO_ID)));
+                alimentacao.setAlimentacao_entrevistado_id(cursor.getString(cursor.getColumnIndex(Field.FIELD_ALIMENTACAO_ENTREVISTADO_ID)));
+                alimentacao.setAlimentacao_entrevistado(cursor.getString(cursor.getColumnIndex(Field.FIELD_ALIMENTACAO_ENTREVISTADO)));
                 alimentacao.setAlimentacao_hora_coleta(cursor.getString(cursor.getColumnIndex(Field.FIELD_ALIMENTACAO_HORA_COLETA)));
                 alimentacao.setAlimentacao_dia_coleta(cursor.getString(cursor.getColumnIndex(Field.FIELD_ALIMENTACAO_DIA_COLETA)));
 

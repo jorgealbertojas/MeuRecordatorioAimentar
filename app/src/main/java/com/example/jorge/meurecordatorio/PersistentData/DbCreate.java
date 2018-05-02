@@ -56,15 +56,22 @@ public class DbCreate {
             "CREATE TABLE IF NOT EXISTS " + TABLE_ALIMENTACAO +  "(" +
                     Field.FIELD_ALIMENTACAO_ID + " INTEGER," +
                     Field.FIELD_ALIMENTACAO_ALIMENTO_ID + " INTEGER," +
+                    Field.FIELD_ALIMENTACAO_ALIMENTO + " VARCHAR(500)," +
                     Field.FIELD_ALIMENTACAO_PREPARACAO_ID + " INTEGER," +
+                    Field.FIELD_ALIMENTACAO_PREPARACAO + " VARCHAR(500)," +
                     Field.FIELD_ALIMENTACAO_LOCAL_ID + " INTEGER," +
+                    Field.FIELD_ALIMENTACAO_LOCAL + " VARCHAR(500)," +
                     Field.FIELD_ALIMENTACAO_UNIDADE_ID + " INTEGER," +
+                    Field.FIELD_ALIMENTACAO_UNIDADE + " VARCHAR(500)," +
                     Field.FIELD_ALIMENTACAO_OCASIAO_CONSUMO_ID + " INTEGER," +
+                    Field.FIELD_ALIMENTACAO_OCASIAO_CONSUMO + " VARCHAR(500)," +
                     Field.FIELD_ALIMENTACAO_ADICAO_ID + " INTEGER," +
+                    Field.FIELD_ALIMENTACAO_ADICAO + " VARCHAR(500)," +
                     Field.FIELD_ALIMENTACAO_QUANTIDADE + "  VARCHAR(500)," +
                     Field.FIELD_ALIMENTACAO_HORA + "  VARCHAR(500)," +
                     Field.FIELD_ALIMENTACAO_USUARIO + "  VARCHAR(500)," +
                     Field.FIELD_ALIMENTACAO_ENTREVISTADO_ID + " INTEGER," +
+                    Field.FIELD_ALIMENTACAO_ENTREVISTADO + " VARCHAR(500)," +
                     Field.FIELD_ALIMENTACAO_HORA_COLETA + "  VARCHAR(500)," +
                     Field.FIELD_ALIMENTACAO_DIA_COLETA + " VARCHAR(500) " +
                     ");";

@@ -32,6 +32,7 @@ public class DetailActivity extends AppCompatActivity {
     private DataBase mDataBase;
 
     String mEntrevistado;
+    String mEntrevistado_nome;
     String mUsuario;
 
     TextView alimento;
@@ -230,13 +231,20 @@ public class DetailActivity extends AppCompatActivity {
 
                     List<Alimentacao> alimentacaoList = new ArrayList<Alimentacao>();
                     Alimentacao alimentacao = new Alimentacao();
-                    alimentacao.setAlimentacao_entrevistador_id(mEntrevistado);
+                    alimentacao.setAlimentacao_entrevistado_id(mEntrevistado);
+                    alimentacao.setAlimentacao_entrevistado(mEntrevistado_nome);
                     alimentacao.setAlimentacao_alimento_id(alimento.getText().toString());
+                    alimentacao.setAlimentacao_alimento(alimento_nome.getText().toString());
                     alimentacao.setAlimentacao_preparacao_id(preparacao.getText().toString());
+                    alimentacao.setAlimentacao_preparacao(preparacao_nome.getText().toString());
                     alimentacao.setAlimentacao_adicao_id(adicao.getText().toString());
+                    alimentacao.setAlimentacao_adicao(adicao_nome.getText().toString());
                     alimentacao.setAlimentacao_local_id(local.getText().toString());
+                    alimentacao.setAlimentacao_local(local_nome.getText().toString());
                     alimentacao.setAlimentacao_unidade_id(unidade.getText().toString());
+                    alimentacao.setAlimentacao_unidade(unidade_nome.getText().toString());
                     alimentacao.setAlimentacao_ocasiao_consumo_id(ocasiaoConsumo.getText().toString());
+                    alimentacao.setAlimentacao_ocasiao_consumo(ocasiaoConsumo_nome.getText().toString());
                     //alimentacao.setAlimentacao_quantidade();
                     alimentacaoList.add(alimentacao);
 

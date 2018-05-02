@@ -120,10 +120,10 @@ public class AlimentacaoAdapter extends RecyclerView.Adapter<AlimentacaoAdapter.
         /** Create filed bind hold full **/
 
         Alimentacao alimentacao = ((Alimentacao) data.get(position));
-        holder.tv_alimento.setText(alimentacao.getAlimentacao_alimento_id());
-        holder.tv_preparacao.setText(alimentacao.getAlimentacao_preparacao_id());
-        holder.tv_local.setText(alimentacao.getAlimentacao_local_id());
-        holder.tv_unidade.setText(alimentacao.getAlimentacao_unidade_id());
+        holder.tv_alimento.setText(alimentacao.getAlimentacao_alimento_id() + " - " + alimentacao.getAlimentacao_alimento());
+        holder.tv_preparacao.setText(alimentacao.getAlimentacao_preparacao_id()  + " - " + alimentacao.getAlimentacao_preparacao());
+        holder.tv_local.setText(alimentacao.getAlimentacao_local_id()  + " - " + alimentacao.getAlimentacao_local());
+        holder.tv_unidade.setText(alimentacao.getAlimentacao_unidade_id()  + " - " + alimentacao.getAlimentacao_unidade());
         holder.tv_hora.setText(alimentacao.getAlimentacao_hora());
 
 

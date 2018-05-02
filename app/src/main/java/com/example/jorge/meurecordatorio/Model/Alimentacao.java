@@ -10,18 +10,88 @@ public class Alimentacao implements Serializable {
 
     private String alimentacao_id;
     private String alimentacao_alimento_id;
+    private String alimentacao_alimento;
     private String alimentacao_preparacao_id;
+    private String alimentacao_preparacao;
     private String alimentacao_local_id;
+    private String alimentacao_local;
     private String alimentacao_unidade_id;
+    private String alimentacao_unidade;
     private String alimentacao_ocasiao_consumo_id;
+    private String alimentacao_ocasiao_consumo;
     private String alimentacao_adicao_id;
+    private String alimentacao_adicao;
     private String alimentacao_quantidade;
     private String alimentacao_hora;
     private String alimentacao_usuario;
-    private String alimentacao_entrevistador_id;
+    private String alimentacao_entrevistado_id;
+    private String alimentacao_entrevistado;
     private String alimentacao_hora_coleta;
     private String alimentacao_dia_coleta;
 
+    public String getAlimentacao_alimento() {
+        return alimentacao_alimento;
+    }
+
+    public void setAlimentacao_alimento(String alimentacao_alimento) {
+        this.alimentacao_alimento = alimentacao_alimento;
+    }
+
+    public String getAlimentacao_preparacao() {
+        return alimentacao_preparacao;
+    }
+
+    public void setAlimentacao_preparacao(String alimentacao_preparacao) {
+        this.alimentacao_preparacao = alimentacao_preparacao;
+    }
+
+    public String getAlimentacao_local() {
+        return alimentacao_local;
+    }
+
+    public void setAlimentacao_local(String alimentacao_local) {
+        this.alimentacao_local = alimentacao_local;
+    }
+
+    public String getAlimentacao_unidade() {
+        return alimentacao_unidade;
+    }
+
+    public void setAlimentacao_unidade(String alimentacao_unidade) {
+        this.alimentacao_unidade = alimentacao_unidade;
+    }
+
+    public String getAlimentacao_ocasiao_consumo() {
+        return alimentacao_ocasiao_consumo;
+    }
+
+    public void setAlimentacao_ocasiao_consumo(String alimentacao_ocasiao_consumo) {
+        this.alimentacao_ocasiao_consumo = alimentacao_ocasiao_consumo;
+    }
+
+    public String getAlimentacao_adicao() {
+        return alimentacao_adicao;
+    }
+
+    public void setAlimentacao_adicao(String alimentacao_adicao) {
+        this.alimentacao_adicao = alimentacao_adicao;
+    }
+
+    public String getAlimentacao_entrevistado_id() {
+        return alimentacao_entrevistado_id;
+    }
+
+    public void setAlimentacao_entrevistado_id(String alimentacao_entrevistado_id) {
+        this.alimentacao_entrevistado_id = alimentacao_entrevistado_id;
+    }
+
+    public String getAlimentacao_entrevistado() {
+        return alimentacao_entrevistado;
+    }
+
+    public void setAlimentacao_entrevistado(String alimentacao_entrevistado) {
+        this.alimentacao_entrevistado = alimentacao_entrevistado;
+    }
 
     public String getAlimentacao_id() {
         return alimentacao_id;
@@ -101,14 +171,6 @@ public class Alimentacao implements Serializable {
 
     public void setAlimentacao_usuario(String alimentacao_usuario) {
         this.alimentacao_usuario = alimentacao_usuario;
-    }
-
-    public String getAlimentacao_entrevistador_id() {
-        return alimentacao_entrevistador_id;
-    }
-
-    public void setAlimentacao_entrevistador_id(String alimentacao_entrevistador_id) {
-        this.alimentacao_entrevistador_id = alimentacao_entrevistador_id;
     }
 
     public String getAlimentacao_hora_coleta() {
