@@ -25,7 +25,9 @@
         <activity android:name=".Generica.PreparacaoActivity" />
         <activity android:name=".Generica.OcasiaoConsumoActivity" />
         <activity android:name=".Generica.AdicaoActivity" />
-        <activity android:name=".DetailActivity"></activity>
+        <activity android:name=".Generica.EntrevistadoActivity" />
+        <activity android:name=".DetailActivity"
+            android:label="Cadastro de Alimento"></activity>
     </application>
 
 </manifest>

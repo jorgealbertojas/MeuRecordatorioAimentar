@@ -2,11 +2,19 @@
 package com.example.jorge.meurecordatorio;
 
 import android.content.Intent;
+import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.text.Editable;
+import android.text.InputType;
+import android.text.TextWatcher;
+import android.text.format.Time;
 import android.view.View;
+import android.widget.EditText;
+import android.widget.TextClock;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.example.jorge.meurecordatorio.Generica.AdicaoActivity;
 import com.example.jorge.meurecordatorio.Generica.AlimentoActivity;
@@ -19,11 +27,16 @@ import com.example.jorge.meurecordatorio.PersistentData.DataBase;
 import com.example.jorge.meurecordatorio.PersistentData.DbInstance;
 import com.example.jorge.meurecordatorio.Utilite.Modulo;
 
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.Date;
 import java.util.List;
 
 import static com.example.jorge.meurecordatorio.MainActivity.PUT_EXTRA_ALIMENTO;
 import static com.example.jorge.meurecordatorio.MainActivity.PUT_EXTRA_ENTREVISTADO;
+import static com.example.jorge.meurecordatorio.MainActivity.PUT_EXTRA_ENTREVISTADO_NOME;
 import static com.example.jorge.meurecordatorio.MainActivity.PUT_EXTRA_USUARIO;
 
 public class DetailActivity extends AppCompatActivity {
@@ -32,8 +45,12 @@ public class DetailActivity extends AppCompatActivity {
     private DataBase mDataBase;
 
     String mEntrevistado;
-    String mEntrevistado_nome;
+    String mEntrevistadoNome;
     String mUsuario;
+
+    TextView entrevistado;
+
+    TextView usuario;
 
     TextView alimento;
     TextView alimento_nome;
@@ -53,7 +70,15 @@ public class DetailActivity extends AppCompatActivity {
     TextView ocasiaoConsumo;
     TextView ocasiaoConsumo_nome;
 
+    TextView tvDiaColeta;
+    TextView tvHoraColeta;
+    EditText obs;
+
     TextView tv_salvar_alimento;
+
+    EditText horaEditText;
+    TextView minutoEditText;
+    EditText quantidadeEditText;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -71,8 +96,87 @@ public class DetailActivity extends AppCompatActivity {
         DbInstance.getInstance(this);
 
         mEntrevistado = extras.getString(PUT_EXTRA_ENTREVISTADO);
+        mEntrevistadoNome = extras.getString(PUT_EXTRA_ENTREVISTADO_NOME);
         mUsuario = extras.getString(PUT_EXTRA_USUARIO);
 
+        entrevistado = (TextView) findViewById(R.id.entrevistado);
+        usuario = (TextView) findViewById(R.id.usuario) ;
+
+
+        entrevistado.setText(mEntrevistado + " - " + mEntrevistadoNome);
+        usuario.setText(mUsuario);
+
+        tvDiaColeta = (TextView) findViewById(R.id.dia_coleta);
+        tvHoraColeta = (TextView) findViewById(R.id.hora_coleta);
+
+        horaEditText = (EditText) findViewById(R.id.hora);
+        minutoEditText = (TextView) findViewById(R.id.hora_minuto);
+        obs = (EditText) findViewById(R.id.obs) ;
+
+        quantidadeEditText = (EditText) findViewById(R.id.quantidade);
+
+        Time today = new Time(Time.getCurrentTimezone());
+        today.setToNow();
+
+        String dia = Integer.toString(today.monthDay);
+        String mes = Integer.toString(today.month + 1);
+        String ano = Integer.toString(today.year);
+        String diaCompleto = dia + "/" + mes + "/" + ano;
+
+        String hora_coleta = Integer.toString(today.hour);
+        String minuto_coleta = Integer.toString(today.minute);
+        String minuto_segundos = Integer.toString(today.second);
+
+        String horacompleta = hora_coleta + ":" + minuto_coleta + ":" + minuto_segundos;
+
+        TextWatcher textWatcher = new TextWatcher() {
+            public void afterTextChanged(Editable s) {
+
+                if (s.length() > 0) {
+                    int tamanho = Integer.parseInt(s.toString());
+                    if (tamanho > 23) {
+                        Toast.makeText(DetailActivity.this, "Atenção! Máximo permitido:" + Integer.toString(23), Toast.LENGTH_LONG).show();
+                        s.clear();
+                    }
+                }
+
+            }
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+
+            }
+
+            public void onTextChanged(CharSequence s, int start, int before, int count) {
+
+            }
+        };
+
+
+        horaEditText.setInputType(InputType.TYPE_CLASS_NUMBER);
+        horaEditText.addTextChangedListener(textWatcher);
+
+
+        minutoEditText.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View arg0) {
+                try {
+
+                    if (minutoEditText.getText().toString().equals("00")) {
+                        minutoEditText.setText("30");
+                    }else{
+                        minutoEditText.setText("00");
+                    }
+
+                } catch (Exception e) {
+                    // TODO: handle exception
+                }
+            }
+        });
+
+
+
+
+        tvDiaColeta.setText(diaCompleto);
+        tvHoraColeta.setText(horacompleta);
         // alimento
         alimento_nome = (TextView)  findViewById(R.id.alimento_nome);
         alimento = (TextView)  findViewById(R.id.alimento);
@@ -209,7 +313,7 @@ public class DetailActivity extends AppCompatActivity {
                 }
             }
         });
-        ocasiaoConsumo.setOnClickListener(new View.OnClickListener() {
+        ocasiaoConsumo_nome.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View arg0) {
                 try {
@@ -231,8 +335,9 @@ public class DetailActivity extends AppCompatActivity {
 
                     List<Alimentacao> alimentacaoList = new ArrayList<Alimentacao>();
                     Alimentacao alimentacao = new Alimentacao();
+                    alimentacao.setAlimentacao_id(Integer.toString(mDataBase.NovoID_ALIMENTO()));
                     alimentacao.setAlimentacao_entrevistado_id(mEntrevistado);
-                    alimentacao.setAlimentacao_entrevistado(mEntrevistado_nome);
+                    alimentacao.setAlimentacao_entrevistado(mEntrevistadoNome);
                     alimentacao.setAlimentacao_alimento_id(alimento.getText().toString());
                     alimentacao.setAlimentacao_alimento(alimento_nome.getText().toString());
                     alimentacao.setAlimentacao_preparacao_id(preparacao.getText().toString());
@@ -245,24 +350,41 @@ public class DetailActivity extends AppCompatActivity {
                     alimentacao.setAlimentacao_unidade(unidade_nome.getText().toString());
                     alimentacao.setAlimentacao_ocasiao_consumo_id(ocasiaoConsumo.getText().toString());
                     alimentacao.setAlimentacao_ocasiao_consumo(ocasiaoConsumo_nome.getText().toString());
-                    //alimentacao.setAlimentacao_quantidade();
+                    alimentacao.setAlimentacao_quantidade(quantidadeEditText.getText().toString());
+                    alimentacao.setAlimentacao_hora(horaEditText.getText().toString() + ":" + minutoEditText.getText().toString());
+                    alimentacao.setAlimentacao_hora_coleta(tvHoraColeta.getText().toString());
+
+                    Time today_fim = new Time(Time.getCurrentTimezone());
+                    today_fim.setToNow();
+
+                    String dia_fim = Integer.toString(today_fim.monthDay);
+                    String mes_fim = Integer.toString(today_fim.month + 1);
+                    String ano_fim = Integer.toString(today_fim.year);
+                    String diaCompleto_fim = dia_fim + "/" + mes_fim + "/" + ano_fim;
+
+                    String hora_coleta_fim = Integer.toString(today_fim.hour);
+                    String minuto_coleta_fim = Integer.toString(today_fim.minute);
+                    String minuto_segundos_fim = Integer.toString(today_fim.second);
+
+                    String horacompleta_fim = hora_coleta_fim + ":" + minuto_coleta_fim + ":" + minuto_segundos_fim;
+
+
+
+                    alimentacao.setAlimentacao_hora_coleta_fim(horacompleta_fim);
+                    alimentacao.setAlimentacao_obs(obs.getText().toString());
+                    alimentacao.setAlimentacao_usuario(mUsuario);
+                    alimentacao.setAlimentacao_dia_coleta(diaCompleto_fim);
                     alimentacaoList.add(alimentacao);
 
                     mDataBase.insertTABLE_ALIMENTACAO(alimentacaoList);
+                    Toast.makeText(DetailActivity.this, "Salvo alimento com sucesso!" , Toast.LENGTH_SHORT).show();
+                    DetailActivity.this.finish();
                 } catch (Exception e) {
                     // TODO: handle exception
+                    Toast.makeText(DetailActivity.this, "ATENÇÃO! ALIMENTO NÃO SALVO" , Toast.LENGTH_LONG).show();
                 }
             }
         });
-
-
-
-        /**
-         * Put Name Repositorie in  title.
-         */
-        this.setTitle(mEntrevistado);
-
-
 
     }
 

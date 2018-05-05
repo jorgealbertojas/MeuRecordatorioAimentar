@@ -7,6 +7,8 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.text.Editable;
+import android.text.TextWatcher;
 import android.util.Log;
 import android.view.View;
 import android.widget.TextView;
@@ -20,6 +22,8 @@ import com.example.jorge.meurecordatorio.Adapter.LocalAdapter;
 import com.example.jorge.meurecordatorio.Adapter.OcasiaoConsumoAdapter;
 import com.example.jorge.meurecordatorio.Adapter.PreparacaoAdapter;
 import com.example.jorge.meurecordatorio.Adapter.UnidadeAdapter;
+import com.example.jorge.meurecordatorio.Generica.EntrevistadoActivity;
+import com.example.jorge.meurecordatorio.Generica.UnidadeActivity;
 import com.example.jorge.meurecordatorio.Interface.InterfaceAdicao;
 import com.example.jorge.meurecordatorio.Interface.InterfaceAdicaoAlimento;
 import com.example.jorge.meurecordatorio.Interface.InterfaceAlimento;
@@ -47,6 +51,7 @@ import com.example.jorge.meurecordatorio.Model.Usuario;
 import com.example.jorge.meurecordatorio.PersistentData.DataBase;
 import com.example.jorge.meurecordatorio.PersistentData.DbInstance;
 import com.example.jorge.meurecordatorio.Utilite.Common;
+import com.example.jorge.meurecordatorio.Utilite.Modulo;
 import com.example.jorge.meurecordatorio.Utilite.Url;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
@@ -64,7 +69,10 @@ public class MainActivity extends AppCompatActivity {
 
     private SQLiteDatabase mDb;
     private DataBase mDataBase;
+
+    public static String mUsuario = "0";
     public final static String PUT_EXTRA_ENTREVISTADO = "PUT_EXTRA_ENTREVISTADO";
+    public final static String PUT_EXTRA_ENTREVISTADO_NOME = "PUT_EXTRA_ENTREVISTADO_NOME";
     public final static String PUT_EXTRA_USUARIO = "PUT_EXTRA_USUARIO";
     public final static String PUT_EXTRA_ALIMENTO = "PUT_EXTRA_ALIMENTO";
 
@@ -99,6 +107,10 @@ public class MainActivity extends AppCompatActivity {
     private InterfaceOcasiaoConsumo mInterfaceOCASIAO_CONSUMO;
     OcasiaoConsumoAdapter mAdapterOCASIAO_CONSUMO;
 
+    private TextView ListaEntrevistado;
+    private TextView entrevistado;
+    private TextView entrevistado_nome;
+
 
 
     @Override
@@ -115,6 +127,43 @@ public class MainActivity extends AppCompatActivity {
             getJson();
         }
 
+        // Entrevistado
+        entrevistado_nome = (TextView)  findViewById(R.id.entrevistado_nome);
+        entrevistado = (TextView)  findViewById(R.id.entrevistado);
+        entrevistado.addTextChangedListener(new TextWatcher() {
+
+            public void onTextChanged(CharSequence s, int start, int before,
+                                      int count) {
+                if(!s.equals("") ) {
+                    iniciaRecyclerView();
+                }
+            }
+
+
+
+            public void beforeTextChanged(CharSequence s, int start, int count,
+                                          int after) {
+
+            }
+
+            public void afterTextChanged(Editable s) {
+
+            }
+        });
+
+        ListaEntrevistado = (TextView)  findViewById(R.id.TextViewEntrevistadoButton);
+        ListaEntrevistado.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View arg0) {
+                try {
+                    showEntrevistado();
+                } catch (Exception e) {
+                    // TODO: handle exception
+                }
+            }
+        });
+
+
         /**
          * use RecyclerView for list the PullRequest .
          */
@@ -130,15 +179,20 @@ public class MainActivity extends AppCompatActivity {
         TextViewAdiciona.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View arg0) {
-                try {
-                    Class destinationClass = DetailActivity.class;
-                    Intent intentToStartDetailActivity = new Intent(getBaseContext(), destinationClass);
-                    intentToStartDetailActivity.putExtra(PUT_EXTRA_ENTREVISTADO, "1");
-                    intentToStartDetailActivity.putExtra(PUT_EXTRA_USUARIO, "1");
-                    startActivity(intentToStartDetailActivity);
+                if (!entrevistado.getText().toString().equals("0")) {
+                    try {
+                        Class destinationClass = DetailActivity.class;
+                        Intent intentToStartDetailActivity = new Intent(getBaseContext(), destinationClass);
+                        intentToStartDetailActivity.putExtra(PUT_EXTRA_ENTREVISTADO, entrevistado.getText().toString());
+                        intentToStartDetailActivity.putExtra(PUT_EXTRA_ENTREVISTADO_NOME, entrevistado_nome.getText().toString());
+                        intentToStartDetailActivity.putExtra(PUT_EXTRA_USUARIO, mUsuario);
+                        startActivity(intentToStartDetailActivity);
 
-                } catch (Exception e) {
-                    // TODO: handle exception
+                    } catch (Exception e) {
+                        // TODO: handle exception
+                    }
+                }else{
+                    Toast.makeText(MainActivity.this,"Escolha um entrevistado!",Toast.LENGTH_LONG);
                 }
             }
         });
@@ -150,6 +204,11 @@ public class MainActivity extends AppCompatActivity {
     @Override
     protected void onResume() {
         iniciaRecyclerView();
+
+        if (Modulo.OPCAO.equals("ENTREVISTADO")){
+            entrevistado_nome.setText(Modulo.NOME);
+            entrevistado.setText(Modulo.ID);
+        }
         super.onResume();
     }
 
@@ -791,17 +850,27 @@ public class MainActivity extends AppCompatActivity {
         }
     };
 
+
+
     private void iniciaRecyclerView(){
         List<Alimentacao> dataPersistent = new ArrayList<>();
-        dataPersistent = mDataBase.getListAlimentacao();
+        dataPersistent = mDataBase.getListAlimentacao(entrevistado.getText().toString());
 
         if (dataPersistent.size()>0) {
             mRecyclerView.setAdapter(new AlimentacaoAdapter(dataPersistent));
+        }else{
+            mRecyclerView.setAdapter(null);
         }
     }
 
 
 
+
+    private void showEntrevistado(){
+        Class destinationClass = EntrevistadoActivity.class;
+        Intent intentToStartDetailActivity = new Intent(getBaseContext(), destinationClass);
+        startActivity(intentToStartDetailActivity);
+    }
 
 
 

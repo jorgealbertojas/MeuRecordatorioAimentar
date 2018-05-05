@@ -213,6 +213,17 @@ public class DataBase extends SQLiteOpenHelper {
         }
     }
 
+    public int NovoID_ALIMENTO() {
+        mDb = this.getWritableDatabase();
+        Cursor cursorTMP = mDb.rawQuery(" SELECT MAX(" + Field.FIELD_ALIMENTACAO_ID + ") FROM " + DbCreate.TABLE_ALIMENTACAO, null);
+        cursorTMP.moveToFirst();
+        int i = 0;
+        if (cursorTMP.getCount() > 0) {
+            i = cursorTMP.getInt(0);
+        }
+        return i + 1;
+    }
+
 
     public void insertTABLE_ALIMENTACAO(List<Alimentacao> alimentacaoList){
 
@@ -238,44 +249,13 @@ public class DataBase extends SQLiteOpenHelper {
             obj.put(Field.FIELD_ALIMENTACAO_ENTREVISTADO_ID, alimentacaoList.get(i).getAlimentacao_entrevistado_id());
             obj.put(Field.FIELD_ALIMENTACAO_ENTREVISTADO, alimentacaoList.get(i).getAlimentacao_entrevistado());
             obj.put(Field.FIELD_ALIMENTACAO_HORA_COLETA, alimentacaoList.get(i).getAlimentacao_hora_coleta());
+            obj.put(Field.FIELD_ALIMENTACAO_HORA_COLETA_FIM, alimentacaoList.get(i).getAlimentacao_hora_coleta_fim());
+            obj.put(Field.FIELD_ALIMENTACAO_OBS, alimentacaoList.get(i).getAlimentacao_obs());
             obj.put(Field.FIELD_ALIMENTACAO_DIA_COLETA, alimentacaoList.get(i).getAlimentacao_dia_coleta());
             this.onInsert(context,obj, DbCreate.TABLE_ALIMENTACAO);
 
         }
     }
-
-    public void updateTABLE_ALIMENTACAO(List<Alimentacao> alimentacaoList){
-
-
-        for (int i = 0; i < alimentacaoList.size() ; i++) {
-
-            mDb = this.getWritableDatabase();
-
-            mDb.execSQL(" update " + DbCreate.TABLE_ALIMENTACAO + " set " +
-                    Field.FIELD_ALIMENTACAO_ALIMENTO_ID + " = " + alimentacaoList.get(i).getAlimentacao_alimento_id()  +
-                    " ," + Field.FIELD_ALIMENTACAO_PREPARACAO_ID + " = " + alimentacaoList.get(i).getAlimentacao_preparacao_id().toString() +
-                    " ," + Field.FIELD_ALIMENTACAO_PREPARACAO + " = " + alimentacaoList.get(i).getAlimentacao_preparacao().toString() +
-                    " ," + Field.FIELD_ALIMENTACAO_LOCAL_ID + " = " + alimentacaoList.get(i).getAlimentacao_local_id().toString() +
-                    " ," + Field.FIELD_ALIMENTACAO_LOCAL + " = " + alimentacaoList.get(i).getAlimentacao_local().toString() +
-                    " ," + Field.FIELD_ALIMENTACAO_UNIDADE_ID + " = " + alimentacaoList.get(i).getAlimentacao_unidade_id().toString() +
-                    " ," + Field.FIELD_ALIMENTACAO_UNIDADE + " = " + alimentacaoList.get(i).getAlimentacao_unidade().toString() +
-                    " ," + Field.FIELD_ALIMENTACAO_OCASIAO_CONSUMO_ID + " = " + alimentacaoList.get(i).getAlimentacao_ocasiao_consumo_id().toString() +
-                    " ," + Field.FIELD_ALIMENTACAO_OCASIAO_CONSUMO + " = " + alimentacaoList.get(i).getAlimentacao_ocasiao_consumo().toString() +
-                    " ," + Field.FIELD_ALIMENTACAO_ADICAO_ID + " = " + alimentacaoList.get(i).getAlimentacao_adicao_id().toString() +
-                    " ," + Field.FIELD_ALIMENTACAO_ADICAO + " = " + alimentacaoList.get(i).getAlimentacao_adicao().toString() +
-                    " ," + Field.FIELD_ALIMENTACAO_QUANTIDADE + " = " + alimentacaoList.get(i).getAlimentacao_quantidade().toString() +
-                    " ," + Field.FIELD_ALIMENTACAO_HORA + " = " + alimentacaoList.get(i).getAlimentacao_hora().toString() +
-                    " ," + Field.FIELD_ALIMENTACAO_USUARIO + " = " + alimentacaoList.get(i).getAlimentacao_usuario().toString() +
-                    " ," + Field.FIELD_ALIMENTACAO_ENTREVISTADO_ID + " = " + alimentacaoList.get(i).getAlimentacao_entrevistado_id().toString() +
-                    " ," + Field.FIELD_ALIMENTACAO_ENTREVISTADO + " = " + alimentacaoList.get(i).getAlimentacao_entrevistado().toString() +
-                    " ," + Field.FIELD_ALIMENTACAO_HORA_COLETA + " = " + alimentacaoList.get(i).getAlimentacao_hora_coleta().toString() +
-                    " ," + Field.FIELD_ALIMENTACAO_DIA_COLETA + " = " + alimentacaoList.get(i).getAlimentacao_dia_coleta().toString() +
-                    " where " + Field.FIELD_ALIMENTACAO_ID + " = " + alimentacaoList.get(i).getAlimentacao_id());
-
-        }
-    }
-
-
 
     public List<Alimento> getListAlimento() {
 
@@ -722,6 +702,32 @@ public class DataBase extends SQLiteOpenHelper {
 
     }
 
+    public List<Entrevistado> getListEntrevistado(String partNome) {
+
+        List<Entrevistado> entrevistadoList = new ArrayList<Entrevistado>();
+
+        mDb = this.getWritableDatabase();
+
+        Cursor cursor = mDb.rawQuery(DbSelect.GET_ENTREVISTADO + " where "+ Field.FIELD_ENTREVISTADO + " LIKE '%" + partNome + "%'",null);
+        cursor.moveToFirst();
+        while(!cursor.isAfterLast() ){
+            Entrevistado entrevistado = new Entrevistado();
+
+            try {
+                entrevistado.setEntrevistado_id(cursor.getString(cursor.getColumnIndex(Field.FIELD_ENTREVISTADO_ID)));
+                entrevistado.setEntrevistado(cursor.getString(cursor.getColumnIndex(Field.FIELD_ENTREVISTADO)));
+
+            } catch (Exception e) {
+                System.out.println(e.getMessage());
+            }
+            entrevistadoList.add(entrevistado);
+            cursor.moveToNext();
+        }
+        cursor.close();
+        return entrevistadoList;
+
+    }
+
     public List<PreparacaoAlimento> getListPreparacaoAlimento() {
 
         List<PreparacaoAlimento> PreparacaoAlimentoList = new ArrayList<PreparacaoAlimento>();
@@ -800,13 +806,13 @@ public class DataBase extends SQLiteOpenHelper {
 
     }
 
-    public List<Alimentacao> getListAlimentacao() {
+    public List<Alimentacao> getListAlimentacao(String Entrevistado) {
 
         List<Alimentacao> alimentacaoList = new ArrayList<Alimentacao>();
 
         mDb = this.getWritableDatabase();
 
-        Cursor cursor = mDb.rawQuery(DbSelect.GET_ALIMENTACAO,null);
+        Cursor cursor = mDb.rawQuery(DbSelect.GET_ALIMENTACAO + " WHERE " + Field.FIELD_ALIMENTACAO_ENTREVISTADO_ID + "  = " + Entrevistado,null);
         cursor.moveToFirst();
         while(!cursor.isAfterLast() ){
             Alimentacao alimentacao = new Alimentacao();
@@ -832,6 +838,8 @@ public class DataBase extends SQLiteOpenHelper {
                 alimentacao.setAlimentacao_entrevistado(cursor.getString(cursor.getColumnIndex(Field.FIELD_ALIMENTACAO_ENTREVISTADO)));
                 alimentacao.setAlimentacao_hora_coleta(cursor.getString(cursor.getColumnIndex(Field.FIELD_ALIMENTACAO_HORA_COLETA)));
                 alimentacao.setAlimentacao_dia_coleta(cursor.getString(cursor.getColumnIndex(Field.FIELD_ALIMENTACAO_DIA_COLETA)));
+                alimentacao.setAlimentacao_hora_coleta_fim(cursor.getString(cursor.getColumnIndex(Field.FIELD_ALIMENTACAO_HORA_COLETA_FIM)));
+                alimentacao.setAlimentacao_obs(cursor.getString(cursor.getColumnIndex(Field.FIELD_ALIMENTACAO_OBS)));
 
             } catch (Exception e) {
                 System.out.println(e.getMessage());

@@ -27,7 +27,25 @@ public class Alimentacao implements Serializable {
     private String alimentacao_entrevistado_id;
     private String alimentacao_entrevistado;
     private String alimentacao_hora_coleta;
+    private String alimentacao_hora_coleta_fim;
+    private String alimentacao_obs;
     private String alimentacao_dia_coleta;
+
+    public String getAlimentacao_hora_coleta_fim() {
+        return alimentacao_hora_coleta_fim;
+    }
+
+    public void setAlimentacao_hora_coleta_fim(String alimentacao_hora_coleta_fim) {
+        this.alimentacao_hora_coleta_fim = alimentacao_hora_coleta_fim;
+    }
+
+    public String getAlimentacao_obs() {
+        return alimentacao_obs;
+    }
+
+    public void setAlimentacao_obs(String alimentacao_obs) {
+        this.alimentacao_obs = alimentacao_obs;
+    }
 
     public String getAlimentacao_alimento() {
         return alimentacao_alimento;

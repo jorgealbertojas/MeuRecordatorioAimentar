@@ -52,11 +52,16 @@ public class AlimentacaoAdapter extends RecyclerView.Adapter<AlimentacaoAdapter.
     public class ViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener{
         TextView tv_alimento;
         TextView tv_preparacao;
+        TextView tv_adicao;
+        TextView tv_hora;
+        TextView tv_ocasiao_consumo;
         TextView tv_local;
         TextView tv_unidade;
-        ImageView iv_incompleto;
-        ImageView iv_completo;
-        TextView tv_hora;
+        TextView tv_hora_coleta;
+        TextView tv_dia_coleta;
+        TextView tv_quantidade;
+        TextView tv_usuario;
+        ImageView iv_check;
 
 
 
@@ -66,12 +71,22 @@ public class AlimentacaoAdapter extends RecyclerView.Adapter<AlimentacaoAdapter.
             super(v);
 
             tv_alimento = (TextView) v.findViewById(R.id.tv_alimento);
+
             tv_preparacao  = (TextView) v.findViewById(R.id.tv_preparacao);
-            tv_local  = (TextView) v.findViewById(R.id.tv_local);
             tv_unidade  = (TextView) v.findViewById(R.id.tv_unidade);
-            iv_incompleto = (ImageView) v.findViewById(R.id.iv_incompleto);
-            iv_completo = (ImageView) v.findViewById(R.id.iv_completo);
+            tv_adicao = (TextView) v.findViewById(R.id.tv_adicao);
+
+            tv_local  = (TextView) v.findViewById(R.id.tv_local);
+            tv_ocasiao_consumo  = (TextView) v.findViewById(R.id.tv_ocasiao_consumo);
+
             tv_hora  = (TextView) v.findViewById(R.id.tv_hora);
+            tv_quantidade = (TextView) v.findViewById(R.id.tv_quantidade);
+
+            tv_hora_coleta  = (TextView) v.findViewById(R.id.tv_hora_coleta);
+            tv_dia_coleta  = (TextView) v.findViewById(R.id.tv_dia_coleta);
+            tv_usuario  = (TextView) v.findViewById(R.id.tv_usuario);
+
+            iv_check = (ImageView) v.findViewById(R.id.iv_check);
 
             v.setOnClickListener(this);
         }
@@ -121,14 +136,60 @@ public class AlimentacaoAdapter extends RecyclerView.Adapter<AlimentacaoAdapter.
 
         Alimentacao alimentacao = ((Alimentacao) data.get(position));
         holder.tv_alimento.setText(alimentacao.getAlimentacao_alimento_id() + " - " + alimentacao.getAlimentacao_alimento());
+
         holder.tv_preparacao.setText(alimentacao.getAlimentacao_preparacao_id()  + " - " + alimentacao.getAlimentacao_preparacao());
-        holder.tv_local.setText(alimentacao.getAlimentacao_local_id()  + " - " + alimentacao.getAlimentacao_local());
+        holder.tv_adicao.setText(alimentacao.getAlimentacao_adicao_id()  + " - " + alimentacao.getAlimentacao_adicao());
         holder.tv_unidade.setText(alimentacao.getAlimentacao_unidade_id()  + " - " + alimentacao.getAlimentacao_unidade());
-        holder.tv_hora.setText(alimentacao.getAlimentacao_hora());
+
+        holder.tv_local.setText(alimentacao.getAlimentacao_local_id()  + " - " + alimentacao.getAlimentacao_local());
+        holder.tv_ocasiao_consumo.setText(alimentacao.getAlimentacao_ocasiao_consumo_id()  + " - " + alimentacao.getAlimentacao_ocasiao_consumo());
+
+        holder.tv_hora.setText("Hora do consumo: " + alimentacao.getAlimentacao_hora());
+        holder.tv_quantidade.setText("Quantidade: " + alimentacao.getAlimentacao_quantidade());
+
+        holder.tv_hora_coleta.setText(alimentacao.getAlimentacao_hora_coleta());
+        holder.tv_dia_coleta.setText(alimentacao.getAlimentacao_dia_coleta());
+        holder.tv_usuario.setText(alimentacao.getAlimentacao_usuario());
 
 
 
-        Picasso.with(mContext).load(mContext.getResources().getResourceName(R.mipmap.ic_launcher));
+
+
+        holder.tv_preparacao.setText(alimentacao.getAlimentacao_preparacao_id()  + " - " + alimentacao.getAlimentacao_preparacao());
+        holder.tv_adicao.setText(alimentacao.getAlimentacao_adicao_id()  + " - " + alimentacao.getAlimentacao_adicao());
+        holder.tv_unidade.setText(alimentacao.getAlimentacao_unidade_id()  + " - " + alimentacao.getAlimentacao_unidade());
+        holder.tv_local.setText(alimentacao.getAlimentacao_local_id()  + " - " + alimentacao.getAlimentacao_local());
+        holder.tv_ocasiao_consumo.setText(alimentacao.getAlimentacao_ocasiao_consumo_id()  + " - " + alimentacao.getAlimentacao_ocasiao_consumo());
+        holder.tv_hora.setText("Hora do consumo: " + alimentacao.getAlimentacao_hora());
+        holder.tv_quantidade.setText("Quantidade: " + alimentacao.getAlimentacao_quantidade());
+
+
+        Boolean check = true;
+        if (alimentacao.getAlimentacao_preparacao_id().toString().equals("") || alimentacao.getAlimentacao_preparacao_id().toString().equals("0")){
+            check = false;
+        }else if (alimentacao.getAlimentacao_adicao_id().toString().equals("") || alimentacao.getAlimentacao_adicao_id().toString().equals("0")){
+            check = false;
+        }else if (alimentacao.getAlimentacao_unidade_id().toString().equals("") || alimentacao.getAlimentacao_unidade_id().toString().equals("0")){
+            check = false;
+        }else if (alimentacao.getAlimentacao_local_id().toString().equals("") || alimentacao.getAlimentacao_local_id().toString().equals("0")){
+            check = false;
+        }else if (alimentacao.getAlimentacao_ocasiao_consumo_id().toString().equals("") || alimentacao.getAlimentacao_ocasiao_consumo_id().toString().equals("0")){
+            check = false;
+        }else if (alimentacao.getAlimentacao_hora().toString().equals("") || alimentacao.getAlimentacao_hora().toString().equals("0")){
+            check = false;
+        }else if (alimentacao.getAlimentacao_quantidade().toString().equals("") || alimentacao.getAlimentacao_quantidade().toString().equals("0")){
+            check = false;
+        }
+
+
+
+
+
+        if (check) {
+            holder.iv_check.setImageResource(R.mipmap.ic_check);
+        }else{
+            holder.iv_check.setImageResource(R.mipmap.ic_no_check);
+        }
 
     }
 

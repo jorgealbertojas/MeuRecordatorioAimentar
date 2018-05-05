@@ -1,5 +1,6 @@
 package com.example.jorge.meurecordatorio.Adapter;
 
+import android.app.Activity;
 import android.content.Context;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
@@ -9,7 +10,9 @@ import android.widget.TextView;
 
 import com.example.jorge.meurecordatorio.Model.Entrevistado;
 import com.example.jorge.meurecordatorio.Model.Local;
+import com.example.jorge.meurecordatorio.Model.Unidade;
 import com.example.jorge.meurecordatorio.R;
+import com.example.jorge.meurecordatorio.Utilite.Modulo;
 
 import java.util.List;
 
@@ -63,7 +66,12 @@ public class EntrevistadoAdapter extends RecyclerView.Adapter<EntrevistadoAdapte
         public void onClick(View view) {
             int adapterPosition = getAdapterPosition();
             Entrevistado object = data.get(adapterPosition);
-            mClickHandler.onClick(object);
+
+            Modulo.OPCAO = "ENTREVISTADO";
+            Modulo.NOME = object.getEntrevistado();
+            Modulo.ID = object.getEntrevistado_id();
+
+            ((Activity) mContext).finish();
 
         }
     }
