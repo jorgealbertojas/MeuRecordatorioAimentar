@@ -89,7 +89,13 @@ public class AdicaoActivity extends AppCompatActivity {
 
     private void iniciaRecyclerView(){
         List<Adicao> dataPersistent = new ArrayList<>();
-        dataPersistent = mDataBase.getListAdicao(mAlimento);
+
+
+        if (mAlimento.equals("S")){
+            dataPersistent = mDataBase.getListAdicao();
+        }else{
+            dataPersistent = mDataBase.getListAdicao(mAlimento);
+        }
 
         if (dataPersistent.size()>0) {
             mRecyclerView.setAdapter(new AdicaoAdapter(dataPersistent));

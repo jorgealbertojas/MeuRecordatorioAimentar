@@ -22,6 +22,9 @@ import com.example.jorge.meurecordatorio.Model.Usuario;
 import java.util.ArrayList;
 import java.util.List;
 
+import static com.example.jorge.meurecordatorio.PersistentData.Field.FIELD_ALIMENTACAO_ID;
+import static com.example.jorge.meurecordatorio.PersistentData.Field.FIELD_ALIMENTO_ID;
+
 /**
  * Created by jorge on 28/04/2018.
  */
@@ -86,8 +89,9 @@ public class DataBase extends SQLiteOpenHelper {
 
         for (int i = 0; i < alimentoList.size() ; i++) {
             ContentValues obj = new ContentValues();
-            obj.put(Field.FIELD_ALIMENTO_ID, alimentoList.get(i).getAlimento_id());
+            obj.put(FIELD_ALIMENTO_ID, alimentoList.get(i).getAlimento_id());
             obj.put(Field.FIELD_ALIMENTO, alimentoList.get(i).getAlimento());
+            obj.put(Field.FIELD_NOVO, alimentoList.get(i).getNovo());
             this.onInsert(context,obj, DbCreate.TABLE_ALIMENTO);
 
         }
@@ -213,9 +217,20 @@ public class DataBase extends SQLiteOpenHelper {
         }
     }
 
+    public int NovoID_ALIMENTACAO() {
+        mDb = this.getWritableDatabase();
+        Cursor cursorTMP = mDb.rawQuery(" SELECT MAX(" + FIELD_ALIMENTACAO_ID + ") FROM " + DbCreate.TABLE_ALIMENTACAO, null);
+        cursorTMP.moveToFirst();
+        int i = 0;
+        if (cursorTMP.getCount() > 0) {
+            i = cursorTMP.getInt(0);
+        }
+        return i + 1;
+    }
+
     public int NovoID_ALIMENTO() {
         mDb = this.getWritableDatabase();
-        Cursor cursorTMP = mDb.rawQuery(" SELECT MAX(" + Field.FIELD_ALIMENTACAO_ID + ") FROM " + DbCreate.TABLE_ALIMENTACAO, null);
+        Cursor cursorTMP = mDb.rawQuery(" SELECT MAX(" + FIELD_ALIMENTO_ID + ") FROM " + DbCreate.TABLE_ALIMENTO, null);
         cursorTMP.moveToFirst();
         int i = 0;
         if (cursorTMP.getCount() > 0) {
@@ -230,7 +245,7 @@ public class DataBase extends SQLiteOpenHelper {
 
         for (int i = 0; i < alimentacaoList.size() ; i++) {
             ContentValues obj = new ContentValues();
-            obj.put(Field.FIELD_ALIMENTACAO_ID, alimentacaoList.get(i).getAlimentacao_id());
+            obj.put(FIELD_ALIMENTACAO_ID, alimentacaoList.get(i).getAlimentacao_id());
             obj.put(Field.FIELD_ALIMENTACAO_ALIMENTO_ID, alimentacaoList.get(i).getAlimentacao_alimento_id());
             obj.put(Field.FIELD_ALIMENTACAO_ALIMENTO, alimentacaoList.get(i).getAlimentacao_alimento());
             obj.put(Field.FIELD_ALIMENTACAO_PREPARACAO_ID, alimentacaoList.get(i).getAlimentacao_preparacao_id());
@@ -269,8 +284,9 @@ public class DataBase extends SQLiteOpenHelper {
             Alimento alimento = new Alimento();
 
             try {
-                alimento.setAlimento_id(cursor.getString(cursor.getColumnIndex(Field.FIELD_ALIMENTO_ID)));
+                alimento.setAlimento_id(cursor.getString(cursor.getColumnIndex(FIELD_ALIMENTO_ID)));
                 alimento.setAlimento(cursor.getString(cursor.getColumnIndex(Field.FIELD_ALIMENTO)));
+                alimento.setNovo(cursor.getString(cursor.getColumnIndex(Field.FIELD_NOVO)));
 
             } catch (Exception e) {
                 System.out.println(e.getMessage());
@@ -281,6 +297,11 @@ public class DataBase extends SQLiteOpenHelper {
         cursor.close();
         return alimentoList;
 
+    }
+
+    public void deleteAlimentacao(String id){
+        mDb = this.getWritableDatabase();
+        mDb.execSQL(" DELETE FROM " + DbCreate.TABLE_ALIMENTACAO + " WHERE " + FIELD_ALIMENTACAO_ID + " = " + id);
     }
 
     public List<Alimento> getListAlimento(String partNome) {
@@ -295,8 +316,9 @@ public class DataBase extends SQLiteOpenHelper {
             Alimento alimento = new Alimento();
 
             try {
-                alimento.setAlimento_id(cursor.getString(cursor.getColumnIndex(Field.FIELD_ALIMENTO_ID)));
+                alimento.setAlimento_id(cursor.getString(cursor.getColumnIndex(FIELD_ALIMENTO_ID)));
                 alimento.setAlimento(cursor.getString(cursor.getColumnIndex(Field.FIELD_ALIMENTO)));
+                alimento.setNovo(cursor.getString(cursor.getColumnIndex(Field.FIELD_NOVO)));
 
             } catch (Exception e) {
                 System.out.println(e.getMessage());
@@ -316,7 +338,7 @@ public class DataBase extends SQLiteOpenHelper {
 
         mDb = this.getWritableDatabase();
 
-        Cursor cursor = mDb.rawQuery(DbSelect.GET_PREPARACAO,null);
+        Cursor cursor = mDb.rawQuery(DbSelect.GET_PREPARACAO_SEM_RELACIONAMENTO,null);
         cursor.moveToFirst();
         while(!cursor.isAfterLast() ){
             Preparacao preparacao = new Preparacao();
@@ -393,7 +415,7 @@ public class DataBase extends SQLiteOpenHelper {
 
         mDb = this.getWritableDatabase();
 
-        Cursor cursor = mDb.rawQuery(DbSelect.GET_UNIDADE ,null);
+        Cursor cursor = mDb.rawQuery(DbSelect.GET_UNIDADE_SEM_RELACIONAMENTO ,null);
         cursor.moveToFirst();
         while(!cursor.isAfterLast() ){
             Unidade unidade = new Unidade();
@@ -471,7 +493,7 @@ public class DataBase extends SQLiteOpenHelper {
 
         mDb = this.getWritableDatabase();
 
-        Cursor cursor = mDb.rawQuery(DbSelect.GET_ADICAO,null);
+        Cursor cursor = mDb.rawQuery(DbSelect.GET_ADICAO_SEM_RELACIONAMENTO,null);
         cursor.moveToFirst();
         while(!cursor.isAfterLast() ){
             Adicao adicao = new Adicao();
@@ -818,7 +840,7 @@ public class DataBase extends SQLiteOpenHelper {
             Alimentacao alimentacao = new Alimentacao();
 
             try {
-                alimentacao.setAlimentacao_id(cursor.getString(cursor.getColumnIndex(Field.FIELD_ALIMENTACAO_ID)));
+                alimentacao.setAlimentacao_id(cursor.getString(cursor.getColumnIndex(FIELD_ALIMENTACAO_ID)));
                 alimentacao.setAlimentacao_alimento_id(cursor.getString(cursor.getColumnIndex(Field.FIELD_ALIMENTACAO_ALIMENTO_ID)));
                 alimentacao.setAlimentacao_alimento(cursor.getString(cursor.getColumnIndex(Field.FIELD_ALIMENTACAO_ALIMENTO)));
                 alimentacao.setAlimentacao_preparacao_id(cursor.getString(cursor.getColumnIndex(Field.FIELD_ALIMENTACAO_PREPARACAO_ID)));

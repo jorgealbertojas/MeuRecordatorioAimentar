@@ -51,6 +51,38 @@
         app:layout_constraintTop_toBottomOf="@+id/entrevistado"/>
 
     <TextView
+        android:id="@+id/tv_deletar_alimento"
+        android:layout_width="100dp"
+        android:layout_height="40dp"
+        android:layout_centerHorizontal="true"
+        android:layout_marginEnd="8dp"
+        android:background="@drawable/rounded_corner_red"
+        android:gravity="center"
+        android:text="Deletar Alimento"
+        android:visibility="visible"
+        android:layout_margin="10dp"
+        android:textAlignment="center"
+        android:textColor="@color/colorWhite"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/entrevistado" />
+
+    <TextView
+        android:id="@+id/tv_duplicar_alimento"
+        android:layout_width="100dp"
+        android:layout_height="40dp"
+        android:layout_centerHorizontal="true"
+        android:layout_marginEnd="8dp"
+        android:background="@drawable/rounded_corner_yellow"
+        android:gravity="center"
+        android:text="Duplicar Alimento"
+        android:visibility="visible"
+        android:layout_margin="10dp"
+        android:textAlignment="center"
+        android:textColor="@color/colorWhite"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/tv_deletar_alimento" />
+
+    <TextView
         android:id="@+id/preparacao_hint"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -294,23 +326,25 @@
         android:maxLines="200"
         android:lines="2"
         app:layout_constraintTop_toBottomOf="@+id/hora" />
+
     <RelativeLayout
+        android:id="@+id/relativeLayout2"
         android:layout_width="match_parent"
         android:layout_height="80dp"
-        android:gravity="center"
         android:background="@color/colorPrimaryDark"
+        android:gravity="center"
         app:layout_constraintBottom_toBottomOf="parent">
+
         <TextView
+            android:id="@+id/tv_salvar_alimento"
             android:layout_width="200dp"
             android:layout_height="40dp"
-            android:background="@drawable/rounded_corner"
-            android:textAlignment="center"
-            android:textColor="@color/colorWhite"
-            android:gravity="center"
             android:layout_centerHorizontal="true"
-            android:id="@+id/tv_salvar_alimento"
+            android:background="@drawable/rounded_corner"
+            android:gravity="center"
             android:text="Salvar Alimento"
-/>
+            android:textAlignment="center"
+            android:textColor="@color/colorWhite" />
 
     </RelativeLayout>
 

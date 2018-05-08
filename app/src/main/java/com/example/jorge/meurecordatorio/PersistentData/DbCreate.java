@@ -13,6 +13,7 @@ public class DbCreate {
     public static String CREATE_TABLE_ALIMENTO =
             "CREATE TABLE IF NOT EXISTS " + TABLE_ALIMENTO +  "(" +
                     Field.FIELD_ALIMENTO_ID + " INTEGER," +
+                    Field.FIELD_NOVO + " VARCHAR(500)," +
                     Field.FIELD_ALIMENTO + " VARCHAR(500) " +
                     ");";
 

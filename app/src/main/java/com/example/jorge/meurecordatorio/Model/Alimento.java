@@ -9,6 +9,15 @@ import java.io.Serializable;
 public class Alimento implements Serializable {
     private String alimento_id;
     private String alimento;
+    private String novo;
+
+    public String getNovo() {
+        return novo;
+    }
+
+    public void setNovo(String novo) {
+        this.novo = novo;
+    }
 
     public String getAlimento_id() {
         return alimento_id;

@@ -1,20 +1,31 @@
 package com.example.jorge.meurecordatorio.Adapter;
 
 import android.content.Context;
+import android.content.Intent;
 import android.content.res.Resources;
 import android.graphics.PorterDuff;
+import android.os.Bundle;
 import android.support.v7.widget.RecyclerView;
+import android.view.KeyEvent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.example.jorge.meurecordatorio.DetailActivity;
+import com.example.jorge.meurecordatorio.Generica.EntrevistadoActivity;
 import com.example.jorge.meurecordatorio.Model.Alimentacao;
 import com.example.jorge.meurecordatorio.R;
 import com.squareup.picasso.Picasso;
 
 import java.util.List;
+
+import static com.example.jorge.meurecordatorio.MainActivity.PUT_BUNDLE_ALIMENTACAO;
+import static com.example.jorge.meurecordatorio.MainActivity.PUT_EXTRA_ALIMENTACAO;
+import static com.example.jorge.meurecordatorio.MainActivity.PUT_EXTRA_ENTREVISTADO;
+import static com.example.jorge.meurecordatorio.MainActivity.PUT_EXTRA_ENTREVISTADO_NOME;
+import static com.example.jorge.meurecordatorio.MainActivity.PUT_EXTRA_USUARIO;
 
 /**
  * Created by jorge on 01/05/2018.
@@ -96,9 +107,23 @@ public class AlimentacaoAdapter extends RecyclerView.Adapter<AlimentacaoAdapter.
         public void onClick(View view) {
             int adapterPosition = getAdapterPosition();
             Alimentacao alimentacao = data.get(adapterPosition);
-            mClickHandler.onClick(alimentacao);
+
+            Class destinationClass = DetailActivity.class;
+            Intent intentToStartDetailActivity = new Intent(mContext, destinationClass);
+
+            Bundle bundle = new Bundle();
+            bundle.putSerializable(PUT_BUNDLE_ALIMENTACAO, alimentacao);
+            intentToStartDetailActivity.putExtra(PUT_EXTRA_ALIMENTACAO, bundle);
+            intentToStartDetailActivity.putExtra(PUT_EXTRA_ENTREVISTADO, alimentacao.getAlimentacao_entrevistado_id());
+            intentToStartDetailActivity.putExtra(PUT_EXTRA_ENTREVISTADO_NOME, alimentacao.getAlimentacao_entrevistado());
+            intentToStartDetailActivity.putExtra(PUT_EXTRA_USUARIO, alimentacao.getAlimentacao_usuario());
+
+            mContext.startActivity(intentToStartDetailActivity);
 
         }
+
+
+
     }
 
     /** create lit de Adapter Travel**/
@@ -175,7 +200,7 @@ public class AlimentacaoAdapter extends RecyclerView.Adapter<AlimentacaoAdapter.
             check = false;
         }else if (alimentacao.getAlimentacao_ocasiao_consumo_id().toString().equals("") || alimentacao.getAlimentacao_ocasiao_consumo_id().toString().equals("0")){
             check = false;
-        }else if (alimentacao.getAlimentacao_hora().toString().equals("") || alimentacao.getAlimentacao_hora().toString().equals("0")){
+        }else if (alimentacao.getAlimentacao_hora().toString().equals("") || alimentacao.getAlimentacao_hora().toString().equals("0") || alimentacao.getAlimentacao_hora().toString().equals("0:00")){
             check = false;
         }else if (alimentacao.getAlimentacao_quantidade().toString().equals("") || alimentacao.getAlimentacao_quantidade().toString().equals("0")){
             check = false;

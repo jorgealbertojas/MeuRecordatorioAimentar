@@ -10,6 +10,7 @@ public class Field {
 
     // TABELA ALIMENTO
     public final static String FIELD_ALIMENTO_ID = "ALIMENTO_ID";
+    public final static String FIELD_NOVO = "NOVO";
     public final static String FIELD_ALIMENTO = "ALIMENTO";
 
     // TABELA PREPARACAO
@@ -52,7 +53,7 @@ public class Field {
     public final static String FIELD_ALIMENTACAO_ENTREVISTADO_ID= "ALIMENTACAO_ENTREVISTADO_ID";
     public final static String FIELD_ALIMENTACAO_ENTREVISTADO= "ALIMENTACAO_ENTREVISTADO";
     public final static String FIELD_ALIMENTACAO_HORA_COLETA= "ALIMENTACAO_HORA_COLETA";
-    public final static String FIELD_ALIMENTACAO_HORA_COLETA_FIM= "ALIMENTACAO_HORA_COLETA_FIM";
+    public final static String FIELD_ALIMENTACAO_HORA_COLETA_FIM = "ALIMENTACAO_HORA_COLETA_FIM";
     public final static String FIELD_ALIMENTACAO_OBS = "ALIMENTACAO_OBS";
     public final static String FIELD_ALIMENTACAO_DIA_COLETA= "ALIMENTACAO_DIA_COLETA";
 

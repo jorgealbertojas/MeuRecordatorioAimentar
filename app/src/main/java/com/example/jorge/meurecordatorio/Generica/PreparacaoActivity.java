@@ -89,7 +89,13 @@ public class PreparacaoActivity extends AppCompatActivity {
 
     private void iniciaRecyclerView(){
         List<Preparacao> dataPersistent = new ArrayList<>();
-        dataPersistent = mDataBase.getListPreparacao(mAlimento);
+
+
+        if (mAlimento.equals("S")){
+            dataPersistent = mDataBase.getListPreparacao();
+        }else{
+            dataPersistent = mDataBase.getListPreparacao(mAlimento);
+        }
 
         if (dataPersistent.size()>0) {
             mRecyclerView.setAdapter(new PreparacaoAdapter(dataPersistent));

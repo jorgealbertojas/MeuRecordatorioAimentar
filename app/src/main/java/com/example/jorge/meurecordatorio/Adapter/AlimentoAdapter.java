@@ -70,7 +70,7 @@ public class AlimentoAdapter extends RecyclerView.Adapter<AlimentoAdapter.ViewHo
             Modulo.OPCAO = "ALIMENTO";
             Modulo.NOME = object.getAlimento();
             Modulo.ID = object.getAlimento_id();
-
+            Modulo.NOVO_ALIMENTO = object.getNovo();
             ((Activity) mContext).finish();
 
 

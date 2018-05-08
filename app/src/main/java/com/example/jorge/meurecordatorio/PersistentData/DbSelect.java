@@ -9,23 +9,42 @@ public class DbSelect {
     public static String GET_ALIMENTO =
             " SELECT "
                     + Field.FIELD_ALIMENTO_ID  + ","
+                    + Field.FIELD_NOVO + ","
                     + Field.FIELD_ALIMENTO +
                     " FROM " + DbCreate.TABLE_ALIMENTO ;
 
-    public static String GET_PREPARACAO =
+    public static String GET_UNIDADE_SEM_RELACIONAMENTO =
             " SELECT "
+                    + Field.FIELD_UNIDADE_ID  + ","
+                    + Field.FIELD_UNIDADE +
+                    " FROM " + DbCreate.TABLE_UNIDADE ;
+
+    public static String GET_PREPARACAO =
+            " SELECT distinct "
                     + Field.FIELD_PREPARACAO_ID  + ","
                     + Field.FIELD_PREPARACAO +
                     " FROM " + DbCreate.TABLE_PREPARACAO + " P, " + DbCreate.TABLE_PREPARACAO_ALIMENTO  + " PA WHERE P." + Field.FIELD_PREPARACAO_ID + " = PA." + Field.FIELD_PREPARACAO_PREPARACAO_ID    ;
 
+    public static String GET_PREPARACAO_SEM_RELACIONAMENTO =
+            " SELECT distinct "
+                    + Field.FIELD_PREPARACAO_ID  + ","
+                    + Field.FIELD_PREPARACAO +
+                    " FROM " + DbCreate.TABLE_PREPARACAO   ;
+
     public static String GET_UNIDADE =
-            " SELECT "
+            " SELECT distinct "
                     + Field.FIELD_UNIDADE_ID  + ","
                     + Field.FIELD_UNIDADE +
                     " FROM " + DbCreate.TABLE_UNIDADE + " U, " + DbCreate.TABLE_UNIDADE_ALIMENTO  + " UA WHERE U." + Field.FIELD_UNIDADE_ID + " = UA." + Field.FIELD_UNIDADE_UNIDADE_ID    ;
 
+    public static String GET_ADICAO_SEM_RELACIONAMENTO =
+            " SELECT distinct "
+                    + Field.FIELD_ADICAO_ID  + ","
+                    + Field.FIELD_ADICAO +
+                    " FROM " + DbCreate.TABLE_ADICAO ;
+
     public static String GET_ADICAO =
-            " SELECT "
+            " SELECT distinct "
                     + Field.FIELD_ADICAO_ID  + ","
                     + Field.FIELD_ADICAO +
                     " FROM " + DbCreate.TABLE_ADICAO + " A, " + DbCreate.TABLE_ADICAO_ALIMENTO  + " AA WHERE A." + Field.FIELD_ADICAO_ID + " = AA." + Field.FIELD_ADICAO_ADICAO_ID    ;
@@ -63,6 +82,8 @@ public class DbSelect {
                     + Field.FIELD_ALIMENTACAO_ENTREVISTADO_ID  + ","
                     + Field.FIELD_ALIMENTACAO_ENTREVISTADO  + ","
                     + Field.FIELD_ALIMENTACAO_HORA_COLETA  + ","
+                    + Field.FIELD_ALIMENTACAO_HORA_COLETA_FIM  + ","
+                    + Field.FIELD_ALIMENTACAO_OBS  + ","
                     + Field.FIELD_ALIMENTACAO_DIA_COLETA +
                     " FROM " + DbCreate.TABLE_ALIMENTACAO ;
 

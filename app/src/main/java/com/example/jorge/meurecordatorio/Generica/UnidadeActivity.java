@@ -89,7 +89,13 @@ public class UnidadeActivity extends AppCompatActivity {
 
     private void iniciaRecyclerView(){
         List<Unidade> dataPersistent = new ArrayList<>();
-        dataPersistent = mDataBase.getListUnidade(mAlimento);
+
+        if (mAlimento.equals("S")){
+            dataPersistent = mDataBase.getListUnidade();
+        }else{
+            dataPersistent = mDataBase.getListUnidade(mAlimento);
+        }
+
 
         if (dataPersistent.size()>0) {
             mRecyclerView.setAdapter(new UnidadeAdapter(dataPersistent));
