@@ -6,6 +6,9 @@ import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.text.Editable;
 import android.text.TextWatcher;
+import android.view.View;
+import android.widget.CheckBox;
+import android.widget.CompoundButton;
 import android.widget.EditText;
 
 import com.example.jorge.meurecordatorio.Adapter.AlimentoAdapter;
@@ -28,6 +31,10 @@ public class EntrevistadoActivity extends AppCompatActivity {
 
     String mName;
 
+    private EditText tv_buscar;
+
+    private static CheckBox checkBoxColetados;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -44,6 +51,15 @@ public class EntrevistadoActivity extends AppCompatActivity {
          */
         this.setTitle(mName);
 
+        checkBoxColetados = (CheckBox) findViewById(R.id.checkBoxColetados);
+        checkBoxColetados.setVisibility(View.VISIBLE);
+        checkBoxColetados.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+                preeecheEntrevistado();
+            }
+        });
+
+
 
         /**
          * use RecyclerView for list the PullRequest .
@@ -56,7 +72,7 @@ public class EntrevistadoActivity extends AppCompatActivity {
 
         iniciaRecyclerView();
 
-        final EditText tv_buscar =  (EditText) findViewById(R.id.tv_buscar);
+        tv_buscar =  (EditText) findViewById(R.id.tv_buscar);
         tv_buscar.addTextChangedListener(new TextWatcher() {
 
             public void afterTextChanged(Editable s) {}
@@ -68,15 +84,8 @@ public class EntrevistadoActivity extends AppCompatActivity {
             public void onTextChanged(CharSequence s, int start,
                                       int before, int count) {
 
+                preeecheEntrevistado();
 
-                if (!tv_buscar.getText().toString().equals("")) {
-                    List<Entrevistado> dataPersistent = new ArrayList<>();
-                    dataPersistent = mDataBase.getListEntrevistado(tv_buscar.getText().toString());
-                    iniciaRecyclerView();
-                    mRecyclerView.setAdapter(new EntrevistadoAdapter(dataPersistent));
-                }else{
-                    iniciaRecyclerView();
-                }
             }
         });
 
@@ -90,5 +99,20 @@ public class EntrevistadoActivity extends AppCompatActivity {
         if (dataPersistent.size()>0) {
             mRecyclerView.setAdapter(new EntrevistadoAdapter(dataPersistent));
         }
+    }
+
+    private void preeecheEntrevistado(){
+       // if (!tv_buscar.getText().toString().equals("")) {
+            List<Entrevistado> dataPersistent = new ArrayList<>();
+            if (!checkBoxColetados.isChecked()) {
+                dataPersistent = mDataBase.getListEntrevistado(tv_buscar.getText().toString());
+            }else{
+                dataPersistent = mDataBase.getListEntrevistadoColetado(tv_buscar.getText().toString());
+            }
+            iniciaRecyclerView();
+            mRecyclerView.setAdapter(new EntrevistadoAdapter(dataPersistent));
+     //   }else{
+         //   iniciaRecyclerView();
+      //  }
     }
 }

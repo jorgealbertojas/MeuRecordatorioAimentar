@@ -99,6 +99,12 @@ public class DbSelect {
                     + Field.FIELD_ENTREVISTADO +
                     " FROM " + DbCreate.TABLE_ENTREVISTADO ;
 
+    public static String GET_ENTREVISTADO_COLETADO =
+            " SELECT "
+                    + Field.FIELD_ENTREVISTADO_ID  + ","
+                    + Field.FIELD_ENTREVISTADO +
+                    " FROM " + DbCreate.TABLE_ENTREVISTADO + " E , " +DbCreate.TABLE_ALIMENTACAO + " A WHERE " + Field.FIELD_ENTREVISTADO_ID + " = " + Field.FIELD_ALIMENTACAO_ENTREVISTADO_ID  ;
+
     public static String GET_PREPARACAO_ALIMENTO =
             " SELECT "
                     + Field.FIELD_PREPARACAO_PREPARACAO_ID  + ","

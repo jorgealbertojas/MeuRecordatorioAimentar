@@ -48,5 +48,15 @@
 
     </RelativeLayout>
 
+    <CheckBox
+        android:id="@+id/checkBoxColetados"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Coletados"
+        android:visibility="visible"
+        android:background="@color/colorAbobora"
+        app:layout_constraintBottom_toTopOf="@+id/relativeSalvar"
+        app:layout_constraintEnd_toEndOf="parent" />
+
 
 </android.support.constraint.ConstraintLayout>

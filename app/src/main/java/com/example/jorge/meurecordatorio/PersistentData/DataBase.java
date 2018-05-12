@@ -750,6 +750,32 @@ public class DataBase extends SQLiteOpenHelper {
 
     }
 
+    public List<Entrevistado> getListEntrevistadoColetado(String partNome) {
+
+        List<Entrevistado> entrevistadoList = new ArrayList<Entrevistado>();
+
+        mDb = this.getWritableDatabase();
+
+        Cursor cursor = mDb.rawQuery(DbSelect.GET_ENTREVISTADO_COLETADO + " AND E."+ Field.FIELD_ENTREVISTADO + " LIKE '%" + partNome + "%'",null);
+        cursor.moveToFirst();
+        while(!cursor.isAfterLast() ){
+            Entrevistado entrevistado = new Entrevistado();
+
+            try {
+                entrevistado.setEntrevistado_id(cursor.getString(cursor.getColumnIndex(Field.FIELD_ENTREVISTADO_ID)));
+                entrevistado.setEntrevistado(cursor.getString(cursor.getColumnIndex(Field.FIELD_ENTREVISTADO)));
+
+            } catch (Exception e) {
+                System.out.println(e.getMessage());
+            }
+            entrevistadoList.add(entrevistado);
+            cursor.moveToNext();
+        }
+        cursor.close();
+        return entrevistadoList;
+
+    }
+
     public List<PreparacaoAlimento> getListPreparacaoAlimento() {
 
         List<PreparacaoAlimento> PreparacaoAlimentoList = new ArrayList<PreparacaoAlimento>();
@@ -875,6 +901,56 @@ public class DataBase extends SQLiteOpenHelper {
 
 
     }
+
+
+    public List<Alimentacao> getListAlimentacao() {
+
+        List<Alimentacao> alimentacaoList = new ArrayList<Alimentacao>();
+
+        mDb = this.getWritableDatabase();
+
+        Cursor cursor = mDb.rawQuery(DbSelect.GET_ALIMENTACAO ,null);
+        cursor.moveToFirst();
+        while(!cursor.isAfterLast() ){
+            Alimentacao alimentacao = new Alimentacao();
+
+            try {
+                alimentacao.setAlimentacao_id(cursor.getString(cursor.getColumnIndex(FIELD_ALIMENTACAO_ID)));
+                alimentacao.setAlimentacao_alimento_id(cursor.getString(cursor.getColumnIndex(Field.FIELD_ALIMENTACAO_ALIMENTO_ID)));
+                alimentacao.setAlimentacao_alimento(cursor.getString(cursor.getColumnIndex(Field.FIELD_ALIMENTACAO_ALIMENTO)));
+                alimentacao.setAlimentacao_preparacao_id(cursor.getString(cursor.getColumnIndex(Field.FIELD_ALIMENTACAO_PREPARACAO_ID)));
+                alimentacao.setAlimentacao_preparacao(cursor.getString(cursor.getColumnIndex(Field.FIELD_ALIMENTACAO_PREPARACAO)));
+                alimentacao.setAlimentacao_local_id(cursor.getString(cursor.getColumnIndex(Field.FIELD_ALIMENTACAO_LOCAL_ID)));
+                alimentacao.setAlimentacao_local(cursor.getString(cursor.getColumnIndex(Field.FIELD_ALIMENTACAO_LOCAL)));
+                alimentacao.setAlimentacao_unidade_id(cursor.getString(cursor.getColumnIndex(Field.FIELD_ALIMENTACAO_UNIDADE_ID)));
+                alimentacao.setAlimentacao_unidade(cursor.getString(cursor.getColumnIndex(Field.FIELD_ALIMENTACAO_UNIDADE)));
+                alimentacao.setAlimentacao_ocasiao_consumo_id(cursor.getString(cursor.getColumnIndex(Field.FIELD_ALIMENTACAO_OCASIAO_CONSUMO_ID)));
+                alimentacao.setAlimentacao_ocasiao_consumo(cursor.getString(cursor.getColumnIndex(Field.FIELD_ALIMENTACAO_OCASIAO_CONSUMO)));
+                alimentacao.setAlimentacao_adicao_id(cursor.getString(cursor.getColumnIndex(Field.FIELD_ALIMENTACAO_ADICAO_ID)));
+                alimentacao.setAlimentacao_adicao(cursor.getString(cursor.getColumnIndex(Field.FIELD_ALIMENTACAO_ADICAO)));
+                alimentacao.setAlimentacao_quantidade(cursor.getString(cursor.getColumnIndex(Field.FIELD_ALIMENTACAO_QUANTIDADE)));
+                alimentacao.setAlimentacao_hora(cursor.getString(cursor.getColumnIndex(Field.FIELD_ALIMENTACAO_HORA)));
+                alimentacao.setAlimentacao_usuario(cursor.getString(cursor.getColumnIndex(Field.FIELD_ALIMENTACAO_USUARIO)));
+                alimentacao.setAlimentacao_entrevistado_id(cursor.getString(cursor.getColumnIndex(Field.FIELD_ALIMENTACAO_ENTREVISTADO_ID)));
+                alimentacao.setAlimentacao_entrevistado(cursor.getString(cursor.getColumnIndex(Field.FIELD_ALIMENTACAO_ENTREVISTADO)));
+                alimentacao.setAlimentacao_hora_coleta(cursor.getString(cursor.getColumnIndex(Field.FIELD_ALIMENTACAO_HORA_COLETA)));
+                alimentacao.setAlimentacao_dia_coleta(cursor.getString(cursor.getColumnIndex(Field.FIELD_ALIMENTACAO_DIA_COLETA)));
+                alimentacao.setAlimentacao_hora_coleta_fim(cursor.getString(cursor.getColumnIndex(Field.FIELD_ALIMENTACAO_HORA_COLETA_FIM)));
+                alimentacao.setAlimentacao_obs(cursor.getString(cursor.getColumnIndex(Field.FIELD_ALIMENTACAO_OBS)));
+
+            } catch (Exception e) {
+                System.out.println(e.getMessage());
+            }
+            alimentacaoList.add(alimentacao);
+            cursor.moveToNext();
+        }
+        cursor.close();
+        return alimentacaoList;
+
+
+
+    }
+
 
     private void onInsert(Context context, ContentValues obj, String nTabela) {
         try{
