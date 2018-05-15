@@ -47,7 +47,7 @@ public class AdicaoActivity extends AppCompatActivity {
         /**
          * Put Name Repositorie in  title.
          */
-        this.setTitle(mName);
+        this.setTitle("Adição");
 
 
         /**

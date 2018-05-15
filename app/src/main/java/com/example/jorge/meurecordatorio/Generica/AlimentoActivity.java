@@ -131,7 +131,7 @@ public class AlimentoActivity extends AppCompatActivity {
         /**
          * Put Name Repositorie in  title.
          */
-        this.setTitle(mName);
+        this.setTitle("Alimento");
 
 
         /**
@@ -163,7 +163,7 @@ public class AlimentoActivity extends AppCompatActivity {
                     dataPersistent = mDataBase.getListAlimento(tv_buscar.getText().toString());
 
                     if (dataPersistent.size()>0) {
-                        relativeSalvar.setVisibility(View.INVISIBLE);
+                        relativeSalvar.setVisibility(View.GONE);
                     }else{
                         relativeSalvar.setVisibility(View.VISIBLE);
                     }

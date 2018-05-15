@@ -14,26 +14,182 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".MainActivity">
+        <activity android:name=".MainActivity"
+            android:screenOrientation="portrait"
+            android:theme="@style/AppTheme">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
-
+p
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".Generica.AlimentoActivity" />
-        <activity android:name=".Generica.UnidadeActivity" />
-        <activity android:name=".Generica.LocalActivity" />
-        <activity android:name=".Generica.PreparacaoActivity" />
-        <activity android:name=".Generica.OcasiaoConsumoActivity" />
-        <activity android:name=".Generica.AdicaoActivity" />
-        <activity android:name=".Generica.EntrevistadoActivity" />
+
         <activity
             android:name=".DetailActivity"
-            android:label="Cadastro de Alimento" />
-        <activity android:name=".ConfiguracaoActivity" />
-        <activity android:name=".DbExportImport" />
-        <activity android:name=".LoginActivity"></activity>
+            android:launchMode="singleTop"
+            android:noHistory="false"
+            android:screenOrientation="portrait"
+            android:theme="@style/AppTheme"
+            android:label="Cadastro de Alimento"
+            android:parentActivityName=".DetailActivity">
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+
+                android:value=".MainActivity" />
+        </activity>
+
+        <activity
+            android:name=".Generica.AlimentoActivity"
+            android:launchMode="singleTop"
+            android:noHistory="false"
+            android:screenOrientation="portrait"
+            android:theme="@style/AppTheme"
+            android:label="Cadastro de Alimento"
+            android:parentActivityName=".Generica.AlimentoActivity">
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+
+                android:value=".DetailActivity" />
+        </activity>
+
+        <activity
+            android:name=".Generica.AlimentoActivity"
+            android:launchMode="singleTop"
+            android:noHistory="false"
+            android:screenOrientation="portrait"
+            android:theme="@style/AppTheme"
+            android:label="Cadastro de Alimento"
+            android:parentActivityName=".Generica.AlimentoActivity">
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+
+                android:value=".DetailActivity" />
+        </activity>
+
+        <activity
+            android:name=".Generica.AlimentoActivity"
+            android:launchMode="singleTop"
+            android:noHistory="false"
+            android:screenOrientation="portrait"
+            android:theme="@style/AppTheme"
+            android:label="Cadastro de Alimento"
+            android:parentActivityName=".Generica.AlimentoActivity">
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+
+                android:value=".DetailActivity" />
+        </activity>
+
+        <activity
+            android:name=".Generica.AlimentoActivity"
+            android:launchMode="singleTop"
+            android:noHistory="false"
+            android:screenOrientation="portrait"
+            android:theme="@style/AppTheme"
+            android:label="Cadastro de Alimento"
+            android:parentActivityName=".Generica.AlimentoActivity">
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+
+                android:value=".DetailActivity" />
+        </activity>
+
+        <activity
+            android:name=".Generica.EntrevistadoActivity"
+            android:launchMode="singleTop"
+            android:noHistory="false"
+            android:screenOrientation="portrait"
+            android:theme="@style/AppTheme"
+            android:label="Cadastro de Alimento"
+            android:parentActivityName=".Generica.AlimentoActivity">
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+
+                android:value=".DetailActivity" />
+        </activity>
+
+        <activity
+            android:name=".Generica.AdicaoActivity"
+            android:launchMode="singleTop"
+            android:noHistory="false"
+            android:screenOrientation="portrait"
+            android:theme="@style/AppTheme"
+            android:label="Cadastro de Alimento"
+            android:parentActivityName=".Generica.AlimentoActivity">
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+
+                android:value=".DetailActivity" />
+        </activity>
+
+        <activity
+            android:name=".Generica.OcasiaoConsumoActivity"
+            android:launchMode="singleTop"
+            android:noHistory="false"
+            android:screenOrientation="portrait"
+            android:theme="@style/AppTheme"
+            android:label="Cadastro de Alimento"
+            android:parentActivityName=".Generica.AlimentoActivity">
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+
+                android:value=".DetailActivity" />
+        </activity>
+
+        <activity
+            android:name=".Generica.PreparacaoActivity"
+            android:launchMode="singleTop"
+            android:noHistory="false"
+            android:screenOrientation="portrait"
+            android:theme="@style/AppTheme"
+            android:parentActivityName=".Generica.AlimentoActivity">
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+
+                android:value=".DetailActivity" />
+        </activity>
+
+        <activity
+            android:name=".Generica.LocalActivity"
+            android:launchMode="singleTop"
+            android:noHistory="false"
+            android:screenOrientation="portrait"
+            android:theme="@style/AppTheme"
+            android:parentActivityName=".Generica.AlimentoActivity">
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+
+                android:value=".DetailActivity" />
+        </activity>
+
+        <activity
+            android:name=".Generica.UnidadeActivity"
+            android:launchMode="singleTop"
+            android:noHistory="false"
+            android:screenOrientation="portrait"
+            android:theme="@style/AppTheme"
+            android:parentActivityName=".Generica.UnidadeActivity">
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+
+                android:value=".DetailActivity" />
+        </activity>
+
+
+
+
+
+
+
+        <activity android:name=".ConfiguracaoActivity"
+            android:screenOrientation="portrait"
+            android:theme="@style/AppTheme"/>
+        <activity android:name=".DbExportImport"
+            android:screenOrientation="portrait"
+            android:theme="@style/AppTheme"/>
+        <activity android:name=".LoginActivity"
+            android:screenOrientation="portrait"
+            android:theme="@style/AppTheme"></activity>
     </application>
 
 </manifest>

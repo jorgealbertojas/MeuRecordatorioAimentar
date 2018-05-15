@@ -456,66 +456,71 @@ public class DetailActivity extends AppCompatActivity {
             @Override
             public void onClick(View arg0) {
                 try {
-                    mDataBase = new DataBase(getApplicationContext());
-                    mDb = mDataBase.getReadableDatabase();
 
-                    List<Alimentacao> alimentacaoList = new ArrayList<Alimentacao>();
-                    Alimentacao alimentacao = new Alimentacao();
+                    if (!alimento.getText().toString().equals("0")) {
+                        mDataBase = new DataBase(getApplicationContext());
+                        mDb = mDataBase.getReadableDatabase();
 
-                    if (alimentacoAlteracao){
-                        mDataBase.deleteAlimentacao(mAlimentacao.getAlimentacao_id().toString());
-                        alimentacao.setAlimentacao_id(mAlimentacao.getAlimentacao_id().toString());
-                    }else {
-                        alimentacao.setAlimentacao_id(Integer.toString(mDataBase.NovoID_ALIMENTACAO()));
+                        List<Alimentacao> alimentacaoList = new ArrayList<Alimentacao>();
+                        Alimentacao alimentacao = new Alimentacao();
+
+                        if (alimentacoAlteracao) {
+                            mDataBase.deleteAlimentacao(mAlimentacao.getAlimentacao_id().toString());
+                            alimentacao.setAlimentacao_id(mAlimentacao.getAlimentacao_id().toString());
+                        } else {
+                            alimentacao.setAlimentacao_id(Integer.toString(mDataBase.NovoID_ALIMENTACAO()));
+                        }
+
+                        alimentacao.setAlimentacao_entrevistado_id(mEntrevistado);
+                        alimentacao.setAlimentacao_entrevistado(mEntrevistadoNome);
+                        alimentacao.setAlimentacao_alimento_id(alimento.getText().toString());
+                        alimentacao.setAlimentacao_alimento(alimento_nome.getText().toString());
+                        alimentacao.setAlimentacao_preparacao_id(preparacao.getText().toString());
+                        alimentacao.setAlimentacao_preparacao(preparacao_nome.getText().toString());
+                        alimentacao.setAlimentacao_adicao_id(adicao.getText().toString());
+                        alimentacao.setAlimentacao_adicao(adicao_nome.getText().toString());
+                        alimentacao.setAlimentacao_local_id(local.getText().toString());
+                        alimentacao.setAlimentacao_local(local_nome.getText().toString());
+                        alimentacao.setAlimentacao_unidade_id(unidade.getText().toString());
+                        alimentacao.setAlimentacao_unidade(unidade_nome.getText().toString());
+                        alimentacao.setAlimentacao_ocasiao_consumo_id(ocasiaoConsumo.getText().toString());
+                        alimentacao.setAlimentacao_ocasiao_consumo(ocasiaoConsumo_nome.getText().toString());
+                        alimentacao.setAlimentacao_quantidade(quantidadeEditText.getText().toString());
+                        alimentacao.setAlimentacao_hora(horaEditText.getText().toString() + ":" + minutoEditText.getText().toString());
+                        alimentacao.setAlimentacao_hora_coleta(tvHoraColeta.getText().toString());
+
+                        Time today_fim = new Time(Time.getCurrentTimezone());
+                        today_fim.setToNow();
+
+                        String dia_fim = Integer.toString(today_fim.monthDay);
+                        String mes_fim = Integer.toString(today_fim.month + 1);
+                        String ano_fim = Integer.toString(today_fim.year);
+                        String diaCompleto_fim = dia_fim + "/" + mes_fim + "/" + ano_fim;
+
+                        String hora_coleta_fim = Integer.toString(today_fim.hour);
+                        String minuto_coleta_fim = Integer.toString(today_fim.minute);
+                        String minuto_segundos_fim = Integer.toString(today_fim.second);
+
+                        String horacompleta_fim = hora_coleta_fim + ":" + minuto_coleta_fim + ":" + minuto_segundos_fim;
+
+
+                        alimentacao.setAlimentacao_hora_coleta_fim(horacompleta_fim);
+                        alimentacao.setAlimentacao_obs(obs.getText().toString());
+                        alimentacao.setAlimentacao_usuario(mUsuario);
+                        alimentacao.setAlimentacao_dia_coleta(diaCompleto_fim);
+                        alimentacaoList.add(alimentacao);
+
+                        mDataBase.insertTABLE_ALIMENTACAO(alimentacaoList);
+                        Toast.makeText(DetailActivity.this, "Salvo alimento com sucesso!", Toast.LENGTH_SHORT).show();
+                        DetailActivity.this.finish();
+                    }else{
+                        Toast.makeText(DetailActivity.this, "ATENÇÃO! Obrigatório a seleção de um alimento", Toast.LENGTH_LONG).show();
                     }
-
-                    alimentacao.setAlimentacao_entrevistado_id(mEntrevistado);
-                    alimentacao.setAlimentacao_entrevistado(mEntrevistadoNome);
-                    alimentacao.setAlimentacao_alimento_id(alimento.getText().toString());
-                    alimentacao.setAlimentacao_alimento(alimento_nome.getText().toString());
-                    alimentacao.setAlimentacao_preparacao_id(preparacao.getText().toString());
-                    alimentacao.setAlimentacao_preparacao(preparacao_nome.getText().toString());
-                    alimentacao.setAlimentacao_adicao_id(adicao.getText().toString());
-                    alimentacao.setAlimentacao_adicao(adicao_nome.getText().toString());
-                    alimentacao.setAlimentacao_local_id(local.getText().toString());
-                    alimentacao.setAlimentacao_local(local_nome.getText().toString());
-                    alimentacao.setAlimentacao_unidade_id(unidade.getText().toString());
-                    alimentacao.setAlimentacao_unidade(unidade_nome.getText().toString());
-                    alimentacao.setAlimentacao_ocasiao_consumo_id(ocasiaoConsumo.getText().toString());
-                    alimentacao.setAlimentacao_ocasiao_consumo(ocasiaoConsumo_nome.getText().toString());
-                    alimentacao.setAlimentacao_quantidade(quantidadeEditText.getText().toString());
-                    alimentacao.setAlimentacao_hora(horaEditText.getText().toString() + ":" + minutoEditText.getText().toString());
-                    alimentacao.setAlimentacao_hora_coleta(tvHoraColeta.getText().toString());
-
-                    Time today_fim = new Time(Time.getCurrentTimezone());
-                    today_fim.setToNow();
-
-                    String dia_fim = Integer.toString(today_fim.monthDay);
-                    String mes_fim = Integer.toString(today_fim.month + 1);
-                    String ano_fim = Integer.toString(today_fim.year);
-                    String diaCompleto_fim = dia_fim + "/" + mes_fim + "/" + ano_fim;
-
-                    String hora_coleta_fim = Integer.toString(today_fim.hour);
-                    String minuto_coleta_fim = Integer.toString(today_fim.minute);
-                    String minuto_segundos_fim = Integer.toString(today_fim.second);
-
-                    String horacompleta_fim = hora_coleta_fim + ":" + minuto_coleta_fim + ":" + minuto_segundos_fim;
-
-
-
-                    alimentacao.setAlimentacao_hora_coleta_fim(horacompleta_fim);
-                    alimentacao.setAlimentacao_obs(obs.getText().toString());
-                    alimentacao.setAlimentacao_usuario(mUsuario);
-                    alimentacao.setAlimentacao_dia_coleta(diaCompleto_fim);
-                    alimentacaoList.add(alimentacao);
-
-                    mDataBase.insertTABLE_ALIMENTACAO(alimentacaoList);
-                    Toast.makeText(DetailActivity.this, "Salvo alimento com sucesso!" , Toast.LENGTH_SHORT).show();
-                    DetailActivity.this.finish();
-                } catch (Exception e) {
+                } catch(Exception e){
                     // TODO: handle exception
-                    Toast.makeText(DetailActivity.this, "ATENÇÃO! ALIMENTO NÃO SALVO" , Toast.LENGTH_LONG).show();
+                    Toast.makeText(DetailActivity.this, "ATENÇÃO! ALIMENTO NÃO SALVO", Toast.LENGTH_LONG).show();
                 }
+
             }
         });
 

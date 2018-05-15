@@ -49,7 +49,7 @@ public class EntrevistadoActivity extends AppCompatActivity {
         /**
          * Put Name Repositorie in  title.
          */
-        this.setTitle(mName);
+        this.setTitle("Entrevistador");
 
         checkBoxColetados = (CheckBox) findViewById(R.id.checkBoxColetados);
         checkBoxColetados.setVisibility(View.VISIBLE);

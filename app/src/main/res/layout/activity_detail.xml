@@ -22,23 +22,19 @@
         android:layout_height="wrap_content"
         android:id="@+id/entrevistado_hint"
         android:textSize="@dimen/padding_text"
+
         android:textColor="@color/colorAccent"
         android:text="Entrevistado" />
 
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:id="@+id/alimento_hint"
-        app:layout_constraintTop_toBottomOf="@+id/entrevistado"
-        android:textColor="@color/colorAccent"
-        android:textSize="@dimen/padding_text"
-        android:text="Alimento" />
+
     <TextView
         android:id="@+id/alimento"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:padding="@dimen/padding_text"
         android:text="0"
+        android:hint="          "
+        android:background="@drawable/rounded_corner_cinza_claro"
         app:layout_constraintTop_toBottomOf="@+id/entrevistado" />
 
     <TextView
@@ -47,6 +43,8 @@
         android:layout_height="wrap_content"
         android:padding="@dimen/padding_text"
         android:text="0"
+        android:hint="          "
+        android:background="@drawable/rounded_corner_cinza_claro"
         app:layout_constraintStart_toEndOf="@+id/alimento"
         app:layout_constraintTop_toBottomOf="@+id/entrevistado"/>
 
@@ -83,19 +81,23 @@
         app:layout_constraintTop_toBottomOf="@+id/tv_deletar_alimento" />
 
     <TextView
-        android:id="@+id/preparacao_hint"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Preparação"
+        android:id="@+id/alimento_hint"
+        app:layout_constraintTop_toBottomOf="@+id/entrevistado"
         android:textColor="@color/colorAccent"
         android:textSize="@dimen/padding_text"
-        app:layout_constraintTop_toBottomOf="@+id/alimento" />
+        android:text="Alimento" />
+
+
     <TextView
         android:id="@+id/preparacao"
         android:layout_width="wrap_content"
         android:padding="@dimen/padding_text"
         android:layout_height="wrap_content"
         android:text="0"
+        android:hint="          "
+        android:background="@drawable/rounded_corner_cinza_claro"
         app:layout_constraintTop_toBottomOf="@+id/alimento" />
     <TextView
         android:id="@+id/preparacao_nome"
@@ -103,8 +105,40 @@
         android:layout_height="wrap_content"
         android:padding="@dimen/padding_text"
         android:text="0"
+        android:hint="          "
+        android:background="@drawable/rounded_corner_cinza_claro"
         app:layout_constraintStart_toEndOf="@+id/preparacao"
         app:layout_constraintTop_toBottomOf="@+id/alimento"/>
+
+    <TextView
+        android:id="@+id/preparacao_hint"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Preparação"
+        android:textColor="@color/colorAccent"
+        android:textSize="@dimen/padding_text"
+        app:layout_constraintTop_toBottomOf="@+id/alimento" />
+
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:padding="@dimen/padding_text"
+        android:id="@+id/adicao"
+        android:text="0"
+        android:hint="          "
+        android:background="@drawable/rounded_corner_cinza_claro"
+        app:layout_constraintTop_toBottomOf="@+id/preparacao"/>
+    <TextView
+        android:id="@+id/adicao_nome"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:padding="@dimen/padding_text"
+        android:text="0"
+        android:hint="          "
+        android:background="@drawable/rounded_corner_cinza_claro"
+        app:layout_constraintStart_toEndOf="@+id/adicao"
+        app:layout_constraintTop_toBottomOf="@+id/preparacao"/>
 
     <TextView
         android:layout_width="wrap_content"
@@ -114,21 +148,27 @@
         android:id="@+id/adicao_hint"
         android:text="Adição"
         app:layout_constraintTop_toBottomOf="@+id/preparacao"/>
+
+
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:padding="@dimen/padding_text"
-        android:id="@+id/adicao"
+        android:id="@+id/local"
         android:text="0"
-        app:layout_constraintTop_toBottomOf="@+id/preparacao"/>
+        android:hint="          "
+        android:background="@drawable/rounded_corner_cinza_claro"
+        app:layout_constraintTop_toBottomOf="@+id/adicao"/>
     <TextView
-        android:id="@+id/adicao_nome"
+        android:id="@+id/local_nome"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:padding="@dimen/padding_text"
         android:text="0"
-        app:layout_constraintStart_toEndOf="@+id/adicao"
-        app:layout_constraintTop_toBottomOf="@+id/preparacao"/>
+        android:hint="          "
+        android:background="@drawable/rounded_corner_cinza_claro"
+        app:layout_constraintStart_toEndOf="@+id/local"
+        app:layout_constraintTop_toBottomOf="@+id/adicao"/>
 
     <TextView
         android:layout_width="wrap_content"
@@ -138,35 +178,15 @@
         android:textColor="@color/colorAccent"
         android:textSize="@dimen/padding_text"
         app:layout_constraintTop_toBottomOf="@+id/adicao"/>
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:padding="@dimen/padding_text"
-        android:id="@+id/local"
-        android:text="0"
-        app:layout_constraintTop_toBottomOf="@+id/adicao"/>
-    <TextView
-        android:id="@+id/local_nome"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:padding="@dimen/padding_text"
-        android:text="0"
-        app:layout_constraintStart_toEndOf="@+id/local"
-        app:layout_constraintTop_toBottomOf="@+id/adicao"/>
 
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:id="@+id/unidade_hint"
-        android:text="Unidade"
-        android:textColor="@color/colorAccent"
-        android:textSize="@dimen/padding_text"
-        app:layout_constraintTop_toBottomOf="@+id/local"/>
+
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:id="@+id/unidade"
         android:text="0"
+        android:hint="          "
+        android:background="@drawable/rounded_corner_cinza_claro"
         android:padding="@dimen/padding_text"
         app:layout_constraintTop_toBottomOf="@+id/local"/>
 
@@ -176,8 +196,41 @@
         android:padding="@dimen/padding_text"
         android:layout_height="wrap_content"
         android:text="0"
+        android:hint="          "
+        android:background="@drawable/rounded_corner_cinza_claro"
         app:layout_constraintStart_toEndOf="@+id/unidade"
         app:layout_constraintTop_toBottomOf="@+id/local" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/unidade_hint"
+        android:text="Unidade"
+        android:textColor="@color/colorAccent"
+        android:textSize="@dimen/padding_text"
+        app:layout_constraintTop_toBottomOf="@+id/local"/>
+
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:padding="@dimen/padding_text"
+        android:id="@+id/ocasiao_consumo"
+        android:text="0"
+        android:hint="          "
+        android:background="@drawable/rounded_corner_cinza_claro"
+        app:layout_constraintTop_toBottomOf="@+id/unidade"/>
+
+    <TextView
+        android:id="@+id/ocasiao_consumo_nome"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:padding="@dimen/padding_text"
+        android:text="0"
+        android:hint="          "
+        android:background="@drawable/rounded_corner_cinza_claro"
+        app:layout_constraintStart_toEndOf="@+id/ocasiao_consumo"
+        app:layout_constraintTop_toBottomOf="@+id/unidade"/>
 
     <TextView
         android:layout_width="wrap_content"
@@ -187,22 +240,15 @@
         android:id="@+id/ocasiao_consumo_hint"
         android:text="Ocasião de consumo"
         app:layout_constraintTop_toBottomOf="@+id/unidade"/>
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:padding="@dimen/padding_text"
-        android:id="@+id/ocasiao_consumo"
-        android:text="0"
-        app:layout_constraintTop_toBottomOf="@+id/unidade"/>
 
-    <TextView
-        android:id="@+id/ocasiao_consumo_nome"
+    <EditText
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:padding="@dimen/padding_text"
-        android:text="0"
-        app:layout_constraintStart_toEndOf="@+id/ocasiao_consumo"
-        app:layout_constraintTop_toBottomOf="@+id/unidade"/>
+        android:id="@+id/quantidade"
+        android:hint="0"
+        app:layout_constraintTop_toBottomOf="@+id/ocasiao_consumo"/>
+
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -211,21 +257,7 @@
         android:id="@+id/quantidade_hint"
         android:text="Quantidade"
         app:layout_constraintTop_toBottomOf="@+id/ocasiao_consumo"/>
-    <EditText
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:padding="@dimen/padding_text"
-        android:id="@+id/quantidade"
-        android:hint="0"
-        app:layout_constraintTop_toBottomOf="@+id/ocasiao_consumo"/>
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:textColor="@color/colorAccent"
-        android:textSize="@dimen/padding_text"
-        android:id="@+id/hora_hint"
-        android:text="Hora"
-        app:layout_constraintTop_toBottomOf="@+id/quantidade"/>
+
     <EditText
         android:layout_width="55dp"
         android:layout_height="wrap_content"
@@ -244,6 +276,25 @@
         android:text=""
         app:layout_constraintStart_toEndOf="@+id/hora"
         app:layout_constraintTop_toBottomOf="@+id/quantidade" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textColor="@color/colorAccent"
+        android:textSize="@dimen/padding_text"
+        android:id="@+id/hora_hint"
+        android:text="Hora"
+        app:layout_constraintTop_toBottomOf="@+id/quantidade"/>
+
+    <TextView
+        android:id="@+id/hora_minuto"
+        android:layout_width="55dp"
+        android:layout_height="wrap_content"
+        android:text="00"
+        android:padding="@dimen/padding_text"
+        app:layout_constraintStart_toEndOf="@+id/hora_ponto"
+        app:layout_constraintTop_toBottomOf="@+id/quantidade" />
+
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -253,22 +304,7 @@
         android:text="00 ou 30 minutos"
         app:layout_constraintStart_toEndOf="@+id/hora_ponto"
         app:layout_constraintTop_toBottomOf="@+id/quantidade"/>
-    <TextView
-        android:id="@+id/hora_minuto"
-        android:layout_width="55dp"
-        android:layout_height="wrap_content"
-        android:text="00"
-        android:padding="@dimen/padding_text"
-        app:layout_constraintStart_toEndOf="@+id/hora_ponto"
-        app:layout_constraintTop_toBottomOf="@+id/quantidade" />
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:textColor="@color/colorAccent"
-        android:textSize="@dimen/padding_text"
-        android:id="@+id/usuario_hint"
-        android:text="Obs:"
-        app:layout_constraintTop_toBottomOf="@+id/hora"/>
+
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -279,14 +315,16 @@
         android:textColor="@color/colorPrimary"
         app:layout_constraintStart_toEndOf="@+id/hora_minuto_coleta_hint"
         app:layout_constraintTop_toBottomOf="@+id/obs"/>
+
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:textColor="@color/colorAccent"
         android:textSize="@dimen/padding_text"
-        android:id="@+id/hora_coleta_hint"
-        android:text="Hora da coleta"
-        app:layout_constraintTop_toBottomOf="@+id/obs"/>
+        android:id="@+id/usuario_hint"
+        android:text="Obs:"
+        app:layout_constraintTop_toBottomOf="@+id/hora"/>
+
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -297,16 +335,16 @@
         android:textColor="@color/colorPrimary"
         app:layout_constraintTop_toBottomOf="@+id/obs"/>
 
-
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:id="@+id/dia_coleta_hint"
         android:textColor="@color/colorAccent"
         android:textSize="@dimen/padding_text"
-        android:text="  Dia da coleta"
-        app:layout_constraintStart_toEndOf="@+id/hora_coleta"
+        android:id="@+id/hora_coleta_hint"
+        android:text="Hora da coleta"
         app:layout_constraintTop_toBottomOf="@+id/obs"/>
+
+
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -347,5 +385,14 @@
             android:textColor="@color/colorWhite" />
 
     </RelativeLayout>
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/dia_coleta_hint"
+        android:textColor="@color/colorAccent"
+        android:textSize="@dimen/padding_text"
+        android:text="  Dia da coleta"
+        app:layout_constraintStart_toEndOf="@+id/hora_coleta"
+        app:layout_constraintTop_toBottomOf="@+id/obs"/>
 
 </android.support.constraint.ConstraintLayout>

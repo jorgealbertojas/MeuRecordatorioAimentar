@@ -11,6 +11,7 @@ import android.text.Editable;
 import android.text.TextWatcher;
 import android.util.Log;
 import android.view.View;
+import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -23,6 +24,7 @@ import com.example.jorge.meurecordatorio.Adapter.LocalAdapter;
 import com.example.jorge.meurecordatorio.Adapter.OcasiaoConsumoAdapter;
 import com.example.jorge.meurecordatorio.Adapter.PreparacaoAdapter;
 import com.example.jorge.meurecordatorio.Adapter.UnidadeAdapter;
+import com.example.jorge.meurecordatorio.Generica.AlimentoActivity;
 import com.example.jorge.meurecordatorio.Generica.EntrevistadoActivity;
 import com.example.jorge.meurecordatorio.Generica.UnidadeActivity;
 import com.example.jorge.meurecordatorio.Interface.InterfaceAdicao;
@@ -57,8 +59,11 @@ import com.example.jorge.meurecordatorio.Utilite.Url;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 
+import java.io.FileInputStream;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Properties;
 
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -94,6 +99,8 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+
+        carregarsuario_login();
 
         if (savedInstanceState == null){
             mDataBase = new DataBase(this);
@@ -188,7 +195,8 @@ public class MainActivity extends AppCompatActivity {
                         // TODO: handle exception
                     }
                 }else{
-                    Toast.makeText(MainActivity.this,"Escolha um entrevistado!",Toast.LENGTH_LONG);
+                    Toast.makeText(MainActivity.this,"Escolha um entrevistado!",Toast.LENGTH_LONG).show();
+
                 }
             }
         });
@@ -245,6 +253,31 @@ public class MainActivity extends AppCompatActivity {
         }
 
     };
+
+    public void carregarsuario_login()
+    {
+
+
+        EditText nEditText = (EditText) findViewById(R.id.editEntrevistado);
+        Properties properties = new Properties();
+        try
+        {
+            FileInputStream fis;
+            fis = new  FileInputStream(Modulo.nomeArquivoINI);
+            properties.load(fis);
+            mUsuario = properties.getProperty("conf.usuario_login");
+
+
+
+
+        }
+        catch (IOException e)
+        {
+            e.printStackTrace();
+        }
+
+
+    }
 
 
 
