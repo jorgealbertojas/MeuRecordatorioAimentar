@@ -1,0 +1,119 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/txtlogin"
+    style="@style/background_all"
+    android:background="#4a89ff"
+    android:weightSum="1">
+<LinearLayout
+    android:layout_width="match_parent"
+    android:orientation="vertical"
+    android:gravity="top"
+    android:layout_height="wrap_content">
+    <Space
+        android:layout_width="match_parent"
+        android:layout_height="46dp"
+        android:layout_weight="0.05" />
+
+    <ImageView
+        android:id="@+id/imageView1"
+        android:layout_width="200dp"
+        android:layout_height="70dp"
+        android:layout_gravity="center_horizontal"
+        android:background="@null"
+        android:scaleType="fitCenter"
+        android:src="@mipmap/ic_user"
+        android:layout_marginBottom="30dp"
+        />
+
+
+
+    <TableLayout xmlns:android="http://schemas.android.com/apk/res/android"
+        android:layout_width="wrap_content"
+        android:layout_gravity="center_horizontal"
+        android:layout_height="wrap_content">
+        <TableRow>
+            <TextView
+                style="@style/form_label"
+                android:id="@+id/textView1"
+                android:text="Login:"
+                />
+
+            <EditText
+                android:id="@+id/editEntrevistado"
+                style="@style/form_input"
+                android:background="@drawable/rounded_corner_cinza"
+                android:ems="10"
+                android:text="">
+
+                <requestFocus />
+            </EditText>
+        </TableRow>
+
+    </TableLayout>
+
+    <TableLayout xmlns:android="http://schemas.android.com/apk/res/android"
+        android:layout_width="wrap_content"
+        android:layout_gravity="center_horizontal"
+        android:layout_height="wrap_content">
+
+        <TableRow
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textAppearance="?android:attr/textAppearanceSmall"
+                android:id="@+id/textView2"
+                android:layout_column="1" />
+        </TableRow>
+
+        <TableRow>
+            <TextView
+                style="@style/form_label"
+                android:id="@+id/textViewselecionado"
+                android:text="Senha:" />
+
+            <EditText
+                android:id="@+id/editsenhalogin"
+                style="@style/form_input"
+                android:layout_column="2"
+                android:background="@drawable/rounded_corner_cinza"
+                android:ems="10"
+                android:inputType="textPassword"
+                android:text="" />
+
+        </TableRow>
+
+        <TextView
+            android:id="@+id/imageButton1"
+            style="@style/icon_confirmar"
+            android:layout_height="35dp"
+            android:background="@drawable/rounded_corner"
+            android:text="Entrar"
+            android:textAlignment="center" />
+
+    </TableLayout>
+
+
+
+
+
+
+
+
+</LinearLayout>
+
+
+    <TextView
+        android:id="@+id/imageButtonNovos"
+        style="@style/icon_confirmar"
+        android:layout_height="35dp"
+        android:layout_width="200dp"
+        android:background="@drawable/rounded_corner"
+        android:text="Buscar novos usuários"
+        android:layout_alignParentBottom="true"
+        android:layout_centerInParent="true"
+        android:textAlignment="center" />
+
+</RelativeLayout>

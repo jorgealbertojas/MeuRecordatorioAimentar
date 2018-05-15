@@ -102,7 +102,7 @@ public class ConfiguracaoActivity extends AppCompatActivity {
 
     private InterfaceUnidadeAlimento mInterfaceUNIDADE_ALIMENTO;
 
-    private InterfaceUsuario mInterfaceUSUARIO;
+
 
     private InterfaceOcasiaoConsumo mInterfaceOCASIAO_CONSUMO;
     OcasiaoConsumoAdapter mAdapterOCASIAO_CONSUMO;
@@ -318,8 +318,6 @@ public class ConfiguracaoActivity extends AppCompatActivity {
             create_API_UNIADE_ALIMENTO(Url.BASE_URL_UNIDADE_UNIDADE);
             mInterfaceUNIDADE_ALIMENTO.getUniadeAliemnto().enqueue(UNIDADE_ALIMENTOCallback);
 
-            create_API_USUARIO(Url.BASE_URL_USUARIO);
-            mInterfaceUSUARIO.getUsuario().enqueue(USUSARIOCallback);
 
             create_API_ADICAO_ALIMENTO(Url.BASE_URL_ADICAO_ADICAO);
             mInterfaceADICAO_ALIMENTO.getAdicaoAlimento().enqueue(ADICAO_ALIMENTOCallback);
@@ -715,56 +713,7 @@ public class ConfiguracaoActivity extends AppCompatActivity {
         }
     };
 
-    /**
-     * *********************USUARIO******************************* .
-     */
-    private void create_API_USUARIO(String url) {
-        Gson gson = new GsonBuilder()
-                .create();
 
-        Retrofit retrofit = new Retrofit.Builder()
-                .baseUrl(url)
-                .addConverterFactory(GsonConverterFactory.create(gson))
-                .build();
-
-        mInterfaceUSUARIO = retrofit.create(InterfaceUsuario.class);
-    }
-
-    private Callback<ListWrapper<Usuario>> USUSARIOCallback = new Callback<ListWrapper<Usuario>>() {
-        @Override
-        public void onResponse(Call<ListWrapper<Usuario>> call, Response<ListWrapper<Usuario>> response) {
-            try {
-                if (response.isSuccessful()) {
-                    List<Usuario> data = new ArrayList<>();
-                    data.addAll(response.body().items);
-
-                    // Persistent Data for SQLLite
-                    mDataBase = new DataBase(getApplicationContext());
-                    mDb = mDataBase.getReadableDatabase();
-
-                    mDataBase.insertTABLE_USUARIO(data);
-
-
-                } else {
-                    Log.d("QuestionsCallback", "Code: " + response.code() + " Message: " + response.message());
-                }
-            } catch (NullPointerException e) {
-                System.out.println("onActivityResult consume crashed");
-                runOnUiThread(new Runnable() {
-                    public void run() {
-                        Context context = getApplicationContext();
-                        Toast toast = Toast.makeText(context, R.string.Error_Access_empty, Toast.LENGTH_SHORT);
-                        toast.show();
-                    }
-                });
-            }
-        }
-
-        @Override
-        public void onFailure(Call<ListWrapper<Usuario>> call, Throwable t) {
-            t.printStackTrace();
-        }
-    };
 
 
     /**

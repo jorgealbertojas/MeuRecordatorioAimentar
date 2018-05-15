@@ -93,6 +93,12 @@ public class DbSelect {
                     + Field.FIELD_SENHA +
                     " FROM " + DbCreate.TABLE_USUARIO ;
 
+    public static String GET_USUARIO_PARAMETRO =
+            " SELECT "
+                    + Field.FIELD_USUARIO  + ","
+                    + Field.FIELD_SENHA +
+                    " FROM " + DbCreate.TABLE_USUARIO + " WHERE " + Field.FIELD_USUARIO + " = ? AND " + Field.FIELD_SENHA + " = ? ";
+
     public static String GET_ENTREVISTADO =
             " SELECT "
                     + Field.FIELD_ENTREVISTADO_ID  + ","
@@ -100,7 +106,7 @@ public class DbSelect {
                     " FROM " + DbCreate.TABLE_ENTREVISTADO ;
 
     public static String GET_ENTREVISTADO_COLETADO =
-            " SELECT "
+            " SELECT distinct "
                     + Field.FIELD_ENTREVISTADO_ID  + ","
                     + Field.FIELD_ENTREVISTADO +
                     " FROM " + DbCreate.TABLE_ENTREVISTADO + " E , " +DbCreate.TABLE_ALIMENTACAO + " A WHERE " + Field.FIELD_ENTREVISTADO_ID + " = " + Field.FIELD_ALIMENTACAO_ENTREVISTADO_ID  ;

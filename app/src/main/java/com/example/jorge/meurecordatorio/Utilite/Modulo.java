@@ -23,4 +23,8 @@ public class Modulo {
 
     public static String caminhobanco = "/data/data/com.example.jorge.meurecordatorio/databases/" + DB_NAME;
 
+    public static boolean Liberado = true;
+
+    public static String nomeArquivoINI = "/data/data/com.example.jorge.meurecordatorio/configuracao.properties";
+
 }

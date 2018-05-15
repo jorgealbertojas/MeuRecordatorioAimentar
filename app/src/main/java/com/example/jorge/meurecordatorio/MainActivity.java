@@ -100,6 +100,12 @@ public class MainActivity extends AppCompatActivity {
             mDb = mDataBase.getReadableDatabase();
             DbInstance.getInstance(this);
 
+            if(savedInstanceState == null){
+                Intent WSActivity = new Intent(this, LoginActivity.class);
+                startActivity(WSActivity);
+
+            }
+
         }
 
 
@@ -224,6 +230,21 @@ public class MainActivity extends AppCompatActivity {
         Intent intentToStartDetailActivity = new Intent(getBaseContext(), destinationClass);
         startActivity(intentToStartDetailActivity);
     }
+
+    public void onStart() {
+        super.onStart();
+
+        if (!Modulo.Liberado) {
+            this.finish();
+            try {
+                this.finalize();
+            } catch (Throwable e) {
+                // TODO Auto-generated catch block
+                e.printStackTrace();
+            }
+        }
+
+    };
 
 
 
