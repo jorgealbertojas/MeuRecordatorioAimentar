@@ -183,7 +183,7 @@ public class ConfiguracaoActivity extends AppCompatActivity {
                     deleteDialog.setView(deleteDialogView);
 
                     TextView nTextView = (TextView) deleteDialogView.findViewById(R.id.txt_dia);
-                    nTextView.setText("ATENÇÃO! Tem certeza que deseja busscar dados do servidor? Os dados coletados deste aparelho serão perdidos e atualizados com os novos dados trazidos do servidor exemplo ALIMENTOS, USUáRIOS ENTREVISTADOS e outros dados referente ao alimento!");
+                    nTextView.setText("ATENÇÃO! Tem certeza que deseja buscar dados do servidor? Os dados coletados deste aparelho serão perdidos e atualizados com os novos dados trazidos do servidor exemplo ALIMENTOS, USUáRIOS ENTREVISTADOS e outros dados referente ao alimento!");
 
                     deleteDialogView.findViewById(R.id.btn_yes).setOnClickListener(new View.OnClickListener() {
 
@@ -252,10 +252,27 @@ public class ConfiguracaoActivity extends AppCompatActivity {
 
             List<Alimentacao> dataPersistent = new ArrayList<>();
             dataPersistent = mDataBase.getListAlimentacao();
-
-
             for (int i = 0; i < dataPersistent.size(); i++) {
-                String formatado = dataPersistent.get(i).getAlimentacao_alimento_id().toString() + "\n";
+
+                String ID_RECORDATORIO = getFormatodoComEspaco(3, dataPersistent.get(i).getAlimentacao_id());
+                String ID_ALIMENTO  = getFormatodoComEspaco(6, dataPersistent.get(i).getAlimentacao_alimento_id());
+                String ALIMENTO_NOVO = getFormatodoComEspaco(1, alimentoENovo(dataPersistent.get(i).getAlimentacao_alimento_id()));
+                String ALIMENTO_DESCRICAO = getFormatodoComEspaco(50, dataPersistent.get(i).getAlimentacao_alimento());
+                String ID_PREPARACAO = getFormatodoComEspaco(4, dataPersistent.get(i).getAlimentacao_preparacao_id());
+                String ID_UNIDADE = getFormatodoComEspaco(4, dataPersistent.get(i).getAlimentacao_unidade_id());
+                String ID_ADICAO = getFormatodoComEspaco(4, dataPersistent.get(i).getAlimentacao_adicao_id());
+                String ID_LOCAL = getFormatodoComEspaco(2, dataPersistent.get(i).getAlimentacao_local_id());
+                String ID_CONSUMO = getFormatodoComEspaco(2, dataPersistent.get(i).getAlimentacao_ocasiao_consumo_id());
+                String QUANTIDADE = getFormatodoComEspaco(6, dataPersistent.get(i).getAlimentacao_quantidade());
+                String HORA = getFormatodoComEspaco(4, dataPersistent.get(i).getAlimentacao_hora());
+                String HORA_COLETA = getFormatodoComEspaco(6, dataPersistent.get(i).getAlimentacao_hora_coleta());
+                String DATA_COLETA = getFormatodoComEspaco(8, dataPersistent.get(i).getAlimentacao_dia_coleta());
+                String USUARIO = getFormatodoComEspaco(10, dataPersistent.get(i).getAlimentacao_usuario());
+                String ENTREVISTADO = getFormatodoComEspaco(10, dataPersistent.get(i).getAlimentacao_entrevistado_id());
+                String OBS = getFormatodoComEspaco(130, dataPersistent.get(i).getAlimentacao_obs());
+
+
+                String formatado = ID_RECORDATORIO + ID_ALIMENTO + ALIMENTO_NOVO + ALIMENTO_DESCRICAO + ID_PREPARACAO + ID_UNIDADE + ID_ADICAO + ID_LOCAL + ID_CONSUMO + QUANTIDADE + HORA + HORA_COLETA + DATA_COLETA + USUARIO + ENTREVISTADO + OBS + "\n";
                 fos.write(formatado.getBytes());
             }
         } catch (IOException e) {
@@ -266,6 +283,31 @@ public class ConfiguracaoActivity extends AppCompatActivity {
         } catch (IOException e) {
             e.printStackTrace();
         }
+    }
+
+    private String alimentoENovo(String aliemntoENovoID){
+        mDataBase = new DataBase(ConfiguracaoActivity.this);
+        mDb = mDataBase.getReadableDatabase();
+        DbInstance.getInstance(ConfiguracaoActivity.this);
+        mDataBase.getListAlimentoID(aliemntoENovoID);
+        if (mDataBase.getListAlimentoID(aliemntoENovoID) > 0){
+            return "1";
+        }else{
+            return "0";
+        }
+
+    }
+
+    private String getFormatodoComEspaco(int espaco, String valor){
+        String resultado = valor;
+
+        int i = valor.length();
+        while (i < espaco){
+            resultado = " " + resultado;
+            i++;
+        }
+
+        return resultado;
     }
 
     private static boolean isExternalStorageReadOnly() {

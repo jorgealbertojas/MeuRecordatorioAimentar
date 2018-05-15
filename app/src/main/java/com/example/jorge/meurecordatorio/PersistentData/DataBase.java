@@ -299,6 +299,33 @@ public class DataBase extends SQLiteOpenHelper {
 
     }
 
+    public int getListAlimentoID(String id) {
+
+        List<Alimento> alimentoList = new ArrayList<Alimento>();
+
+        mDb = this.getWritableDatabase();
+
+        Cursor cursor = mDb.rawQuery(DbSelect.GET_ALIMENTO + " WHERE  " + FIELD_ALIMENTO_ID + " = " + id,null);
+        cursor.moveToFirst();
+        while(!cursor.isAfterLast() ){
+            Alimento alimento = new Alimento();
+
+            try {
+                alimento.setAlimento_id(cursor.getString(cursor.getColumnIndex(FIELD_ALIMENTO_ID)));
+                alimento.setAlimento(cursor.getString(cursor.getColumnIndex(Field.FIELD_ALIMENTO)));
+                alimento.setNovo(cursor.getString(cursor.getColumnIndex(Field.FIELD_NOVO)));
+
+            } catch (Exception e) {
+                System.out.println(e.getMessage());
+            }
+            alimentoList.add(alimento);
+            cursor.moveToNext();
+        }
+        cursor.close();
+        return alimentoList.size();
+
+    }
+
     public void deleteAlimentacao(String id){
         mDb = this.getWritableDatabase();
         mDb.execSQL(" DELETE FROM " + DbCreate.TABLE_ALIMENTACAO + " WHERE " + FIELD_ALIMENTACAO_ID + " = " + id);
