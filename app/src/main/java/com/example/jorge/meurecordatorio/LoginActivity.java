@@ -30,6 +30,7 @@ import com.example.jorge.meurecordatorio.Interface.InterfaceUsuario;
 import com.example.jorge.meurecordatorio.Model.ListWrapper;
 import com.example.jorge.meurecordatorio.Model.Usuario;
 import com.example.jorge.meurecordatorio.PersistentData.DataBase;
+import com.example.jorge.meurecordatorio.PersistentData.DbCreate;
 import com.example.jorge.meurecordatorio.PersistentData.DbInstance;
 import com.example.jorge.meurecordatorio.Utilite.Common;
 import com.example.jorge.meurecordatorio.Utilite.Modulo;
@@ -84,6 +85,7 @@ public class LoginActivity extends AppCompatActivity {
 
         mDataBase = new DataBase(this);
         mDb = mDataBase.getReadableDatabase();
+        mDb.execSQL(DbCreate.CREATE_TABLE_USUARIO);
         DbInstance.getInstance(this);
 
         imageButtonNovos = (TextView) findViewById(R.id.imageButtonNovos);
@@ -253,9 +255,12 @@ public class LoginActivity extends AppCompatActivity {
                     mDataBase = new DataBase(getApplicationContext());
                     mDb = mDataBase.getReadableDatabase();
 
+                    mDb.execSQL(" DROP TABLE IF EXISTS " + DbCreate.TABLE_USUARIO );
+                    mDb.execSQL(DbCreate.CREATE_TABLE_USUARIO);
+
                     mDataBase.insertTABLE_USUARIO(data);
 
-
+                    Toast.makeText(LoginActivity.this, "Buscou os usuários com sucesso!", Toast.LENGTH_SHORT).show();
                 } else {
                     Log.d("QuestionsCallback", "Code: " + response.code() + " Message: " + response.message());
                 }

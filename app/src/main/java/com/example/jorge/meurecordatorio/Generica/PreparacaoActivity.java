@@ -94,7 +94,7 @@ public class PreparacaoActivity extends AppCompatActivity {
         if (mAlimento.equals("S")){
             dataPersistent = mDataBase.getListPreparacao();
         }else{
-            dataPersistent = mDataBase.getListPreparacao(mAlimento);
+            dataPersistent = mDataBase.getListPreparacaoCOMRELACIONAMENTO(mAlimento);
         }
 
         if (dataPersistent.size()>0) {

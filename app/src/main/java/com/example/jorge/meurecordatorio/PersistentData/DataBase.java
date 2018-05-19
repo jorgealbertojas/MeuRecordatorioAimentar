@@ -57,7 +57,7 @@ public class DataBase extends SQLiteOpenHelper {
         db.execSQL(" DROP TABLE IF EXISTS " + DbCreate.TABLE_OCASIAO_CONSUMO );
         db.execSQL(" DROP TABLE IF EXISTS " + DbCreate.TABLE_LOCAL );
         db.execSQL(" DROP TABLE IF EXISTS " + DbCreate.TABLE_ALIMENTACAO );
-        db.execSQL(" DROP TABLE IF EXISTS " + DbCreate.TABLE_USUARIO );
+        //db.execSQL(" DROP TABLE IF EXISTS " + DbCreate.TABLE_USUARIO );
         db.execSQL(" DROP TABLE IF EXISTS " + DbCreate.TABLE_ENTREVISTADO );
         db.execSQL(" DROP TABLE IF EXISTS " + DbCreate.TABLE_PREPARACAO_ALIMENTO );
         db.execSQL(" DROP TABLE IF EXISTS " + DbCreate.TABLE_UNIDADE_ALIMENTO );
@@ -70,7 +70,7 @@ public class DataBase extends SQLiteOpenHelper {
         db.execSQL(DbCreate.CREATE_TABLE_OCASIAO_CONSUMO);
         db.execSQL(DbCreate.CREATE_TABLE_LOCAL);
         db.execSQL(DbCreate.CREATE_TABLE_ALIMENTACAO);
-        db.execSQL(DbCreate.CREATE_TABLE_USUARIO);
+       // db.execSQL(DbCreate.CREATE_TABLE_USUARIO);
         db.execSQL(DbCreate.CREATE_TABLE_ENTREVISTADO);
         db.execSQL(DbCreate.CREATE_TABLE_PREPARACAO_ALIMENTO);
         db.execSQL(DbCreate.CREATE_TABLE_UNIDADE_ALIMENTO);
@@ -230,11 +230,11 @@ public class DataBase extends SQLiteOpenHelper {
 
     public int NovoID_ALIMENTO() {
         mDb = this.getWritableDatabase();
-        Cursor cursorTMP = mDb.rawQuery(" SELECT MAX(" + FIELD_ALIMENTO_ID + ") FROM " + DbCreate.TABLE_ALIMENTO, null);
+        Cursor cursorTMP = mDb.rawQuery(" SELECT " + FIELD_ALIMENTO_ID + " FROM " + DbCreate.TABLE_ALIMENTO, null);
         cursorTMP.moveToFirst();
         int i = 0;
         if (cursorTMP.getCount() > 0) {
-            i = cursorTMP.getInt(0);
+            i = cursorTMP.getCount();
         }
         return i + 1;
     }
@@ -305,7 +305,7 @@ public class DataBase extends SQLiteOpenHelper {
 
         mDb = this.getWritableDatabase();
 
-        Cursor cursor = mDb.rawQuery(DbSelect.GET_ALIMENTO + " WHERE  " + FIELD_ALIMENTO_ID + " = " + id,null);
+        Cursor cursor = mDb.rawQuery(DbSelect.GET_ALIMENTO + " WHERE  " + FIELD_ALIMENTO_ID + " = '" + id + "'",null);
         cursor.moveToFirst();
         while(!cursor.isAfterLast() ){
             Alimento alimento = new Alimento();
@@ -328,7 +328,7 @@ public class DataBase extends SQLiteOpenHelper {
 
     public void deleteAlimentacao(String id){
         mDb = this.getWritableDatabase();
-        mDb.execSQL(" DELETE FROM " + DbCreate.TABLE_ALIMENTACAO + " WHERE " + FIELD_ALIMENTACAO_ID + " = " + id);
+        mDb.execSQL(" DELETE FROM " + DbCreate.TABLE_ALIMENTACAO + " WHERE " + FIELD_ALIMENTACAO_ID + " = '" + id +"'");
     }
 
     public List<Alimento> getListAlimento(String partNome) {
@@ -391,7 +391,33 @@ public class DataBase extends SQLiteOpenHelper {
 
         mDb = this.getWritableDatabase();
 
-        Cursor cursor = mDb.rawQuery(DbSelect.GET_PREPARACAO + " AND UA." + Field.FIELD_UNIDADE_UNIDADE_ID + " = " + alimento + " AND U."+ Field.FIELD_UNIDADE + " LIKE '%" + partNome + "%'",null);
+        Cursor cursor = mDb.rawQuery(DbSelect.GET_PREPARACAO + " AND UA." + Field.FIELD_PREPARACAO_ALIMENTO_ID + " = '" + alimento + "' AND U."+ Field.FIELD_UNIDADE + " LIKE '%" + partNome + "%'",null);
+        cursor.moveToFirst();
+        while(!cursor.isAfterLast() ){
+            Preparacao preparacao = new Preparacao();
+
+            try {
+                preparacao.setPreparacao_id(cursor.getString(cursor.getColumnIndex(Field.FIELD_PREPARACAO_ID)));
+                preparacao.setPreparacao(cursor.getString(cursor.getColumnIndex(Field.FIELD_PREPARACAO)));
+
+            } catch (Exception e) {
+                System.out.println(e.getMessage());
+            }
+            preparacaoList.add(preparacao);
+            cursor.moveToNext();
+        }
+        cursor.close();
+        return preparacaoList;
+
+    }
+
+    public List<Preparacao> getListPreparacaoCOMRELACIONAMENTO(String alimento) {
+
+        List<Preparacao> preparacaoList = new ArrayList<Preparacao>();
+
+        mDb = this.getWritableDatabase();
+
+        Cursor cursor = mDb.rawQuery(DbSelect.GET_PREPARACAO + " AND PA." + Field.FIELD_PREPARACAO_ALIMENTO_ID + " = '" + alimento  + "'",null);
         cursor.moveToFirst();
         while(!cursor.isAfterLast() ){
             Preparacao preparacao = new Preparacao();
@@ -467,7 +493,7 @@ public class DataBase extends SQLiteOpenHelper {
 
         mDb = this.getWritableDatabase();
 
-        Cursor cursor = mDb.rawQuery(DbSelect.GET_UNIDADE + " AND UA." + Field.FIELD_UNIDADE_UNIDADE_ID + " = " + alimento,null);
+        Cursor cursor = mDb.rawQuery(DbSelect.GET_UNIDADE + " AND UA." + Field.FIELD_UNIDADE_ALIMENTO_ID + " = '" + alimento  + "'",null);
         cursor.moveToFirst();
         while(!cursor.isAfterLast() ){
             Unidade unidade = new Unidade();
@@ -494,7 +520,7 @@ public class DataBase extends SQLiteOpenHelper {
 
         mDb = this.getWritableDatabase();
 
-        Cursor cursor = mDb.rawQuery(DbSelect.GET_UNIDADE + " AND UA." + Field.FIELD_UNIDADE_UNIDADE_ID + " = " + alimento + " AND U."+ Field.FIELD_UNIDADE + " LIKE '%" + partNome + "%'",null);
+        Cursor cursor = mDb.rawQuery(DbSelect.GET_UNIDADE + " AND UA." + Field.FIELD_UNIDADE_ALIMENTO_ID + " = '" + alimento + "' AND U."+ Field.FIELD_UNIDADE + " LIKE '%" + partNome + "%'",null);
         cursor.moveToFirst();
         while(!cursor.isAfterLast() ){
             Unidade unidade = new Unidade();
@@ -546,7 +572,7 @@ public class DataBase extends SQLiteOpenHelper {
 
         mDb = this.getWritableDatabase();
 
-        Cursor cursor = mDb.rawQuery(DbSelect.GET_ADICAO + " AND AA." + Field.FIELD_ADICAO_ADICAO_ID + " = " + alimento + " AND A."+ Field.FIELD_ADICAO + " LIKE '%" + partNome + "%'",null);
+        Cursor cursor = mDb.rawQuery(DbSelect.GET_ADICAO + " AND AA." + Field.FIELD_ADICAO_ALIMENTO_ID + " = '" + alimento + "' AND A."+ Field.FIELD_ADICAO + " LIKE '%" + partNome + "%'",null);
         cursor.moveToFirst();
         while(!cursor.isAfterLast() ){
             Adicao adicao = new Adicao();
@@ -572,7 +598,7 @@ public class DataBase extends SQLiteOpenHelper {
 
         mDb = this.getWritableDatabase();
 
-        Cursor cursor = mDb.rawQuery(DbSelect.GET_ADICAO + " AND AA." + Field.FIELD_ADICAO_ADICAO_ID + " = " + alimento,null);
+        Cursor cursor = mDb.rawQuery(DbSelect.GET_ADICAO + " AND AA." + Field.FIELD_ADICAO_ALIMENTO_ID + " = '" + alimento  + "'",null);
         cursor.moveToFirst();
         while(!cursor.isAfterLast() ){
             Adicao adicao = new Adicao();

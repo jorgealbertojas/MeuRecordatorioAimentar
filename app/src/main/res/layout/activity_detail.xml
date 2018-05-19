@@ -361,7 +361,7 @@
         android:layout_height="wrap_content"
         android:hint="Caso necessário escreva uma observação"
         android:padding="@dimen/padding_text"
-        android:maxLines="200"
+        android:maxLines="130"
         android:lines="2"
         app:layout_constraintTop_toBottomOf="@+id/hora" />
 

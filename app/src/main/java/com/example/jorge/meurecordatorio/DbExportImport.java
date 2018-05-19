@@ -35,7 +35,7 @@ public class DbExportImport extends AppCompatActivity {
     private String usuario = "";
     private String Nomeusuario = "";
     private int AlunoAtual = 0;
-    private String filtro_desc_pesquisa = "";
+    private String filtro_desc_pesquisa = "REC24";
     private String filtro_previsao = "";
     private String filtro_id_cliente = "";
     private String filtro_id_pesquisa = "";

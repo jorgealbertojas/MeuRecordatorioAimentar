@@ -87,7 +87,7 @@ public class MainActivity extends AppCompatActivity {
 
     public RecyclerView mRecyclerView;
 
-
+    private TextView tv_quantity;
 
     private TextView ListaEntrevistado;
     private TextView entrevistado;
@@ -101,6 +101,8 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
 
         carregarsuario_login();
+
+        tv_quantity = (TextView) findViewById(R.id.tv_quantity);
 
         if (savedInstanceState == null){
             mDataBase = new DataBase(this);
@@ -225,8 +227,10 @@ public class MainActivity extends AppCompatActivity {
 
         if (dataPersistent.size()>0) {
             mRecyclerView.setAdapter(new AlimentacaoAdapter(dataPersistent));
+            tv_quantity.setText(Integer.toString(dataPersistent.size()));
         }else{
             mRecyclerView.setAdapter(null);
+            tv_quantity.setText("0");
         }
     }
 

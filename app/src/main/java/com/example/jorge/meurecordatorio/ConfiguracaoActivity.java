@@ -8,6 +8,7 @@ import android.os.Environment;
 import android.os.StatFs;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.text.format.Time;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -46,6 +47,7 @@ import com.example.jorge.meurecordatorio.Model.Unidade;
 import com.example.jorge.meurecordatorio.Model.UnidadeAlimento;
 import com.example.jorge.meurecordatorio.Model.Usuario;
 import com.example.jorge.meurecordatorio.PersistentData.DataBase;
+import com.example.jorge.meurecordatorio.PersistentData.DbCreate;
 import com.example.jorge.meurecordatorio.PersistentData.DbInstance;
 import com.example.jorge.meurecordatorio.Utilite.Common;
 import com.example.jorge.meurecordatorio.Utilite.Modulo;
@@ -54,9 +56,11 @@ import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 
 import java.io.File;
+import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
+import java.io.OutputStream;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -68,8 +72,10 @@ import retrofit2.converter.gson.GsonConverterFactory;
 
 public class ConfiguracaoActivity extends AppCompatActivity {
 
-    String filename = "teste.txt";
+    String filename = "REC24.txt";
     File myExternalFile;
+
+    private String filtro_desc_pesquisa = "REC24";
 
     private TextView TextViewCOPIAR;
     private TextView TextViewBUSCAR;
@@ -104,6 +110,8 @@ public class ConfiguracaoActivity extends AppCompatActivity {
 
 
 
+
+
     private InterfaceOcasiaoConsumo mInterfaceOCASIAO_CONSUMO;
     OcasiaoConsumoAdapter mAdapterOCASIAO_CONSUMO;
 
@@ -111,6 +119,8 @@ public class ConfiguracaoActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_configuracao);
+
+
 
         TextViewCOPIAR = (TextView) findViewById(R.id.TextViewCOPIAR);
         TextViewCOPIAR.setOnClickListener(new View.OnClickListener() {
@@ -240,7 +250,19 @@ public class ConfiguracaoActivity extends AppCompatActivity {
     }
 
     private void salvearquivo(){
-        myExternalFile = new File(Modulo.storage, filename);
+
+        String DataCompleta1;
+        Time now1 = new Time();
+        now1.setToNow();
+        DataCompleta1 = Integer.toString(now1.year);
+        DataCompleta1 = DataCompleta1 + "_" + Integer.toString(now1.month + 1);
+        DataCompleta1 = DataCompleta1 + "_" + Integer.toString(now1.monthDay);
+        DataCompleta1 = DataCompleta1 + "_" + Integer.toString(now1.hour);
+        DataCompleta1 = DataCompleta1 + "_" + Integer.toString(now1.minute);
+        DataCompleta1 = DataCompleta1 + "_" + Integer.toString(now1.second);
+
+
+        myExternalFile = new File(Modulo.storage, DataCompleta1 +  filename);
 
         FileOutputStream fos = null;
         try {
@@ -255,7 +277,7 @@ public class ConfiguracaoActivity extends AppCompatActivity {
             for (int i = 0; i < dataPersistent.size(); i++) {
 
                 String ID_RECORDATORIO = getFormatodoComEspaco(3, dataPersistent.get(i).getAlimentacao_id());
-                String ID_ALIMENTO  = getFormatodoComEspaco(6, dataPersistent.get(i).getAlimentacao_alimento_id());
+                String ID_ALIMENTO  = getFormatodoComEspaco(8, dataPersistent.get(i).getAlimentacao_alimento_id());
                 String ALIMENTO_NOVO = getFormatodoComEspaco(1, alimentoENovo(dataPersistent.get(i).getAlimentacao_alimento_id()));
                 String ALIMENTO_DESCRICAO = getFormatodoComEspaco(50, dataPersistent.get(i).getAlimentacao_alimento());
                 String ID_PREPARACAO = getFormatodoComEspaco(4, dataPersistent.get(i).getAlimentacao_preparacao_id());
@@ -265,8 +287,8 @@ public class ConfiguracaoActivity extends AppCompatActivity {
                 String ID_CONSUMO = getFormatodoComEspaco(2, dataPersistent.get(i).getAlimentacao_ocasiao_consumo_id());
                 String QUANTIDADE = getFormatodoComEspaco(6, dataPersistent.get(i).getAlimentacao_quantidade());
                 String HORA = getFormatodoComEspaco(4, dataPersistent.get(i).getAlimentacao_hora());
-                String HORA_COLETA = getFormatodoComEspaco(6, dataPersistent.get(i).getAlimentacao_hora_coleta());
-                String DATA_COLETA = getFormatodoComEspaco(8, dataPersistent.get(i).getAlimentacao_dia_coleta());
+                String HORA_COLETA = getFormatodoComEspaco(6, formataHora(dataPersistent.get(i).getAlimentacao_hora_coleta()));
+                String DATA_COLETA = getFormatodoComEspaco(8, formatarData(dataPersistent.get(i).getAlimentacao_dia_coleta()));
                 String USUARIO = getFormatodoComEspaco(10, dataPersistent.get(i).getAlimentacao_usuario());
                 String ENTREVISTADO = getFormatodoComEspaco(10, dataPersistent.get(i).getAlimentacao_entrevistado_id());
                 String OBS = getFormatodoComEspaco(130, dataPersistent.get(i).getAlimentacao_obs());
@@ -274,7 +296,37 @@ public class ConfiguracaoActivity extends AppCompatActivity {
 
                 String formatado = ID_RECORDATORIO + ID_ALIMENTO + ALIMENTO_NOVO + ALIMENTO_DESCRICAO + ID_PREPARACAO + ID_UNIDADE + ID_ADICAO + ID_LOCAL + ID_CONSUMO + QUANTIDADE + HORA + HORA_COLETA + DATA_COLETA + USUARIO + ENTREVISTADO + OBS + "\n";
                 fos.write(formatado.getBytes());
+
             }
+
+
+
+            /////// salvar
+
+            String DataCompleta;
+            Time now = new Time();
+            now.setToNow();
+            DataCompleta = Integer.toString(now.year);
+            DataCompleta = DataCompleta + "_" + Integer.toString(now.month + 1);
+            DataCompleta = DataCompleta + "_" + Integer.toString(now.monthDay);
+            DataCompleta = DataCompleta + "_" + Integer.toString(now.hour);
+            DataCompleta = DataCompleta + "_" + Integer.toString(now.minute);
+            DataCompleta = DataCompleta + "_" + Integer.toString(now.second);
+
+
+            try {
+                bkp(Modulo.caminhobanco, Modulo.storage + Modulo.NomeCopia + filtro_desc_pesquisa + DataCompleta + ".db");
+            } catch (IOException e) {
+                // TODO Auto-generated catch block
+                e.printStackTrace();
+            }
+
+            Toast.makeText(ConfiguracaoActivity.this, "Atualizado com sucesso!", Toast.LENGTH_SHORT).show();
+            mDb.execSQL(" DROP TABLE IF EXISTS " + DbCreate.TABLE_ALIMENTACAO );
+            mDb.execSQL(DbCreate.CREATE_TABLE_ALIMENTACAO);
+
+
+
         } catch (IOException e) {
             e.printStackTrace();
         }
@@ -283,6 +335,90 @@ public class ConfiguracaoActivity extends AppCompatActivity {
         } catch (IOException e) {
             e.printStackTrace();
         }
+    }
+
+    private String formataHora(String hora){
+        try{
+        if (hora != null){
+            hora = hora.replace(":","");
+            return hora;
+        }else{
+            return "0000";
+        }
+
+        }catch(Exception e){
+            return  "00000000";
+        }
+
+    }
+
+    private String formatarData(String data){
+        try{
+
+        String ano ="";
+        String mes ="";
+        String dia = "";
+        if (data != null){
+            if (data.length() > 0){
+                int i = (data.indexOf("/"));
+                if (i > 0) {
+
+                    dia = data.substring(0, i);
+                    mes = data.substring(i+1, data.length());
+
+                    int ii = (mes.indexOf("/"));
+                    ano = mes.substring(0,mes.length());
+                    mes = mes.substring(0,ii );
+
+
+
+                    ano = ano.substring(ii+1, ano.length());
+                }
+
+            }
+        }
+
+        if (mes.length() == 1){
+            mes = "0" + mes;
+        }
+
+        if (dia.length() == 1){
+            dia = "0" + dia;
+        }
+
+
+        return  ano + mes +dia;
+
+        }catch(Exception e){
+            return  "00000000";
+        }
+    }
+
+    private void bkp(String Origem, String Destino) throws IOException {
+        final String inFileName = Origem;
+
+        File dbFile = new File(inFileName);
+        FileInputStream fis = new FileInputStream(dbFile);
+
+
+        //String outFileName = Environment.getExternalStoragePublicDirectory()+"/database_copy.db";
+        String outFileName = Destino;
+
+        // Open the empty db as the output stream
+        OutputStream output = new FileOutputStream(outFileName);
+
+        // Transfer bytes from the inputfile to the outputfile
+        byte[] buffer = new byte[1024];
+        int length;
+        while ((length = fis.read(buffer)) > 0) {
+            output.write(buffer, 0, length);
+        }
+
+        // Close the streams
+        output.flush();
+        output.close();
+        fis.close();
+
     }
 
     private String alimentoENovo(String aliemntoENovoID){
