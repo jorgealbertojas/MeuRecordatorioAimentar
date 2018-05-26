@@ -11,6 +11,7 @@ import com.example.jorge.meurecordatorio.Model.AdicaoAlimento;
 import com.example.jorge.meurecordatorio.Model.Alimentacao;
 import com.example.jorge.meurecordatorio.Model.Alimento;
 import com.example.jorge.meurecordatorio.Model.Entrevistado;
+import com.example.jorge.meurecordatorio.Model.GrauParentesco;
 import com.example.jorge.meurecordatorio.Model.Local;
 import com.example.jorge.meurecordatorio.Model.OcasiaoConsumo;
 import com.example.jorge.meurecordatorio.Model.Preparacao;
@@ -33,6 +34,8 @@ public class DataBase extends SQLiteOpenHelper {
 
     private SQLiteDatabase mDb;
     private Context context;
+    GrauParentesco grauParentesco;
+    List<GrauParentesco> grauParentescoList;
 
 
 
@@ -64,6 +67,7 @@ public class DataBase extends SQLiteOpenHelper {
         db.execSQL(" DROP TABLE IF EXISTS " + DbCreate.TABLE_ADICAO_ALIMENTO );
 
         db.execSQL(DbCreate.CREATE_TABLE_ALIMENTO);
+        db.execSQL(DbCreate.CREATE_TABLE_GRAU_PARENTESCO);
         db.execSQL(DbCreate.CREATE_TABLE_PREPARACAO);
         db.execSQL(DbCreate.CREATE_TABLE_UNIDADE);
         db.execSQL(DbCreate.CREATE_TABLE_ADICAO);
@@ -75,6 +79,27 @@ public class DataBase extends SQLiteOpenHelper {
         db.execSQL(DbCreate.CREATE_TABLE_PREPARACAO_ALIMENTO);
         db.execSQL(DbCreate.CREATE_TABLE_UNIDADE_ALIMENTO);
         db.execSQL(DbCreate.CREATE_TABLE_ADICAO_ALIMENTO);
+
+
+        grauParentescoList = new ArrayList<>();
+
+        grauParentesco = new GrauParentesco();
+        grauParentesco.setId("1");
+        grauParentesco.setParentesco("Mãe");
+        grauParentescoList.add(grauParentesco);
+
+        grauParentesco = new GrauParentesco();
+        grauParentesco.setId("2");
+        grauParentesco.setParentesco("Pai");
+        grauParentescoList.add(grauParentesco);
+
+        grauParentesco = new GrauParentesco();
+        grauParentesco.setId("3");
+        grauParentesco.setParentesco("Tia");
+        grauParentescoList.add(grauParentesco);
+
+
+        insertTABLE_GRAU_PARENTESCO(grauParentescoList);
 
 
     }
@@ -217,6 +242,18 @@ public class DataBase extends SQLiteOpenHelper {
         }
     }
 
+    public void insertTABLE_GRAU_PARENTESCO(List<GrauParentesco> grauParentescoList){
+
+
+        for (int i = 0; i < grauParentescoList.size() ; i++) {
+            ContentValues obj = new ContentValues();
+            obj.put(Field.FIELD_GRAU_PARENTESCO_ID, grauParentescoList.get(i).getId());
+            obj.put(Field.FIELD_GRAU_PARENTESCO, grauParentescoList.get(i).getParentesco());
+            this.onInsert(context,obj, DbCreate.TABLE_GRAU_PARENTESCO);
+
+        }
+    }
+
     public int NovoID_ALIMENTACAO() {
         mDb = this.getWritableDatabase();
         Cursor cursorTMP = mDb.rawQuery(" SELECT MAX(" + FIELD_ALIMENTACAO_ID + ") FROM " + DbCreate.TABLE_ALIMENTACAO, null);
@@ -267,6 +304,8 @@ public class DataBase extends SQLiteOpenHelper {
             obj.put(Field.FIELD_ALIMENTACAO_HORA_COLETA_FIM, alimentacaoList.get(i).getAlimentacao_hora_coleta_fim());
             obj.put(Field.FIELD_ALIMENTACAO_OBS, alimentacaoList.get(i).getAlimentacao_obs());
             obj.put(Field.FIELD_ALIMENTACAO_DIA_COLETA, alimentacaoList.get(i).getAlimentacao_dia_coleta());
+            obj.put(Field.FIELD_ALIMENTACAO_GRAU_PARENTESCO, alimentacaoList.get(i).getAlimentacao_grau_parentesco());
+            obj.put(Field.FIELD_ALIMENTACAO_DIA_ATIPICO, alimentacaoList.get(i).getAlimentacao_dia_atico());
             this.onInsert(context,obj, DbCreate.TABLE_ALIMENTACAO);
 
         }
@@ -563,6 +602,58 @@ public class DataBase extends SQLiteOpenHelper {
         }
         cursor.close();
         return adicaoList;
+
+    }
+
+    public List<GrauParentesco> getListGrauParentesco(String partNome) {
+
+        List<GrauParentesco> grauParentescoList = new ArrayList<GrauParentesco>();
+
+        mDb = this.getWritableDatabase();
+
+        Cursor cursor = mDb.rawQuery(DbSelect.GET_GRAU_PARENTESCO + " WHERE "+ Field.FIELD_GRAU_PARENTESCO + " LIKE '%" + partNome + "%'",null);
+        cursor.moveToFirst();
+        while(!cursor.isAfterLast() ){
+            GrauParentesco grauParentesco = new GrauParentesco();
+
+            try {
+                grauParentesco.setId(cursor.getString(cursor.getColumnIndex(Field.FIELD_GRAU_PARENTESCO_ID)));
+                grauParentesco.setParentesco(cursor.getString(cursor.getColumnIndex(Field.FIELD_GRAU_PARENTESCO)));
+
+            } catch (Exception e) {
+                System.out.println(e.getMessage());
+            }
+            grauParentescoList.add(grauParentesco);
+            cursor.moveToNext();
+        }
+        cursor.close();
+        return grauParentescoList;
+
+    }
+
+    public List<GrauParentesco> getListGrauParentesco() {
+
+        List<GrauParentesco> grauParentescoList = new ArrayList<GrauParentesco>();
+
+        mDb = this.getWritableDatabase();
+
+        Cursor cursor = mDb.rawQuery(DbSelect.GET_GRAU_PARENTESCO,null);
+        cursor.moveToFirst();
+        while(!cursor.isAfterLast() ){
+            GrauParentesco grauParentesco = new GrauParentesco();
+
+            try {
+                grauParentesco.setId(cursor.getString(cursor.getColumnIndex(Field.FIELD_GRAU_PARENTESCO_ID)));
+                grauParentesco.setParentesco(cursor.getString(cursor.getColumnIndex(Field.FIELD_GRAU_PARENTESCO)));
+
+            } catch (Exception e) {
+                System.out.println(e.getMessage());
+            }
+            grauParentescoList.add(grauParentesco);
+            cursor.moveToNext();
+        }
+        cursor.close();
+        return grauParentescoList;
 
     }
 

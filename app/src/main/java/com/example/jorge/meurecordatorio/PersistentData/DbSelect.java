@@ -84,7 +84,9 @@ public class DbSelect {
                     + Field.FIELD_ALIMENTACAO_HORA_COLETA  + ","
                     + Field.FIELD_ALIMENTACAO_HORA_COLETA_FIM  + ","
                     + Field.FIELD_ALIMENTACAO_OBS  + ","
-                    + Field.FIELD_ALIMENTACAO_DIA_COLETA +
+                    + Field.FIELD_ALIMENTACAO_DIA_COLETA + ","
+                    + Field.FIELD_ALIMENTACAO_GRAU_PARENTESCO  + ","
+                    + Field.FIELD_ALIMENTACAO_DIA_ATIPICO +
                     " FROM " + DbCreate.TABLE_ALIMENTACAO ;
 
     public static String GET_USUARIO =
@@ -129,6 +131,13 @@ public class DbSelect {
                     + Field.FIELD_ADICAO_ADICAO_ID  + ","
                     + Field.FIELD_ADICAO_ALIMENTO_ID +
                     " FROM " + DbCreate.TABLE_ADICAO ;
+
+    public static String GET_GRAU_PARENTESCO =
+            " SELECT "
+                    + Field.FIELD_GRAU_PARENTESCO  + ","
+                    + Field.FIELD_GRAU_PARENTESCO_ID +
+                    " FROM " + DbCreate.TABLE_GRAU_PARENTESCO ;
+
 
 /*
     public static String GET_SQL_PULL_REQUEST =

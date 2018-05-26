@@ -30,6 +30,8 @@ public class Alimentacao implements Serializable {
     private String alimentacao_hora_coleta_fim;
     private String alimentacao_obs;
     private String alimentacao_dia_coleta;
+    private String alimentacao_grau_parentesco;
+    private String alimentacao_dia_atico;
 
     public String getAlimentacao_hora_coleta_fim() {
         return alimentacao_hora_coleta_fim;
@@ -205,5 +207,21 @@ public class Alimentacao implements Serializable {
 
     public void setAlimentacao_dia_coleta(String alimentacao_dia_coleta) {
         this.alimentacao_dia_coleta = alimentacao_dia_coleta;
+    }
+
+    public String getAlimentacao_grau_parentesco() {
+        return alimentacao_grau_parentesco;
+    }
+
+    public void setAlimentacao_grau_parentesco(String alimentacao_grau_parentesco) {
+        this.alimentacao_grau_parentesco = alimentacao_grau_parentesco;
+    }
+
+    public String getAlimentacao_dia_atico() {
+        return alimentacao_dia_atico;
+    }
+
+    public void setAlimentacao_dia_atico(String alimentacao_dia_atico) {
+        this.alimentacao_dia_atico = alimentacao_dia_atico;
     }
 }

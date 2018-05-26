@@ -365,6 +365,8 @@
         android:lines="2"
         app:layout_constraintTop_toBottomOf="@+id/hora" />
 
+
+
     <RelativeLayout
         android:id="@+id/relativeLayout2"
         android:layout_width="match_parent"
@@ -394,5 +396,55 @@
         android:text="  Dia da coleta"
         app:layout_constraintStart_toEndOf="@+id/hora_coleta"
         app:layout_constraintTop_toBottomOf="@+id/obs"/>
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:padding="@dimen/padding_text"
+        android:id="@+id/grau_parentesco"
+        android:text="0"
+        android:hint="          "
+        android:background="@drawable/rounded_corner_cinza_claro"
+        app:layout_constraintTop_toBottomOf="@+id/dia_coleta"/>
+
+    <TextView
+        android:id="@+id/grau_parentesco_nome"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:padding="@dimen/padding_text"
+        android:text="0"
+        android:hint="          "
+        android:background="@drawable/rounded_corner_cinza_claro"
+        app:layout_constraintStart_toEndOf="@+id/ocasiao_consumo"
+        app:layout_constraintTop_toBottomOf="@+id/dia_coleta"/>
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textColor="@color/colorAccent"
+        android:textSize="@dimen/padding_text"
+        android:id="@+id/grau_parentesco_hint"
+        android:text="Grau parentesco"
+        app:layout_constraintTop_toBottomOf="@+id/dia_coleta"/>
+
+    <TextView
+        android:id="@+id/dia_atipico"
+        android:layout_width="55dp"
+        android:layout_height="wrap_content"
+        android:text="Não"
+        android:padding="@dimen/padding_text"
+        app:layout_constraintStart_toEndOf="@+id/grau_parentesco_nome"
+        app:layout_constraintTop_toBottomOf="@+id/dia_coleta" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textColor="@color/colorAccent"
+        android:textSize="@dimen/padding_text"
+        android:id="@+id/dia_atipico_hint"
+        android:text="Dia atípico"
+        app:layout_constraintStart_toEndOf="@+id/grau_parentesco_nome"
+        app:layout_constraintTop_toBottomOf="@+id/dia_coleta"/>
+
 
 </android.support.constraint.ConstraintLayout>

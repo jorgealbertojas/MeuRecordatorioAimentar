@@ -23,6 +23,7 @@ import android.widget.Toast;
 
 import com.example.jorge.meurecordatorio.Generica.AdicaoActivity;
 import com.example.jorge.meurecordatorio.Generica.AlimentoActivity;
+import com.example.jorge.meurecordatorio.Generica.GrauParentescoActivity;
 import com.example.jorge.meurecordatorio.Generica.LocalActivity;
 import com.example.jorge.meurecordatorio.Generica.OcasiaoConsumoActivity;
 import com.example.jorge.meurecordatorio.Generica.PreparacaoActivity;
@@ -45,6 +46,7 @@ import static com.example.jorge.meurecordatorio.MainActivity.PUT_EXTRA_ALIMENTAC
 import static com.example.jorge.meurecordatorio.MainActivity.PUT_EXTRA_ALIMENTO;
 import static com.example.jorge.meurecordatorio.MainActivity.PUT_EXTRA_ENTREVISTADO;
 import static com.example.jorge.meurecordatorio.MainActivity.PUT_EXTRA_ENTREVISTADO_NOME;
+import static com.example.jorge.meurecordatorio.MainActivity.PUT_EXTRA_GRAU_PARENTESCO;
 import static com.example.jorge.meurecordatorio.MainActivity.PUT_EXTRA_USUARIO;
 
 public class DetailActivity extends AppCompatActivity {
@@ -78,6 +80,11 @@ public class DetailActivity extends AppCompatActivity {
 
     TextView ocasiaoConsumo;
     TextView ocasiaoConsumo_nome;
+
+    TextView grauParentesco;
+    TextView grau_parentesco_nome;
+
+    TextView diaAtipico;
 
     TextView tvDiaColeta;
     TextView tvHoraColeta;
@@ -450,6 +457,30 @@ public class DetailActivity extends AppCompatActivity {
             }
         });
 
+        // OcasiaoCaonsumo
+        grau_parentesco_nome = (TextView)  findViewById(R.id.grau_parentesco_nome);
+        grauParentesco = (TextView)  findViewById(R.id.grau_parentesco);
+        grauParentesco.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View arg0) {
+                try {
+                    showGrauParentesco();
+                } catch (Exception e) {
+                    // TODO: handle exception
+                }
+            }
+        });
+        grau_parentesco_nome.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View arg0) {
+                try {
+                    showGrauParentesco();
+                } catch (Exception e) {
+                    // TODO: handle exception
+                }
+            }
+        });
+
 
         tv_salvar_alimento = (TextView)  findViewById(R.id.tv_salvar_alimento);
         tv_salvar_alimento.setOnClickListener(new View.OnClickListener() {
@@ -649,6 +680,9 @@ public class DetailActivity extends AppCompatActivity {
         }else if (Modulo.OPCAO.equals("OCASIAO_CONSUMO")){
             ocasiaoConsumo_nome.setText(Modulo.NOME);
             ocasiaoConsumo.setText(Modulo.ID);
+        }else if (Modulo.OPCAO.equals("GRAU_PARENTESCO")){
+           grau_parentesco_nome.setText(Modulo.NOME);
+           grauParentesco.setText(Modulo.ID);
         }
 
 
@@ -715,6 +749,13 @@ public class DetailActivity extends AppCompatActivity {
         Intent intentToStartDetailActivity = new Intent(getBaseContext(), destinationClass);
         intentToStartDetailActivity.putExtra(PUT_EXTRA_ENTREVISTADO, mEntrevistado);
         intentToStartDetailActivity.putExtra(PUT_EXTRA_ALIMENTO, alimento.getText().toString());
+        startActivity(intentToStartDetailActivity);
+    }
+
+    private void showGrauParentesco(){
+        Class destinationClass = GrauParentescoActivity.class;
+        Intent intentToStartDetailActivity = new Intent(getBaseContext(), destinationClass);
+        intentToStartDetailActivity.putExtra(PUT_EXTRA_GRAU_PARENTESCO, grauParentesco.getText().toString());
         startActivity(intentToStartDetailActivity);
     }
 

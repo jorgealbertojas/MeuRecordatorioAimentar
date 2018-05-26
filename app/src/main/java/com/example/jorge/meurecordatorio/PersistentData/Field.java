@@ -17,6 +17,10 @@ public class Field {
     public final static String FIELD_PREPARACAO_ID = "PREPARACAO_ID";
     public final static String FIELD_PREPARACAO = "PREPARACAO";
 
+    // TABELA grau_parentesco
+    public final static String FIELD_GRAU_PARENTESCO_ID = "GRAU_PARENTESCO_ID";
+    public final static String FIELD_GRAU_PARENTESCO = "GRAU_PARENTESCO";
+
     // TABELA UNIDADE
     public final static String FIELD_UNIDADE_ID = "UNIDADE_ID";
     public final static String FIELD_UNIDADE = "UNIDADE";
@@ -56,6 +60,8 @@ public class Field {
     public final static String FIELD_ALIMENTACAO_HORA_COLETA_FIM = "ALIMENTACAO_HORA_COLETA_FIM";
     public final static String FIELD_ALIMENTACAO_OBS = "ALIMENTACAO_OBS";
     public final static String FIELD_ALIMENTACAO_DIA_COLETA= "ALIMENTACAO_DIA_COLETA";
+    public final static String FIELD_ALIMENTACAO_GRAU_PARENTESCO= "ALIMENTACAO_GRAU_PARENTESCO";
+    public final static String FIELD_ALIMENTACAO_DIA_ATIPICO= "ALIMENTACAO_DIA_ATIPICO";
 
     // TABELA USUARIO
     public final static String FIELD_USUARIO = "USUARIO";

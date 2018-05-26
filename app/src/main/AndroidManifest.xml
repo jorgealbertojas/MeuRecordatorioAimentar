@@ -52,13 +52,14 @@ p
                 android:value=".DetailActivity" />
         </activity>
 
+
         <activity
-            android:name=".Generica.AlimentoActivity"
+            android:name=".Generica.GrauParentescoActivity"
             android:launchMode="singleTop"
             android:noHistory="false"
             android:screenOrientation="portrait"
             android:theme="@style/AppTheme"
-            android:label="Cadastro de Alimento"
+            android:label="Grau de parentesco"
             android:parentActivityName=".Generica.AlimentoActivity">
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
@@ -66,33 +67,7 @@ p
                 android:value=".DetailActivity" />
         </activity>
 
-        <activity
-            android:name=".Generica.AlimentoActivity"
-            android:launchMode="singleTop"
-            android:noHistory="false"
-            android:screenOrientation="portrait"
-            android:theme="@style/AppTheme"
-            android:label="Cadastro de Alimento"
-            android:parentActivityName=".Generica.AlimentoActivity">
-            <meta-data
-                android:name="android.support.PARENT_ACTIVITY"
 
-                android:value=".DetailActivity" />
-        </activity>
-
-        <activity
-            android:name=".Generica.AlimentoActivity"
-            android:launchMode="singleTop"
-            android:noHistory="false"
-            android:screenOrientation="portrait"
-            android:theme="@style/AppTheme"
-            android:label="Cadastro de Alimento"
-            android:parentActivityName=".Generica.AlimentoActivity">
-            <meta-data
-                android:name="android.support.PARENT_ACTIVITY"
-
-                android:value=".DetailActivity" />
-        </activity>
 
         <activity
             android:name=".Generica.EntrevistadoActivity"
