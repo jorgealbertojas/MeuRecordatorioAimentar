@@ -85,6 +85,7 @@ public class DbSelect {
                     + Field.FIELD_ALIMENTACAO_HORA_COLETA_FIM  + ","
                     + Field.FIELD_ALIMENTACAO_OBS  + ","
                     + Field.FIELD_ALIMENTACAO_DIA_COLETA + ","
+                    + Field.FIELD_ALIMENTACAO_GRAU_PARENTESCO_ID  + ","
                     + Field.FIELD_ALIMENTACAO_GRAU_PARENTESCO  + ","
                     + Field.FIELD_ALIMENTACAO_DIA_ATIPICO +
                     " FROM " + DbCreate.TABLE_ALIMENTACAO ;

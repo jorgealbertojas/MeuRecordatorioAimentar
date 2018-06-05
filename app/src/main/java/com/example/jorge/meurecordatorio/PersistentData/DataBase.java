@@ -304,6 +304,7 @@ public class DataBase extends SQLiteOpenHelper {
             obj.put(Field.FIELD_ALIMENTACAO_HORA_COLETA_FIM, alimentacaoList.get(i).getAlimentacao_hora_coleta_fim());
             obj.put(Field.FIELD_ALIMENTACAO_OBS, alimentacaoList.get(i).getAlimentacao_obs());
             obj.put(Field.FIELD_ALIMENTACAO_DIA_COLETA, alimentacaoList.get(i).getAlimentacao_dia_coleta());
+            obj.put(Field.FIELD_ALIMENTACAO_GRAU_PARENTESCO_ID, alimentacaoList.get(i).getAlimentacao_grau_parentesco_id());
             obj.put(Field.FIELD_ALIMENTACAO_GRAU_PARENTESCO, alimentacaoList.get(i).getAlimentacao_grau_parentesco());
             obj.put(Field.FIELD_ALIMENTACAO_DIA_ATIPICO, alimentacaoList.get(i).getAlimentacao_dia_atico());
             this.onInsert(context,obj, DbCreate.TABLE_ALIMENTACAO);
@@ -1031,6 +1032,9 @@ public class DataBase extends SQLiteOpenHelper {
                 alimentacao.setAlimentacao_hora_coleta(cursor.getString(cursor.getColumnIndex(Field.FIELD_ALIMENTACAO_HORA_COLETA)));
                 alimentacao.setAlimentacao_dia_coleta(cursor.getString(cursor.getColumnIndex(Field.FIELD_ALIMENTACAO_DIA_COLETA)));
                 alimentacao.setAlimentacao_hora_coleta_fim(cursor.getString(cursor.getColumnIndex(Field.FIELD_ALIMENTACAO_HORA_COLETA_FIM)));
+                alimentacao.setAlimentacao_grau_parentesco_id(cursor.getString(cursor.getColumnIndex(Field.FIELD_ALIMENTACAO_GRAU_PARENTESCO_ID)));
+                alimentacao.setAlimentacao_grau_parentesco(cursor.getString(cursor.getColumnIndex(Field.FIELD_ALIMENTACAO_GRAU_PARENTESCO)));
+                alimentacao.setAlimentacao_dia_atico(cursor.getString(cursor.getColumnIndex(Field.FIELD_ALIMENTACAO_DIA_ATIPICO)));
                 alimentacao.setAlimentacao_obs(cursor.getString(cursor.getColumnIndex(Field.FIELD_ALIMENTACAO_OBS)));
 
             } catch (Exception e) {
@@ -1081,6 +1085,9 @@ public class DataBase extends SQLiteOpenHelper {
                 alimentacao.setAlimentacao_dia_coleta(cursor.getString(cursor.getColumnIndex(Field.FIELD_ALIMENTACAO_DIA_COLETA)));
                 alimentacao.setAlimentacao_hora_coleta_fim(cursor.getString(cursor.getColumnIndex(Field.FIELD_ALIMENTACAO_HORA_COLETA_FIM)));
                 alimentacao.setAlimentacao_obs(cursor.getString(cursor.getColumnIndex(Field.FIELD_ALIMENTACAO_OBS)));
+                alimentacao.setAlimentacao_grau_parentesco(cursor.getString(cursor.getColumnIndex(Field.FIELD_ALIMENTACAO_GRAU_PARENTESCO)));
+                alimentacao.setAlimentacao_grau_parentesco_id(cursor.getString(cursor.getColumnIndex(Field.FIELD_ALIMENTACAO_GRAU_PARENTESCO_ID)));
+                alimentacao.setAlimentacao_dia_atico(cursor.getString(cursor.getColumnIndex(Field.FIELD_ALIMENTACAO_DIA_ATIPICO)));
 
             } catch (Exception e) {
                 System.out.println(e.getMessage());

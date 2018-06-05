@@ -1,7 +1,9 @@
 
 package com.example.jorge.meurecordatorio;
 
+import android.app.ActionBar;
 import android.app.AlertDialog;
+import android.content.Context;
 import android.content.Intent;
 import android.content.IntentSender;
 import android.content.res.Resources;
@@ -10,13 +12,19 @@ import android.database.sqlite.SQLiteDatabase;
 import android.graphics.Typeface;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.telecom.StatusHints;
 import android.text.Editable;
 import android.text.InputType;
 import android.text.TextWatcher;
 import android.text.format.Time;
+import android.util.TypedValue;
 import android.view.LayoutInflater;
 import android.view.View;
+import android.view.inputmethod.InputMethodManager;
+import android.widget.CheckBox;
+import android.widget.CompoundButton;
 import android.widget.EditText;
+import android.widget.LinearLayout;
 import android.widget.TextClock;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -32,6 +40,7 @@ import com.example.jorge.meurecordatorio.Model.Alimentacao;
 import com.example.jorge.meurecordatorio.Model.Alimento;
 import com.example.jorge.meurecordatorio.PersistentData.DataBase;
 import com.example.jorge.meurecordatorio.PersistentData.DbInstance;
+import com.example.jorge.meurecordatorio.Utilite.Common;
 import com.example.jorge.meurecordatorio.Utilite.Modulo;
 
 import java.text.DateFormat;
@@ -46,10 +55,15 @@ import static com.example.jorge.meurecordatorio.MainActivity.PUT_EXTRA_ALIMENTAC
 import static com.example.jorge.meurecordatorio.MainActivity.PUT_EXTRA_ALIMENTO;
 import static com.example.jorge.meurecordatorio.MainActivity.PUT_EXTRA_ENTREVISTADO;
 import static com.example.jorge.meurecordatorio.MainActivity.PUT_EXTRA_ENTREVISTADO_NOME;
+import static com.example.jorge.meurecordatorio.MainActivity.PUT_EXTRA_ETAPA;
 import static com.example.jorge.meurecordatorio.MainActivity.PUT_EXTRA_GRAU_PARENTESCO;
 import static com.example.jorge.meurecordatorio.MainActivity.PUT_EXTRA_USUARIO;
+import static com.example.jorge.meurecordatorio.Utilite.Modulo.NAO_SE_APLICA;
 
 public class DetailActivity extends AppCompatActivity {
+
+    private ArrayList<CheckBox> checkboxs;
+    private LinearLayout ll;
 
     private SQLiteDatabase mDb;
     private DataBase mDataBase;
@@ -84,7 +98,6 @@ public class DetailActivity extends AppCompatActivity {
     TextView grauParentesco;
     TextView grau_parentesco_nome;
 
-    TextView diaAtipico;
 
     TextView tvDiaColeta;
     TextView tvHoraColeta;
@@ -99,13 +112,32 @@ public class DetailActivity extends AppCompatActivity {
     TextView tv_deletar_alimento;
     TextView tv_duplicar_alimento;
 
+    TextView diaAtipico;
+
+    TextView quantidadeEditTextHINT;
+    TextView horaEditTextHINT;
+    TextView preparacaoHINT;
+    TextView adicaoHINT;
+    TextView unidadeHINT;
+    TextView localHINT;
+    TextView ocasiaoConsumoHINT;
+    TextView obsHINT;
+    TextView hora_ponto;
+    TextView hora_minuto_coleta_hint;
+    TextView tv_entrar_obs;
+
+
+
     public static Alimentacao mAlimentacao;
     public static boolean alimentacoAlteracao = false;
+    public static String mEtapa = "0";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_detail);
+
+        this.ll = (LinearLayout) this.findViewById(R.id.edits_ll);
 
         /**
          * Get putExtra for Activity Main .
@@ -120,6 +152,9 @@ public class DetailActivity extends AppCompatActivity {
         mEntrevistado = extras.getString(PUT_EXTRA_ENTREVISTADO);
         mEntrevistadoNome = extras.getString(PUT_EXTRA_ENTREVISTADO_NOME);
         mUsuario = extras.getString(PUT_EXTRA_USUARIO);
+        mEtapa = extras.getString(PUT_EXTRA_ETAPA);
+
+
 
         Bundle bundle = getIntent().getBundleExtra(PUT_EXTRA_ALIMENTACAO);
 
@@ -143,6 +178,21 @@ public class DetailActivity extends AppCompatActivity {
         minutoEditText = (TextView) findViewById(R.id.hora_minuto);
         obs = (EditText) findViewById(R.id.obs) ;
         quantidadeEditText = (EditText) findViewById(R.id.quantidade);
+        diaAtipico =  (TextView) findViewById(R.id.dia_atipico);
+
+        /// HINT
+        quantidadeEditTextHINT  =  (TextView) findViewById(R.id.quantidade_hint);
+        horaEditTextHINT  =  (TextView) findViewById(R.id.hora_hint);
+        preparacaoHINT  =  (TextView) findViewById(R.id.preparacao_hint);
+        adicaoHINT  =  (TextView) findViewById(R.id.adicao_hint);
+        unidadeHINT  =  (TextView) findViewById(R.id.unidade_hint);
+        localHINT =  (TextView) findViewById(R.id.local_hint);
+        ocasiaoConsumoHINT  =  (TextView) findViewById(R.id.ocasiao_consumo_hint);
+        obsHINT  =  (TextView) findViewById(R.id.obs_hint);
+        hora_ponto   =  (TextView) findViewById(R.id.hora_ponto);
+        hora_minuto_coleta_hint   =  (TextView) findViewById(R.id.hora_minuto_coleta_hint);
+
+
 
 
 
@@ -195,6 +245,23 @@ public class DetailActivity extends AppCompatActivity {
                         minutoEditText.setText("30");
                     }else{
                         minutoEditText.setText("00");
+                    }
+
+                } catch (Exception e) {
+                    // TODO: handle exception
+                }
+            }
+        });
+
+        diaAtipico.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View arg0) {
+                try {
+
+                    if (diaAtipico.getText().toString().equals("NÃO")) {
+                        diaAtipico.setText("SIM");
+                    }else{
+                        diaAtipico.setText("NÃO");
                     }
 
                 } catch (Exception e) {
@@ -502,6 +569,8 @@ public class DetailActivity extends AppCompatActivity {
                             alimentacao.setAlimentacao_id(Integer.toString(mDataBase.NovoID_ALIMENTACAO()));
                         }
 
+
+
                         alimentacao.setAlimentacao_entrevistado_id(mEntrevistado);
                         alimentacao.setAlimentacao_entrevistado(mEntrevistadoNome);
                         alimentacao.setAlimentacao_alimento_id(alimento.getText().toString());
@@ -517,6 +586,7 @@ public class DetailActivity extends AppCompatActivity {
                         alimentacao.setAlimentacao_ocasiao_consumo_id(ocasiaoConsumo.getText().toString());
                         alimentacao.setAlimentacao_ocasiao_consumo(ocasiaoConsumo_nome.getText().toString());
                         alimentacao.setAlimentacao_quantidade(quantidadeEditText.getText().toString());
+
                         alimentacao.setAlimentacao_hora(horaEditText.getText().toString() + ":" + minutoEditText.getText().toString());
                         alimentacao.setAlimentacao_hora_coleta(tvHoraColeta.getText().toString());
 
@@ -541,6 +611,18 @@ public class DetailActivity extends AppCompatActivity {
                         alimentacao.setAlimentacao_dia_coleta(diaCompleto_fim);
                         alimentacaoList.add(alimentacao);
 
+                        Modulo.NOME_PARENTESCO = grau_parentesco_nome.getText().toString();
+                        Modulo.PARENTESCO = grauParentesco.getText().toString();
+                        Modulo.DIAATIPICO =  diaAtipico.getText().toString();
+
+                        alimentacao.setAlimentacao_grau_parentesco(grau_parentesco_nome.getText().toString());
+                        alimentacao.setAlimentacao_grau_parentesco_id(grauParentesco.getText().toString());
+                        alimentacao.setAlimentacao_dia_atico(diaAtipico.getText().toString());
+
+                        if (Common.eLeitematerno(alimento_nome.getText().toString())){
+                            alimentacao = naoSeaplica(alimentacao);
+                        }
+
                         mDataBase.insertTABLE_ALIMENTACAO(alimentacaoList);
                         Toast.makeText(DetailActivity.this, "Salvo alimento com sucesso!", Toast.LENGTH_SHORT).show();
                         DetailActivity.this.finish();
@@ -556,34 +638,8 @@ public class DetailActivity extends AppCompatActivity {
         });
 
     if (alimentacoAlteracao){
+         preencherValor();
 
-        alimento.setOnClickListener(null);
-        alimento_nome.setOnClickListener(null);
-        alimento_nome.setTextColor(getResources().getColor(R.color.colorPrimaryDark));
-        alimento.setTextColor(getResources().getColor(R.color.colorPrimaryDark));
-        alimento_nome.setTypeface(null, Typeface.BOLD);
-        alimento.setTypeface(null, Typeface.BOLD);
-        tv_deletar_alimento.setVisibility(View.VISIBLE);
-        tv_duplicar_alimento.setVisibility(View.VISIBLE);
-
-        tvDiaColeta.setText(mAlimentacao.getAlimentacao_dia_coleta());
-        tvHoraColeta.setText(mAlimentacao.getAlimentacao_hora_coleta());
-        quantidadeEditText.setText(mAlimentacao.getAlimentacao_quantidade());
-        minutoEditText.setText(pegarSoMinuto(mAlimentacao.getAlimentacao_hora()));
-        horaEditText.setText(pegarSoHora(mAlimentacao.getAlimentacao_hora()));
-        alimento.setText(mAlimentacao.getAlimentacao_alimento_id());
-        alimento_nome.setText(mAlimentacao.getAlimentacao_alimento());
-        preparacao.setText(mAlimentacao.getAlimentacao_preparacao_id());
-        preparacao_nome.setText(mAlimentacao.getAlimentacao_preparacao());
-        adicao.setText(mAlimentacao.getAlimentacao_adicao_id());
-        adicao_nome.setText(mAlimentacao.getAlimentacao_adicao());
-        unidade.setText(mAlimentacao.getAlimentacao_unidade_id());
-        unidade_nome.setText(mAlimentacao.getAlimentacao_unidade());
-        local.setText(mAlimentacao.getAlimentacao_local_id());
-        local_nome.setText(mAlimentacao.getAlimentacao_local());
-        ocasiaoConsumo.setText(mAlimentacao.getAlimentacao_ocasiao_consumo_id());
-        ocasiaoConsumo_nome.setText(mAlimentacao.getAlimentacao_ocasiao_consumo());
-        obs.setText(mAlimentacao.getAlimentacao_obs());
     }else {
 
         tv_deletar_alimento.setVisibility(View.GONE);
@@ -613,7 +669,79 @@ public class DetailActivity extends AppCompatActivity {
         tvHoraColeta.setText(horacompleta);
     }
 
+    showEtapa(mEtapa);
 
+        if (Common.eLeitematerno(alimento_nome.getText().toString())){
+            quantidadeEditTextHINT.setText("Minutos:");
+        }
+
+        tv_entrar_obs = (TextView) findViewById(R.id.tv_entrar_obs);
+        tv_entrar_obs.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View arg0) {
+                try {
+
+                    showOpcoesOBS();
+
+                } catch (Exception e) {
+                    // TODO: handle exception
+                }
+            }
+        });
+
+        TextView tv_sair = (TextView) findViewById(R.id.tv_sair);
+        tv_sair.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View arg0) {
+                try {
+
+                    closeOpcoesOBS();
+
+                } catch (Exception e) {
+                    // TODO: handle exception
+                }
+            }
+        });
+
+        CheckComOpcoesOBS();
+
+    }
+
+    private void preencherValor(){
+        alimento.setOnClickListener(null);
+        alimento_nome.setOnClickListener(null);
+        alimento_nome.setTextColor(getResources().getColor(R.color.colorPrimaryDark));
+        alimento.setTextColor(getResources().getColor(R.color.colorPrimaryDark));
+        alimento_nome.setTypeface(null, Typeface.BOLD);
+        alimento.setTypeface(null, Typeface.BOLD);
+        tv_deletar_alimento.setVisibility(View.VISIBLE);
+        tv_duplicar_alimento.setVisibility(View.VISIBLE);
+
+        tvDiaColeta.setText(mAlimentacao.getAlimentacao_dia_coleta());
+        tvHoraColeta.setText(mAlimentacao.getAlimentacao_hora_coleta());
+        quantidadeEditText.setText(mAlimentacao.getAlimentacao_quantidade());
+        minutoEditText.setText(pegarSoMinuto(mAlimentacao.getAlimentacao_hora()));
+        horaEditText.setText(pegarSoHora(mAlimentacao.getAlimentacao_hora()));
+        alimento.setText(mAlimentacao.getAlimentacao_alimento_id());
+        alimento_nome.setText(mAlimentacao.getAlimentacao_alimento());
+        preparacao.setText(mAlimentacao.getAlimentacao_preparacao_id());
+        preparacao_nome.setText(mAlimentacao.getAlimentacao_preparacao());
+        adicao.setText(mAlimentacao.getAlimentacao_adicao_id());
+        adicao_nome.setText(mAlimentacao.getAlimentacao_adicao());
+        unidade.setText(mAlimentacao.getAlimentacao_unidade_id());
+        unidade_nome.setText(mAlimentacao.getAlimentacao_unidade());
+        local.setText(mAlimentacao.getAlimentacao_local_id());
+        local_nome.setText(mAlimentacao.getAlimentacao_local());
+        ocasiaoConsumo.setText(mAlimentacao.getAlimentacao_ocasiao_consumo_id());
+        ocasiaoConsumo_nome.setText(mAlimentacao.getAlimentacao_ocasiao_consumo());
+        grauParentesco.setText(mAlimentacao.getAlimentacao_grau_parentesco_id());
+        grau_parentesco_nome.setText(mAlimentacao.getAlimentacao_grau_parentesco());
+        diaAtipico.setText(mAlimentacao.getAlimentacao_dia_atico());
+        obs.setText(mAlimentacao.getAlimentacao_obs());
+
+        if (Common.eLeitematerno(mAlimentacao.getAlimentacao_alimento())){
+            quantidadeEditTextHINT.setText("Minutos:");
+        }
     }
 
     @Override
@@ -662,9 +790,15 @@ public class DetailActivity extends AppCompatActivity {
     protected void onResume() {
 
         if (Modulo.OPCAO.equals("ALIMENTO")){
+
             alimento_nome.setText(Modulo.NOME);
             alimento.setText(Modulo.ID);
             novoAliemnto = Modulo.NOVO_ALIMENTO;
+
+            if (Common.eLeitematerno(alimento_nome.getText().toString())){
+                quantidadeEditTextHINT.setText("Minutos:");
+            }
+
         }else if (Modulo.OPCAO.equals("UNIDADE")){
             unidade_nome.setText(Modulo.NOME);
             unidade.setText(Modulo.ID);
@@ -684,6 +818,7 @@ public class DetailActivity extends AppCompatActivity {
            grau_parentesco_nome.setText(Modulo.NOME);
            grauParentesco.setText(Modulo.ID);
         }
+
 
 
 
@@ -758,5 +893,116 @@ public class DetailActivity extends AppCompatActivity {
         intentToStartDetailActivity.putExtra(PUT_EXTRA_GRAU_PARENTESCO, grauParentesco.getText().toString());
         startActivity(intentToStartDetailActivity);
     }
+
+
+    private void showEtapa(String etapa) {
+
+        if (etapa.equals("1")) {
+            colocarEtapaInvisivel();
+        }
+
+        if (!Modulo.NOME_PARENTESCO.equals("0") && grau_parentesco_nome.getText().equals("0")) {
+            grau_parentesco_nome.setText(Modulo.NOME_PARENTESCO);
+            grauParentesco.setText(Modulo.PARENTESCO);
+            diaAtipico.setText(Modulo.DIAATIPICO);
+        }
+
+
+    }
+
+    private void colocarEtapaInvisivel(){
+        quantidadeEditText.setVisibility(View.GONE);
+        preparacao.setVisibility(View.GONE);
+        preparacao_nome.setVisibility(View.GONE);
+        adicao.setVisibility(View.GONE);
+        adicao_nome.setVisibility(View.GONE);
+        unidade.setVisibility(View.GONE);
+        unidade_nome.setVisibility(View.GONE);
+        local.setVisibility(View.GONE);
+        local_nome.setVisibility(View.GONE);
+        ocasiaoConsumo.setVisibility(View.INVISIBLE);
+        ocasiaoConsumo_nome.setVisibility(View.GONE);
+        obs.setVisibility(View.GONE);
+        tv_entrar_obs.setVisibility(View.GONE);
+
+
+
+        quantidadeEditTextHINT.setVisibility(View.GONE);
+        preparacaoHINT.setVisibility(View.GONE);
+        adicaoHINT.setVisibility(View.GONE);
+        unidadeHINT.setVisibility(View.GONE);
+        localHINT.setVisibility(View.GONE);
+        ocasiaoConsumoHINT.setVisibility(View.GONE);
+        obsHINT.setVisibility(View.GONE);
+    }
+
+
+
+    private Alimentacao naoSeaplica(Alimentacao alimentacao){
+        alimentacao.setAlimentacao_preparacao_id(NAO_SE_APLICA);
+        alimentacao.setAlimentacao_preparacao(NAO_SE_APLICA);
+        alimentacao.setAlimentacao_adicao_id(NAO_SE_APLICA);
+        alimentacao.setAlimentacao_adicao(NAO_SE_APLICA);
+        alimentacao.setAlimentacao_local_id(NAO_SE_APLICA);
+        alimentacao.setAlimentacao_local(NAO_SE_APLICA);
+        alimentacao.setAlimentacao_unidade_id(NAO_SE_APLICA);
+        alimentacao.setAlimentacao_unidade(NAO_SE_APLICA);
+        alimentacao.setAlimentacao_ocasiao_consumo_id(NAO_SE_APLICA);
+        alimentacao.setAlimentacao_ocasiao_consumo(NAO_SE_APLICA);
+
+
+        return alimentacao;
+    }
+
+    private void showOpcoesOBS(){
+        ll.setVisibility(View.VISIBLE);
+
+    }
+
+    private void closeOpcoesOBS(){
+        ll.setVisibility(View.GONE);
+    }
+
+
+    private void CheckComOpcoesOBS() {
+
+        List<String> list = Common.pegarFormatosOpcoesOBS();
+
+        checkboxs = new ArrayList<CheckBox>();
+
+        for (int i = 0; i < list.size(); i++) {
+            LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(ActionBar.LayoutParams.FILL_PARENT, ActionBar.LayoutParams.WRAP_CONTENT);
+
+            CheckBox checkbox = new CheckBox(this);
+            checkbox.setText(list.get(i).toString());
+            checkbox.setTypeface(null, Typeface.NORMAL);
+            checkbox.setTextColor(getResources().getColor(R.color.colorWhite));
+
+            checkbox.setTextSize(TypedValue.COMPLEX_UNIT_SP, 10);
+
+
+            ((InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE))
+                    .hideSoftInputFromWindow(checkbox.getWindowToken(), 0);
+
+            checkbox.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+                @Override
+                public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+                    boolean pegarEstado = isChecked;
+
+                    if (isChecked) {
+                        obs.setText(obs.getText() + ((CheckBox) buttonView).getText().toString() + ", ");
+                    } else {
+
+                        obs.setText(obs.getText().toString().replace(((CheckBox) buttonView).getText().toString() + ", ",""));
+
+                    }
+                }
+            });
+
+            checkboxs.add(checkbox); // adiciona a nova editText a lista.
+            ll.addView(checkbox, params); // adiciona a editText ao ViewGroup
+        }
+    }
+
 
 }

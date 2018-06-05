@@ -156,6 +156,21 @@
                 app:layout_constraintLeft_toRightOf="@+id/iv_usuario"
                 app:layout_constraintTop_toBottomOf="@+id/tv_preparacao" />
 
+            <TextView
+
+                android:id="@+id/tv_grau_parentesco"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/tv_dia_coleta"
+                android:text="0"
+                android:layout_marginLeft="8dp"
+                android:layout_marginStart="8dp"
+                android:layout_marginTop="8dp"
+                android:textColor="@color/colorPrimaryDark"
+                android:textStyle="bold"
+                app:layout_constraintLeft_toRightOf="@+id/iv_responsavel"
+                app:layout_constraintTop_toBottomOf="@+id/tv_preparacao"  />
+
             <ImageView
                 android:id="@+id/iv_dia_coleta"
                 android:layout_width="20dp"
@@ -189,6 +204,17 @@
                 app:layout_constraintLeft_toRightOf="@+id/tv_dia_coleta"
                 app:layout_constraintTop_toBottomOf="@+id/tv_preparacao"
                 app:srcCompat="@mipmap/ic_user"/>
+
+            <ImageView
+                android:id="@+id/iv_responsavel"
+                android:layout_width="20dp"
+                android:layout_height="20dp"
+                android:layout_below="@+id/space"
+                android:layout_marginLeft="8dp"
+                android:layout_marginTop="8dp"
+                app:layout_constraintLeft_toRightOf="@+id/tv_usuario"
+                app:layout_constraintTop_toBottomOf="@+id/tv_preparacao"
+                app:srcCompat="@mipmap/ic_responsavel"/>
 
             <RelativeLayout
                 android:id="@+id/rl_RelativeLayout"
@@ -243,6 +269,24 @@
                 android:paddingLeft="10dp"
                 app:layout_constraintLeft_toRightOf="@+id/tv_hora"
                 android:textStyle="bold" />
+
+
+            <TextView
+
+                android:id="@+id/tv_atipico"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/tv_dia_coleta"
+                android:layout_marginEnd="8dp"
+                android:layout_marginStart="8dp"
+                android:text="02222"
+                android:textColor="@color/colorPrimaryDark"
+                android:textSize="8sp"
+                android:textStyle="bold"
+                app:layout_constraintEnd_toEndOf="@+id/rl_RelativeLayout"
+                app:layout_constraintStart_toStartOf="@+id/rl_RelativeLayout"
+                app:layout_constraintTop_toBottomOf="@+id/rl_RelativeLayout" />
+
 
         </android.support.constraint.ConstraintLayout>
     </android.support.v7.widget.CardView>

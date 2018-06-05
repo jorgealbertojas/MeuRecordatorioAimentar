@@ -47,7 +47,7 @@ public class OcasiaoConsumoActivity extends AppCompatActivity {
         /**
          * Put Name Repositorie in  title.
          */
-        this.setTitle("Ocasião de consumo");
+        this.setTitle("Tipo de refeição");
 
 
         /**

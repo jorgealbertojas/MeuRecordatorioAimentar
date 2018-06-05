@@ -238,7 +238,7 @@
         android:textColor="@color/colorAccent"
         android:textSize="@dimen/padding_text"
         android:id="@+id/ocasiao_consumo_hint"
-        android:text="Ocasião de consumo"
+        android:text="Tipo de refeição"
         app:layout_constraintTop_toBottomOf="@+id/unidade"/>
 
     <EditText
@@ -321,7 +321,7 @@
         android:layout_height="wrap_content"
         android:textColor="@color/colorAccent"
         android:textSize="@dimen/padding_text"
-        android:id="@+id/usuario_hint"
+        android:id="@+id/obs_hint"
         android:text="Obs:"
         app:layout_constraintTop_toBottomOf="@+id/hora"/>
 
@@ -330,7 +330,6 @@
         android:layout_height="wrap_content"
         android:padding="@dimen/padding_text"
         android:id="@+id/hora_coleta"
-        android:text="0"
         android:background="@drawable/rounded_corner_cinza"
         android:textColor="@color/colorPrimary"
         app:layout_constraintTop_toBottomOf="@+id/obs"/>
@@ -366,6 +365,19 @@
         app:layout_constraintTop_toBottomOf="@+id/hora" />
 
 
+    <TextView
+        android:id="@+id/tv_entrar_obs"
+        android:layout_width="80dp"
+        android:layout_height="40dp"
+        android:layout_centerHorizontal="true"
+        android:background="@drawable/rounded_corner"
+        android:gravity="center"
+        android:textSize="10sp"
+        android:text="Opções OBS"
+        android:textAlignment="center"
+        android:textColor="@color/colorWhite"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/obs" />
 
     <RelativeLayout
         android:id="@+id/relativeLayout2"
@@ -445,6 +457,31 @@
         android:text="Dia atípico"
         app:layout_constraintStart_toEndOf="@+id/grau_parentesco_nome"
         app:layout_constraintTop_toBottomOf="@+id/dia_coleta"/>
+
+    <LinearLayout
+        android:id="@+id/edits_ll"
+        android:layout_width="150dp"
+        android:layout_height="300dp"
+        android:visibility="gone"
+        android:layout_marginBottom="8dp"
+        android:background="@color/colorPrimary"
+        android:orientation="vertical"
+        app:layout_constraintBottom_toTopOf="@+id/relativeLayout2"
+        app:layout_constraintEnd_toEndOf="parent">
+        <TextView
+            android:id="@+id/tv_sair"
+            android:layout_width="100dp"
+            android:layout_height="40dp"
+            android:layout_margin="20dp"
+            android:layout_centerHorizontal="true"
+            android:background="@drawable/rounded_corner"
+            android:gravity="center"
+            android:text="Fechar"
+            android:textAlignment="center"
+            android:textColor="@color/colorWhite" />
+
+
+    </LinearLayout>
 
 
 </android.support.constraint.ConstraintLayout>

@@ -17,6 +17,8 @@ import com.example.jorge.meurecordatorio.DetailActivity;
 import com.example.jorge.meurecordatorio.Generica.EntrevistadoActivity;
 import com.example.jorge.meurecordatorio.Model.Alimentacao;
 import com.example.jorge.meurecordatorio.R;
+import com.example.jorge.meurecordatorio.Utilite.Common;
+import com.example.jorge.meurecordatorio.Utilite.Modulo;
 import com.squareup.picasso.Picasso;
 
 import java.util.List;
@@ -25,6 +27,7 @@ import static com.example.jorge.meurecordatorio.MainActivity.PUT_BUNDLE_ALIMENTA
 import static com.example.jorge.meurecordatorio.MainActivity.PUT_EXTRA_ALIMENTACAO;
 import static com.example.jorge.meurecordatorio.MainActivity.PUT_EXTRA_ENTREVISTADO;
 import static com.example.jorge.meurecordatorio.MainActivity.PUT_EXTRA_ENTREVISTADO_NOME;
+import static com.example.jorge.meurecordatorio.MainActivity.PUT_EXTRA_ETAPA;
 import static com.example.jorge.meurecordatorio.MainActivity.PUT_EXTRA_USUARIO;
 
 /**
@@ -73,7 +76,8 @@ public class AlimentacaoAdapter extends RecyclerView.Adapter<AlimentacaoAdapter.
         TextView tv_quantidade;
         TextView tv_usuario;
         ImageView iv_check;
-
+        TextView tv_grau_parentesco;
+        TextView tv_atipico;
 
 
 
@@ -99,6 +103,10 @@ public class AlimentacaoAdapter extends RecyclerView.Adapter<AlimentacaoAdapter.
 
             iv_check = (ImageView) v.findViewById(R.id.iv_check);
 
+            tv_grau_parentesco = (TextView) v.findViewById(R.id.tv_grau_parentesco);
+
+            tv_atipico = (TextView) v.findViewById(R.id.tv_atipico);
+
             v.setOnClickListener(this);
         }
 
@@ -110,14 +118,14 @@ public class AlimentacaoAdapter extends RecyclerView.Adapter<AlimentacaoAdapter.
 
             Class destinationClass = DetailActivity.class;
             Intent intentToStartDetailActivity = new Intent(mContext, destinationClass);
-
+            Modulo.OPCAO = "0";
             Bundle bundle = new Bundle();
             bundle.putSerializable(PUT_BUNDLE_ALIMENTACAO, alimentacao);
             intentToStartDetailActivity.putExtra(PUT_EXTRA_ALIMENTACAO, bundle);
             intentToStartDetailActivity.putExtra(PUT_EXTRA_ENTREVISTADO, alimentacao.getAlimentacao_entrevistado_id());
             intentToStartDetailActivity.putExtra(PUT_EXTRA_ENTREVISTADO_NOME, alimentacao.getAlimentacao_entrevistado());
             intentToStartDetailActivity.putExtra(PUT_EXTRA_USUARIO, alimentacao.getAlimentacao_usuario());
-
+            intentToStartDetailActivity.putExtra(PUT_EXTRA_ETAPA, Modulo.ETAPA);
             mContext.startActivity(intentToStartDetailActivity);
 
         }
@@ -153,8 +161,7 @@ public class AlimentacaoAdapter extends RecyclerView.Adapter<AlimentacaoAdapter.
      //   Resources res = mContext.getResources();
      //   final int newColor = res.getColor(R.color.colorYellow);
      //   holder.mForks.setColorFilter(newColor, PorterDuff.Mode.SRC_ATOP);
-     //   holder.mStar.setColorFilter(newColor, PorterDuff.Mode.SRC_ATOP);
-
+     //   holder.mStar.setColo        tv_grau_parentesco.
 
 
         /** Create filed bind hold full **/
@@ -186,8 +193,20 @@ public class AlimentacaoAdapter extends RecyclerView.Adapter<AlimentacaoAdapter.
         holder.tv_local.setText(alimentacao.getAlimentacao_local_id()  + " - " + alimentacao.getAlimentacao_local());
         holder.tv_ocasiao_consumo.setText(alimentacao.getAlimentacao_ocasiao_consumo_id()  + " - " + alimentacao.getAlimentacao_ocasiao_consumo());
         holder.tv_hora.setText("Hora do consumo: " + alimentacao.getAlimentacao_hora());
-        holder.tv_quantidade.setText("Quantidade: " + alimentacao.getAlimentacao_quantidade());
+        if (Common.eLeitematerno(alimentacao.getAlimentacao_alimento())) {
+            holder.tv_quantidade.setText("Minutos: " + alimentacao.getAlimentacao_quantidade());
+        }else{
+            holder.tv_quantidade.setText("Quantidade: " + alimentacao.getAlimentacao_quantidade());
+        }
 
+        holder.tv_grau_parentesco.setText(alimentacao.getAlimentacao_grau_parentesco());
+
+        if (alimentacao.getAlimentacao_dia_atico().equals("NÃO")) {
+            holder.tv_atipico.setText("típico");
+        }else{
+            holder.tv_atipico.setText("atípico");
+            holder.tv_atipico.setTextColor(mContext.getResources().getColor(R.color.colorRed));
+        }
 
         Boolean check = true;
         if (alimentacao.getAlimentacao_preparacao_id().toString().equals("") || alimentacao.getAlimentacao_preparacao_id().toString().equals("0")){

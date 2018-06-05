@@ -30,8 +30,17 @@ public class Alimentacao implements Serializable {
     private String alimentacao_hora_coleta_fim;
     private String alimentacao_obs;
     private String alimentacao_dia_coleta;
+    private String alimentacao_grau_parentesco_id;
     private String alimentacao_grau_parentesco;
     private String alimentacao_dia_atico;
+
+    public String getAlimentacao_grau_parentesco_id() {
+        return alimentacao_grau_parentesco_id;
+    }
+
+    public void setAlimentacao_grau_parentesco_id(String alimentacao_grau_parentesco_id) {
+        this.alimentacao_grau_parentesco_id = alimentacao_grau_parentesco_id;
+    }
 
     public String getAlimentacao_hora_coleta_fim() {
         return alimentacao_hora_coleta_fim;
