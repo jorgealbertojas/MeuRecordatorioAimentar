@@ -100,7 +100,7 @@ public class EntrevistadoAdapter extends RecyclerView.Adapter<EntrevistadoAdapte
         /** Create filed bind hold full **/
 
         Entrevistado object = ((Entrevistado) data.get(position));
-        holder.mTextViewId.setText(object.getEntrevistado_id());
+        holder.mTextViewId.setText(object.getEntrevistado_id() +" - ");
         holder.mTextViewDescricao.setText(object.getEntrevistado());
 
 

@@ -1,10 +1,12 @@
 package com.example.jorge.meurecordatorio;
 
 import android.app.AlertDialog;
+import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.Intent;
 import android.database.sqlite.SQLiteDatabase;
 import android.os.Environment;
+import android.os.Handler;
 import android.os.StatFs;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -55,14 +57,19 @@ import com.example.jorge.meurecordatorio.Utilite.Url;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 
+import org.xmlpull.v1.XmlPullParserException;
+
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.OutputStream;
+import java.io.OutputStreamWriter;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Executors;
 
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -72,8 +79,16 @@ import retrofit2.converter.gson.GsonConverterFactory;
 
 public class ConfiguracaoActivity extends AppCompatActivity {
 
-    String filename = "REC24.txt";
+    String filename = "recordatorio.txt";
     File myExternalFile;
+
+    private static boolean nOK = false;
+
+    int LIMITE = 10;
+
+    int count = 0;
+
+    int pcountProgress = 0;
 
     private String filtro_desc_pesquisa = "REC24";
 
@@ -109,7 +124,9 @@ public class ConfiguracaoActivity extends AppCompatActivity {
     private InterfaceUnidadeAlimento mInterfaceUNIDADE_ALIMENTO;
 
 
-
+    MyControlThread mThread;
+    ProgressDialog mDialog;
+    Handler mHandler;
 
 
     private InterfaceOcasiaoConsumo mInterfaceOCASIAO_CONSUMO;
@@ -120,7 +137,9 @@ public class ConfiguracaoActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_configuracao);
 
-
+        mDataBase = new DataBase(ConfiguracaoActivity.this);
+        mDb = mDataBase.getReadableDatabase();
+        DbInstance.getInstance(ConfiguracaoActivity.this);
 
         TextViewCOPIAR = (TextView) findViewById(R.id.TextViewCOPIAR);
         TextViewCOPIAR.setOnClickListener(new View.OnClickListener() {
@@ -199,15 +218,17 @@ public class ConfiguracaoActivity extends AppCompatActivity {
 
                         @Override
                         public void onClick(View v) {
-
+                            bkp();
                             mDataBase = new DataBase(ConfiguracaoActivity.this);
                             mDb = mDataBase.getReadableDatabase();
                             mDataBase.onCreate(mDb);
                             DbInstance.getInstance(ConfiguracaoActivity.this);
 
-                            getJson();
+                           // getJson();
 
-                            Toast.makeText(ConfiguracaoActivity.this, "Atualizado alimentos com sucesso!" , Toast.LENGTH_SHORT).show();
+                            ativaThread();
+
+                          //  Toast.makeText(ConfiguracaoActivity.this, "Atualizado alimentos com sucesso!" , Toast.LENGTH_SHORT).show();
                             deleteDialog.dismiss();
                         }
                     });
@@ -233,7 +254,73 @@ public class ConfiguracaoActivity extends AppCompatActivity {
             @Override
             public void onClick(View arg0) {
                 try {
-                    gerarArquivoTXT();
+
+                    LayoutInflater factory = LayoutInflater.from(ConfiguracaoActivity.this);
+                    final View deleteDialogView = factory.inflate(
+                            R.layout.custom_dialog, null);
+                    final AlertDialog deleteDialog1 = new AlertDialog.Builder(ConfiguracaoActivity.this).create();
+                    deleteDialog1.setView(deleteDialogView);
+
+                    TextView nTextView = (TextView) deleteDialogView.findViewById(R.id.txt_dia);
+                    nTextView.setText("ATENÇÃO! Tem certeza que encerrar a coleta?");
+
+                    deleteDialogView.findViewById(R.id.btn_yes).setOnClickListener(new View.OnClickListener() {
+
+                        @Override
+                        public void onClick(View v) {
+
+
+
+
+                            LayoutInflater factory = LayoutInflater.from(ConfiguracaoActivity.this);
+                            final View deleteDialogView = factory.inflate(
+                                    R.layout.custom_dialog, null);
+                            final AlertDialog deleteDialog = new AlertDialog.Builder(ConfiguracaoActivity.this).create();
+                            deleteDialog.setView(deleteDialogView);
+
+                            TextView nTextView = (TextView) deleteDialogView.findViewById(R.id.txt_dia);
+                            nTextView.setText("ATENÇÃO! Depois de encerrar não poderá mais adicionar alimentos para esses entrevistados! Tem certeza que deseja continuar?");
+
+                            deleteDialogView.findViewById(R.id.btn_yes).setOnClickListener(new View.OnClickListener() {
+
+                                @Override
+                                public void onClick(View v) {
+
+                                    try {
+                                        gerarArquivoTXT();
+                                    } catch (IOException e) {
+                                        e.printStackTrace();
+                                    }
+
+
+                                    deleteDialog.dismiss();
+                                }
+                            });
+                            deleteDialogView.findViewById(R.id.btn_no).setOnClickListener(new View.OnClickListener() {
+
+                                @Override
+                                public void onClick(View v) {
+                                    deleteDialog.dismiss();
+
+                                }
+                            });
+
+                            deleteDialog.show();
+                            deleteDialog1.dismiss();
+                        }
+                    });
+                    deleteDialogView.findViewById(R.id.btn_no).setOnClickListener(new View.OnClickListener() {
+
+                        @Override
+                        public void onClick(View v) {
+                            deleteDialog1.dismiss();
+
+                        }
+                    });
+
+                    deleteDialog1.show();
+
+
                 } catch (Exception e) {
                     // TODO: handle exception
                 }
@@ -241,15 +328,13 @@ public class ConfiguracaoActivity extends AppCompatActivity {
         });
     }
 
-    private void gerarArquivoTXT(){
-        mDataBase = new DataBase(ConfiguracaoActivity.this);
-        mDb = mDataBase.getReadableDatabase();
-        DbInstance.getInstance(ConfiguracaoActivity.this);
+    private void gerarArquivoTXT() throws IOException {
 
         salvearquivo();
+
     }
 
-    private void salvearquivo(){
+    private void salvearquivo() throws IOException {
 
         String DataCompleta1;
         Time now1 = new Time();
@@ -262,24 +347,42 @@ public class ConfiguracaoActivity extends AppCompatActivity {
         DataCompleta1 = DataCompleta1 + "_" + Integer.toString(now1.second);
 
 
-        myExternalFile = new File(Modulo.storage, DataCompleta1 +  filename);
+        myExternalFile = new File(Modulo.storageCliente, filename);
 
-        FileOutputStream fos = null;
-        try {
-            fos = new FileOutputStream(myExternalFile);
-        } catch (FileNotFoundException e) {
-            e.printStackTrace();
+
+        OutputStreamWriter outStreamWriter = null;
+        FileOutputStream outStream = null;
+
+
+
+        if ( myExternalFile.exists() == false ){
+            myExternalFile.createNewFile();
         }
-        try {
 
+        outStream = new FileOutputStream(myExternalFile,true) ;
+        outStreamWriter = new OutputStreamWriter(outStream);
+
+
+        try {
+            String ENTREVISTADO_E_NOVO = "0";
+            int contadorDiferente = 0;
             List<Alimentacao> dataPersistent = new ArrayList<>();
             dataPersistent = mDataBase.getListAlimentacao();
             for (int i = 0; i < dataPersistent.size(); i++) {
+                if (!(ENTREVISTADO_E_NOVO.toString().equals(dataPersistent.get(i).getAlimentacao_entrevistado_id()))){
+                    contadorDiferente = 0;
+                }
+                contadorDiferente ++;
+                ENTREVISTADO_E_NOVO = dataPersistent.get(i).getAlimentacao_entrevistado_id();
 
+
+                String IDENTIFICADOR = getFormatodoComEspaco(2, "50");
+                String ENTREVISTADO = getFormatodoComEspaco(32, dataPersistent.get(i).getAlimentacao_entrevistado_id());
+                String SEQUENCIAL_ALIMENTO = getFormatodoComEspaco(3, Integer.toString(contadorDiferente));
                 String ID_RECORDATORIO = getFormatodoComEspaco(3, dataPersistent.get(i).getAlimentacao_id());
                 String ID_ALIMENTO  = getFormatodoComEspaco(8, dataPersistent.get(i).getAlimentacao_alimento_id());
                 String ALIMENTO_NOVO = getFormatodoComEspaco(1, alimentoENovo(dataPersistent.get(i).getAlimentacao_alimento_id()));
-                String ALIMENTO_DESCRICAO = getFormatodoComEspaco(50, dataPersistent.get(i).getAlimentacao_alimento());
+                String ALIMENTO_DESCRICAO = getFormatodoComEspacoDireita(50, dataPersistent.get(i).getAlimentacao_alimento());
                 String ID_PREPARACAO = getFormatodoComEspaco(4, dataPersistent.get(i).getAlimentacao_preparacao_id());
                 String ID_UNIDADE = getFormatodoComEspaco(4, dataPersistent.get(i).getAlimentacao_unidade_id());
                 String ID_ADICAO = getFormatodoComEspaco(4, dataPersistent.get(i).getAlimentacao_adicao_id());
@@ -289,52 +392,66 @@ public class ConfiguracaoActivity extends AppCompatActivity {
                 String HORA = getFormatodoComEspaco(4, dataPersistent.get(i).getAlimentacao_hora());
                 String HORA_COLETA = getFormatodoComEspaco(6, formataHora(dataPersistent.get(i).getAlimentacao_hora_coleta()));
                 String DATA_COLETA = getFormatodoComEspaco(8, formatarData(dataPersistent.get(i).getAlimentacao_dia_coleta()));
-                String USUARIO = getFormatodoComEspaco(10, dataPersistent.get(i).getAlimentacao_usuario());
-                String ENTREVISTADO = getFormatodoComEspaco(10, dataPersistent.get(i).getAlimentacao_entrevistado_id());
-                String OBS = getFormatodoComEspaco(130, dataPersistent.get(i).getAlimentacao_obs());
+                String USUARIO = getFormatodoComEspacoDireita(20, dataPersistent.get(i).getAlimentacao_usuario());
+                String OBS = getFormatodoComEspacoDireita(130, dataPersistent.get(i).getAlimentacao_obs());
 
 
-                String formatado = ID_RECORDATORIO + ID_ALIMENTO + ALIMENTO_NOVO + ALIMENTO_DESCRICAO + ID_PREPARACAO + ID_UNIDADE + ID_ADICAO + ID_LOCAL + ID_CONSUMO + QUANTIDADE + HORA + HORA_COLETA + DATA_COLETA + USUARIO + ENTREVISTADO + OBS + "\n";
-                fos.write(formatado.getBytes());
+                String formatado = IDENTIFICADOR + ENTREVISTADO  + SEQUENCIAL_ALIMENTO + ID_RECORDATORIO + ID_ALIMENTO + ALIMENTO_NOVO + ALIMENTO_DESCRICAO + ID_PREPARACAO + ID_UNIDADE + ID_ADICAO + ID_LOCAL + ID_CONSUMO + QUANTIDADE + HORA + HORA_COLETA + DATA_COLETA + USUARIO + OBS + "\n";
+
+
+                outStreamWriter.append(formatado);
+                outStreamWriter.flush();
+
+
 
             }
 
+            bkp();
+            Toast.makeText(ConfiguracaoActivity.this, "Encerrado com sucesso!", Toast.LENGTH_SHORT).show();
 
 
-            /////// salvar
-
-            String DataCompleta;
-            Time now = new Time();
-            now.setToNow();
-            DataCompleta = Integer.toString(now.year);
-            DataCompleta = DataCompleta + "_" + Integer.toString(now.month + 1);
-            DataCompleta = DataCompleta + "_" + Integer.toString(now.monthDay);
-            DataCompleta = DataCompleta + "_" + Integer.toString(now.hour);
-            DataCompleta = DataCompleta + "_" + Integer.toString(now.minute);
-            DataCompleta = DataCompleta + "_" + Integer.toString(now.second);
 
 
-            try {
-                bkp(Modulo.caminhobanco, Modulo.storage + Modulo.NomeCopia + filtro_desc_pesquisa + DataCompleta + ".db");
-            } catch (IOException e) {
-                // TODO Auto-generated catch block
-                e.printStackTrace();
-            }
-
-            Toast.makeText(ConfiguracaoActivity.this, "Atualizado com sucesso!", Toast.LENGTH_SHORT).show();
-            mDb.execSQL(" DROP TABLE IF EXISTS " + DbCreate.TABLE_ALIMENTACAO );
-            mDb.execSQL(DbCreate.CREATE_TABLE_ALIMENTACAO);
 
 
 
         } catch (IOException e) {
             e.printStackTrace();
         }
+
+    }
+
+
+    private void bkp(){
+        /////// salvar
+
+        String DataCompleta;
+        Time now = new Time();
+        now.setToNow();
+        DataCompleta = Integer.toString(now.year);
+        DataCompleta = DataCompleta + "_" + Integer.toString(now.month + 1);
+        DataCompleta = DataCompleta + "_" + Integer.toString(now.monthDay);
+        DataCompleta = DataCompleta + "_" + Integer.toString(now.hour);
+        DataCompleta = DataCompleta + "_" + Integer.toString(now.minute);
+        DataCompleta = DataCompleta + "_" + Integer.toString(now.second);
+
+
         try {
-            fos.close();
+            bkp(Modulo.caminhobanco, Modulo.storage + Modulo.NomeCopia + filtro_desc_pesquisa + DataCompleta + ".db");
         } catch (IOException e) {
+            // TODO Auto-generated catch block
             e.printStackTrace();
         }
+
+
+
+        mDb.execSQL(" DROP TABLE IF EXISTS " + DbCreate.TABLE_ALIMENTACAO );
+        mDb.execSQL(DbCreate.CREATE_TABLE_ALIMENTACAO);
+
+        mDb.execSQL(" DROP TABLE IF EXISTS " + DbCreate.TABLE_ENTREVISTADO );
+        mDb.execSQL(DbCreate.CREATE_TABLE_ENTREVISTADO);
+
+
     }
 
     private String formataHora(String hora){
@@ -446,6 +563,18 @@ public class ConfiguracaoActivity extends AppCompatActivity {
         return resultado;
     }
 
+    private String getFormatodoComEspacoDireita(int espaco, String valor){
+        String resultado = valor;
+
+        int i = valor.length();
+        while (i < espaco){
+            resultado = resultado +  " ";
+            i++;
+        }
+
+        return resultado;
+    }
+
     private static boolean isExternalStorageReadOnly() {
         String extStorageState = Environment.getExternalStorageState();
         if (Environment.MEDIA_MOUNTED_READ_ONLY.equals(extStorageState)) {
@@ -540,6 +669,8 @@ public class ConfiguracaoActivity extends AppCompatActivity {
 
                     mAdapterALIMENTO = new AlimentoAdapter(dataPersistent);
 
+                    count ++;
+
                 } else {
                     Log.d("QuestionsCallback", "Code: " + response.code() + " Message: " + response.message());
                 }
@@ -594,6 +725,8 @@ public class ConfiguracaoActivity extends AppCompatActivity {
                     dataPersistent = mDataBase.getListAdicao();
 
                     mAdapterADICAO = new AdicaoAdapter(dataPersistent);
+
+                    count ++;
 
                 } else {
                     Log.d("QuestionsCallback", "Code: " + response.code() + " Message: " + response.message());
@@ -650,6 +783,8 @@ public class ConfiguracaoActivity extends AppCompatActivity {
 
                     mAdapterPREPARACAO = new PreparacaoAdapter(dataPersistent);
 
+                    count ++;
+
                 } else {
                     Log.d("QuestionsCallback", "Code: " + response.code() + " Message: " + response.message());
                 }
@@ -704,6 +839,8 @@ public class ConfiguracaoActivity extends AppCompatActivity {
                     dataPersistent = mDataBase.getListEntrevistado();
 
                     mAdapterENTREVISTADO = new EntrevistadoAdapter(dataPersistent);
+
+                    count ++;
 
                 } else {
                     Log.d("QuestionsCallback", "Code: " + response.code() + " Message: " + response.message());
@@ -760,6 +897,8 @@ public class ConfiguracaoActivity extends AppCompatActivity {
 
                     mAdapterLOCAL = new LocalAdapter(dataPersistent);
 
+                    count ++;
+
                 } else {
                     Log.d("QuestionsCallback", "Code: " + response.code() + " Message: " + response.message());
                 }
@@ -814,6 +953,8 @@ public class ConfiguracaoActivity extends AppCompatActivity {
                     dataPersistent = mDataBase.getListOcasiaoConsumo();
 
                     mAdapterOCASIAO_CONSUMO = new OcasiaoConsumoAdapter(dataPersistent);
+
+                    count ++;
 
                 } else {
                     Log.d("QuestionsCallback", "Code: " + response.code() + " Message: " + response.message());
@@ -870,6 +1011,8 @@ public class ConfiguracaoActivity extends AppCompatActivity {
 
                     mAdapterUNIDADE = new UnidadeAdapter(dataPersistent);
 
+                    count ++;
+
                 } else {
                     Log.d("QuestionsCallback", "Code: " + response.code() + " Message: " + response.message());
                 }
@@ -923,6 +1066,8 @@ public class ConfiguracaoActivity extends AppCompatActivity {
 
                     mDataBase.insertTABLE_ADICAO_ALIMENTO(data);
 
+                    count ++;
+
 
 
                 } else {
@@ -975,6 +1120,8 @@ public class ConfiguracaoActivity extends AppCompatActivity {
 
                     mDataBase.insertTABLE_PREPARACAO_ALIMENTO(data);
 
+                    count ++;
+
 
                 } else {
                     Log.d("QuestionsCallback", "Code: " + response.code() + " Message: " + response.message());
@@ -1023,8 +1170,9 @@ public class ConfiguracaoActivity extends AppCompatActivity {
                     // Persistent Data for SQLLite
                     mDataBase = new DataBase(getApplicationContext());
                     mDb = mDataBase.getReadableDatabase();
-
                     mDataBase.insertTABLE_UNIDADE_ALIMENTO(data);
+
+                    count ++;
 
 
 
@@ -1102,5 +1250,114 @@ public class ConfiguracaoActivity extends AppCompatActivity {
         return android.os.Environment.getExternalStorageState().equals(
                 android.os.Environment.MEDIA_MOUNTED);
     }
+
+
+
+
+    private class MythreadWeservice implements Runnable {
+
+
+        public MythreadWeservice() {
+
+        }
+
+        public void run() {
+            mHandler.post(new Runnable() {
+                @Override
+                public void run() {
+                    mDialog.setMessage("Atualizando sistema aguarde... ");
+                }
+            });
+
+
+
+            //Webservice v = new Webservice(SOAP_ADDRESS);
+            //v.getEstados();
+            try {
+
+
+                getJson();
+
+
+            } catch (Exception e) {
+                // TODO Auto-generated catch block
+                e.printStackTrace();
+            }
+
+            mHandler.post(new Runnable() {
+                @Override
+                public void run() {
+
+                }
+            });
+        }
+
+    }
+
+    private class MyControlThread extends Thread {
+        private int numTasks;
+
+        public MyControlThread(int tasks) {
+            this.numTasks = tasks;
+        }
+
+        @Override
+        public void run() {
+            ExecutorService executor =  Executors.newSingleThreadExecutor();
+            //for (int i = 1; i <= numTasks; i++) {
+            //Runnable worker = new MyTask("task" +i, 5);
+            //executor.submit(worker);
+            //}
+
+            //Webservice v = new Webservice("http://146.164.25.139/EricaWebServ/EricaSrv.asmx");
+            //v.getEstados();
+
+            Runnable worker = new MythreadWeservice();
+            executor.submit(worker);
+
+            executor.shutdown();
+            while (!executor.isTerminated() || count<LIMITE) {
+                try {
+                    Thread.sleep(1000);
+                    pcountProgress ++;
+
+
+                    mHandler.post(new Runnable() {
+                        @Override
+                        public void run() {
+                            mDialog.setMessage("Atualizando sistema aguarde... \n" + Integer.toString(count)  + " de 10" );
+                        }
+                    });
+
+
+                    mDialog.setProgress(pcountProgress);
+                    mDialog.onContentChanged();
+
+                } catch (InterruptedException e) {
+                }
+            }
+            mHandler.post(new Runnable() {
+                @Override
+                public void run() {
+                    mDialog.dismiss();
+
+                    Toast.makeText(ConfiguracaoActivity.this, "Atualizado com sucesso!", Toast.LENGTH_SHORT).show();
+                }
+            });
+        }
+    }
+
+    private void ativaThread() {
+        mDialog = ProgressDialog.show(this, "Aguarde", "Processando...", true, false);
+        mHandler = new Handler();
+        count = 0;
+        mDialog.setMax(100);
+        mThread = new MyControlThread(LIMITE);
+        mThread.start();
+    }
+
+
+
+
 
 }

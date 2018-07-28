@@ -5,7 +5,7 @@ android:shape="rectangle">
 
 <!-- view background color -->
 <solid
-    android:color="#f7d201" >
+    android:color="@color/amareloligth" >
 </solid>
 
 <!-- view border color and width -->

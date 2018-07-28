@@ -20,6 +20,7 @@ import android.text.format.Time;
 import android.util.TypedValue;
 import android.view.LayoutInflater;
 import android.view.View;
+import android.view.WindowManager;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.CheckBox;
 import android.widget.CompoundButton;
@@ -95,8 +96,7 @@ public class DetailActivity extends AppCompatActivity {
     TextView ocasiaoConsumo;
     TextView ocasiaoConsumo_nome;
 
-    TextView grauParentesco;
-    TextView grau_parentesco_nome;
+
 
 
     TextView tvDiaColeta;
@@ -112,7 +112,7 @@ public class DetailActivity extends AppCompatActivity {
     TextView tv_deletar_alimento;
     TextView tv_duplicar_alimento;
 
-    TextView diaAtipico;
+
 
     TextView quantidadeEditTextHINT;
     TextView horaEditTextHINT;
@@ -130,7 +130,7 @@ public class DetailActivity extends AppCompatActivity {
 
     public static Alimentacao mAlimentacao;
     public static boolean alimentacoAlteracao = false;
-    public static String mEtapa = "0";
+    public static int mEtapa = 0;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -152,7 +152,7 @@ public class DetailActivity extends AppCompatActivity {
         mEntrevistado = extras.getString(PUT_EXTRA_ENTREVISTADO);
         mEntrevistadoNome = extras.getString(PUT_EXTRA_ENTREVISTADO_NOME);
         mUsuario = extras.getString(PUT_EXTRA_USUARIO);
-        mEtapa = extras.getString(PUT_EXTRA_ETAPA);
+        mEtapa = extras.getInt(PUT_EXTRA_ETAPA);
 
 
 
@@ -178,7 +178,8 @@ public class DetailActivity extends AppCompatActivity {
         minutoEditText = (TextView) findViewById(R.id.hora_minuto);
         obs = (EditText) findViewById(R.id.obs) ;
         quantidadeEditText = (EditText) findViewById(R.id.quantidade);
-        diaAtipico =  (TextView) findViewById(R.id.dia_atipico);
+        quantidadeEditText.setInputType(InputType.TYPE_CLASS_NUMBER);
+
 
         /// HINT
         quantidadeEditTextHINT  =  (TextView) findViewById(R.id.quantidade_hint);
@@ -191,8 +192,6 @@ public class DetailActivity extends AppCompatActivity {
         obsHINT  =  (TextView) findViewById(R.id.obs_hint);
         hora_ponto   =  (TextView) findViewById(R.id.hora_ponto);
         hora_minuto_coleta_hint   =  (TextView) findViewById(R.id.hora_minuto_coleta_hint);
-
-
 
 
 
@@ -235,7 +234,6 @@ public class DetailActivity extends AppCompatActivity {
         horaEditText.setInputType(InputType.TYPE_CLASS_NUMBER);
         horaEditText.addTextChangedListener(textWatcher);
 
-
         minutoEditText.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View arg0) {
@@ -253,22 +251,7 @@ public class DetailActivity extends AppCompatActivity {
             }
         });
 
-        diaAtipico.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View arg0) {
-                try {
 
-                    if (diaAtipico.getText().toString().equals("NÃO")) {
-                        diaAtipico.setText("SIM");
-                    }else{
-                        diaAtipico.setText("NÃO");
-                    }
-
-                } catch (Exception e) {
-                    // TODO: handle exception
-                }
-            }
-        });
 
 
         tv_duplicar_alimento = (TextView)  findViewById(R.id.tv_duplicar_alimento);
@@ -524,24 +507,34 @@ public class DetailActivity extends AppCompatActivity {
             }
         });
 
-        // OcasiaoCaonsumo
-        grau_parentesco_nome = (TextView)  findViewById(R.id.grau_parentesco_nome);
-        grauParentesco = (TextView)  findViewById(R.id.grau_parentesco);
-        grauParentesco.setOnClickListener(new View.OnClickListener() {
+
+
+        if (Common.eLeitematerno(alimento_nome.getText().toString())){
+            quantidadeEditTextHINT.setText("Minutos:");
+        }
+
+        tv_entrar_obs = (TextView) findViewById(R.id.tv_entrar_obs);
+        tv_entrar_obs.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View arg0) {
                 try {
-                    showGrauParentesco();
+
+                    showOpcoesOBS();
+
                 } catch (Exception e) {
                     // TODO: handle exception
                 }
             }
         });
-        grau_parentesco_nome.setOnClickListener(new View.OnClickListener() {
+
+        TextView tv_sair = (TextView) findViewById(R.id.tv_sair);
+        tv_sair.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View arg0) {
                 try {
-                    showGrauParentesco();
+
+                    closeOpcoesOBS();
+
                 } catch (Exception e) {
                     // TODO: handle exception
                 }
@@ -550,12 +543,13 @@ public class DetailActivity extends AppCompatActivity {
 
 
         tv_salvar_alimento = (TextView)  findViewById(R.id.tv_salvar_alimento);
+
         tv_salvar_alimento.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View arg0) {
                 try {
 
-                    if (!alimento.getText().toString().equals("0")) {
+                    if ((!alimento.getText().toString().equals("0")) && (!horaEditText.getText().toString().equals("")) && (!horaEditText.getText().toString().equals("0"))) {
                         mDataBase = new DataBase(getApplicationContext());
                         mDb = mDataBase.getReadableDatabase();
 
@@ -611,13 +605,11 @@ public class DetailActivity extends AppCompatActivity {
                         alimentacao.setAlimentacao_dia_coleta(diaCompleto_fim);
                         alimentacaoList.add(alimentacao);
 
-                        Modulo.NOME_PARENTESCO = grau_parentesco_nome.getText().toString();
-                        Modulo.PARENTESCO = grauParentesco.getText().toString();
-                        Modulo.DIAATIPICO =  diaAtipico.getText().toString();
 
-                        alimentacao.setAlimentacao_grau_parentesco(grau_parentesco_nome.getText().toString());
-                        alimentacao.setAlimentacao_grau_parentesco_id(grauParentesco.getText().toString());
-                        alimentacao.setAlimentacao_dia_atico(diaAtipico.getText().toString());
+
+                        alimentacao.setAlimentacao_grau_parentesco(Modulo.NOME_PARENTESCO);
+                        alimentacao.setAlimentacao_grau_parentesco_id(Modulo.PARENTESCO);
+                        alimentacao.setAlimentacao_dia_atico(Modulo.DIAATIPICO);
 
                         if (Common.eLeitematerno(alimento_nome.getText().toString())){
                             alimentacao = naoSeaplica(alimentacao);
@@ -627,7 +619,7 @@ public class DetailActivity extends AppCompatActivity {
                         Toast.makeText(DetailActivity.this, "Salvo alimento com sucesso!", Toast.LENGTH_SHORT).show();
                         DetailActivity.this.finish();
                     }else{
-                        Toast.makeText(DetailActivity.this, "ATENÇÃO! Obrigatório a seleção de um alimento", Toast.LENGTH_LONG).show();
+                        Toast.makeText(DetailActivity.this, "ATENÇÃO! Obrigatório a seleção de um alimento, Grau de parentesco e hora", Toast.LENGTH_LONG).show();
                     }
                 } catch(Exception e){
                     // TODO: handle exception
@@ -644,9 +636,10 @@ public class DetailActivity extends AppCompatActivity {
 
         tv_deletar_alimento.setVisibility(View.GONE);
         tv_duplicar_alimento.setVisibility(View.GONE);
-        quantidadeEditText.setText("0");
+        quantidadeEditText.setText("");
         minutoEditText.setText("00");
-        horaEditText.setText("0");
+        horaEditText.setText("");
+
         alimento.setText("0");
         alimento_nome.setText("0");
         preparacao.setText("0");
@@ -669,39 +662,8 @@ public class DetailActivity extends AppCompatActivity {
         tvHoraColeta.setText(horacompleta);
     }
 
-    showEtapa(mEtapa);
+    showEtapa( mEtapa);
 
-        if (Common.eLeitematerno(alimento_nome.getText().toString())){
-            quantidadeEditTextHINT.setText("Minutos:");
-        }
-
-        tv_entrar_obs = (TextView) findViewById(R.id.tv_entrar_obs);
-        tv_entrar_obs.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View arg0) {
-                try {
-
-                    showOpcoesOBS();
-
-                } catch (Exception e) {
-                    // TODO: handle exception
-                }
-            }
-        });
-
-        TextView tv_sair = (TextView) findViewById(R.id.tv_sair);
-        tv_sair.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View arg0) {
-                try {
-
-                    closeOpcoesOBS();
-
-                } catch (Exception e) {
-                    // TODO: handle exception
-                }
-            }
-        });
 
         CheckComOpcoesOBS();
 
@@ -722,6 +684,9 @@ public class DetailActivity extends AppCompatActivity {
         quantidadeEditText.setText(mAlimentacao.getAlimentacao_quantidade());
         minutoEditText.setText(pegarSoMinuto(mAlimentacao.getAlimentacao_hora()));
         horaEditText.setText(pegarSoHora(mAlimentacao.getAlimentacao_hora()));
+
+
+
         alimento.setText(mAlimentacao.getAlimentacao_alimento_id());
         alimento_nome.setText(mAlimentacao.getAlimentacao_alimento());
         preparacao.setText(mAlimentacao.getAlimentacao_preparacao_id());
@@ -734,9 +699,7 @@ public class DetailActivity extends AppCompatActivity {
         local_nome.setText(mAlimentacao.getAlimentacao_local());
         ocasiaoConsumo.setText(mAlimentacao.getAlimentacao_ocasiao_consumo_id());
         ocasiaoConsumo_nome.setText(mAlimentacao.getAlimentacao_ocasiao_consumo());
-        grauParentesco.setText(mAlimentacao.getAlimentacao_grau_parentesco_id());
-        grau_parentesco_nome.setText(mAlimentacao.getAlimentacao_grau_parentesco());
-        diaAtipico.setText(mAlimentacao.getAlimentacao_dia_atico());
+
         obs.setText(mAlimentacao.getAlimentacao_obs());
 
         if (Common.eLeitematerno(mAlimentacao.getAlimentacao_alimento())){
@@ -814,9 +777,6 @@ public class DetailActivity extends AppCompatActivity {
         }else if (Modulo.OPCAO.equals("OCASIAO_CONSUMO")){
             ocasiaoConsumo_nome.setText(Modulo.NOME);
             ocasiaoConsumo.setText(Modulo.ID);
-        }else if (Modulo.OPCAO.equals("GRAU_PARENTESCO")){
-           grau_parentesco_nome.setText(Modulo.NOME);
-           grauParentesco.setText(Modulo.ID);
         }
 
 
@@ -887,25 +847,16 @@ public class DetailActivity extends AppCompatActivity {
         startActivity(intentToStartDetailActivity);
     }
 
-    private void showGrauParentesco(){
-        Class destinationClass = GrauParentescoActivity.class;
-        Intent intentToStartDetailActivity = new Intent(getBaseContext(), destinationClass);
-        intentToStartDetailActivity.putExtra(PUT_EXTRA_GRAU_PARENTESCO, grauParentesco.getText().toString());
-        startActivity(intentToStartDetailActivity);
-    }
 
 
-    private void showEtapa(String etapa) {
 
-        if (etapa.equals("1")) {
+    private void showEtapa(int etapa) {
+
+        if (etapa == 1) {
             colocarEtapaInvisivel();
         }
 
-        if (!Modulo.NOME_PARENTESCO.equals("0") && grau_parentesco_nome.getText().equals("0")) {
-            grau_parentesco_nome.setText(Modulo.NOME_PARENTESCO);
-            grauParentesco.setText(Modulo.PARENTESCO);
-            diaAtipico.setText(Modulo.DIAATIPICO);
-        }
+
 
 
     }
@@ -922,7 +873,7 @@ public class DetailActivity extends AppCompatActivity {
         local_nome.setVisibility(View.GONE);
         ocasiaoConsumo.setVisibility(View.INVISIBLE);
         ocasiaoConsumo_nome.setVisibility(View.GONE);
-        obs.setVisibility(View.GONE);
+        obs.setVisibility(View.INVISIBLE);
         tv_entrar_obs.setVisibility(View.GONE);
 
 

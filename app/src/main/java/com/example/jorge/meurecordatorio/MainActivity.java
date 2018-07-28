@@ -3,7 +3,14 @@ package com.example.jorge.meurecordatorio;
 import android.app.AlertDialog;
 import android.content.Context;
 import android.content.Intent;
+import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
+import android.os.Build;
+import android.support.annotation.RequiresApi;
+import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentManager;
+import android.support.v4.app.FragmentPagerAdapter;
+import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
@@ -18,6 +25,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.darwindeveloper.wcviewpager.WCViewPagerIndicator;
 import com.example.jorge.meurecordatorio.Adapter.AdicaoAdapter;
 import com.example.jorge.meurecordatorio.Adapter.AlimentacaoAdapter;
 import com.example.jorge.meurecordatorio.Adapter.AlimentoAdapter;
@@ -28,6 +36,7 @@ import com.example.jorge.meurecordatorio.Adapter.PreparacaoAdapter;
 import com.example.jorge.meurecordatorio.Adapter.UnidadeAdapter;
 import com.example.jorge.meurecordatorio.Generica.AlimentoActivity;
 import com.example.jorge.meurecordatorio.Generica.EntrevistadoActivity;
+import com.example.jorge.meurecordatorio.Generica.GrauParentescoActivity;
 import com.example.jorge.meurecordatorio.Generica.UnidadeActivity;
 import com.example.jorge.meurecordatorio.Interface.InterfaceAdicao;
 import com.example.jorge.meurecordatorio.Interface.InterfaceAdicaoAlimento;
@@ -55,24 +64,30 @@ import com.example.jorge.meurecordatorio.Model.UnidadeAlimento;
 import com.example.jorge.meurecordatorio.Model.Usuario;
 import com.example.jorge.meurecordatorio.PersistentData.DataBase;
 import com.example.jorge.meurecordatorio.PersistentData.DbInstance;
+import com.example.jorge.meurecordatorio.PersistentData.DbSelect;
+import com.example.jorge.meurecordatorio.PersistentData.Field;
 import com.example.jorge.meurecordatorio.Utilite.Common;
 import com.example.jorge.meurecordatorio.Utilite.CrunchifyJSONFileWrite;
 import com.example.jorge.meurecordatorio.Utilite.Modulo;
+import com.example.jorge.meurecordatorio.Utilite.PageFragment;
 import com.example.jorge.meurecordatorio.Utilite.Url;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 
+import org.json.simple.JSONArray;
+import org.json.simple.JSONObject;
+
+import java.io.BufferedReader;
+import java.io.File;
 import java.io.FileInputStream;
+
+import java.io.FileReader;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Properties;
 
-import retrofit2.Call;
-import retrofit2.Callback;
-import retrofit2.Response;
-import retrofit2.Retrofit;
-import retrofit2.converter.gson.GsonConverterFactory;
+import static com.example.jorge.meurecordatorio.Utilite.Modulo.storageCliente;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -100,18 +115,38 @@ public class MainActivity extends AppCompatActivity {
     private TextView entrevistado;
     private TextView entrevistado_nome;
 
-    private TextView TextViewAdiciona;
+    TextView diaAtipico;
+
+    TextView grauParentesco;
+    TextView grau_parentesco_nome;
+
+
 
      private ImageView mMenu;
 
-     private static TextView TextViewPasso;
+    public static String NOME = "0";
+    public static String ID = "0";
+
+    //inicializamos la vista
+    static WCViewPagerIndicator wcViewPagerIndicator;
+
+
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+
+
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
+        wcViewPagerIndicator = (WCViewPagerIndicator) findViewById(R.id.wcviewpager);
+
         carregarsuario_login();
+
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT) {
+            getEntrevistador();
+        }
 
         CrunchifyJSONFileWrite CrunchifyJSONFileWrite = new CrunchifyJSONFileWrite();
         try {
@@ -135,134 +170,6 @@ public class MainActivity extends AppCompatActivity {
             }
 
         }
-
-        TextViewPasso = (TextView) findViewById(R.id.TextViewPasso);
-        TextViewPasso.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View arg0) {
-                try {
-                    if (TextViewPasso.getTag().equals("0")){
-                        TextViewPasso.setText("Finalizar entrada Alimento");
-                        TextViewPasso.setTag("1");
-                        TextViewPasso.setBackground(getResources().getDrawable(R.drawable.rounded_corner_red));
-                        TextViewAdiciona.setVisibility(View.VISIBLE);
-                        TextViewAdiciona.setBackground(getResources().getDrawable(R.drawable.rounded_corner));
-                        TextViewAdiciona.setText("Adicionar alimento");
-                    }else if (TextViewPasso.getTag().equals("1")){
-
-
-
-                        try {
-
-
-
-
-
-                            LayoutInflater factory = LayoutInflater.from(MainActivity.this);
-                            final View deleteDialogView = factory.inflate(
-                                    R.layout.custom_dialog1, null);
-                            final AlertDialog deleteDialog1 = new AlertDialog.Builder(MainActivity.this).create();
-                            deleteDialog1.setView(deleteDialogView);
-
-                            TextView nTextView = (TextView) deleteDialogView.findViewById(R.id.txt_dia);
-                            nTextView.setText("ATENÇÃO!\n Perguntar se houve adição de açúcar ou outra substância com o intuito de adoçar as bebidas, preparações ou alimentos. \n Ou se teve mais algum alimento! \nCaso não tenha mais nenhum alimento aperte em SIM! \n Ou aperte em NÃO para voltar e inserir mais alimentos");
-
-                            deleteDialogView.findViewById(R.id.btn_yes).setOnClickListener(new View.OnClickListener() {
-
-                                @Override
-                                public void onClick(View v) {
-
-
-                                    LayoutInflater factory = LayoutInflater.from(MainActivity.this);
-                                    final View deleteDialogView2 = factory.inflate(
-                                            R.layout.custom_dialog2, null);
-                                    final AlertDialog deleteDialog2 = new AlertDialog.Builder(MainActivity.this).create();
-                                    deleteDialog2.setView(deleteDialogView2);
-
-                                    TextView nTextView2 = (TextView) deleteDialogView2.findViewById(R.id.txt_dia);
-                                    nTextView2.setText("ATENÇÃO! \n Perguntar ao adolescente se consumiu algum alimento que não tenha sido relatado, como: balas, chicletes, biscoitos, bebidas, doces, manteigas/margarina, em outros! \n Caso não tenha mais nenhum aliemnto aperte em SIM! \n Ou aperte em NÃO para voltar e inserir mais alimentos");
-
-                                    deleteDialogView2.findViewById(R.id.btn_yes).setOnClickListener(new View.OnClickListener() {
-
-                                        @Override
-                                        public void onClick(View v) {
-
-                                            TextViewPasso.setText("Iniciar coleta complementos");
-                                            TextViewPasso.setTag("2");
-                                            TextViewPasso.setBackground(getResources().getDrawable(R.drawable.rounded_corner));
-                                            TextViewAdiciona.setVisibility(View.GONE);
-                                            deleteDialog2.dismiss();
-
-
-                                        }
-                                    });
-                                    deleteDialogView2.findViewById(R.id.btn_no).setOnClickListener(new View.OnClickListener() {
-
-                                        @Override
-                                        public void onClick(View v) {
-                                            deleteDialog2.dismiss();
-
-                                        }
-                                    });
-
-                                    deleteDialog2.show();
-                                    deleteDialog1.dismiss();
-
-
-
-
-
-
-
-                                }
-                            });
-                            deleteDialogView.findViewById(R.id.btn_no).setOnClickListener(new View.OnClickListener() {
-
-                                @Override
-                                public void onClick(View v) {
-                                    deleteDialog1.dismiss();
-
-                                }
-                            });
-
-                            deleteDialog1.show();
-
-
-
-
-
-
-
-
-                        } catch (Exception e) {
-                            // TODO: handle exception
-                            Toast.makeText(MainActivity.this, "ATENÇÃO! Problema reinicie o sistema" , Toast.LENGTH_LONG).show();
-                        }
-
-
-                    }else if (TextViewPasso.getTag().equals("2")){
-                        TextViewPasso.setText("Finalizar coleta");
-                        TextViewPasso.setTag("3");
-                        TextViewPasso.setBackground(getResources().getDrawable(R.drawable.rounded_corner_red));
-                        TextViewAdiciona.setVisibility(View.VISIBLE);
-                        TextViewAdiciona.setBackground(getResources().getDrawable(R.drawable.rounded_corner_yellow));
-                        TextViewAdiciona.setText("Esqueci de adicionar alimento");
-                    }else if (TextViewPasso.getTag().equals("3")){
-                        TextViewPasso.setTag("0");
-                        TextViewPasso.setBackground(getResources().getDrawable(R.drawable.rounded_corner));
-                        TextViewPasso.setText("Iniciar escolha");
-                        TextViewAdiciona.setVisibility(View.GONE);
-                        Toast.makeText(MainActivity.this, "ATENÇÃO! Coleta encerrada pode fazer a revisão, caso necessário pode iniciar os passos novamente" , Toast.LENGTH_LONG).show();
-                    }
-
-                    Modulo.ETAPA = TextViewPasso.getTag().toString();
-
-                } catch (Exception e) {
-                    // TODO: handle exception
-                }
-            }
-        });
-
 
 
 
@@ -328,34 +235,77 @@ public class MainActivity extends AppCompatActivity {
 
        // iniciaRecyclerView();
 
-        TextViewAdiciona = (TextView) findViewById(R.id.TextViewAdiciona);
-        TextViewAdiciona.setOnClickListener(new View.OnClickListener() {
+
+
+
+
+        //creamos un nuevo adpater
+        ViewPagerAdapter viewPagerAdapter = new ViewPagerAdapter(getSupportFragmentManager());
+        wcViewPagerIndicator.setAdapter(viewPagerAdapter);//aplicamos el adapter
+
+        //obtenemos el viewpager y capturamos sus cambios en tiempo de ejecucuion
+        wcViewPagerIndicator.getViewPager().addOnPageChangeListener(new ViewPager.OnPageChangeListener() {
+            @Override
+            public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {
+                Modulo.ID_TAB_POSITION = position;
+
+            }
+
+            @Override
+            public void onPageSelected(int position) {
+                //NOTA: las posiciones del viewpager inician en 0
+                //cambiamos el indicador a la posicion del viewpager
+
+                Modulo.NOME = NOME;
+                Modulo.ID = ID;
+                wcViewPagerIndicator.setSelectedindicator(position);
+
+            }
+
+            @Override
+            public void onPageScrollStateChanged(int state) {
+
+            }
+        });
+
+        diaAtipico =  (TextView) findViewById(R.id.dia_atipico);
+        diaAtipico.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View arg0) {
-                if (!entrevistado.getText().toString().equals("0")) {
-                    try {
+                try {
 
-                        Modulo.OPCAO = "0";
-                        Class destinationClass = DetailActivity.class;
-                        Intent intentToStartDetailActivity = new Intent(getBaseContext(), destinationClass);
-                        intentToStartDetailActivity.putExtra(PUT_EXTRA_ENTREVISTADO, entrevistado.getText().toString());
-                        intentToStartDetailActivity.putExtra(PUT_EXTRA_ENTREVISTADO_NOME, entrevistado_nome.getText().toString());
-                        intentToStartDetailActivity.putExtra(PUT_EXTRA_USUARIO, mUsuario);
-
-
-
-                        intentToStartDetailActivity.putExtra(PUT_EXTRA_ETAPA, TextViewPasso.getTag().toString());
-                        startActivity(intentToStartDetailActivity);
-
-                    } catch (Exception e) {
-                        // TODO: handle exception
+                    if (diaAtipico.getText().toString().equals("NÃO")) {
+                        diaAtipico.setText("SIM");
+                    }else{
+                        diaAtipico.setText("NÃO");
                     }
 
+                } catch (Exception e) {
+                    // TODO: handle exception
+                }
+            }
+        });
 
-
-                }else{
-                    Toast.makeText(MainActivity.this,"Escolha um entrevistado!",Toast.LENGTH_LONG).show();
-
+        // OcasiaoCaonsumo
+        grau_parentesco_nome = (TextView)  findViewById(R.id.grau_parentesco_nome);
+        grauParentesco = (TextView)  findViewById(R.id.grau_parentesco);
+        grauParentesco.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View arg0) {
+                try {
+                    showGrauParentesco();
+                } catch (Exception e) {
+                    // TODO: handle exception
+                }
+            }
+        });
+        grau_parentesco_nome.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View arg0) {
+                try {
+                    showGrauParentesco();
+                } catch (Exception e) {
+                    // TODO: handle exception
                 }
             }
         });
@@ -371,6 +321,11 @@ public class MainActivity extends AppCompatActivity {
         if (Modulo.OPCAO.equals("ENTREVISTADO")){
             entrevistado_nome.setText(Modulo.NOME);
             entrevistado.setText(Modulo.ID);
+            NOME = Modulo.NOME;
+            ID = Modulo.ID;
+        }else if (Modulo.OPCAO.equals("GRAU_PARENTESCO")){
+            grau_parentesco_nome.setText(Modulo.NOME);
+            grauParentesco.setText(Modulo.ID);
         }
         super.onResume();
     }
@@ -404,6 +359,7 @@ public class MainActivity extends AppCompatActivity {
         super.onStart();
 
         if (!Modulo.Liberado) {
+
             this.finish();
             try {
                 this.finalize();
@@ -414,6 +370,8 @@ public class MainActivity extends AppCompatActivity {
         }
 
     };
+
+
 
     public void carregarsuario_login()
     {
@@ -441,5 +399,126 @@ public class MainActivity extends AppCompatActivity {
     }
 
 
+
+    @RequiresApi(api = Build.VERSION_CODES.KITKAT)
+    public void getEntrevistador(){
+
+        StringBuilder text = new StringBuilder();
+        try {
+
+            File file = new File(storageCliente, "chave.txt");
+
+            BufferedReader br = new BufferedReader(new FileReader(file));
+            String line;
+
+            JSONArray items = new JSONArray();
+
+            int i = 0;
+            String id = "0";
+            String id_crianca = "0";
+            String nome_crianca = "0";
+            String nome_mae = "0";
+
+            while ((line = br.readLine()) != null) {
+
+                if (!line.isEmpty()) {
+                    i++;
+                }
+
+
+                if ((i == 1) && (!line.isEmpty())){
+                    id = line;
+                }else if ((i == 2 && (!line.isEmpty()))){
+                    id_crianca = line;
+                }else if ((i == 3 && (!line.isEmpty()))){
+                    nome_crianca = line;
+                }else if (i == 4 && (!line.isEmpty())){
+                    nome_mae = line;
+                }
+                text.append(line);
+
+
+
+
+
+            }
+
+            Entrevistado entrevistado = new Entrevistado();
+            entrevistado.setEntrevistado_id(id + id_crianca);
+            entrevistado.setEntrevistado(nome_crianca + " / " + nome_mae);
+
+
+            List<Entrevistado> data = new ArrayList<>();
+            data.add(entrevistado);
+            // Persistent Data for SQLLite
+            mDataBase = new DataBase(this);
+
+            if (!(mDataBase.getListEntrevistadoEXISTE(entrevistado.getEntrevistado_id()))) {
+                mDataBase.insertTABLE_ENTREVISTADO(data);
+            }
+
+
+            Modulo.OPCAO = "ENTREVISTADO";
+            Modulo.NOME = entrevistado.getEntrevistado();
+            Modulo.ID = entrevistado.getEntrevistado_id();
+
+            NOME = entrevistado.getEntrevistado();
+            ID = entrevistado.getEntrevistado_id();
+
+
+
+            br.close();
+        } catch (IOException e) {
+
+
+
+            e.printStackTrace();
+
+        } finally {
+
+        }
+    }
+
+    /**
+     * adaptador para nuextro wcviewpager
+     */
+    private class ViewPagerAdapter extends FragmentPagerAdapter {
+
+        public ViewPagerAdapter(FragmentManager fm) {
+            super(fm);
+        }
+
+        /**
+         * Return the Fragment associated with a specified position.
+         *
+         * @param position
+         */
+        @Override
+        public Fragment getItem(int position) {
+
+            //usaremos la misma clase para todos los fragment solo cambiaremos el texto de cada fragment
+            Fragment fragment = new PageFragment(NOME,ID,wcViewPagerIndicator);
+            Bundle args = new Bundle();//para pasar datos al fragment
+            args.putInt(PageFragment.PAGE, position);//le sumamos 1 a la posicion para que el texto mostrado corresponda con el del indicador
+            fragment.setArguments(args);//le pasamos los datos(numero de pagina) al fragment
+
+            return fragment;
+        }
+
+        /**
+         * Return the number of views available.
+         */
+        @Override
+        public int getCount() {
+            return 5;//nuemro de paginas para nuestro wcviewpager
+        }
+    }
+
+    private void showGrauParentesco(){
+        Class destinationClass = GrauParentescoActivity.class;
+        Intent intentToStartDetailActivity = new Intent(this, destinationClass);
+        intentToStartDetailActivity.putExtra(PUT_EXTRA_GRAU_PARENTESCO, grauParentesco.getText().toString());
+        startActivity(intentToStartDetailActivity);
+    }
 
 }

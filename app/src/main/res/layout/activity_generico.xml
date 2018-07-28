@@ -32,7 +32,7 @@
         android:layout_height="80dp"
         android:gravity="center"
         android:id="@+id/relativeSalvar"
-        android:background="@color/colorPrimaryDark"
+        android:background="@color/colorPrimary"
         android:visibility="gone"
         app:layout_constraintBottom_toBottomOf="parent">
         <TextView

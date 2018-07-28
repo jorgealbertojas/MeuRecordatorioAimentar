@@ -78,7 +78,7 @@ public class DbCreate {
                     Field.FIELD_ALIMENTACAO_QUANTIDADE + "  VARCHAR(500)," +
                     Field.FIELD_ALIMENTACAO_HORA + "  VARCHAR(500)," +
                     Field.FIELD_ALIMENTACAO_USUARIO + "  VARCHAR(500)," +
-                    Field.FIELD_ALIMENTACAO_ENTREVISTADO_ID + " INTEGER," +
+                    Field.FIELD_ALIMENTACAO_ENTREVISTADO_ID + "  VARCHAR(500)," +
                     Field.FIELD_ALIMENTACAO_ENTREVISTADO + " VARCHAR(500)," +
                     Field.FIELD_ALIMENTACAO_HORA_COLETA + "  VARCHAR(500)," +
                     Field.FIELD_ALIMENTACAO_HORA_COLETA_FIM + "  VARCHAR(500)," +
@@ -99,7 +99,7 @@ public class DbCreate {
     public static String TABLE_ENTREVISTADO = "TABLE_ENTREVISTADO";
     public static String CREATE_TABLE_ENTREVISTADO =
             "CREATE TABLE IF NOT EXISTS " + TABLE_ENTREVISTADO +  "(" +
-                    Field.FIELD_ENTREVISTADO_ID + " INTEGER," +
+                    Field.FIELD_ENTREVISTADO_ID + " VARCHAR(500)," +
                     Field.FIELD_ENTREVISTADO + " VARCHAR(500) " +
                     ");";
 

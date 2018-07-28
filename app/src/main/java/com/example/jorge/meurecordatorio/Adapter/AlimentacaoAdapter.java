@@ -201,7 +201,7 @@ public class AlimentacaoAdapter extends RecyclerView.Adapter<AlimentacaoAdapter.
 
         holder.tv_grau_parentesco.setText(alimentacao.getAlimentacao_grau_parentesco());
 
-        if (alimentacao.getAlimentacao_dia_atico().equals("NÃO")) {
+        if (alimentacao.getAlimentacao_dia_atico().equals("Não")) {
             holder.tv_atipico.setText("típico");
         }else{
             holder.tv_atipico.setText("atípico");

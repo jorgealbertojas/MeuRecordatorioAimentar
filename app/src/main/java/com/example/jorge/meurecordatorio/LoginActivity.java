@@ -45,6 +45,7 @@ import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
+import java.io.InputStream;
 import java.io.OutputStream;
 import java.util.ArrayList;
 import java.util.List;
@@ -58,6 +59,7 @@ import retrofit2.Response;
 import retrofit2.Retrofit;
 import retrofit2.converter.gson.GsonConverterFactory;
 
+import static com.example.jorge.meurecordatorio.PersistentData.DbCreate.DB_NAME;
 import static com.example.jorge.meurecordatorio.PersistentData.DbSelect.GET_USUARIO;
 import static com.example.jorge.meurecordatorio.PersistentData.DbSelect.GET_USUARIO_PARAMETRO;
 
@@ -152,8 +154,18 @@ public class LoginActivity extends AppCompatActivity {
             Modulo.Liberado = true;
             usuario = cusrsorlogin.getString(0).toString();
 
+            if (mDataBase.getListAlimento().size()==0) {
+                String sAssets = "backup_REC24_JORGE.db";
+                try {
+                    restaura_bkp(sAssets);
+                } catch (IOException e) {
+                e.printStackTrace();
+                }
+
+            }
 
             this.finish();
+
 
         } else
         {
@@ -163,7 +175,26 @@ public class LoginActivity extends AppCompatActivity {
 
 
 
+    private void restaura_bkp(String Origem) throws IOException{
 
+        File file = getDatabasePath(DB_NAME);
+        if (file.exists()) {
+            if (!file.getParentFile().exists()) {
+                file.getParentFile().mkdir();
+            }
+
+            InputStream inputStream = getAssets().open(Origem);
+            OutputStream outputStream = new FileOutputStream(file);
+            byte[] buffer = new byte[1024 * 8];
+            int numOfBytesToRead;
+            while((numOfBytesToRead = inputStream.read(buffer)) > 0)
+                outputStream.write(buffer, 0, numOfBytesToRead);
+            inputStream.close();
+            outputStream.close();
+        }
+
+        //db = SQLiteDatabase.openOrCreateDatabase(file, null);
+    }
 
 
 

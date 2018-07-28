@@ -25,6 +25,7 @@ import java.util.List;
 
 import static com.example.jorge.meurecordatorio.PersistentData.Field.FIELD_ALIMENTACAO_ID;
 import static com.example.jorge.meurecordatorio.PersistentData.Field.FIELD_ALIMENTO_ID;
+import static com.example.jorge.meurecordatorio.PersistentData.Field.FIELD_ENTREVISTADO_ID;
 
 /**
  * Created by jorge on 28/04/2018.
@@ -227,6 +228,7 @@ public class DataBase extends SQLiteOpenHelper {
             obj.put(Field.FIELD_UNIDADE_ALIMENTO_ID, unidadeAlimentoList.get(i).getUnidade_alimento_id());
             this.onInsert(context,obj, DbCreate.TABLE_UNIDADE_ALIMENTO);
 
+
         }
     }
 
@@ -369,6 +371,11 @@ public class DataBase extends SQLiteOpenHelper {
     public void deleteAlimentacao(String id){
         mDb = this.getWritableDatabase();
         mDb.execSQL(" DELETE FROM " + DbCreate.TABLE_ALIMENTACAO + " WHERE " + FIELD_ALIMENTACAO_ID + " = '" + id +"'");
+    }
+
+    public void deleteentrevistado(String id){
+        mDb = this.getWritableDatabase();
+        mDb.execSQL(" DELETE FROM " + DbCreate.TABLE_ENTREVISTADO + " WHERE " + FIELD_ENTREVISTADO_ID + " = '" + id +"'");
     }
 
     public List<Alimento> getListAlimento(String partNome) {
@@ -921,6 +928,24 @@ public class DataBase extends SQLiteOpenHelper {
 
     }
 
+    public boolean getListEntrevistadoEXISTE(String ID) {
+
+        List<Entrevistado> entrevistadoList = new ArrayList<Entrevistado>();
+
+        mDb = this.getWritableDatabase();
+
+        boolean resultado = false;
+
+        Cursor cursor = mDb.rawQuery(DbSelect.GET_ENTREVISTADO + " where "  + Field.FIELD_ENTREVISTADO_ID + " = '" + ID + "'",null);
+        cursor.moveToFirst();
+        if (cursor.getCount() > 0){
+            resultado = true;
+        }
+        cursor.close();
+        return resultado;
+
+    }
+
     public List<PreparacaoAlimento> getListPreparacaoAlimento() {
 
         List<PreparacaoAlimento> PreparacaoAlimentoList = new ArrayList<PreparacaoAlimento>();
@@ -1005,7 +1030,7 @@ public class DataBase extends SQLiteOpenHelper {
 
         mDb = this.getWritableDatabase();
 
-        Cursor cursor = mDb.rawQuery(DbSelect.GET_ALIMENTACAO + " WHERE " + Field.FIELD_ALIMENTACAO_ENTREVISTADO_ID + "  = " + Entrevistado,null);
+        Cursor cursor = mDb.rawQuery(DbSelect.GET_ALIMENTACAO + " WHERE " + Field.FIELD_ALIMENTACAO_ENTREVISTADO_ID + "  = '" + Entrevistado +"'",null);
         cursor.moveToFirst();
         while(!cursor.isAfterLast() ){
             Alimentacao alimentacao = new Alimentacao();
