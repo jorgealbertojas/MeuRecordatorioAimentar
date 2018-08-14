@@ -83,6 +83,7 @@ import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileInputStream;
 
+import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.IOException;
 import java.util.ArrayList;
@@ -98,7 +99,6 @@ public class MainActivity extends AppCompatActivity {
 
     public List<Alimentacao> dataPersistent = null;
 
-    public static String mUsuario = "0";
     public final static String PUT_EXTRA_ENTREVISTADO = "PUT_EXTRA_ENTREVISTADO";
     public final static String PUT_EXTRA_ENTREVISTADO_NOME = "PUT_EXTRA_ENTREVISTADO_NOME";
     public final static String PUT_EXTRA_USUARIO = "PUT_EXTRA_USUARIO";
@@ -135,6 +135,7 @@ public class MainActivity extends AppCompatActivity {
 
     public static String NOME = "0";
     public static String ID = "0";
+    public static String USUARIO = "0";
 
     AlimentacaoAdapter alimentacaoAdapter;
 
@@ -151,26 +152,33 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
 
 
-        carregarsuario_login();
+        //carregarsuario_login();
 
 
 
 
 
 
-        CrunchifyJSONFileWrite CrunchifyJSONFileWrite = new CrunchifyJSONFileWrite();
-        try {
-            CrunchifyJSONFileWrite.main();
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
+      //  CrunchifyJSONFileWrite CrunchifyJSONFileWrite = new CrunchifyJSONFileWrite();
+      //  try {
+      //      CrunchifyJSONFileWrite.main();
+      //  } catch (IOException e) {
+      //      e.printStackTrace();
+      //  }
 
         proximo = (ImageView) findViewById(R.id.proximo);
         anterior = (ImageView) findViewById(R.id.anterior);
 
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT) {
+            if (!getEntrevistador()){
+                Toast.makeText(this, "ATENÇÃO! ESTE SISTEMA SÓ PODE SER CHAMADO PELO SISTEMA DE PESQUISA CSPRO" , Toast.LENGTH_LONG).show();
+                this.finish();
+            }
+        }
+
         imagepiscar = (ImageView) findViewById(R.id.image);
         mViewPager = (ViewPager) findViewById(R.id.pager);
-        mViewPager.setVisibility(View.INVISIBLE);
+        mViewPager.setVisibility(View.VISIBLE);
         mViewPager.setAdapter(new MyPagerAdapter(getSupportFragmentManager()));
         mViewPager.addOnPageChangeListener(new ViewPager.OnPageChangeListener() {
             @Override
@@ -328,8 +336,8 @@ public class MainActivity extends AppCompatActivity {
             DbInstance.getInstance(this);
 
             if(savedInstanceState == null){
-                Intent WSActivity = new Intent(this, LoginActivity.class);
-                startActivity(WSActivity);
+             //   Intent WSActivity = new Intent(this, LoginActivity.class);
+            //    startActivity(WSActivity);
 
             }
 
@@ -408,7 +416,7 @@ public class MainActivity extends AppCompatActivity {
                         deleteDialog1.setView(deleteDialogView);
 
                         TextView nTextView = (TextView) deleteDialogView.findViewById(R.id.txt_dia);
-                        nTextView.setText("ATENÇÃO!\n Agora eu gostaria que você me dissesse tudo que " +  NOME + " comeu ou bebeu ontem, do momento em que acordou até a hora em que foi dormir. Caso [nome da criança] tenha acordado de madrugada, também gostaria de saber o que ele/ela comeu ou bebeu de madrugada”.  Me informe também os horários em que a criança consumiu os alimentos e bebidas. Não se preocupe com a quantidade agora, pois falaremos dos detalhes depois.");
+                        nTextView.setText("ATENÇÃO!\n Agora eu gostaria que você me dissesse tudo que " +  NOME + " comeu ou bebeu ontem, do momento em que acordou até a hora em que foi dormir. Caso " +  NOME + "  tenha acordado de madrugada, também gostaria de saber o que ele/ela comeu ou bebeu de madrugada”.  Me informe também os horários em que a criança consumiu os alimentos e bebidas. Não se preocupe com a quantidade agora, pois falaremos dos detalhes depois.");
 
                         deleteDialogView.findViewById(R.id.btn_yes).setOnClickListener(new View.OnClickListener() {
 
@@ -456,9 +464,7 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT) {
-            getEntrevistador();
-        }
+
 
         /**
          * use RecyclerView for list the PullRequest .
@@ -625,7 +631,7 @@ public class MainActivity extends AppCompatActivity {
 
 
 
-    public void carregarsuario_login()
+  /*  public void carregarsuario_login()
     {
 
 
@@ -649,18 +655,31 @@ public class MainActivity extends AppCompatActivity {
 
 
     }
+*/
+
 
 
 
     @RequiresApi(api = Build.VERSION_CODES.KITKAT)
-    public void getEntrevistador(){
+    public boolean getEntrevistador() {
+
+        String fileName = "chave.txt";
+
+        File fileExist = new File(storageCliente, "chave.txt");
+        if (fileExist.exists()){
+
 
         StringBuilder text = new StringBuilder();
         try {
 
             File file = new File(storageCliente, "chave.txt");
 
-            BufferedReader br = new BufferedReader(new FileReader(file));
+            BufferedReader br = null;
+            try {
+                br = new BufferedReader(new FileReader(file));
+            } catch (FileNotFoundException e) {
+                e.printStackTrace();
+            }
             String line;
 
             JSONArray items = new JSONArray();
@@ -670,9 +689,10 @@ public class MainActivity extends AppCompatActivity {
             String id_crianca = "0";
             String nome_crianca = "0";
             String nome_mae = "0";
+            String nome_USUARIO = "0";
 
             while ((line = br.readLine()) != null) {
-                mViewPager.setVisibility(View.VISIBLE);
+
 
                 if (!line.isEmpty()) {
                     i++;
@@ -687,6 +707,8 @@ public class MainActivity extends AppCompatActivity {
                     nome_crianca = line;
                 }else if (i == 4 && (!line.isEmpty())){
                     nome_mae = line;
+                }else if (i == 5 && (!line.isEmpty())){
+                    nome_USUARIO = line;
                 }
                 text.append(line);
 
@@ -698,7 +720,7 @@ public class MainActivity extends AppCompatActivity {
 
             Entrevistado entrevistado = new Entrevistado();
             entrevistado.setEntrevistado_id(id + id_crianca);
-            entrevistado.setEntrevistado(nome_crianca + " / " + nome_mae);
+            entrevistado.setEntrevistado(nome_crianca);
 
 
             List<Entrevistado> data = new ArrayList<>();
@@ -717,17 +739,29 @@ public class MainActivity extends AppCompatActivity {
 
             NOME = entrevistado.getEntrevistado();
             ID = entrevistado.getEntrevistado_id();
+            USUARIO = nome_USUARIO;
 
 
 
             br.close();
+
+
+
         } catch (IOException e) {
 
 
 
             e.printStackTrace();
 
+
+
         } finally {
+
+        }
+            fileExist.delete();
+            return true;
+        }else{
+            return false;
 
         }
     }
@@ -750,15 +784,15 @@ public class MainActivity extends AppCompatActivity {
         public android.support.v4.app.Fragment getItem(int pos) {
             switch (pos) {
                 case 0:
-                    return FragmentViewPager.newInstance("Etapa 1 - Adiciona alimento","Adicionar Alimento.", R.mipmap.food, pos,mUsuario);
+                    return FragmentViewPager.newInstance("Etapa 1 - Adiciona alimento","Adicionar Alimento.", R.mipmap.food, pos,USUARIO);
                 case 1:
-                    return FragmentViewPager.newInstance("Etapa 2 - Adicionar complemento", "Clique no alimento abaixo para adicinar complemento.", R.mipmap.add,pos,mUsuario);
+                    return FragmentViewPager.newInstance("Etapa 2 - Adicionar complemento", "Clique no alimento abaixo para adicinar complemento.", R.mipmap.add,pos,USUARIO);
                 case 2:
-                    return FragmentViewPager.newInstance("Etapa 3 - Check", "Atenção! Caso tenha alimento abaixo clique para completar.",  R.mipmap.check, pos,mUsuario);
+                    return FragmentViewPager.newInstance("Etapa 3 - Check", "Atenção! Caso tenha alimento abaixo clique para completar.",  R.mipmap.check, pos,USUARIO);
                 case 3:
-                    return FragmentViewPager.newInstance("Etapa 4 - Relatório", "Confira se faltou algum alimento.",  R.mipmap.report, pos,mUsuario);
+                    return FragmentViewPager.newInstance("Etapa 4 - Relatório", "Confira se faltou algum alimento.",  R.mipmap.report, pos,USUARIO);
                 default:
-                    return FragmentViewPager.newInstance("Etapa 5 - Finalizar", "Encerrar entrevista .",  R.mipmap.finish, pos,mUsuario);
+                    return FragmentViewPager.newInstance("Etapa 5 - Finalizar", "Encerrar entrevista .",  R.mipmap.finish, pos,USUARIO);
             }
         }
 

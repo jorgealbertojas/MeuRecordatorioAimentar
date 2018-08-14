@@ -80,9 +80,11 @@ import retrofit2.Response;
 import retrofit2.Retrofit;
 import retrofit2.converter.gson.GsonConverterFactory;
 
+import static com.example.jorge.meurecordatorio.Utilite.Modulo.filename;
+
 public class ConfiguracaoActivity extends AppCompatActivity {
 
-    String filename = "recordatorio.txt";
+
     File myExternalFile;
 
     private static boolean nOK = false;
@@ -387,22 +389,23 @@ public class ConfiguracaoActivity extends AppCompatActivity {
                 String SEQUENCIAL_ALIMENTO = getFormatodoComEspaco(3, Integer.toString(contadorDiferente));
                 String ID_RECORDATORIO = getFormatodoComEspaco(3, dataPersistent.get(i).getAlimentacao_id());
                 String ID_ALIMENTO  = getFormatodoComEspaco(8, dataPersistent.get(i).getAlimentacao_alimento_id());
-                String ALIMENTO_NOVO = getFormatodoComEspaco(1, alimentoENovo(dataPersistent.get(i).getAlimentacao_alimento_id()));
-                String ALIMENTO_DESCRICAO = getFormatodoComEspacoDireita(50, dataPersistent.get(i).getAlimentacao_alimento());
+                String ALIMENTO_NOVO = getFormatodoComEspaco(2, alimentoENovo(dataPersistent.get(i).getAlimentacao_alimento_id()));
+                String ALIMENTO_DESCRICAO = getFormatodoComEspacoDireita(90, dataPersistent.get(i).getAlimentacao_alimento());
                 String ID_PREPARACAO = getFormatodoComEspaco(4, dataPersistent.get(i).getAlimentacao_preparacao_id());
                 String ID_UNIDADE = getFormatodoComEspaco(4, dataPersistent.get(i).getAlimentacao_unidade_id());
                 String ID_ADICAO = getFormatodoComEspaco(4, dataPersistent.get(i).getAlimentacao_adicao_id());
-                String ID_LOCAL = getFormatodoComEspaco(2, dataPersistent.get(i).getAlimentacao_local_id());
-                String ID_CONSUMO = getFormatodoComEspaco(2, dataPersistent.get(i).getAlimentacao_ocasiao_consumo_id());
-                String QUANTIDADE = getFormatodoComEspaco(6, dataPersistent.get(i).getAlimentacao_quantidade());
-                String HORA = getFormatodoComEspaco(4, dataPersistent.get(i).getAlimentacao_hora());
+                String ID_LOCAL = getFormatodoComEspaco(4, dataPersistent.get(i).getAlimentacao_local_id());
+                String ID_CONSUMO = getFormatodoComEspaco(4, dataPersistent.get(i).getAlimentacao_ocasiao_consumo_id());
+                String QUANTIDADE = getFormatodoComEspaco(10, dataPersistent.get(i).getAlimentacao_quantidade());
+                String HORA = getFormatodoComEspacoHORA(4, dataPersistent.get(i).getAlimentacao_hora());
                 String HORA_COLETA = getFormatodoComEspaco(6, formataHora(dataPersistent.get(i).getAlimentacao_hora_coleta()));
                 String DATA_COLETA = getFormatodoComEspaco(8, formatarData(dataPersistent.get(i).getAlimentacao_dia_coleta()));
                 String USUARIO = getFormatodoComEspacoDireita(20, dataPersistent.get(i).getAlimentacao_usuario());
                 String OBS = getFormatodoComEspacoDireita(130, dataPersistent.get(i).getAlimentacao_obs());
+                String ESPESSURA = getFormatodoComEspacoDireita(20, dataPersistent.get(i).getAlimentacao_espessura());
 
 
-                String formatado = IDENTIFICADOR + ENTREVISTADO  + SEQUENCIAL_ALIMENTO + ID_RECORDATORIO + ID_ALIMENTO + ALIMENTO_NOVO + ALIMENTO_DESCRICAO + ID_PREPARACAO + ID_UNIDADE + ID_ADICAO + ID_LOCAL + ID_CONSUMO + QUANTIDADE + HORA + HORA_COLETA + DATA_COLETA + USUARIO + OBS + "\n";
+                String formatado = IDENTIFICADOR + ENTREVISTADO  + SEQUENCIAL_ALIMENTO + ID_RECORDATORIO + ID_ALIMENTO + ALIMENTO_NOVO + ALIMENTO_DESCRICAO + ID_PREPARACAO + ID_UNIDADE + ID_ADICAO + ID_LOCAL + ID_CONSUMO + QUANTIDADE + HORA + HORA_COLETA + DATA_COLETA + USUARIO + OBS + ESPESSURA + "\n";
 
 
                 outStreamWriter.append(formatado);
@@ -572,6 +575,27 @@ public class ConfiguracaoActivity extends AppCompatActivity {
         return resultado;
     }
 
+    private String getFormatodoComEspacoHORA(int espaco, String valor){
+
+
+        if (valor != null){
+            if (valor.length()>0){
+               if (valor.indexOf(":") == 1){
+                   valor = " " + valor;
+                   valor = valor.replace(":","");
+               }
+            }
+        }
+
+        int i = valor.length();
+        while (i < espaco){
+            valor = " " + valor;
+            i++;
+        }
+
+        return valor;
+    }
+
     private String getFormatodoComEspacoDireita(int espaco, String valor){
         String resultado = valor;
 
@@ -579,6 +603,12 @@ public class ConfiguracaoActivity extends AppCompatActivity {
         while (i < espaco){
             resultado = resultado +  " ";
             i++;
+        }
+
+        if(resultado != null ){
+            if (resultado.length() > espaco) {
+                resultado = resultado.substring(0,espaco -1);
+            }
         }
 
         return resultado;

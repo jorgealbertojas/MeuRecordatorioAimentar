@@ -658,13 +658,16 @@ public class DetailActivity extends AppCompatActivity {
                         alimentacao.setAlimentacao_obs(obs.getText().toString());
                         alimentacao.setAlimentacao_usuario(mUsuario);
                         alimentacao.setAlimentacao_dia_coleta(diaCompleto_fim);
-                        alimentacaoList.add(alimentacao);
-
-
 
                         alimentacao.setAlimentacao_grau_parentesco(grau_parentesco_nome);
                         alimentacao.setAlimentacao_grau_parentesco_id(grau_parentesco);
                         alimentacao.setAlimentacao_dia_atico(diaAtipico);
+
+                        alimentacaoList.add(alimentacao);
+
+
+
+
 
                         if (Common.eLeitematerno(alimento_nome.getText().toString())){
                             alimentacao = naoSeaplica(alimentacao);

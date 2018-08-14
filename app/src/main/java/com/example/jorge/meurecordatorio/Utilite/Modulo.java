@@ -27,6 +27,8 @@ public class Modulo {
 
     public static String storageCliente = "/storage/emulated/0/csentry/inani/";
 
+    public static String filename  = "inaniR.txt";
+
     public static String NomeCopia = "backup_";
 
     // know type connect wifi
