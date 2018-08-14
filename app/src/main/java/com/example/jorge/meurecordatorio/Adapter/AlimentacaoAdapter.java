@@ -1,11 +1,15 @@
 package com.example.jorge.meurecordatorio.Adapter;
 
+import android.app.AlertDialog;
 import android.content.Context;
 import android.content.Intent;
 import android.content.res.Resources;
 import android.graphics.PorterDuff;
 import android.os.Bundle;
+import android.support.v7.widget.CardView;
 import android.support.v7.widget.RecyclerView;
+import android.text.Editable;
+import android.text.TextWatcher;
 import android.view.KeyEvent;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -15,6 +19,7 @@ import android.widget.TextView;
 
 import com.example.jorge.meurecordatorio.DetailActivity;
 import com.example.jorge.meurecordatorio.Generica.EntrevistadoActivity;
+import com.example.jorge.meurecordatorio.MainActivity;
 import com.example.jorge.meurecordatorio.Model.Alimentacao;
 import com.example.jorge.meurecordatorio.R;
 import com.example.jorge.meurecordatorio.Utilite.Common;
@@ -38,7 +43,11 @@ public class AlimentacaoAdapter extends RecyclerView.Adapter<AlimentacaoAdapter.
 
     private final List<Alimentacao> data;
 
+    private int mostrar;
+
     private Context mContext;
+
+    public static boolean estaFaltando = false;
 
 
     /*
@@ -78,12 +87,15 @@ public class AlimentacaoAdapter extends RecyclerView.Adapter<AlimentacaoAdapter.
         ImageView iv_check;
         TextView tv_grau_parentesco;
         TextView tv_atipico;
+        CardView card_view;
 
 
 
         /** get field of the main for show recyclerView**/
         public ViewHolder(View v) {
             super(v);
+
+            card_view = (CardView) v.findViewById(R.id.card_view);
 
             tv_alimento = (TextView) v.findViewById(R.id.tv_alimento);
 
@@ -95,6 +107,9 @@ public class AlimentacaoAdapter extends RecyclerView.Adapter<AlimentacaoAdapter.
             tv_ocasiao_consumo  = (TextView) v.findViewById(R.id.tv_ocasiao_consumo);
 
             tv_hora  = (TextView) v.findViewById(R.id.tv_hora);
+
+
+
             tv_quantidade = (TextView) v.findViewById(R.id.tv_quantidade);
 
             tv_hora_coleta  = (TextView) v.findViewById(R.id.tv_hora_coleta);
@@ -125,7 +140,7 @@ public class AlimentacaoAdapter extends RecyclerView.Adapter<AlimentacaoAdapter.
             intentToStartDetailActivity.putExtra(PUT_EXTRA_ENTREVISTADO, alimentacao.getAlimentacao_entrevistado_id());
             intentToStartDetailActivity.putExtra(PUT_EXTRA_ENTREVISTADO_NOME, alimentacao.getAlimentacao_entrevistado());
             intentToStartDetailActivity.putExtra(PUT_EXTRA_USUARIO, alimentacao.getAlimentacao_usuario());
-            intentToStartDetailActivity.putExtra(PUT_EXTRA_ETAPA, Modulo.ETAPA);
+            intentToStartDetailActivity.putExtra(PUT_EXTRA_ETAPA, 1);
             mContext.startActivity(intentToStartDetailActivity);
 
         }
@@ -135,7 +150,9 @@ public class AlimentacaoAdapter extends RecyclerView.Adapter<AlimentacaoAdapter.
     }
 
     /** create lit de Adapter Travel**/
-    public AlimentacaoAdapter(List<Alimentacao> data) {
+    public AlimentacaoAdapter(List<Alimentacao> data, int mostrar) {
+        estaFaltando = false;
+        this.mostrar = mostrar;
         this.data = data;
     }
 
@@ -143,7 +160,15 @@ public class AlimentacaoAdapter extends RecyclerView.Adapter<AlimentacaoAdapter.
     @Override
     public AlimentacaoAdapter.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         View v;
-        v = LayoutInflater.from(parent.getContext()).inflate(R.layout.layout_alimentacao, parent, false);
+        if (mostrar == 4) {
+            v = LayoutInflater.from(parent.getContext()).inflate(R.layout.layout_alimentacao, parent, false);
+        }
+        else if (mostrar < 2) {
+            v = LayoutInflater.from(parent.getContext()).inflate(R.layout.layout_alimentacao, parent, false);
+        }else{
+            v = LayoutInflater.from(parent.getContext()).inflate(R.layout.layout_alimentacao_check, parent, false);
+        }
+
         mContext = parent.getContext();
 
 
@@ -200,8 +225,11 @@ public class AlimentacaoAdapter extends RecyclerView.Adapter<AlimentacaoAdapter.
         }
 
         holder.tv_grau_parentesco.setText(alimentacao.getAlimentacao_grau_parentesco());
+        if (alimentacao.getAlimentacao_dia_atico() == null){
 
-        if (alimentacao.getAlimentacao_dia_atico().equals("Não")) {
+        }
+
+        else if (alimentacao.getAlimentacao_dia_atico().equals("Não")) {
             holder.tv_atipico.setText("típico");
         }else{
             holder.tv_atipico.setText("atípico");
@@ -231,8 +259,15 @@ public class AlimentacaoAdapter extends RecyclerView.Adapter<AlimentacaoAdapter.
 
         if (check) {
             holder.iv_check.setImageResource(R.mipmap.ic_check);
+            if (mostrar == 2) {
+                holder.card_view.setVisibility(View.GONE);
+            }
         }else{
             holder.iv_check.setImageResource(R.mipmap.ic_no_check);
+            estaFaltando = true;
+            if (mostrar == 3) {
+                holder.card_view.setVisibility(View.GONE);
+            }
         }
 
     }

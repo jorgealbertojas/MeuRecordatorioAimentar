@@ -1,5 +1,8 @@
 package com.example.jorge.meurecordatorio.Generica;
 
+import android.content.ContentValues;
+import android.content.Context;
+import android.database.sqlite.SQLiteDatabase;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
@@ -10,9 +13,13 @@ import android.widget.EditText;
 
 import com.example.jorge.meurecordatorio.Adapter.AdicaoAdapter;
 import com.example.jorge.meurecordatorio.Adapter.GrauParentescoAdapter;
+import com.example.jorge.meurecordatorio.ConfiguracaoActivity;
 import com.example.jorge.meurecordatorio.Model.Adicao;
 import com.example.jorge.meurecordatorio.Model.GrauParentesco;
 import com.example.jorge.meurecordatorio.PersistentData.DataBase;
+import com.example.jorge.meurecordatorio.PersistentData.DbCreate;
+import com.example.jorge.meurecordatorio.PersistentData.DbInstance;
+import com.example.jorge.meurecordatorio.PersistentData.Field;
 import com.example.jorge.meurecordatorio.R;
 
 import java.util.ArrayList;
@@ -30,8 +37,12 @@ public class GrauParentescoActivity extends AppCompatActivity {
     RecyclerView mRecyclerView;
 
     private DataBase mDataBase;
+    private SQLiteDatabase mDb;
 
     String mParentesco;
+
+    GrauParentesco grauParentesco;
+    List<GrauParentesco> grauParentescoList;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -61,6 +72,8 @@ public class GrauParentescoActivity extends AppCompatActivity {
         mRecyclerView.setLayoutManager(new LinearLayoutManager(this));
 
         mDataBase = new DataBase(this);
+        mDb = mDataBase.getReadableDatabase();
+        DbInstance.getInstance(this);
 
         iniciaRecyclerView();
 
@@ -94,8 +107,38 @@ public class GrauParentescoActivity extends AppCompatActivity {
         List<GrauParentesco> dataPersistent = new ArrayList<>();
         dataPersistent = mDataBase.getListGrauParentesco();
 
+        if (dataPersistent.size()==0){
+            grauParentescoList = new ArrayList<>();
+
+            grauParentesco = new GrauParentesco();
+            grauParentesco.setId("1");
+            grauParentesco.setParentesco("Mãe");
+            grauParentescoList.add(grauParentesco);
+
+            grauParentesco = new GrauParentesco();
+            grauParentesco.setId("2");
+            grauParentesco.setParentesco("Pai");
+            grauParentescoList.add(grauParentesco);
+
+            grauParentesco = new GrauParentesco();
+            grauParentesco.setId("3");
+            grauParentesco.setParentesco("Tia");
+            grauParentescoList.add(grauParentesco);
+
+            mDataBase = new DataBase(getApplicationContext());
+            mDb = mDataBase.getReadableDatabase();
+
+            mDataBase.insertTABLE_GRAU_PARENTESCO(grauParentescoList);
+
+
+        }
+
         if (dataPersistent.size()>0) {
             mRecyclerView.setAdapter(new GrauParentescoAdapter(dataPersistent));
         }
     }
+
+
+
+
 }

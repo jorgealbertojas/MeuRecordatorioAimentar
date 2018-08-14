@@ -81,7 +81,7 @@
                 android:background="@drawable/rounded_corner_cinza"
                 android:ems="10"
                 android:inputType="textPassword"
-                android:text="" />
+                android:text="123" />
 
         </TableRow>
 

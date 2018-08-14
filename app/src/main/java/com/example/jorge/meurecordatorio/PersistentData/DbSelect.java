@@ -37,6 +37,12 @@ public class DbSelect {
                     + Field.FIELD_UNIDADE +
                     " FROM " + DbCreate.TABLE_UNIDADE + " U, " + DbCreate.TABLE_UNIDADE_ALIMENTO  + " UA WHERE U." + Field.FIELD_UNIDADE_ID + " = UA." + Field.FIELD_UNIDADE_UNIDADE_ID    ;
 
+    public static String GET_UNIDADE_ALIMENTO_TESTE =
+            " SELECT  "
+                    + Field.FIELD_UNIDADE_UNIDADE_ID  + ","
+                    + Field.FIELD_UNIDADE_ALIMENTO_ID +
+                    " FROM " + DbCreate.TABLE_UNIDADE_ALIMENTO     ;
+
     public static String GET_ADICAO_SEM_RELACIONAMENTO =
             " SELECT distinct "
                     + Field.FIELD_ADICAO_ID  + ","
@@ -87,7 +93,8 @@ public class DbSelect {
                     + Field.FIELD_ALIMENTACAO_DIA_COLETA + ","
                     + Field.FIELD_ALIMENTACAO_GRAU_PARENTESCO_ID  + ","
                     + Field.FIELD_ALIMENTACAO_GRAU_PARENTESCO  + ","
-                    + Field.FIELD_ALIMENTACAO_DIA_ATIPICO +
+                    + Field.FIELD_ALIMENTACAO_DIA_ATIPICO + ","
+                    + Field.FIELD_ALIMENTACAO_ESPESSURA +
                     " FROM " + DbCreate.TABLE_ALIMENTACAO ;
 
     public static String GET_USUARIO =
@@ -125,6 +132,12 @@ public class DbSelect {
                     + Field.FIELD_UNIDADE_UNIDADE_ID  + ","
                     + Field.FIELD_UNIDADE_ALIMENTO_ID +
                     " FROM " + DbCreate.TABLE_UNIDADE ;
+
+    public static String GET_ADICAO_ALIMENTO_TESTE =
+            " SELECT "
+                    + Field.FIELD_ADICAO_ADICAO_ID  + ","
+                    + Field.FIELD_ADICAO_ALIMENTO_ID +
+                    " FROM " + DbCreate.TABLE_ADICAO_ALIMENTO ;
 
 
     public static String GET_ADICAO_ALIMENTO =

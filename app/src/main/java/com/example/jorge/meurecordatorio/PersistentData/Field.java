@@ -63,6 +63,7 @@ public class Field {
     public final static String FIELD_ALIMENTACAO_GRAU_PARENTESCO_ID= "ALIMENTACAO_GRAU_PARENTESCO_ID";
     public final static String FIELD_ALIMENTACAO_GRAU_PARENTESCO= "ALIMENTACAO_GRAU_PARENTESCO";
     public final static String FIELD_ALIMENTACAO_DIA_ATIPICO= "ALIMENTACAO_DIA_ATIPICO";
+    public final static String FIELD_ALIMENTACAO_ESPESSURA= "ALIMENTACAO_ESPESSURA";
 
     // TABELA USUARIO
     public final static String FIELD_USUARIO = "USUARIO";

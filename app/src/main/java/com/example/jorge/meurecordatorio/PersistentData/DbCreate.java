@@ -66,27 +66,28 @@ public class DbCreate {
                     Field.FIELD_ALIMENTACAO_ALIMENTO_ID + " INTEGER," +
                     Field.FIELD_ALIMENTACAO_ALIMENTO + " VARCHAR(500)," +
                     Field.FIELD_ALIMENTACAO_PREPARACAO_ID + " INTEGER," +
-                    Field.FIELD_ALIMENTACAO_PREPARACAO + " VARCHAR(500)," +
+                    Field.FIELD_ALIMENTACAO_PREPARACAO + " VARCHAR(100)," +
                     Field.FIELD_ALIMENTACAO_LOCAL_ID + " INTEGER," +
-                    Field.FIELD_ALIMENTACAO_LOCAL + " VARCHAR(500)," +
+                    Field.FIELD_ALIMENTACAO_LOCAL + " VARCHAR(100)," +
                     Field.FIELD_ALIMENTACAO_UNIDADE_ID + " INTEGER," +
                     Field.FIELD_ALIMENTACAO_UNIDADE + " VARCHAR(500)," +
                     Field.FIELD_ALIMENTACAO_OCASIAO_CONSUMO_ID + " INTEGER," +
-                    Field.FIELD_ALIMENTACAO_OCASIAO_CONSUMO + " VARCHAR(500)," +
+                    Field.FIELD_ALIMENTACAO_OCASIAO_CONSUMO + " VARCHAR(100)," +
                     Field.FIELD_ALIMENTACAO_ADICAO_ID + " INTEGER," +
                     Field.FIELD_ALIMENTACAO_ADICAO + " VARCHAR(500)," +
-                    Field.FIELD_ALIMENTACAO_QUANTIDADE + "  VARCHAR(500)," +
-                    Field.FIELD_ALIMENTACAO_HORA + "  VARCHAR(500)," +
-                    Field.FIELD_ALIMENTACAO_USUARIO + "  VARCHAR(500)," +
-                    Field.FIELD_ALIMENTACAO_ENTREVISTADO_ID + "  VARCHAR(500)," +
-                    Field.FIELD_ALIMENTACAO_ENTREVISTADO + " VARCHAR(500)," +
-                    Field.FIELD_ALIMENTACAO_HORA_COLETA + "  VARCHAR(500)," +
-                    Field.FIELD_ALIMENTACAO_HORA_COLETA_FIM + "  VARCHAR(500)," +
+                    Field.FIELD_ALIMENTACAO_QUANTIDADE + "  VARCHAR(100)," +
+                    Field.FIELD_ALIMENTACAO_HORA + "  VARCHAR(10)," +
+                    Field.FIELD_ALIMENTACAO_USUARIO + "  VARCHAR(100)," +
+                    Field.FIELD_ALIMENTACAO_ENTREVISTADO_ID + "  VARCHAR(100)," +
+                    Field.FIELD_ALIMENTACAO_ENTREVISTADO + " VARCHAR(100)," +
+                    Field.FIELD_ALIMENTACAO_HORA_COLETA + "  VARCHAR(50)," +
+                    Field.FIELD_ALIMENTACAO_HORA_COLETA_FIM + "  VARCHAR(50)," +
                     Field.FIELD_ALIMENTACAO_OBS + "  VARCHAR(500)," +
-                    Field.FIELD_ALIMENTACAO_DIA_COLETA + " VARCHAR(500), " +
+                    Field.FIELD_ALIMENTACAO_DIA_COLETA + " VARCHAR(50), " +
                     Field.FIELD_ALIMENTACAO_GRAU_PARENTESCO_ID + " INTEGER, " +
-                    Field.FIELD_ALIMENTACAO_GRAU_PARENTESCO + " VARCHAR(500), " +
-                    Field.FIELD_ALIMENTACAO_DIA_ATIPICO + " VARCHAR(500) " +
+                    Field.FIELD_ALIMENTACAO_GRAU_PARENTESCO + " VARCHAR(50), " +
+                    Field.FIELD_ALIMENTACAO_DIA_ATIPICO + " VARCHAR(50), " +
+                    Field.FIELD_ALIMENTACAO_ESPESSURA + " VARCHAR(100) " +
                     ");";
 
     public static String TABLE_USUARIO = "TABLE_USUARIO";

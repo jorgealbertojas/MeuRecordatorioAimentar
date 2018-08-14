@@ -20,12 +20,14 @@ import android.text.TextWatcher;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
+import android.view.animation.AlphaAnimation;
+import android.view.animation.Animation;
+import android.view.animation.LinearInterpolator;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.darwindeveloper.wcviewpager.WCViewPagerIndicator;
 import com.example.jorge.meurecordatorio.Adapter.AdicaoAdapter;
 import com.example.jorge.meurecordatorio.Adapter.AlimentacaoAdapter;
 import com.example.jorge.meurecordatorio.Adapter.AlimentoAdapter;
@@ -68,8 +70,8 @@ import com.example.jorge.meurecordatorio.PersistentData.DbSelect;
 import com.example.jorge.meurecordatorio.PersistentData.Field;
 import com.example.jorge.meurecordatorio.Utilite.Common;
 import com.example.jorge.meurecordatorio.Utilite.CrunchifyJSONFileWrite;
+import com.example.jorge.meurecordatorio.Utilite.FragmentViewPager;
 import com.example.jorge.meurecordatorio.Utilite.Modulo;
-import com.example.jorge.meurecordatorio.Utilite.PageFragment;
 import com.example.jorge.meurecordatorio.Utilite.Url;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
@@ -94,6 +96,8 @@ public class MainActivity extends AppCompatActivity {
     private SQLiteDatabase mDb;
     private DataBase mDataBase;
 
+    public List<Alimentacao> dataPersistent = null;
+
     public static String mUsuario = "0";
     public final static String PUT_EXTRA_ENTREVISTADO = "PUT_EXTRA_ENTREVISTADO";
     public final static String PUT_EXTRA_ENTREVISTADO_NOME = "PUT_EXTRA_ENTREVISTADO_NOME";
@@ -105,31 +109,37 @@ public class MainActivity extends AppCompatActivity {
     public final static String PUT_EXTRA_ALIMENTACAO = "PUT_EXTRA_ALIMENTACAO";
 
     public final static String PUT_EXTRA_GRAU_PARENTESCO = "PUT_EXTRA_GRAU_PARENTESCO";
+    public final static String PUT_EXTRA_GRAU_PARENTESCO_NOME = "PUT_EXTRA_GRAU_PARENTESCO_NOME";
     public final static String PUT_EXTRA_DIA_ATIPICO = "PUT_EXTRA_DIA_ATIPICO";
 
     public RecyclerView mRecyclerView;
+    public RecyclerView mRecyclerViewCheck;
+    public RecyclerView mRecyclerViewCheckCompleto;
+
+    public static ViewPager mViewPager;
 
     private TextView tv_quantity;
 
     private TextView ListaEntrevistado;
-    private TextView entrevistado;
-    private TextView entrevistado_nome;
+    public TextView entrevistado;
+    public TextView entrevistado_nome;
 
-    TextView diaAtipico;
+    public TextView diaAtipico;
 
-    TextView grauParentesco;
-    TextView grau_parentesco_nome;
+    public TextView grauParentesco;
+    public TextView grau_parentesco_nome;
 
 
-
-     private ImageView mMenu;
+    private ImageView imagepiscar;
+    private ImageView mMenu;
 
     public static String NOME = "0";
     public static String ID = "0";
 
-    //inicializamos la vista
-    static WCViewPagerIndicator wcViewPagerIndicator;
+    AlimentacaoAdapter alimentacaoAdapter;
 
+    public static ImageView proximo;
+    public static ImageView anterior;
 
 
 
@@ -140,13 +150,13 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        wcViewPagerIndicator = (WCViewPagerIndicator) findViewById(R.id.wcviewpager);
 
         carregarsuario_login();
 
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT) {
-            getEntrevistador();
-        }
+
+
+
+
 
         CrunchifyJSONFileWrite CrunchifyJSONFileWrite = new CrunchifyJSONFileWrite();
         try {
@@ -154,6 +164,160 @@ public class MainActivity extends AppCompatActivity {
         } catch (IOException e) {
             e.printStackTrace();
         }
+
+        proximo = (ImageView) findViewById(R.id.proximo);
+        anterior = (ImageView) findViewById(R.id.anterior);
+
+        imagepiscar = (ImageView) findViewById(R.id.image);
+        mViewPager = (ViewPager) findViewById(R.id.pager);
+        mViewPager.setVisibility(View.INVISIBLE);
+        mViewPager.setAdapter(new MyPagerAdapter(getSupportFragmentManager()));
+        mViewPager.addOnPageChangeListener(new ViewPager.OnPageChangeListener() {
+            @Override
+            public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {
+
+            }
+
+            @Override
+            public void onPageSelected(int position) {
+
+                if (position == 0) {
+                    imagepiscar.setVisibility(View.INVISIBLE);
+                    imagepiscar.setAnimation(null);
+                    mRecyclerView.setVisibility(View.VISIBLE);
+                    mRecyclerViewCheck.setVisibility(View.GONE);
+                    mRecyclerViewCheckCompleto.setVisibility(View.GONE);
+                    anterior.setVisibility(View.INVISIBLE);
+                    proximo.setVisibility(View.VISIBLE);
+
+
+                } else if (position == 1) {
+                        anterior.setVisibility(View.VISIBLE);
+                        proximo.setVisibility(View.VISIBLE);
+
+                        imagepiscar.setVisibility(View.INVISIBLE);
+                        imagepiscar.setAnimation(null);
+                        mRecyclerView.setVisibility(View.VISIBLE);
+                        mRecyclerViewCheck.setVisibility(View.GONE);
+                        mRecyclerViewCheckCompleto.setVisibility(View.GONE);
+
+
+
+                } else if (position == 2) {
+
+                    anterior.setVisibility(View.VISIBLE);
+                    proximo.setVisibility(View.VISIBLE);
+                    imagepiscar.setVisibility(View.INVISIBLE);
+                    imagepiscar.setAnimation(null);
+                    mRecyclerView.setVisibility(View.GONE);
+                    mRecyclerViewCheck.setVisibility(View.VISIBLE);
+                    mRecyclerViewCheckCompleto.setVisibility(View.GONE);
+                    LayoutInflater factory = LayoutInflater.from(MainActivity.this);
+                    final View deleteDialogView = factory.inflate(
+                            R.layout.custom_dialog1, null);
+                    final AlertDialog deleteDialog1 = new AlertDialog.Builder(MainActivity.this).create();
+                    deleteDialog1.setView(deleteDialogView);
+
+                    TextView nTextView = (TextView) deleteDialogView.findViewById(R.id.txt_dia);
+                    nTextView.setText("ATENÇÃO!\n Confira se existe alimentos imcompletos");
+
+                    deleteDialogView.findViewById(R.id.btn_yes).setOnClickListener(new View.OnClickListener() {
+
+                        @Override
+                        public void onClick(View v) {
+                            deleteDialog1.dismiss();
+                        }
+                    });
+                    deleteDialogView.findViewById(R.id.btn_no).setOnClickListener(new View.OnClickListener() {
+
+                        @Override
+                        public void onClick(View v) {
+                            deleteDialog1.dismiss();
+
+                        }
+                    });
+
+                    deleteDialog1.show();
+
+                } else if (position == 3){
+
+                    anterior.setVisibility(View.VISIBLE);
+                    proximo.setVisibility(View.VISIBLE);
+                    imagepiscar.setVisibility(View.INVISIBLE);
+                    imagepiscar.setAnimation(null);
+                    mRecyclerView.setVisibility(View.GONE);
+                    mRecyclerViewCheck.setVisibility(View.GONE);
+                    mRecyclerViewCheckCompleto.setVisibility(View.VISIBLE);
+                  /*  LayoutInflater factory = LayoutInflater.from(MainActivity.this);
+                    final View deleteDialogView = factory.inflate(
+                            R.layout.custom_dialog1, null);
+                    final AlertDialog deleteDialog1 = new AlertDialog.Builder(MainActivity.this).create();
+                    deleteDialog1.setView(deleteDialogView);
+
+                    TextView nTextView = (TextView) deleteDialogView.findViewById(R.id.txt_dia);
+                    nTextView.setText("ATENÇÃO!\n Coleta encerrada pode fazer a revisão, caso necessário pode iniciar os passos novamente");
+
+                    deleteDialogView.findViewById(R.id.btn_yes).setOnClickListener(new View.OnClickListener() {
+
+                        @Override
+                        public void onClick(View v) {
+                            deleteDialog1.dismiss();
+                        }
+                    });
+                    deleteDialogView.findViewById(R.id.btn_no).setOnClickListener(new View.OnClickListener() {
+
+                        @Override
+                        public void onClick(View v) {
+                            deleteDialog1.dismiss();
+
+                        }
+                    });*/
+
+                   // deleteDialog1.show();
+                }else if (position == 4) {
+                    anterior.setVisibility(View.VISIBLE);
+                    proximo.setVisibility(View.INVISIBLE);
+                    mRecyclerView.setVisibility(View.VISIBLE);
+                    mRecyclerViewCheck.setVisibility(View.GONE);
+                    mRecyclerViewCheckCompleto.setVisibility(View.GONE);
+
+                    imagepiscar.setVisibility(View.INVISIBLE);
+                    imagepiscar.setAnimation(null);
+
+                    if (alimentacaoAdapter.estaFaltando){
+                        imagepiscar.setVisibility(View.VISIBLE);
+                        imagepiscar = (ImageView) findViewById(R.id.image);
+                        Animation animation = new AlphaAnimation((float) 1, 0); // Change alpha from fully visible to invisible
+                        animation.setDuration(500); // duration - half a second
+                        animation.setInterpolator(new LinearInterpolator()); // do not alter
+                        // animation
+                        // rate
+                        animation.setRepeatCount(Animation.INFINITE); // Repeat animation
+                        // infinitely
+                        animation.setRepeatMode(Animation.REVERSE); // Reverse animation at the
+                        // end so the button will
+                        // fade back in
+                        imagepiscar.startAnimation(animation);
+                    }
+
+
+
+
+
+
+
+                }
+            }
+
+            @Override
+            public void onPageScrollStateChanged(int state) {
+
+            }
+
+        });
+
+
+
 
 
         tv_quantity = (TextView) findViewById(R.id.tv_quantity);
@@ -196,6 +360,75 @@ public class MainActivity extends AppCompatActivity {
                                       int count) {
                 if(!s.equals("") ) {
                     iniciaRecyclerView();
+
+                    if (dataPersistent.size() > 0){
+                        if (dataPersistent.get(0).getAlimentacao_dia_atico() == null){
+                            diaAtipico.setText("NÃO");
+                        }
+                        else if (dataPersistent.get(0).getAlimentacao_dia_atico().equals("null")){
+                            diaAtipico.setText("NÃO");
+                        }else{
+                            diaAtipico.setText(dataPersistent.get(0).getAlimentacao_dia_atico());
+                        }
+
+                        if (dataPersistent.get(0).getAlimentacao_grau_parentesco() == null) {
+                            grau_parentesco_nome.setText("0");
+                        }
+                        else if (dataPersistent.get(0).getAlimentacao_grau_parentesco().equals("null")){
+                            grau_parentesco_nome.setText("0");
+                        }else {
+                            grau_parentesco_nome.setText(dataPersistent.get(0).getAlimentacao_grau_parentesco());
+                        }
+
+                        if (dataPersistent.get(0).getAlimentacao_grau_parentesco_id() == null){
+                            grauParentesco.setText("0");
+                        }
+                        else if (dataPersistent.get(0).getAlimentacao_grau_parentesco_id().equals("null")){
+                            grauParentesco.setText("0");
+                        }else {
+                            grauParentesco.setText(dataPersistent.get(0).getAlimentacao_grau_parentesco_id());
+                        }
+
+
+
+                        mViewPager.setVisibility(View.VISIBLE);
+
+                    }
+                    else{
+                        grau_parentesco_nome.setText("0");
+                        grauParentesco.setText("NÃO");
+                        mViewPager.setVisibility(View.INVISIBLE);
+                    }
+                    if (mRecyclerView.getAdapter() == null) {
+
+                        LayoutInflater factory = LayoutInflater.from(MainActivity.this);
+                        final View deleteDialogView = factory.inflate(
+                                R.layout.custom_dialog1, null);
+                        final AlertDialog deleteDialog1 = new AlertDialog.Builder(MainActivity.this).create();
+                        deleteDialog1.setView(deleteDialogView);
+
+                        TextView nTextView = (TextView) deleteDialogView.findViewById(R.id.txt_dia);
+                        nTextView.setText("ATENÇÃO!\n Agora eu gostaria que você me dissesse tudo que " +  NOME + " comeu ou bebeu ontem, do momento em que acordou até a hora em que foi dormir. Caso [nome da criança] tenha acordado de madrugada, também gostaria de saber o que ele/ela comeu ou bebeu de madrugada”.  Me informe também os horários em que a criança consumiu os alimentos e bebidas. Não se preocupe com a quantidade agora, pois falaremos dos detalhes depois.");
+
+                        deleteDialogView.findViewById(R.id.btn_yes).setOnClickListener(new View.OnClickListener() {
+
+                            @Override
+                            public void onClick(View v) {
+                                deleteDialog1.dismiss();
+                            }
+                        });
+                        deleteDialogView.findViewById(R.id.btn_no).setOnClickListener(new View.OnClickListener() {
+
+                            @Override
+                            public void onClick(View v) {
+                                deleteDialog1.dismiss();
+
+                            }
+                        });
+
+                        deleteDialog1.show();
+                    }
+
                 }
             }
 
@@ -223,6 +456,9 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT) {
+            getEntrevistador();
+        }
 
         /**
          * use RecyclerView for list the PullRequest .
@@ -231,17 +467,21 @@ public class MainActivity extends AppCompatActivity {
         mRecyclerView.setHasFixedSize(true);
         mRecyclerView.setLayoutManager(new LinearLayoutManager(this));
 
+        mRecyclerViewCheck = (RecyclerView) findViewById(R.id.rv_alimento_check);
+        mRecyclerViewCheck.setHasFixedSize(true);
+        mRecyclerViewCheck.setLayoutManager(new LinearLayoutManager(this));
+
+        mRecyclerViewCheckCompleto = (RecyclerView) findViewById(R.id.rv_alimento_check_completo);
+        mRecyclerViewCheckCompleto.setHasFixedSize(true);
+        mRecyclerViewCheckCompleto.setLayoutManager(new LinearLayoutManager(this));
+
         mDataBase = new DataBase(this);
 
        // iniciaRecyclerView();
 
-
-
-
-
         //creamos un nuevo adpater
-        ViewPagerAdapter viewPagerAdapter = new ViewPagerAdapter(getSupportFragmentManager());
-        wcViewPagerIndicator.setAdapter(viewPagerAdapter);//aplicamos el adapter
+        //ViewPagerAdapter viewPagerAdapter = new ViewPagerAdapter(getSupportFragmentManager());
+      /*  wcViewPagerIndicator.setAdapter(viewPagerAdapter);//aplicamos el adapter
 
         //obtenemos el viewpager y capturamos sus cambios en tiempo de ejecucuion
         wcViewPagerIndicator.getViewPager().addOnPageChangeListener(new ViewPager.OnPageChangeListener() {
@@ -266,7 +506,7 @@ public class MainActivity extends AppCompatActivity {
             public void onPageScrollStateChanged(int state) {
 
             }
-        });
+        });*/
 
         diaAtipico =  (TextView) findViewById(R.id.dia_atipico);
         diaAtipico.setOnClickListener(new View.OnClickListener() {
@@ -294,6 +534,7 @@ public class MainActivity extends AppCompatActivity {
             public void onClick(View arg0) {
                 try {
                     showGrauParentesco();
+                    mViewPager.setVisibility(View.VISIBLE);
                 } catch (Exception e) {
                     // TODO: handle exception
                 }
@@ -304,6 +545,7 @@ public class MainActivity extends AppCompatActivity {
             public void onClick(View arg0) {
                 try {
                     showGrauParentesco();
+                    mViewPager.setVisibility(View.VISIBLE);
                 } catch (Exception e) {
                     // TODO: handle exception
                 }
@@ -319,10 +561,10 @@ public class MainActivity extends AppCompatActivity {
         iniciaRecyclerView();
 
         if (Modulo.OPCAO.equals("ENTREVISTADO")){
-            entrevistado_nome.setText(Modulo.NOME);
-            entrevistado.setText(Modulo.ID);
             NOME = Modulo.NOME;
             ID = Modulo.ID;
+            entrevistado_nome.setText(Modulo.NOME);
+            entrevistado.setText(Modulo.ID);
         }else if (Modulo.OPCAO.equals("GRAU_PARENTESCO")){
             grau_parentesco_nome.setText(Modulo.NOME);
             grauParentesco.setText(Modulo.ID);
@@ -333,15 +575,25 @@ public class MainActivity extends AppCompatActivity {
 
 
 
-    private void iniciaRecyclerView(){
-        List<Alimentacao> dataPersistent = new ArrayList<>();
+    public void iniciaRecyclerView(){
+        imagepiscar.setVisibility(View.INVISIBLE);
+        imagepiscar.setAnimation(null);
+        dataPersistent = new ArrayList<>();
         dataPersistent = mDataBase.getListAlimentacao(entrevistado.getText().toString());
 
         if (dataPersistent.size()>0) {
-            mRecyclerView.setAdapter(new AlimentacaoAdapter(dataPersistent));
+            mRecyclerView.setAdapter(new AlimentacaoAdapter(dataPersistent,0));
+            mRecyclerViewCheck.setAdapter(new AlimentacaoAdapter(dataPersistent,2));
+            alimentacaoAdapter = (new AlimentacaoAdapter(dataPersistent,3));
+            mRecyclerViewCheckCompleto.setAdapter(alimentacaoAdapter);
             tv_quantity.setText(Integer.toString(dataPersistent.size()));
+
+
+
         }else{
             mRecyclerView.setAdapter(null);
+            mRecyclerViewCheck.setAdapter(null);
+            mRecyclerViewCheckCompleto.setAdapter(null);
             tv_quantity.setText("0");
         }
     }
@@ -420,6 +672,7 @@ public class MainActivity extends AppCompatActivity {
             String nome_mae = "0";
 
             while ((line = br.readLine()) != null) {
+                mViewPager.setVisibility(View.VISIBLE);
 
                 if (!line.isEmpty()) {
                     i++;
@@ -479,46 +732,40 @@ public class MainActivity extends AppCompatActivity {
         }
     }
 
-    /**
-     * adaptador para nuextro wcviewpager
-     */
-    private class ViewPagerAdapter extends FragmentPagerAdapter {
-
-        public ViewPagerAdapter(FragmentManager fm) {
-            super(fm);
-        }
-
-        /**
-         * Return the Fragment associated with a specified position.
-         *
-         * @param position
-         */
-        @Override
-        public Fragment getItem(int position) {
-
-            //usaremos la misma clase para todos los fragment solo cambiaremos el texto de cada fragment
-            Fragment fragment = new PageFragment(NOME,ID,wcViewPagerIndicator);
-            Bundle args = new Bundle();//para pasar datos al fragment
-            args.putInt(PageFragment.PAGE, position);//le sumamos 1 a la posicion para que el texto mostrado corresponda con el del indicador
-            fragment.setArguments(args);//le pasamos los datos(numero de pagina) al fragment
-
-            return fragment;
-        }
-
-        /**
-         * Return the number of views available.
-         */
-        @Override
-        public int getCount() {
-            return 5;//nuemro de paginas para nuestro wcviewpager
-        }
-    }
 
     private void showGrauParentesco(){
         Class destinationClass = GrauParentescoActivity.class;
         Intent intentToStartDetailActivity = new Intent(this, destinationClass);
         intentToStartDetailActivity.putExtra(PUT_EXTRA_GRAU_PARENTESCO, grauParentesco.getText().toString());
         startActivity(intentToStartDetailActivity);
+    }
+
+    private class MyPagerAdapter extends FragmentPagerAdapter {
+
+        public MyPagerAdapter(FragmentManager fm) {
+            super(fm);
+        }
+
+        @Override
+        public android.support.v4.app.Fragment getItem(int pos) {
+            switch (pos) {
+                case 0:
+                    return FragmentViewPager.newInstance("Etapa 1 - Adiciona alimento","Adicionar Alimento.", R.mipmap.food, pos,mUsuario);
+                case 1:
+                    return FragmentViewPager.newInstance("Etapa 2 - Adicionar complemento", "Clique no alimento abaixo para adicinar complemento.", R.mipmap.add,pos,mUsuario);
+                case 2:
+                    return FragmentViewPager.newInstance("Etapa 3 - Check", "Atenção! Caso tenha alimento abaixo clique para completar.",  R.mipmap.check, pos,mUsuario);
+                case 3:
+                    return FragmentViewPager.newInstance("Etapa 4 - Relatório", "Confira se faltou algum alimento.",  R.mipmap.report, pos,mUsuario);
+                default:
+                    return FragmentViewPager.newInstance("Etapa 5 - Finalizar", "Encerrar entrevista .",  R.mipmap.finish, pos,mUsuario);
+            }
+        }
+
+        @Override
+        public int getCount() {
+            return 5;
+        }
     }
 
 }

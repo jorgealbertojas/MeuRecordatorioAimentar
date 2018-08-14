@@ -34,6 +34,9 @@ public class Alimentacao implements Serializable {
     private String alimentacao_grau_parentesco;
     private String alimentacao_dia_atico;
 
+
+    private String alimentacao_espessura;
+
     public String getAlimentacao_grau_parentesco_id() {
         return alimentacao_grau_parentesco_id;
     }
@@ -233,4 +236,13 @@ public class Alimentacao implements Serializable {
     public void setAlimentacao_dia_atico(String alimentacao_dia_atico) {
         this.alimentacao_dia_atico = alimentacao_dia_atico;
     }
+
+    public String getAlimentacao_espessura() {
+        return alimentacao_espessura;
+    }
+
+    public void setAlimentacao_espessura(String alimentacao_espessura) {
+        this.alimentacao_espessura = alimentacao_espessura;
+    }
+
 }

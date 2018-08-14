@@ -1,0 +1,318 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_marginTop="8dp">
+
+    <android.support.v7.widget.CardView xmlns:card_view="http://schemas.android.com/apk/res-auto"
+        android:id="@+id/card_view"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:layout_marginEnd="8dp"
+        android:layout_marginLeft="8dp"
+        android:layout_marginRight="8dp"
+        android:layout_marginTop="8dp"
+        card_view:cardCornerRadius="4dp"
+        card_view:cardElevation="5dp"
+        card_view:cardMaxElevation="5dp"
+        card_view:contentPadding="5dp"
+        card_view:layout_constraintEnd_toEndOf="parent"
+        card_view:layout_constraintLeft_toLeftOf="parent"
+        card_view:layout_constraintTop_toTopOf="parent">
+
+        <android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+            xmlns:app="http://schemas.android.com/apk/res-auto"
+            xmlns:tools="http://schemas.android.com/tools"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <TextView
+                android:id="@+id/tv_alimento"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="8dp"
+                android:layout_marginStart="8dp"
+                android:lines="2"
+                android:paddingLeft="10dp"
+                android:paddingTop="10dp"
+                android:text="tv_alimento"
+                android:textColor="@color/colorPrimary"
+                android:textSize="18sp"
+                android:textStyle="bold"
+                app:layout_constraintEnd_toStartOf="@+id/rl_RelativeLayout"
+                app:layout_constraintStart_toStartOf="parent" />
+
+            <TextView
+
+                android:id="@+id/tv_local"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/tv_alimento"
+                android:layout_marginEnd="8dp"
+                android:layout_marginStart="8dp"
+                android:layout_marginTop="8dp"
+                android:layout_toRightOf="@+id/space"
+                android:visibility="gone"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/tv_alimento" />
+
+            <TextView
+
+                android:id="@+id/tv_ocasiao_consumo"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/tv_alimento"
+                android:layout_marginEnd="8dp"
+                android:layout_marginStart="8dp"
+                android:layout_marginTop="8dp"
+                android:layout_toRightOf="@+id/space"
+                android:visibility="gone"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/tv_local" />
+
+            <TextView
+
+                android:id="@+id/tv_unidade"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/tv_alimento"
+                android:layout_marginEnd="8dp"
+                android:layout_marginStart="8dp"
+                android:layout_marginTop="8dp"
+                android:layout_toRightOf="@+id/space"
+                android:visibility="gone"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/tv_ocasiao_consumo" />
+
+            <TextView
+
+                android:id="@+id/tv_adicao"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/tv_alimento"
+                android:layout_marginEnd="8dp"
+                android:layout_marginStart="8dp"
+                android:layout_marginTop="8dp"
+                android:layout_toRightOf="@+id/space"
+                android:visibility="gone"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/tv_unidade" />
+
+            <TextView
+
+                android:id="@+id/tv_preparacao"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/tv_alimento"
+                android:layout_marginEnd="8dp"
+                android:layout_marginStart="8dp"
+                android:layout_marginTop="8dp"
+                android:layout_toRightOf="@+id/space"
+                android:visibility="gone"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/tv_adicao" />
+
+
+            <TextView
+                android:id="@+id/tv_dia_coleta"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/tv_preparacao"
+                android:layout_marginLeft="8dp"
+                android:layout_marginStart="8dp"
+                android:layout_marginTop="8dp"
+                android:text="01/01/2000"
+                android:textColor="@color/colorPrimary"
+                android:textStyle="bold"
+                android:visibility="gone"
+                app:layout_constraintLeft_toRightOf="@+id/iv_dia_coleta"
+                app:layout_constraintTop_toBottomOf="@+id/tv_preparacao" />
+
+            <TextView
+                android:id="@+id/tv_hora_coleta"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/tv_dia_coleta"
+                android:layout_marginLeft="8dp"
+                android:layout_marginStart="8dp"
+                android:layout_marginTop="8dp"
+                android:text="0"
+                android:textColor="@color/colorPrimary"
+                android:textStyle="bold"
+                android:visibility="gone"
+                app:layout_constraintLeft_toRightOf="@+id/iv_hora_coleta"
+                app:layout_constraintTop_toBottomOf="@+id/tv_preparacao" />
+
+            <TextView
+                android:id="@+id/tv_usuario"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/tv_dia_coleta"
+                android:layout_marginLeft="8dp"
+                android:layout_marginStart="8dp"
+                android:layout_marginTop="8dp"
+                android:text="0"
+                android:textColor="@color/colorPrimary"
+                android:textStyle="bold"
+                android:visibility="gone"
+                app:layout_constraintLeft_toRightOf="@+id/iv_usuario"
+                app:layout_constraintTop_toBottomOf="@+id/tv_preparacao" />
+
+            <TextView
+
+                android:id="@+id/tv_grau_parentesco"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/tv_dia_coleta"
+                android:layout_marginLeft="8dp"
+                android:layout_marginStart="8dp"
+                android:layout_marginTop="8dp"
+                android:text="0"
+                android:textColor="@color/colorPrimary"
+                android:textStyle="bold"
+                android:visibility="gone"
+                app:layout_constraintLeft_toRightOf="@+id/iv_responsavel"
+                app:layout_constraintTop_toBottomOf="@+id/tv_preparacao" />
+
+            <ImageView
+                android:id="@+id/iv_dia_coleta"
+                android:layout_width="20dp"
+                android:layout_height="20dp"
+                android:layout_below="@+id/space"
+                android:layout_marginLeft="8dp"
+                android:layout_marginTop="8dp"
+                android:visibility="gone"
+                app:layout_constraintLeft_toRightOf="@+id/tv_hora_coleta"
+                app:layout_constraintTop_toBottomOf="@+id/tv_preparacao"
+                app:srcCompat="@mipmap/ic_day" />
+
+            <ImageView
+                android:id="@+id/iv_hora_coleta"
+                android:layout_width="20dp"
+                android:layout_height="20dp"
+                android:layout_below="@+id/iv_dia_coleta"
+                android:layout_marginLeft="20dp"
+                android:layout_marginTop="8dp"
+                android:scaleType="centerInside"
+                android:visibility="gone"
+                app:layout_constraintLeft_toLeftOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/tv_preparacao"
+                app:srcCompat="@mipmap/ic_hour" />
+
+            <ImageView
+                android:id="@+id/iv_usuario"
+                android:layout_width="20dp"
+                android:layout_height="20dp"
+                android:layout_below="@+id/space"
+                android:layout_marginLeft="8dp"
+                android:layout_marginTop="8dp"
+                android:visibility="gone"
+                app:layout_constraintLeft_toRightOf="@+id/tv_dia_coleta"
+                app:layout_constraintTop_toBottomOf="@+id/tv_preparacao"
+                app:srcCompat="@mipmap/ic_user" />
+
+            <ImageView
+                android:id="@+id/iv_responsavel"
+                android:layout_width="20dp"
+                android:layout_height="20dp"
+                android:layout_below="@+id/space"
+                android:layout_marginLeft="8dp"
+                android:layout_marginTop="8dp"
+                android:visibility="gone"
+                app:layout_constraintLeft_toRightOf="@+id/tv_usuario"
+                app:layout_constraintTop_toBottomOf="@+id/tv_preparacao"
+                app:srcCompat="@mipmap/ic_responsavel" />
+
+            <RelativeLayout
+                android:id="@+id/rl_RelativeLayout"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/tv_hora_coleta"
+                android:layout_marginEnd="5dp"
+                android:layout_marginRight="5dp"
+
+                android:layout_marginTop="0dp"
+                app:layout_constraintRight_toRightOf="parent"
+                app:layout_constraintTop_toTopOf="parent">
+
+                <ImageView xmlns:app="http://schemas.android.com/apk/res-auto"
+                    android:id="@+id/iv_check"
+                    android:layout_width="50dp"
+                    android:layout_height="50dp"
+                    android:layout_centerHorizontal="true"
+                    android:src="@mipmap/ic_check" />
+
+            </RelativeLayout>
+
+            <Space
+                android:id="@+id/space"
+                android:layout_width="5dp"
+                android:layout_height="0dp"
+                android:layout_marginEnd="50dp"
+                android:layout_marginLeft="10dp"
+                android:layout_marginRight="50dp"
+                android:layout_marginStart="10dp"
+                android:visibility="gone"
+                app:layout_constraintHorizontal_bias="0.0"
+                app:layout_constraintLeft_toRightOf="@+id/tv_preparacao"
+                app:layout_constraintRight_toLeftOf="@+id/rl_RelativeLayout"
+                tools:layout_editor_absoluteY="97dp" />
+
+            <TextView
+                android:id="@+id/tv_hora"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="0"
+                android:textAlignment="center"
+                android:textColor="@color/colorAccent"
+                android:textStyle="bold"
+                android:visibility="gone" />
+
+            <TextView
+                android:id="@+id/tv_quantidade"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="8dp"
+                android:layout_marginStart="8dp"
+                android:paddingLeft="10dp"
+                android:text="0"
+                android:textAlignment="center"
+
+                android:textColor="@color/colorPrimary"
+                android:textStyle="bold"
+                android:visibility="gone"
+                app:layout_constraintLeft_toRightOf="@+id/tv_hora"
+                app:layout_constraintStart_toStartOf="parent" />
+
+
+            <TextView
+
+                android:id="@+id/tv_atipico"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/tv_dia_coleta"
+                android:layout_marginEnd="8dp"
+                android:layout_marginStart="8dp"
+                android:text="02222"
+                android:textColor="@color/colorPrimary"
+                android:textSize="8sp"
+                android:textStyle="bold"
+                android:visibility="gone"
+                app:layout_constraintEnd_toEndOf="@+id/rl_RelativeLayout"
+                app:layout_constraintStart_toStartOf="@+id/rl_RelativeLayout"
+                app:layout_constraintTop_toBottomOf="@+id/rl_RelativeLayout" />
+
+
+        </android.support.constraint.ConstraintLayout>
+    </android.support.v7.widget.CardView>
+
+
+</android.support.constraint.ConstraintLayout>

@@ -1,5 +1,6 @@
 package com.example.jorge.meurecordatorio.Generica;
 
+import android.app.Activity;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
@@ -14,6 +15,7 @@ import com.example.jorge.meurecordatorio.Model.Preparacao;
 import com.example.jorge.meurecordatorio.Model.Unidade;
 import com.example.jorge.meurecordatorio.PersistentData.DataBase;
 import com.example.jorge.meurecordatorio.R;
+import com.example.jorge.meurecordatorio.Utilite.Modulo;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -29,6 +31,8 @@ public class PreparacaoActivity extends AppCompatActivity {
 
     String mName;
     String mAlimento;
+
+    public List<Preparacao> dataPersistent = null;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -61,6 +65,15 @@ public class PreparacaoActivity extends AppCompatActivity {
 
         iniciaRecyclerView();
 
+        if (dataPersistent != null) {
+            if (dataPersistent.size() == 1) {
+                Modulo.OPCAO = "PREPARACAO";
+                Modulo.NOME = dataPersistent.get(0).getPreparacao();
+                Modulo.ID = dataPersistent.get(0).getPreparacao_id();
+                this.finish();
+            }
+        }
+
         final EditText tv_buscar =  (EditText) findViewById(R.id.tv_buscar);
         tv_buscar.addTextChangedListener(new TextWatcher() {
 
@@ -88,8 +101,8 @@ public class PreparacaoActivity extends AppCompatActivity {
 
 
     private void iniciaRecyclerView(){
-        List<Preparacao> dataPersistent = new ArrayList<>();
 
+       dataPersistent = new ArrayList<>();
 
         if (mAlimento.equals("S")){
             dataPersistent = mDataBase.getListPreparacao();

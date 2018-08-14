@@ -10,6 +10,8 @@ import android.text.Editable;
 import android.text.TextWatcher;
 import android.view.LayoutInflater;
 import android.view.View;
+import android.widget.CheckBox;
+import android.widget.CompoundButton;
 import android.widget.EditText;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
@@ -41,10 +43,21 @@ public class AlimentoActivity extends AppCompatActivity {
 
     String mName;
 
+    private static CheckBox checkBoxColetados;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_generico);
+
+        checkBoxColetados = (CheckBox) findViewById(R.id.checkBoxColetados);
+        checkBoxColetados.setVisibility(View.VISIBLE);
+        checkBoxColetados.setText("Buscar em qualquer lugar do texto");
+        checkBoxColetados.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+                buscarTerxto();
+            }
+        });
 
         /**
          * Get putExtra for Activity Main .
@@ -158,22 +171,7 @@ public class AlimentoActivity extends AppCompatActivity {
                                       int before, int count) {
 
 
-                if (!tv_buscar.getText().toString().equals("")) {
-                    List<Alimento> dataPersistent = new ArrayList<>();
-                    dataPersistent = mDataBase.getListAlimento(tv_buscar.getText().toString());
-
-                    if (dataPersistent.size()>0) {
-                        relativeSalvar.setVisibility(View.GONE);
-                    }else{
-                        relativeSalvar.setVisibility(View.VISIBLE);
-                    }
-
-                    iniciaRecyclerView();
-                    mRecyclerView.setAdapter(new AlimentoAdapter(dataPersistent));
-
-                }else{
-                    iniciaRecyclerView();
-                }
+                buscarTerxto();
             }
         });
 
@@ -189,6 +187,30 @@ public class AlimentoActivity extends AppCompatActivity {
          //   relativeSalvar.setVisibility(View.INVISIBLE);
         }else{
          //   relativeSalvar.setVisibility(View.VISIBLE);
+        }
+    }
+
+
+    private void buscarTerxto(){
+        if (!tv_buscar.getText().toString().equals("")) {
+            List<Alimento> dataPersistent = new ArrayList<>();
+            if (checkBoxColetados.isChecked()) {
+                dataPersistent = mDataBase.getListAlimento(tv_buscar.getText().toString());
+            }else{
+                dataPersistent = mDataBase.getListAlimentoInicio(tv_buscar.getText().toString());
+            }
+
+            if (dataPersistent.size()>0) {
+                relativeSalvar.setVisibility(View.GONE);
+            }else{
+                relativeSalvar.setVisibility(View.VISIBLE);
+            }
+
+            iniciaRecyclerView();
+            mRecyclerView.setAdapter(new AlimentoAdapter(dataPersistent));
+
+        }else{
+            iniciaRecyclerView();
         }
     }
 }

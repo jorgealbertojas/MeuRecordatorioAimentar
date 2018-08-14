@@ -22,6 +22,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.WindowManager;
 import android.view.inputmethod.InputMethodManager;
+import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.CompoundButton;
 import android.widget.EditText;
@@ -44,20 +45,18 @@ import com.example.jorge.meurecordatorio.PersistentData.DbInstance;
 import com.example.jorge.meurecordatorio.Utilite.Common;
 import com.example.jorge.meurecordatorio.Utilite.Modulo;
 
-import java.text.DateFormat;
-import java.text.SimpleDateFormat;
 import java.util.ArrayList;
-import java.util.Calendar;
-import java.util.Date;
 import java.util.List;
 
 import static com.example.jorge.meurecordatorio.MainActivity.PUT_BUNDLE_ALIMENTACAO;
 import static com.example.jorge.meurecordatorio.MainActivity.PUT_EXTRA_ALIMENTACAO;
 import static com.example.jorge.meurecordatorio.MainActivity.PUT_EXTRA_ALIMENTO;
+import static com.example.jorge.meurecordatorio.MainActivity.PUT_EXTRA_DIA_ATIPICO;
 import static com.example.jorge.meurecordatorio.MainActivity.PUT_EXTRA_ENTREVISTADO;
 import static com.example.jorge.meurecordatorio.MainActivity.PUT_EXTRA_ENTREVISTADO_NOME;
 import static com.example.jorge.meurecordatorio.MainActivity.PUT_EXTRA_ETAPA;
 import static com.example.jorge.meurecordatorio.MainActivity.PUT_EXTRA_GRAU_PARENTESCO;
+import static com.example.jorge.meurecordatorio.MainActivity.PUT_EXTRA_GRAU_PARENTESCO_NOME;
 import static com.example.jorge.meurecordatorio.MainActivity.PUT_EXTRA_USUARIO;
 import static com.example.jorge.meurecordatorio.Utilite.Modulo.NAO_SE_APLICA;
 
@@ -107,7 +106,7 @@ public class DetailActivity extends AppCompatActivity {
 
     EditText horaEditText;
     TextView minutoEditText;
-    EditText quantidadeEditText;
+    public static EditText quantidadeEditText;
 
     TextView tv_deletar_alimento;
     TextView tv_duplicar_alimento;
@@ -126,11 +125,25 @@ public class DetailActivity extends AppCompatActivity {
     TextView hora_minuto_coleta_hint;
     TextView tv_entrar_obs;
 
+    Button buttonfracao;
+    Button buttonvirgula;
+
+    TextView espessura;
+    TextView espessura_hint;
+
+
 
 
     public static Alimentacao mAlimentacao;
     public static boolean alimentacoAlteracao = false;
     public static int mEtapa = 0;
+
+    public String diaAtipico;
+
+    public String grau_parentesco;
+    public String grau_parentesco_nome;
+
+    public Context mContext;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -138,6 +151,8 @@ public class DetailActivity extends AppCompatActivity {
         setContentView(R.layout.activity_detail);
 
         this.ll = (LinearLayout) this.findViewById(R.id.edits_ll);
+
+        mContext = this.ll.getContext();
 
         /**
          * Get putExtra for Activity Main .
@@ -154,6 +169,9 @@ public class DetailActivity extends AppCompatActivity {
         mUsuario = extras.getString(PUT_EXTRA_USUARIO);
         mEtapa = extras.getInt(PUT_EXTRA_ETAPA);
 
+        grau_parentesco = extras.getString(PUT_EXTRA_GRAU_PARENTESCO);
+        grau_parentesco_nome = extras.getString(PUT_EXTRA_GRAU_PARENTESCO_NOME);
+        diaAtipico = extras.getString(PUT_EXTRA_DIA_ATIPICO);
 
 
         Bundle bundle = getIntent().getBundleExtra(PUT_EXTRA_ALIMENTACAO);
@@ -175,6 +193,9 @@ public class DetailActivity extends AppCompatActivity {
         tvDiaColeta = (TextView) findViewById(R.id.dia_coleta);
         tvHoraColeta = (TextView) findViewById(R.id.hora_coleta);
         horaEditText = (EditText) findViewById(R.id.hora);
+
+        espessura = (TextView) findViewById(R.id.espessura);
+
         minutoEditText = (TextView) findViewById(R.id.hora_minuto);
         obs = (EditText) findViewById(R.id.obs) ;
         quantidadeEditText = (EditText) findViewById(R.id.quantidade);
@@ -193,6 +214,7 @@ public class DetailActivity extends AppCompatActivity {
         hora_ponto   =  (TextView) findViewById(R.id.hora_ponto);
         hora_minuto_coleta_hint   =  (TextView) findViewById(R.id.hora_minuto_coleta_hint);
 
+        espessura_hint = (TextView) findViewById(R.id.espessura_hint);
 
 
         Time today = new Time(Time.getCurrentTimezone());
@@ -217,7 +239,9 @@ public class DetailActivity extends AppCompatActivity {
                     if (tamanho > 23) {
                         Toast.makeText(DetailActivity.this, "Atenção! Máximo permitido:" + Integer.toString(23), Toast.LENGTH_LONG).show();
                         s.clear();
+
                     }
+
                 }
 
             }
@@ -237,19 +261,28 @@ public class DetailActivity extends AppCompatActivity {
         minutoEditText.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View arg0) {
-                try {
-
-                    if (minutoEditText.getText().toString().equals("00")) {
-                        minutoEditText.setText("30");
-                    }else{
-                        minutoEditText.setText("00");
-                    }
-
-                } catch (Exception e) {
-                    // TODO: handle exception
-                }
+                minutoEditTextClick();
             }
         });
+
+        buttonfracao = (Button) findViewById(R.id.buttonfracao);
+        buttonfracao.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View arg0) {
+               quantidadeEditText.setText(quantidadeEditText.getText().toString() + buttonfracao.getText().toString());
+                quantidadeEditText.setSelection(quantidadeEditText.length());
+            }
+        });
+
+        buttonvirgula = (Button) findViewById(R.id.buttonvirgula);
+        buttonvirgula.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View arg0) {
+                quantidadeEditText.setText(quantidadeEditText.getText().toString() + buttonvirgula.getText().toString());
+                quantidadeEditText.setSelection(quantidadeEditText.length());
+            }
+        });
+
 
 
 
@@ -280,9 +313,28 @@ public class DetailActivity extends AppCompatActivity {
                             mDb = mDataBase.getReadableDatabase();
 
                             mAlimentacao.setAlimentacao_id(Integer.toString(mDataBase.NovoID_ALIMENTACAO()));
+
                             data.add(mAlimentacao);
 
+                            data.get(0).setAlimentacao_espessura("0");
+                            data.get(0).setAlimentacao_adicao("0");
+                            data.get(0).setAlimentacao_adicao_id("0");
+                            data.get(0).setAlimentacao_preparacao("0");
+                            data.get(0).setAlimentacao_preparacao_id("0");
+                            data.get(0).setAlimentacao_obs("");
+                            data.get(0).setAlimentacao_hora("0:00");
+                            data.get(0).setAlimentacao_unidade("0");
+                            data.get(0).setAlimentacao_unidade_id("0");
+                            data.get(0).setAlimentacao_ocasiao_consumo("0");
+                            data.get(0).setAlimentacao_ocasiao_consumo_id("0");
+                            data.get(0).setAlimentacao_local("0");
+                            data.get(0).setAlimentacao_local_id("0");
+                            data.get(0).setAlimentacao_quantidade("");
+
+
                             mDataBase.insertTABLE_ALIMENTACAO(data);
+
+
 
 
                             finish();
@@ -549,9 +601,11 @@ public class DetailActivity extends AppCompatActivity {
             public void onClick(View arg0) {
                 try {
 
-                    if ((!alimento.getText().toString().equals("0")) && (!horaEditText.getText().toString().equals("")) && (!horaEditText.getText().toString().equals("0"))) {
+                    if ((!alimento.getText().toString().equals("0"))) {
                         mDataBase = new DataBase(getApplicationContext());
                         mDb = mDataBase.getReadableDatabase();
+
+                        mDataBase.updatealimentacao(mEntrevistado,grau_parentesco_nome,grau_parentesco,diaAtipico);
 
                         List<Alimentacao> alimentacaoList = new ArrayList<Alimentacao>();
                         Alimentacao alimentacao = new Alimentacao();
@@ -580,6 +634,7 @@ public class DetailActivity extends AppCompatActivity {
                         alimentacao.setAlimentacao_ocasiao_consumo_id(ocasiaoConsumo.getText().toString());
                         alimentacao.setAlimentacao_ocasiao_consumo(ocasiaoConsumo_nome.getText().toString());
                         alimentacao.setAlimentacao_quantidade(quantidadeEditText.getText().toString());
+                        alimentacao.setAlimentacao_espessura(espessura.getText().toString());
 
                         alimentacao.setAlimentacao_hora(horaEditText.getText().toString() + ":" + minutoEditText.getText().toString());
                         alimentacao.setAlimentacao_hora_coleta(tvHoraColeta.getText().toString());
@@ -607,9 +662,9 @@ public class DetailActivity extends AppCompatActivity {
 
 
 
-                        alimentacao.setAlimentacao_grau_parentesco(Modulo.NOME_PARENTESCO);
-                        alimentacao.setAlimentacao_grau_parentesco_id(Modulo.PARENTESCO);
-                        alimentacao.setAlimentacao_dia_atico(Modulo.DIAATIPICO);
+                        alimentacao.setAlimentacao_grau_parentesco(grau_parentesco_nome);
+                        alimentacao.setAlimentacao_grau_parentesco_id(grau_parentesco);
+                        alimentacao.setAlimentacao_dia_atico(diaAtipico);
 
                         if (Common.eLeitematerno(alimento_nome.getText().toString())){
                             alimentacao = naoSeaplica(alimentacao);
@@ -619,7 +674,7 @@ public class DetailActivity extends AppCompatActivity {
                         Toast.makeText(DetailActivity.this, "Salvo alimento com sucesso!", Toast.LENGTH_SHORT).show();
                         DetailActivity.this.finish();
                     }else{
-                        Toast.makeText(DetailActivity.this, "ATENÇÃO! Obrigatório a seleção de um alimento, Grau de parentesco e hora", Toast.LENGTH_LONG).show();
+                        Toast.makeText(DetailActivity.this, "ATENÇÃO! Obrigatório a seleção de um alimento", Toast.LENGTH_LONG).show();
                     }
                 } catch(Exception e){
                     // TODO: handle exception
@@ -637,6 +692,7 @@ public class DetailActivity extends AppCompatActivity {
         tv_deletar_alimento.setVisibility(View.GONE);
         tv_duplicar_alimento.setVisibility(View.GONE);
         quantidadeEditText.setText("");
+        espessura.setText("");
         minutoEditText.setText("00");
         horaEditText.setText("");
 
@@ -652,7 +708,7 @@ public class DetailActivity extends AppCompatActivity {
         local_nome.setText("0");
         ocasiaoConsumo.setText("0");
         ocasiaoConsumo_nome.setText("0");
-        obs.setText("0");
+        obs.setText("");
 
         Modulo.NOME = "0";
         Modulo.ID = "0";
@@ -682,6 +738,7 @@ public class DetailActivity extends AppCompatActivity {
         tvDiaColeta.setText(mAlimentacao.getAlimentacao_dia_coleta());
         tvHoraColeta.setText(mAlimentacao.getAlimentacao_hora_coleta());
         quantidadeEditText.setText(mAlimentacao.getAlimentacao_quantidade());
+        espessura.setText(mAlimentacao.getAlimentacao_espessura());
         minutoEditText.setText(pegarSoMinuto(mAlimentacao.getAlimentacao_hora()));
         horaEditText.setText(pegarSoHora(mAlimentacao.getAlimentacao_hora()));
 
@@ -852,7 +909,7 @@ public class DetailActivity extends AppCompatActivity {
 
     private void showEtapa(int etapa) {
 
-        if (etapa == 1) {
+        if (etapa == 0) {
             colocarEtapaInvisivel();
         }
 
@@ -863,6 +920,7 @@ public class DetailActivity extends AppCompatActivity {
 
     private void colocarEtapaInvisivel(){
         quantidadeEditText.setVisibility(View.GONE);
+        espessura.setVisibility(View.GONE);
         preparacao.setVisibility(View.GONE);
         preparacao_nome.setVisibility(View.GONE);
         adicao.setVisibility(View.GONE);
@@ -885,6 +943,12 @@ public class DetailActivity extends AppCompatActivity {
         localHINT.setVisibility(View.GONE);
         ocasiaoConsumoHINT.setVisibility(View.GONE);
         obsHINT.setVisibility(View.GONE);
+        espessura_hint.setVisibility(View.GONE);
+
+        buttonfracao.setVisibility(View.GONE);
+
+        buttonvirgula.setVisibility(View.GONE);
+
     }
 
 
@@ -952,6 +1016,20 @@ public class DetailActivity extends AppCompatActivity {
 
             checkboxs.add(checkbox); // adiciona a nova editText a lista.
             ll.addView(checkbox, params); // adiciona a editText ao ViewGroup
+        }
+    }
+
+    private void minutoEditTextClick(){
+        try {
+
+            if (minutoEditText.getText().toString().equals("00")) {
+                minutoEditText.setText("30");
+            }else{
+                minutoEditText.setText("00");
+            }
+
+        } catch (Exception e) {
+            // TODO: handle exception
         }
     }
 

@@ -14,6 +14,7 @@ import com.example.jorge.meurecordatorio.Model.Adicao;
 import com.example.jorge.meurecordatorio.Model.Unidade;
 import com.example.jorge.meurecordatorio.PersistentData.DataBase;
 import com.example.jorge.meurecordatorio.R;
+import com.example.jorge.meurecordatorio.Utilite.Modulo;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -29,6 +30,8 @@ public class AdicaoActivity extends AppCompatActivity {
 
     String mName;
     String mAlimento;
+
+    public List<Adicao> dataPersistent = null;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -61,6 +64,15 @@ public class AdicaoActivity extends AppCompatActivity {
 
         iniciaRecyclerView();
 
+        if (dataPersistent != null) {
+            if (dataPersistent.size() == 1) {
+                Modulo.OPCAO = "ADICAO";
+                Modulo.NOME = dataPersistent.get(0).getAdicao();
+                Modulo.ID = dataPersistent.get(0).getAdicao_id();
+                this.finish();
+            }
+        }
+
         final EditText tv_buscar =  (EditText) findViewById(R.id.tv_buscar);
         tv_buscar.addTextChangedListener(new TextWatcher() {
 
@@ -88,7 +100,7 @@ public class AdicaoActivity extends AppCompatActivity {
 
 
     private void iniciaRecyclerView(){
-        List<Adicao> dataPersistent = new ArrayList<>();
+       dataPersistent = new ArrayList<>();
 
 
         if (mAlimento.equals("S")){

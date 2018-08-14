@@ -23,6 +23,10 @@ import com.example.jorge.meurecordatorio.Model.Usuario;
 import java.util.ArrayList;
 import java.util.List;
 
+import static com.example.jorge.meurecordatorio.PersistentData.Field.FIELD_ALIMENTACAO_DIA_ATIPICO;
+import static com.example.jorge.meurecordatorio.PersistentData.Field.FIELD_ALIMENTACAO_ENTREVISTADO_ID;
+import static com.example.jorge.meurecordatorio.PersistentData.Field.FIELD_ALIMENTACAO_GRAU_PARENTESCO;
+import static com.example.jorge.meurecordatorio.PersistentData.Field.FIELD_ALIMENTACAO_GRAU_PARENTESCO_ID;
 import static com.example.jorge.meurecordatorio.PersistentData.Field.FIELD_ALIMENTACAO_ID;
 import static com.example.jorge.meurecordatorio.PersistentData.Field.FIELD_ALIMENTO_ID;
 import static com.example.jorge.meurecordatorio.PersistentData.Field.FIELD_ENTREVISTADO_ID;
@@ -35,8 +39,7 @@ public class DataBase extends SQLiteOpenHelper {
 
     private SQLiteDatabase mDb;
     private Context context;
-    GrauParentesco grauParentesco;
-    List<GrauParentesco> grauParentescoList;
+
 
 
 
@@ -66,6 +69,7 @@ public class DataBase extends SQLiteOpenHelper {
         db.execSQL(" DROP TABLE IF EXISTS " + DbCreate.TABLE_PREPARACAO_ALIMENTO );
         db.execSQL(" DROP TABLE IF EXISTS " + DbCreate.TABLE_UNIDADE_ALIMENTO );
         db.execSQL(" DROP TABLE IF EXISTS " + DbCreate.TABLE_ADICAO_ALIMENTO );
+        db.execSQL(" DROP TABLE IF EXISTS " + DbCreate.TABLE_GRAU_PARENTESCO );
 
         db.execSQL(DbCreate.CREATE_TABLE_ALIMENTO);
         db.execSQL(DbCreate.CREATE_TABLE_GRAU_PARENTESCO);
@@ -82,25 +86,11 @@ public class DataBase extends SQLiteOpenHelper {
         db.execSQL(DbCreate.CREATE_TABLE_ADICAO_ALIMENTO);
 
 
-        grauParentescoList = new ArrayList<>();
-
-        grauParentesco = new GrauParentesco();
-        grauParentesco.setId("1");
-        grauParentesco.setParentesco("Mãe");
-        grauParentescoList.add(grauParentesco);
-
-        grauParentesco = new GrauParentesco();
-        grauParentesco.setId("2");
-        grauParentesco.setParentesco("Pai");
-        grauParentescoList.add(grauParentesco);
-
-        grauParentesco = new GrauParentesco();
-        grauParentesco.setId("3");
-        grauParentesco.setParentesco("Tia");
-        grauParentescoList.add(grauParentesco);
 
 
-        insertTABLE_GRAU_PARENTESCO(grauParentescoList);
+
+
+
 
 
     }
@@ -306,9 +296,10 @@ public class DataBase extends SQLiteOpenHelper {
             obj.put(Field.FIELD_ALIMENTACAO_HORA_COLETA_FIM, alimentacaoList.get(i).getAlimentacao_hora_coleta_fim());
             obj.put(Field.FIELD_ALIMENTACAO_OBS, alimentacaoList.get(i).getAlimentacao_obs());
             obj.put(Field.FIELD_ALIMENTACAO_DIA_COLETA, alimentacaoList.get(i).getAlimentacao_dia_coleta());
-            obj.put(Field.FIELD_ALIMENTACAO_GRAU_PARENTESCO_ID, alimentacaoList.get(i).getAlimentacao_grau_parentesco_id());
-            obj.put(Field.FIELD_ALIMENTACAO_GRAU_PARENTESCO, alimentacaoList.get(i).getAlimentacao_grau_parentesco());
+            obj.put(FIELD_ALIMENTACAO_GRAU_PARENTESCO_ID, alimentacaoList.get(i).getAlimentacao_grau_parentesco_id());
+            obj.put(FIELD_ALIMENTACAO_GRAU_PARENTESCO, alimentacaoList.get(i).getAlimentacao_grau_parentesco());
             obj.put(Field.FIELD_ALIMENTACAO_DIA_ATIPICO, alimentacaoList.get(i).getAlimentacao_dia_atico());
+            obj.put(Field.FIELD_ALIMENTACAO_ESPESSURA, alimentacaoList.get(i).getAlimentacao_espessura());
             this.onInsert(context,obj, DbCreate.TABLE_ALIMENTACAO);
 
         }
@@ -373,9 +364,55 @@ public class DataBase extends SQLiteOpenHelper {
         mDb.execSQL(" DELETE FROM " + DbCreate.TABLE_ALIMENTACAO + " WHERE " + FIELD_ALIMENTACAO_ID + " = '" + id +"'");
     }
 
+    public void deleteAlimentacaoEntrevistado(String idEntrevistado){
+        mDb = this.getWritableDatabase();
+        mDb.execSQL(" DELETE FROM " + DbCreate.TABLE_ALIMENTACAO + " WHERE " + FIELD_ALIMENTACAO_ENTREVISTADO_ID + " = '" + idEntrevistado +"'");
+    }
+
+    public void updatealimentacao(String entrevistado, String parentesco, String parentesco_id, String dia_tipico){
+        mDb = this.getWritableDatabase();
+        mDb.execSQL(" UPDATE " + DbCreate.TABLE_ALIMENTACAO + "  SET " + FIELD_ALIMENTACAO_GRAU_PARENTESCO_ID + " = '" + parentesco_id + "'," + FIELD_ALIMENTACAO_GRAU_PARENTESCO + " = '" + parentesco + "'," + FIELD_ALIMENTACAO_DIA_ATIPICO + " = '" + dia_tipico + "' WHERE " + FIELD_ALIMENTACAO_ENTREVISTADO_ID + " = '" + entrevistado +"'");
+    }
+
     public void deleteentrevistado(String id){
         mDb = this.getWritableDatabase();
         mDb.execSQL(" DELETE FROM " + DbCreate.TABLE_ENTREVISTADO + " WHERE " + FIELD_ENTREVISTADO_ID + " = '" + id +"'");
+    }
+
+    public List<Alimento> getListAlimentoInicio(String partNome) {
+
+        List<Alimento> alimentoList = new ArrayList<Alimento>();
+
+        mDb = this.getWritableDatabase();
+
+        Cursor cursor;
+        if (partNome.indexOf(" ",partNome.length()-1) == partNome.length()-1) {
+            cursor = mDb.rawQuery(DbSelect.GET_ALIMENTO + " WHERE " + Field.FIELD_ALIMENTO + " LIKE '" + partNome.substring(0,partNome.length()-1) + "'", null);
+        }else{
+            cursor = mDb.rawQuery(DbSelect.GET_ALIMENTO + " WHERE " + Field.FIELD_ALIMENTO + " LIKE '" + partNome + "%'", null);
+        }
+        cursor.moveToFirst();
+        if (cursor.getCount() == 0){
+            cursor = mDb.rawQuery(DbSelect.GET_ALIMENTO + " WHERE " + Field.FIELD_ALIMENTO + " LIKE '" + partNome + "%'", null);
+        }
+
+        while(!cursor.isAfterLast() ){
+            Alimento alimento = new Alimento();
+
+            try {
+                alimento.setAlimento_id(cursor.getString(cursor.getColumnIndex(FIELD_ALIMENTO_ID)));
+                alimento.setAlimento(cursor.getString(cursor.getColumnIndex(Field.FIELD_ALIMENTO)));
+                alimento.setNovo(cursor.getString(cursor.getColumnIndex(Field.FIELD_NOVO)));
+
+            } catch (Exception e) {
+                System.out.println(e.getMessage());
+            }
+            alimentoList.add(alimento);
+            cursor.moveToNext();
+        }
+        cursor.close();
+        return alimentoList;
+
     }
 
     public List<Alimento> getListAlimento(String partNome) {
@@ -438,7 +475,7 @@ public class DataBase extends SQLiteOpenHelper {
 
         mDb = this.getWritableDatabase();
 
-        Cursor cursor = mDb.rawQuery(DbSelect.GET_PREPARACAO + " AND UA." + Field.FIELD_PREPARACAO_ALIMENTO_ID + " = '" + alimento + "' AND U."+ Field.FIELD_UNIDADE + " LIKE '%" + partNome + "%'",null);
+        Cursor cursor = mDb.rawQuery(DbSelect.GET_PREPARACAO + " AND PA." + Field.FIELD_PREPARACAO_ALIMENTO_ID + " = '" + alimento + "' AND P."+ Field.FIELD_PREPARACAO + " LIKE '%" + partNome + "%'",null);
         cursor.moveToFirst();
         while(!cursor.isAfterLast() ){
             Preparacao preparacao = new Preparacao();
@@ -1057,10 +1094,11 @@ public class DataBase extends SQLiteOpenHelper {
                 alimentacao.setAlimentacao_hora_coleta(cursor.getString(cursor.getColumnIndex(Field.FIELD_ALIMENTACAO_HORA_COLETA)));
                 alimentacao.setAlimentacao_dia_coleta(cursor.getString(cursor.getColumnIndex(Field.FIELD_ALIMENTACAO_DIA_COLETA)));
                 alimentacao.setAlimentacao_hora_coleta_fim(cursor.getString(cursor.getColumnIndex(Field.FIELD_ALIMENTACAO_HORA_COLETA_FIM)));
-                alimentacao.setAlimentacao_grau_parentesco_id(cursor.getString(cursor.getColumnIndex(Field.FIELD_ALIMENTACAO_GRAU_PARENTESCO_ID)));
-                alimentacao.setAlimentacao_grau_parentesco(cursor.getString(cursor.getColumnIndex(Field.FIELD_ALIMENTACAO_GRAU_PARENTESCO)));
+                alimentacao.setAlimentacao_grau_parentesco_id(cursor.getString(cursor.getColumnIndex(FIELD_ALIMENTACAO_GRAU_PARENTESCO_ID)));
+                alimentacao.setAlimentacao_grau_parentesco(cursor.getString(cursor.getColumnIndex(FIELD_ALIMENTACAO_GRAU_PARENTESCO)));
                 alimentacao.setAlimentacao_dia_atico(cursor.getString(cursor.getColumnIndex(Field.FIELD_ALIMENTACAO_DIA_ATIPICO)));
                 alimentacao.setAlimentacao_obs(cursor.getString(cursor.getColumnIndex(Field.FIELD_ALIMENTACAO_OBS)));
+                alimentacao.setAlimentacao_espessura(cursor.getString(cursor.getColumnIndex(Field.FIELD_ALIMENTACAO_ESPESSURA)));
 
             } catch (Exception e) {
                 System.out.println(e.getMessage());
@@ -1110,9 +1148,10 @@ public class DataBase extends SQLiteOpenHelper {
                 alimentacao.setAlimentacao_dia_coleta(cursor.getString(cursor.getColumnIndex(Field.FIELD_ALIMENTACAO_DIA_COLETA)));
                 alimentacao.setAlimentacao_hora_coleta_fim(cursor.getString(cursor.getColumnIndex(Field.FIELD_ALIMENTACAO_HORA_COLETA_FIM)));
                 alimentacao.setAlimentacao_obs(cursor.getString(cursor.getColumnIndex(Field.FIELD_ALIMENTACAO_OBS)));
-                alimentacao.setAlimentacao_grau_parentesco(cursor.getString(cursor.getColumnIndex(Field.FIELD_ALIMENTACAO_GRAU_PARENTESCO)));
-                alimentacao.setAlimentacao_grau_parentesco_id(cursor.getString(cursor.getColumnIndex(Field.FIELD_ALIMENTACAO_GRAU_PARENTESCO_ID)));
+                alimentacao.setAlimentacao_grau_parentesco(cursor.getString(cursor.getColumnIndex(FIELD_ALIMENTACAO_GRAU_PARENTESCO)));
+                alimentacao.setAlimentacao_grau_parentesco_id(cursor.getString(cursor.getColumnIndex(FIELD_ALIMENTACAO_GRAU_PARENTESCO_ID)));
                 alimentacao.setAlimentacao_dia_atico(cursor.getString(cursor.getColumnIndex(Field.FIELD_ALIMENTACAO_DIA_ATIPICO)));
+                alimentacao.setAlimentacao_espessura(cursor.getString(cursor.getColumnIndex(Field.FIELD_ALIMENTACAO_ESPESSURA)));
 
             } catch (Exception e) {
                 System.out.println(e.getMessage());
@@ -1126,6 +1165,9 @@ public class DataBase extends SQLiteOpenHelper {
 
 
     }
+
+
+
 
 
     private void onInsert(Context context, ContentValues obj, String nTabela) {

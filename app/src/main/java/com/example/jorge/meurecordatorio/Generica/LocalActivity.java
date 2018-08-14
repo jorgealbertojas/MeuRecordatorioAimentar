@@ -30,6 +30,7 @@ public class LocalActivity extends AppCompatActivity {
     String mName;
     String mAlimento;
 
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -47,7 +48,7 @@ public class LocalActivity extends AppCompatActivity {
         /**
          * Put Name Repositorie in  title.
          */
-        this.setTitle("Local");
+        this.setTitle("Onde " + mName + " comeu este alimento ou bebida?");
 
 
         /**

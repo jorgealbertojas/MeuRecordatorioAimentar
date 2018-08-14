@@ -15,7 +15,7 @@ public interface InterfacePreparacaoAlimento {
     @Headers({
             "Cache-Control: cache",
             "Ocp-Apim-Trace: true",
-            "Ocp-Apim-Subscription-Key: 07901815f746485db4a7fe5daf5acba1"
+            "Ocp-Apim-Subscription-Key: e701a890f3754280bc3adc8af66019e0"
     })
     @GET("/preparacaopreparacao")
     Call<ListWrapper<PreparacaoAlimento>> getPreparacaoAliemnto() ;

@@ -34,6 +34,9 @@ import com.example.jorge.meurecordatorio.Interface.InterfacePreparacao;
 import com.example.jorge.meurecordatorio.Interface.InterfacePreparacaoAlimento;
 import com.example.jorge.meurecordatorio.Interface.InterfaceUnidade;
 import com.example.jorge.meurecordatorio.Interface.InterfaceUnidadeAlimento;
+import com.example.jorge.meurecordatorio.Interface.InterfaceUnidadeAlimento1;
+import com.example.jorge.meurecordatorio.Interface.InterfaceUnidadeAlimento2;
+import com.example.jorge.meurecordatorio.Interface.InterfaceUnidadeAlimento3;
 import com.example.jorge.meurecordatorio.Interface.InterfaceUsuario;
 import com.example.jorge.meurecordatorio.Model.Adicao;
 import com.example.jorge.meurecordatorio.Model.AdicaoAlimento;
@@ -84,7 +87,7 @@ public class ConfiguracaoActivity extends AppCompatActivity {
 
     private static boolean nOK = false;
 
-    int LIMITE = 10;
+    int LIMITE = 12;
 
     int count = 0;
 
@@ -121,7 +124,9 @@ public class ConfiguracaoActivity extends AppCompatActivity {
     private InterfaceUnidade mInterfaceUNIDADE;
     UnidadeAdapter mAdapterUNIDADE;
 
-    private InterfaceUnidadeAlimento mInterfaceUNIDADE_ALIMENTO;
+    private InterfaceUnidadeAlimento1 mInterfaceUNIDADE_ALIMENTO1;
+    private InterfaceUnidadeAlimento2 mInterfaceUNIDADE_ALIMENTO2;
+    private InterfaceUnidadeAlimento3 mInterfaceUNIDADE_ALIMENTO3;
 
 
     MyControlThread mThread;
@@ -218,7 +223,7 @@ public class ConfiguracaoActivity extends AppCompatActivity {
 
                         @Override
                         public void onClick(View v) {
-                            bkp();
+
                             mDataBase = new DataBase(ConfiguracaoActivity.this);
                             mDb = mDataBase.getReadableDatabase();
                             mDataBase.onCreate(mDb);
@@ -334,6 +339,7 @@ public class ConfiguracaoActivity extends AppCompatActivity {
 
     }
 
+
     private void salvearquivo() throws IOException {
 
         String DataCompleta1;
@@ -422,6 +428,23 @@ public class ConfiguracaoActivity extends AppCompatActivity {
     }
 
 
+
+
+    private String formataHora(String hora){
+        try{
+        if (hora != null){
+            hora = hora.replace(":","");
+            return hora;
+        }else{
+            return "0000";
+        }
+
+        }catch(Exception e){
+            return  "00000000";
+        }
+
+    }
+
     private void bkp(){
         /////// salvar
 
@@ -454,20 +477,6 @@ public class ConfiguracaoActivity extends AppCompatActivity {
 
     }
 
-    private String formataHora(String hora){
-        try{
-        if (hora != null){
-            hora = hora.replace(":","");
-            return hora;
-        }else{
-            return "0000";
-        }
-
-        }catch(Exception e){
-            return  "00000000";
-        }
-
-    }
 
     private String formatarData(String data){
         try{
@@ -622,8 +631,14 @@ public class ConfiguracaoActivity extends AppCompatActivity {
             create_API_UNIDADE(Url.BASE_URL_UNIDADE);
             mInterfaceUNIDADE.getUnidade().enqueue(UNIDADECallback);
 
-            create_API_UNIADE_ALIMENTO(Url.BASE_URL_UNIDADE_UNIDADE);
-            mInterfaceUNIDADE_ALIMENTO.getUniadeAliemnto().enqueue(UNIDADE_ALIMENTOCallback);
+            create_API_UNIADE_ALIMENTO1(Url.BASE_URL_UNIDADE_UNIDADE);
+            mInterfaceUNIDADE_ALIMENTO1.getUniadeAliemnto().enqueue(UNIDADE_ALIMENTOCallback1);
+
+            create_API_UNIADE_ALIMENTO2(Url.BASE_URL_UNIDADE_UNIDADE);
+            mInterfaceUNIDADE_ALIMENTO2.getUniadeAliemnto().enqueue(UNIDADE_ALIMENTOCallback2);
+
+            create_API_UNIADE_ALIMENTO3(Url.BASE_URL_UNIDADE_UNIDADE);
+            mInterfaceUNIDADE_ALIMENTO3.getUniadeAliemnto().enqueue(UNIDADE_ALIMENTOCallback3);
 
 
             create_API_ADICAO_ALIMENTO(Url.BASE_URL_ADICAO_ADICAO);
@@ -1147,7 +1162,7 @@ public class ConfiguracaoActivity extends AppCompatActivity {
     /**
      * *********************OCASIAO CONSUMO******************************* .
      */
-    private void create_API_UNIADE_ALIMENTO(String url) {
+    private void create_API_UNIADE_ALIMENTO1(String url) {
         Gson gson = new GsonBuilder()
                 .create();
 
@@ -1156,10 +1171,111 @@ public class ConfiguracaoActivity extends AppCompatActivity {
                 .addConverterFactory(GsonConverterFactory.create(gson))
                 .build();
 
-        mInterfaceUNIDADE_ALIMENTO = retrofit.create(InterfaceUnidadeAlimento.class);
+        mInterfaceUNIDADE_ALIMENTO1 = retrofit.create(InterfaceUnidadeAlimento1.class);
     }
 
-    private Callback<ListWrapper<UnidadeAlimento>> UNIDADE_ALIMENTOCallback = new Callback<ListWrapper<UnidadeAlimento>>() {
+    private void create_API_UNIADE_ALIMENTO2(String url) {
+        Gson gson = new GsonBuilder()
+                .create();
+
+        Retrofit retrofit = new Retrofit.Builder()
+                .baseUrl(url)
+                .addConverterFactory(GsonConverterFactory.create(gson))
+                .build();
+
+        mInterfaceUNIDADE_ALIMENTO2 = retrofit.create(InterfaceUnidadeAlimento2.class);
+    }
+
+    private void create_API_UNIADE_ALIMENTO3(String url) {
+        Gson gson = new GsonBuilder()
+                .create();
+
+        Retrofit retrofit = new Retrofit.Builder()
+                .baseUrl(url)
+                .addConverterFactory(GsonConverterFactory.create(gson))
+                .build();
+
+        mInterfaceUNIDADE_ALIMENTO3 = retrofit.create(InterfaceUnidadeAlimento3.class);
+    }
+
+    private Callback<ListWrapper<UnidadeAlimento>> UNIDADE_ALIMENTOCallback1 = new Callback<ListWrapper<UnidadeAlimento>>() {
+        @Override
+        public void onResponse(Call<ListWrapper<UnidadeAlimento>> call, Response<ListWrapper<UnidadeAlimento>> response) {
+            try {
+                if (response.isSuccessful()) {
+                    List<UnidadeAlimento> data = new ArrayList<>();
+                    data.addAll(response.body().items);
+
+                    // Persistent Data for SQLLite
+                    mDataBase = new DataBase(getApplicationContext());
+                    mDb = mDataBase.getReadableDatabase();
+                    mDataBase.insertTABLE_UNIDADE_ALIMENTO(data);
+
+                    count ++;
+
+
+
+                } else {
+                    Log.d("QuestionsCallback", "Code: " + response.code() + " Message: " + response.message());
+                }
+            } catch (NullPointerException e) {
+                System.out.println("onActivityResult consume crashed");
+                runOnUiThread(new Runnable() {
+                    public void run() {
+                        Context context = getApplicationContext();
+                        Toast toast = Toast.makeText(context, R.string.Error_Access_empty, Toast.LENGTH_SHORT);
+                        toast.show();
+                    }
+                });
+            }
+        }
+
+        @Override
+        public void onFailure(Call<ListWrapper<UnidadeAlimento>> call, Throwable t) {
+            t.printStackTrace();
+        }
+    };
+
+    private Callback<ListWrapper<UnidadeAlimento>> UNIDADE_ALIMENTOCallback2 = new Callback<ListWrapper<UnidadeAlimento>>() {
+        @Override
+        public void onResponse(Call<ListWrapper<UnidadeAlimento>> call, Response<ListWrapper<UnidadeAlimento>> response) {
+            try {
+
+                if (response.isSuccessful()) {
+                    List<UnidadeAlimento> data = new ArrayList<>();
+                    data.addAll(response.body().items);
+
+                    // Persistent Data for SQLLite
+                    mDataBase = new DataBase(getApplicationContext());
+                    mDb = mDataBase.getReadableDatabase();
+                    mDataBase.insertTABLE_UNIDADE_ALIMENTO(data);
+
+                    count ++;
+
+
+
+                } else {
+                    Log.d("QuestionsCallback", "Code: " + response.code() + " Message: " + response.message());
+                }
+            } catch (NullPointerException e) {
+                System.out.println("onActivityResult consume crashed");
+                runOnUiThread(new Runnable() {
+                    public void run() {
+                        Context context = getApplicationContext();
+                        Toast toast = Toast.makeText(context, R.string.Error_Access_empty, Toast.LENGTH_SHORT);
+                        toast.show();
+                    }
+                });
+            }
+        }
+
+        @Override
+        public void onFailure(Call<ListWrapper<UnidadeAlimento>> call, Throwable t) {
+            t.printStackTrace();
+        }
+    };
+
+    private Callback<ListWrapper<UnidadeAlimento>> UNIDADE_ALIMENTOCallback3 = new Callback<ListWrapper<UnidadeAlimento>>() {
         @Override
         public void onResponse(Call<ListWrapper<UnidadeAlimento>> call, Response<ListWrapper<UnidadeAlimento>> response) {
             try {
@@ -1325,7 +1441,7 @@ public class ConfiguracaoActivity extends AppCompatActivity {
                     mHandler.post(new Runnable() {
                         @Override
                         public void run() {
-                            mDialog.setMessage("Atualizando sistema aguarde... \n" + Integer.toString(count)  + " de 10" );
+                            mDialog.setMessage("Atualizando sistema aguarde... \n" + Integer.toString(count)  + " de 12" );
                         }
                     });
 
