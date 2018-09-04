@@ -269,7 +269,7 @@ public class ConfiguracaoActivity extends AppCompatActivity {
                     deleteDialog1.setView(deleteDialogView);
 
                     TextView nTextView = (TextView) deleteDialogView.findViewById(R.id.txt_dia);
-                    nTextView.setText("ATENÇÃO! Tem certeza que encerrar a coleta?");
+                    nTextView.setText("Tem certeza que deseja finalizar a entrevista?");
 
                     deleteDialogView.findViewById(R.id.btn_yes).setOnClickListener(new View.OnClickListener() {
 
@@ -286,7 +286,7 @@ public class ConfiguracaoActivity extends AppCompatActivity {
                             deleteDialog.setView(deleteDialogView);
 
                             TextView nTextView = (TextView) deleteDialogView.findViewById(R.id.txt_dia);
-                            nTextView.setText("ATENÇÃO! Depois de encerrar não poderá mais adicionar alimentos para esses entrevistados! Tem certeza que deseja continuar?");
+                            nTextView.setText("ATENÇÃO! Depois de encerrar não poderá mais adicionar alimentos para esses entrevistados! Tem certeza que deseja encerrar?");
 
                             deleteDialogView.findViewById(R.id.btn_yes).setOnClickListener(new View.OnClickListener() {
 

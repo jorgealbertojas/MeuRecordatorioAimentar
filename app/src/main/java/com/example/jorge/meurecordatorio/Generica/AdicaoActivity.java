@@ -50,7 +50,7 @@ public class AdicaoActivity extends AppCompatActivity {
         /**
          * Put Name Repositorie in  title.
          */
-        this.setTitle("Adição");
+        this.setTitle("Foi adicionado algo a este alimento?");
 
 
         /**

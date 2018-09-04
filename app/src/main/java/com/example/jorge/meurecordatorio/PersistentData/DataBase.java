@@ -311,7 +311,7 @@ public class DataBase extends SQLiteOpenHelper {
 
         mDb = this.getWritableDatabase();
 
-        Cursor cursor = mDb.rawQuery(DbSelect.GET_ALIMENTO,null);
+        Cursor cursor = mDb.rawQuery(DbSelect.GET_ALIMENTO + " ORDER BY  " + Field.FIELD_ALIMENTO,null);
         cursor.moveToFirst();
         while(!cursor.isAfterLast() ){
             Alimento alimento = new Alimento();
@@ -338,7 +338,7 @@ public class DataBase extends SQLiteOpenHelper {
 
         mDb = this.getWritableDatabase();
 
-        Cursor cursor = mDb.rawQuery(DbSelect.GET_ALIMENTO + " WHERE  " + FIELD_ALIMENTO_ID + " = '" + id + "'",null);
+        Cursor cursor = mDb.rawQuery(DbSelect.GET_ALIMENTO + " WHERE  " + FIELD_ALIMENTO_ID + " = '" + id + "'" + " ORDER BY  " + Field.FIELD_ALIMENTO,null);
         cursor.moveToFirst();
         while(!cursor.isAfterLast() ){
             Alimento alimento = new Alimento();
@@ -387,13 +387,13 @@ public class DataBase extends SQLiteOpenHelper {
 
         Cursor cursor;
         if (partNome.indexOf(" ",partNome.length()-1) == partNome.length()-1) {
-            cursor = mDb.rawQuery(DbSelect.GET_ALIMENTO + " WHERE " + Field.FIELD_ALIMENTO + " LIKE '" + partNome.substring(0,partNome.length()-1) + "'", null);
+            cursor = mDb.rawQuery(DbSelect.GET_ALIMENTO + " WHERE " + Field.FIELD_ALIMENTO + " LIKE '" + partNome.substring(0,partNome.length()-1) + "'" + " ORDER BY  " + Field.FIELD_ALIMENTO, null);
         }else{
-            cursor = mDb.rawQuery(DbSelect.GET_ALIMENTO + " WHERE " + Field.FIELD_ALIMENTO + " LIKE '" + partNome + "%'", null);
+            cursor = mDb.rawQuery(DbSelect.GET_ALIMENTO + " WHERE " + Field.FIELD_ALIMENTO + " LIKE '" + partNome + "%'" + " ORDER BY  " + Field.FIELD_ALIMENTO, null);
         }
         cursor.moveToFirst();
         if (cursor.getCount() == 0){
-            cursor = mDb.rawQuery(DbSelect.GET_ALIMENTO + " WHERE " + Field.FIELD_ALIMENTO + " LIKE '" + partNome + "%'", null);
+            cursor = mDb.rawQuery(DbSelect.GET_ALIMENTO + " WHERE " + Field.FIELD_ALIMENTO + " LIKE '" + partNome + "%'" + " ORDER BY  " + Field.FIELD_ALIMENTO, null);
         }
 
         while(!cursor.isAfterLast() ){
@@ -421,7 +421,7 @@ public class DataBase extends SQLiteOpenHelper {
 
         mDb = this.getWritableDatabase();
 
-        Cursor cursor = mDb.rawQuery(DbSelect.GET_ALIMENTO + " WHERE "+ Field.FIELD_ALIMENTO + " LIKE '%" + partNome + "%'",null);
+        Cursor cursor = mDb.rawQuery(DbSelect.GET_ALIMENTO + " WHERE "+ Field.FIELD_ALIMENTO + " LIKE '%" + partNome + "%'" + " ORDER BY  " + Field.FIELD_ALIMENTO,null);
         cursor.moveToFirst();
         while(!cursor.isAfterLast() ){
             Alimento alimento = new Alimento();

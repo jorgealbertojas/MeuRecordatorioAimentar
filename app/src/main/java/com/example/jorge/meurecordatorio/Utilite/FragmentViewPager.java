@@ -50,8 +50,10 @@ public class FragmentViewPager extends android.support.v4.app.Fragment {
 
     File myExternalFile;
 
+    static TextView TextViewAdiciona;
+
     public static boolean continua = true;
-    int i = 1;
+    public static int contador = 0;
 
     private String filtro_desc_pesquisa = "REC24";
 
@@ -66,7 +68,7 @@ public class FragmentViewPager extends android.support.v4.app.Fragment {
         TextView tv = (TextView) v.findViewById(R.id.title);
         tv.setText(getArguments().getString("text"));
 
-        TextView TextViewAdiciona = (TextView) v.findViewById(R.id.TextViewAdiciona);
+        TextViewAdiciona = (TextView) v.findViewById(R.id.TextViewAdiciona);
         TextViewAdiciona.setText(getArguments().getString("text2"));
 
         ImageView imageView = (ImageView) v.findViewById(R.id.image);
@@ -80,6 +82,12 @@ public class FragmentViewPager extends android.support.v4.app.Fragment {
         try {
 
             if (mPos == 0){
+                contador = 0;
+                TextViewAdiciona.setBackground(null);
+            }
+
+            else if (mPos == 1){
+                contador = 0;
                 TextViewAdiciona.setBackground(getResources().getDrawable(R.drawable.rounded_corner));
                 TextViewAdiciona.setOnClickListener(new View.OnClickListener() {
                     @Override
@@ -111,21 +119,13 @@ public class FragmentViewPager extends android.support.v4.app.Fragment {
                         }
                     }
                 });
-            } else if (mPos == 1) {
-                TextViewAdiciona.setBackground(null);
-
             } else if (mPos == 2) {
+                contador = 0;
                 TextViewAdiciona.setBackground(null);
 
             } else if (mPos == 3) {
-
+                contador = 0;
                 TextViewAdiciona.setBackground(null);
-
-            }else if(mPos == 4){
-
-
-
-
 
                 try {
 
@@ -161,7 +161,7 @@ public class FragmentViewPager extends android.support.v4.app.Fragment {
 
                                 @Override
                                 public void onClick(View v) {
-                                LayoutInflater factory = LayoutInflater.from(getContext());
+                                    LayoutInflater factory = LayoutInflater.from(getContext());
                                     final View deleteDialogView = factory.inflate(
                                             R.layout.custom_dialog, null);
                                     final AlertDialog deleteDialog3 = new AlertDialog.Builder(getContext()).create();
@@ -222,6 +222,7 @@ public class FragmentViewPager extends android.support.v4.app.Fragment {
 
                                                                 @Override
                                                                 public void onClick(View v) {
+                                                                    ((MainActivity) container.getContext()).mViewPager.setCurrentItem(1);
                                                                     deleteDialog4.dismiss();
 
                                                                 }
@@ -235,6 +236,7 @@ public class FragmentViewPager extends android.support.v4.app.Fragment {
 
                                                         @Override
                                                         public void onClick(View v) {
+                                                            ((MainActivity) container.getContext()).mViewPager.setCurrentItem(1);
                                                             deleteDialog5.dismiss();
 
                                                         }
@@ -248,6 +250,7 @@ public class FragmentViewPager extends android.support.v4.app.Fragment {
 
                                                 @Override
                                                 public void onClick(View v) {
+                                                    ((MainActivity) container.getContext()).mViewPager.setCurrentItem(1);
                                                     deleteDialog2.dismiss();
 
                                                 }
@@ -261,6 +264,7 @@ public class FragmentViewPager extends android.support.v4.app.Fragment {
 
                                         @Override
                                         public void onClick(View v) {
+                                            ((MainActivity) container.getContext()).mViewPager.setCurrentItem(1);
                                             deleteDialog3.dismiss();
 
                                         }
@@ -274,6 +278,7 @@ public class FragmentViewPager extends android.support.v4.app.Fragment {
 
                                 @Override
                                 public void onClick(View v) {
+                                    ((MainActivity) container.getContext()).mViewPager.setCurrentItem(1);
                                     deleteDialog0.dismiss();
 
                                 }
@@ -287,6 +292,7 @@ public class FragmentViewPager extends android.support.v4.app.Fragment {
 
                         @Override
                         public void onClick(View v) {
+                            ((MainActivity) container.getContext()).mViewPager.setCurrentItem(1);
                             deleteDialog1.dismiss();
 
                         }
@@ -299,93 +305,110 @@ public class FragmentViewPager extends android.support.v4.app.Fragment {
                     // TODO: handle exception
                 }
 
+            } else if (mPos == 4) {
+                contador = 0;
+                TextViewAdiciona.setBackground(null);
+
+            }else if(mPos == 5){
 
 
 
+                    TextViewAdiciona.setBackground(getResources().getDrawable(R.drawable.rounded_corner));
+                    TextViewAdiciona.setText("Confere próximo alimento");
+                    TextViewAdiciona.setOnClickListener(new View.OnClickListener() {
+                        @Override
+                        public void onClick(View arg0) {
+                            if (contador < ((MainActivity) container.getContext()).mRecyclerView.getAdapter().getItemCount()-1) {
+                                ((MainActivity) container.getContext()).mRecyclerView.getAdapter().notifyItemMoved(0, ((MainActivity) container.getContext()).mRecyclerView.getAdapter().getItemCount() - 1);
+                                contador = contador + 1;
+                            }else {
+                                TextViewAdiciona.setBackground(getResources().getDrawable(R.drawable.rounded_corner_red));
+                                TextViewAdiciona.setText("Finalizar entrevista");
+                                TextViewAdiciona.setOnClickListener(new View.OnClickListener() {
+                                    @Override
+                                    public void onClick(View arg0) {
+                                        try {
+
+                                            LayoutInflater factory = LayoutInflater.from(getContext());
+                                            final View deleteDialogView = factory.inflate(
+                                                    R.layout.custom_dialog, null);
+                                            final AlertDialog deleteDialog1 = new AlertDialog.Builder(getContext()).create();
+                                            deleteDialog1.setView(deleteDialogView);
+
+                                            TextView nTextView = (TextView) deleteDialogView.findViewById(R.id.txt_dia);
+                                            nTextView.setText("Tem certeza que deseja finalizar a entrevista?");
+
+                                            deleteDialogView.findViewById(R.id.btn_yes).setOnClickListener(new View.OnClickListener() {
+
+                                                @Override
+                                                public void onClick(View v) {
 
 
+                                                    LayoutInflater factory = LayoutInflater.from(getContext());
+                                                    final View deleteDialogView = factory.inflate(
+                                                            R.layout.custom_dialog, null);
+                                                    final AlertDialog deleteDialog = new AlertDialog.Builder(getContext()).create();
+                                                    deleteDialog.setView(deleteDialogView);
+
+                                                    TextView nTextView = (TextView) deleteDialogView.findViewById(R.id.txt_dia);
+                                                    nTextView.setText("ATENÇÃO! Depois de encerrar não poderá mais adicionar alimentos para esses entrevistados! Tem certeza que deseja encerrar?");
+
+                                                    deleteDialogView.findViewById(R.id.btn_yes).setOnClickListener(new View.OnClickListener() {
+
+                                                        @Override
+                                                        public void onClick(View v) {
+                                                            try {
+                                                                gerarArquivoTXT();
+                                                                ((MainActivity) container.getContext()).mViewPager.setCurrentItem(0);
+                                                            } catch (IOException e) {
+                                                                e.printStackTrace();
+                                                            }
+
+                                                            deleteDialog.dismiss();
+                                                        }
+                                                    });
+                                                    deleteDialogView.findViewById(R.id.btn_no).setOnClickListener(new View.OnClickListener() {
+
+                                                        @Override
+                                                        public void onClick(View v) {
+                                                            ((MainActivity) container.getContext()).mViewPager.setCurrentItem(0);
+                                                            deleteDialog.dismiss();
+
+                                                        }
+                                                    });
+
+                                                    deleteDialog.show();
+                                                    deleteDialog1.dismiss();
+                                                }
+                                            });
+                                            deleteDialogView.findViewById(R.id.btn_no).setOnClickListener(new View.OnClickListener() {
+
+                                                @Override
+                                                public void onClick(View v) {
+                                                    ((MainActivity) container.getContext()).mViewPager.setCurrentItem(0);
+                                                    deleteDialog1.dismiss();
+
+                                                }
+                                            });
+
+                                            deleteDialog1.show();
 
 
-
-
-
-                TextViewAdiciona.setBackground(getResources().getDrawable(R.drawable.rounded_corner));
-                TextViewAdiciona.setOnClickListener(new View.OnClickListener() {
-                    @Override
-                    public void onClick(View arg0) {
-                        try {
-
-                            LayoutInflater factory = LayoutInflater.from(getContext());
-                            final View deleteDialogView = factory.inflate(
-                                    R.layout.custom_dialog, null);
-                            final AlertDialog deleteDialog1 = new AlertDialog.Builder(getContext()).create();
-                            deleteDialog1.setView(deleteDialogView);
-
-                            TextView nTextView = (TextView) deleteDialogView.findViewById(R.id.txt_dia);
-                            nTextView.setText("ATENÇÃO! Tem certeza que encerrar a coleta?");
-
-                            deleteDialogView.findViewById(R.id.btn_yes).setOnClickListener(new View.OnClickListener() {
-
-                                @Override
-                                public void onClick(View v) {
-
-
-
-
-                                    LayoutInflater factory = LayoutInflater.from(getContext());
-                                    final View deleteDialogView = factory.inflate(
-                                            R.layout.custom_dialog, null);
-                                    final AlertDialog deleteDialog = new AlertDialog.Builder(getContext()).create();
-                                    deleteDialog.setView(deleteDialogView);
-
-                                    TextView nTextView = (TextView) deleteDialogView.findViewById(R.id.txt_dia);
-                                    nTextView.setText("ATENÇÃO! Depois de encerrar não poderá mais adicionar alimentos para esses entrevistados! Tem certeza que deseja continuar?");
-
-                                    deleteDialogView.findViewById(R.id.btn_yes).setOnClickListener(new View.OnClickListener() {
-
-                                        @Override
-                                        public void onClick(View v) {
-
-                                            try {
-                                                gerarArquivoTXT();
-                                            } catch (IOException e) {
-                                                e.printStackTrace();
-                                            }
-
-
-                                            deleteDialog.dismiss();
+                                        } catch (Exception e) {
+                                            // TODO: handle exception
                                         }
-                                    });
-                                    deleteDialogView.findViewById(R.id.btn_no).setOnClickListener(new View.OnClickListener() {
+                                    }
+                                });
 
-                                        @Override
-                                        public void onClick(View v) {
-                                            deleteDialog.dismiss();
+                            }
 
-                                        }
-                                    });
-
-                                    deleteDialog.show();
-                                    deleteDialog1.dismiss();
-                                }
-                            });
-                            deleteDialogView.findViewById(R.id.btn_no).setOnClickListener(new View.OnClickListener() {
-
-                                @Override
-                                public void onClick(View v) {
-                                    deleteDialog1.dismiss();
-
-                                }
-                            });
-
-                            deleteDialog1.show();
-
-
-                        } catch (Exception e) {
-                            // TODO: handle exception
                         }
-                    }
-                });
+                    });
+
+
+
+
+
 
             }
 

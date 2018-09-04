@@ -49,7 +49,7 @@
         </activity>
         <activity
             android:name=".Generica.GrauParentescoActivity"
-            android:label="Grau de parentesco"
+            android:label="Parentesco"
             android:launchMode="singleTop"
             android:noHistory="false"
             android:parentActivityName=".Generica.AlimentoActivity"

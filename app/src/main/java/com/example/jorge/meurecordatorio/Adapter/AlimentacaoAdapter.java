@@ -89,7 +89,7 @@ public class AlimentacaoAdapter extends RecyclerView.Adapter<AlimentacaoAdapter.
         TextView tv_usuario;
         ImageView iv_check;
         TextView tv_grau_parentesco;
-        TextView tv_atipico;
+
         CardView card_view;
 
 
@@ -123,7 +123,6 @@ public class AlimentacaoAdapter extends RecyclerView.Adapter<AlimentacaoAdapter.
 
             tv_grau_parentesco = (TextView) v.findViewById(R.id.tv_grau_parentesco);
 
-            tv_atipico = (TextView) v.findViewById(R.id.tv_atipico);
 
             v.setOnClickListener(this);
         }
@@ -143,7 +142,7 @@ public class AlimentacaoAdapter extends RecyclerView.Adapter<AlimentacaoAdapter.
             intentToStartDetailActivity.putExtra(PUT_EXTRA_ENTREVISTADO, alimentacao.getAlimentacao_entrevistado_id());
             intentToStartDetailActivity.putExtra(PUT_EXTRA_ENTREVISTADO_NOME, alimentacao.getAlimentacao_entrevistado());
             intentToStartDetailActivity.putExtra(PUT_EXTRA_USUARIO, alimentacao.getAlimentacao_usuario());
-            intentToStartDetailActivity.putExtra(PUT_EXTRA_ETAPA, 1);
+            intentToStartDetailActivity.putExtra(PUT_EXTRA_ETAPA, 2);
             intentToStartDetailActivity.putExtra(PUT_EXTRA_GRAU_PARENTESCO_NOME, ((MainActivity) mContext).grau_parentesco_nome.getText().toString());
             intentToStartDetailActivity.putExtra(PUT_EXTRA_GRAU_PARENTESCO, ((MainActivity) mContext).grauParentesco.getText().toString());
             intentToStartDetailActivity.putExtra(PUT_EXTRA_DIA_ATIPICO, ((MainActivity) mContext).diaAtipico.getText().toString());
@@ -166,10 +165,10 @@ public class AlimentacaoAdapter extends RecyclerView.Adapter<AlimentacaoAdapter.
     @Override
     public AlimentacaoAdapter.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         View v;
-        if (mostrar == 4) {
+        if (mostrar == 5) {
             v = LayoutInflater.from(parent.getContext()).inflate(R.layout.layout_alimentacao, parent, false);
         }
-        else if (mostrar < 2) {
+        else if (mostrar < 3) {
             v = LayoutInflater.from(parent.getContext()).inflate(R.layout.layout_alimentacao, parent, false);
         }else{
             v = LayoutInflater.from(parent.getContext()).inflate(R.layout.layout_alimentacao_check, parent, false);
@@ -198,14 +197,15 @@ public class AlimentacaoAdapter extends RecyclerView.Adapter<AlimentacaoAdapter.
         /** Create filed bind hold full **/
 
         Alimentacao alimentacao = ((Alimentacao) data.get(position));
-        holder.tv_alimento.setText(alimentacao.getAlimentacao_alimento_id() + " - " + alimentacao.getAlimentacao_alimento());
+       // holder.tv_alimento.setText(alimentacao.getAlimentacao_alimento_id() + " - " + alimentacao.getAlimentacao_alimento());
+        holder.tv_alimento.setText(alimentacao.getAlimentacao_alimento());
 
-        holder.tv_preparacao.setText(alimentacao.getAlimentacao_preparacao_id()  + " - " + alimentacao.getAlimentacao_preparacao());
+/*        holder.tv_preparacao.setText(alimentacao.getAlimentacao_preparacao_id()  + " - " + alimentacao.getAlimentacao_preparacao());
         holder.tv_adicao.setText(alimentacao.getAlimentacao_adicao_id()  + " - " + alimentacao.getAlimentacao_adicao());
-        holder.tv_unidade.setText(alimentacao.getAlimentacao_unidade_id()  + " - " + alimentacao.getAlimentacao_unidade());
+        holder.tv_unidade.setText(alimentacao.getAlimentacao_unidade_id()  + " - " + alimentacao.getAlimentacao_unidade());*/
 
-        holder.tv_local.setText(alimentacao.getAlimentacao_local_id()  + " - " + alimentacao.getAlimentacao_local());
-        holder.tv_ocasiao_consumo.setText(alimentacao.getAlimentacao_ocasiao_consumo_id()  + " - " + alimentacao.getAlimentacao_ocasiao_consumo());
+/*        holder.tv_local.setText(alimentacao.getAlimentacao_local_id()  + " - " + alimentacao.getAlimentacao_local());
+        holder.tv_ocasiao_consumo.setText(alimentacao.getAlimentacao_ocasiao_consumo_id()  + " - " + alimentacao.getAlimentacao_ocasiao_consumo());*/
 
         holder.tv_hora.setText("Hora do consumo: " + alimentacao.getAlimentacao_hora());
         holder.tv_quantidade.setText("Quantidade: " + alimentacao.getAlimentacao_quantidade());
@@ -216,13 +216,17 @@ public class AlimentacaoAdapter extends RecyclerView.Adapter<AlimentacaoAdapter.
 
 
 
+        holder.tv_preparacao.setText(alimentacao.getAlimentacao_preparacao());
+        holder.tv_adicao.setText(alimentacao.getAlimentacao_adicao());
+        holder.tv_unidade.setText(alimentacao.getAlimentacao_unidade());
+        holder.tv_local.setText(alimentacao.getAlimentacao_local());
+        holder.tv_ocasiao_consumo.setText(alimentacao.getAlimentacao_ocasiao_consumo());
 
-
-        holder.tv_preparacao.setText(alimentacao.getAlimentacao_preparacao_id()  + " - " + alimentacao.getAlimentacao_preparacao());
+       /* holder.tv_preparacao.setText(alimentacao.getAlimentacao_preparacao_id()  + " - " + alimentacao.getAlimentacao_preparacao());
         holder.tv_adicao.setText(alimentacao.getAlimentacao_adicao_id()  + " - " + alimentacao.getAlimentacao_adicao());
         holder.tv_unidade.setText(alimentacao.getAlimentacao_unidade_id()  + " - " + alimentacao.getAlimentacao_unidade());
         holder.tv_local.setText(alimentacao.getAlimentacao_local_id()  + " - " + alimentacao.getAlimentacao_local());
-        holder.tv_ocasiao_consumo.setText(alimentacao.getAlimentacao_ocasiao_consumo_id()  + " - " + alimentacao.getAlimentacao_ocasiao_consumo());
+        holder.tv_ocasiao_consumo.setText(alimentacao.getAlimentacao_ocasiao_consumo_id()  + " - " + alimentacao.getAlimentacao_ocasiao_consumo());*/
         holder.tv_hora.setText("Hora do consumo: " + alimentacao.getAlimentacao_hora());
         if (Common.eLeitematerno(alimentacao.getAlimentacao_alimento())) {
             holder.tv_quantidade.setText("Minutos: " + alimentacao.getAlimentacao_quantidade());
@@ -235,28 +239,29 @@ public class AlimentacaoAdapter extends RecyclerView.Adapter<AlimentacaoAdapter.
 
         }
 
-        else if (alimentacao.getAlimentacao_dia_atico().equals("Não")) {
-            holder.tv_atipico.setText("típico");
-        }else{
-            holder.tv_atipico.setText("atípico");
-            holder.tv_atipico.setTextColor(mContext.getResources().getColor(R.color.colorRed));
-        }
-
         Boolean check = true;
-        if (alimentacao.getAlimentacao_preparacao_id().toString().equals("") || alimentacao.getAlimentacao_preparacao_id().toString().equals("0")){
-            check = false;
-        }else if (alimentacao.getAlimentacao_adicao_id().toString().equals("") || alimentacao.getAlimentacao_adicao_id().toString().equals("0")){
-            check = false;
-        }else if (alimentacao.getAlimentacao_unidade_id().toString().equals("") || alimentacao.getAlimentacao_unidade_id().toString().equals("0")){
-            check = false;
-        }else if (alimentacao.getAlimentacao_local_id().toString().equals("") || alimentacao.getAlimentacao_local_id().toString().equals("0")){
-            check = false;
-        }else if (alimentacao.getAlimentacao_ocasiao_consumo_id().toString().equals("") || alimentacao.getAlimentacao_ocasiao_consumo_id().toString().equals("0")){
-            check = false;
-        }else if (alimentacao.getAlimentacao_hora().toString().equals("") || alimentacao.getAlimentacao_hora().toString().equals("0") || alimentacao.getAlimentacao_hora().toString().equals("0:00")){
-            check = false;
-        }else if (alimentacao.getAlimentacao_quantidade().toString().equals("") || alimentacao.getAlimentacao_quantidade().toString().equals("0")){
-            check = false;
+        if (mostrar != 2) {
+            if (alimentacao.getAlimentacao_preparacao_id().toString().equals("") || alimentacao.getAlimentacao_preparacao_id().toString().equals("0")) {
+                check = false;
+            } else if (alimentacao.getAlimentacao_adicao_id().toString().equals("") || alimentacao.getAlimentacao_adicao_id().toString().equals("0")) {
+                check = false;
+            } else if (alimentacao.getAlimentacao_unidade_id().toString().equals("") || alimentacao.getAlimentacao_unidade_id().toString().equals("0")) {
+                check = false;
+            } else if (alimentacao.getAlimentacao_local_id().toString().equals("") || alimentacao.getAlimentacao_local_id().toString().equals("0")) {
+                check = false;
+            } else if (alimentacao.getAlimentacao_ocasiao_consumo_id().toString().equals("") || alimentacao.getAlimentacao_ocasiao_consumo_id().toString().equals("0")) {
+                check = false;
+            } else if (alimentacao.getAlimentacao_hora().toString().equals("") || alimentacao.getAlimentacao_hora().toString().equals("0") || alimentacao.getAlimentacao_hora().toString().equals("0:00")) {
+                check = false;
+            } else if (alimentacao.getAlimentacao_quantidade().toString().equals("") || alimentacao.getAlimentacao_quantidade().toString().equals("0")) {
+                check = false;
+            }
+        }else{
+            if (alimentacao.getAlimentacao_ocasiao_consumo_id().toString().equals("") || alimentacao.getAlimentacao_ocasiao_consumo_id().toString().equals("0")){
+                check = false;
+            }else if (alimentacao.getAlimentacao_hora().toString().equals("") || alimentacao.getAlimentacao_hora().toString().equals("0") || alimentacao.getAlimentacao_hora().toString().equals("0:00")){
+                check = false;
+            }
         }
 
 
@@ -265,13 +270,13 @@ public class AlimentacaoAdapter extends RecyclerView.Adapter<AlimentacaoAdapter.
 
         if (check) {
             holder.iv_check.setImageResource(R.mipmap.ic_check);
-            if (mostrar == 2) {
+            if (mostrar == 3) {
                 holder.card_view.setVisibility(View.GONE);
             }
         }else{
             holder.iv_check.setImageResource(R.mipmap.ic_no_check);
             estaFaltando = true;
-            if (mostrar == 3) {
+            if (mostrar == 4) {
                 holder.card_view.setVisibility(View.GONE);
             }
         }

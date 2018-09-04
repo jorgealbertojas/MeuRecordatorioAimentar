@@ -55,6 +55,7 @@
         android:layout_height="wrap_content"
         android:text="Coletados"
         android:visibility="invisible"
+        android:textColor="@color/colorWhite"
         android:background="@color/colorAbobora"
         app:layout_constraintBottom_toTopOf="@+id/relativeSalvar"
         app:layout_constraintEnd_toEndOf="parent" />

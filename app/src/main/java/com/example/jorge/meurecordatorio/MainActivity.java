@@ -70,6 +70,7 @@ import com.example.jorge.meurecordatorio.PersistentData.DbSelect;
 import com.example.jorge.meurecordatorio.PersistentData.Field;
 import com.example.jorge.meurecordatorio.Utilite.Common;
 import com.example.jorge.meurecordatorio.Utilite.CrunchifyJSONFileWrite;
+import com.example.jorge.meurecordatorio.Utilite.EndlessRecyclerViewScrollListener;
 import com.example.jorge.meurecordatorio.Utilite.FragmentViewPager;
 import com.example.jorge.meurecordatorio.Utilite.Modulo;
 import com.example.jorge.meurecordatorio.Utilite.Url;
@@ -84,12 +85,17 @@ import java.io.File;
 import java.io.FileInputStream;
 
 import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
 import java.io.FileReader;
 import java.io.IOException;
+import java.io.InputStream;
+import java.io.OutputStream;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Properties;
 
+import static com.example.jorge.meurecordatorio.PersistentData.DbCreate.DB_NAME;
+import static com.example.jorge.meurecordatorio.PersistentData.DbSelect.GET_USUARIO_PARAMETRO;
 import static com.example.jorge.meurecordatorio.Utilite.Modulo.storageCliente;
 
 public class MainActivity extends AppCompatActivity {
@@ -142,6 +148,12 @@ public class MainActivity extends AppCompatActivity {
     public static ImageView proximo;
     public static ImageView anterior;
 
+    public static TextView proximo_palavra;
+    public static TextView anterior_palavra;
+
+    public static TextView grau_parentesco_hint;
+    public static TextView diaatipico_hint;
+
 
 
     @Override
@@ -156,6 +168,8 @@ public class MainActivity extends AppCompatActivity {
 
 
 
+        grau_parentesco_hint = (TextView) findViewById(R.id.grau_parentesco_hint);
+        diaatipico_hint = (TextView) findViewById(R.id.dia_atipico_hint);
 
 
 
@@ -169,11 +183,15 @@ public class MainActivity extends AppCompatActivity {
         proximo = (ImageView) findViewById(R.id.proximo);
         anterior = (ImageView) findViewById(R.id.anterior);
 
+        proximo_palavra = (TextView) findViewById(R.id.proximo_palavra);
+        anterior_palavra = (TextView) findViewById(R.id.anterior_palavra);
+
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT) {
-            if (!getEntrevistador()){
-                Toast.makeText(this, "ATENÇÃO! ESTE SISTEMA SÓ PODE SER CHAMADO PELO SISTEMA DE PESQUISA CSPRO" , Toast.LENGTH_LONG).show();
-                this.finish();
-            }
+            // BEBETO
+          //  if (!getEntrevistador()){
+          //      Toast.makeText(this, "ATENÇÃO! ESTE SISTEMA SÓ PODE SER CHAMADO PELO SISTEMA DE PESQUISA CSPRO" , Toast.LENGTH_LONG).show();
+          //      this.finish();
+         //   }
         }
 
         imagepiscar = (ImageView) findViewById(R.id.image);
@@ -189,40 +207,112 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onPageSelected(int position) {
 
+
                 if (position == 0) {
+                    diaAtipico.setVisibility(View.VISIBLE);
+                    grau_parentesco_nome.setVisibility(View.VISIBLE);
+                    grauParentesco.setVisibility(View.VISIBLE);
+                    grau_parentesco_hint.setVisibility(View.VISIBLE);
+                    diaatipico_hint.setVisibility(View.VISIBLE);
+
                     imagepiscar.setVisibility(View.INVISIBLE);
                     imagepiscar.setAnimation(null);
+
+                    anterior.setVisibility(View.INVISIBLE);
+                    proximo.setVisibility(View.VISIBLE);
+                    anterior_palavra.setVisibility(View.INVISIBLE);
+                    proximo_palavra.setVisibility(View.VISIBLE);
+                }
+
+                else if (position == 1) {
+
+                    diaAtipico.setVisibility(View.GONE);
+                    grau_parentesco_nome.setVisibility(View.GONE);
+                    grauParentesco.setVisibility(View.GONE);
+                    grau_parentesco_hint.setVisibility(View.GONE);
+                    diaatipico_hint.setVisibility(View.GONE);
+
+                    anterior.setVisibility(View.VISIBLE);
+                    proximo.setVisibility(View.VISIBLE);
+                    anterior_palavra.setVisibility(View.VISIBLE);
+                    proximo_palavra.setVisibility(View.VISIBLE);
+
+
                     mRecyclerView.setVisibility(View.VISIBLE);
                     mRecyclerViewCheck.setVisibility(View.GONE);
                     mRecyclerViewCheckCompleto.setVisibility(View.GONE);
-                    anterior.setVisibility(View.INVISIBLE);
-                    proximo.setVisibility(View.VISIBLE);
-
-
-                } else if (position == 1) {
-                        anterior.setVisibility(View.VISIBLE);
-                        proximo.setVisibility(View.VISIBLE);
-
-                        imagepiscar.setVisibility(View.INVISIBLE);
-                        imagepiscar.setAnimation(null);
-                        mRecyclerView.setVisibility(View.VISIBLE);
-                        mRecyclerViewCheck.setVisibility(View.GONE);
-                        mRecyclerViewCheckCompleto.setVisibility(View.GONE);
 
 
 
                 } else if (position == 2) {
+                    diaAtipico.setVisibility(View.GONE);
+                    grau_parentesco_nome.setVisibility(View.GONE);
+                    grauParentesco.setVisibility(View.GONE);
+                    grau_parentesco_hint.setVisibility(View.GONE);
+                    diaatipico_hint.setVisibility(View.GONE);
+
 
                     anterior.setVisibility(View.VISIBLE);
                     proximo.setVisibility(View.VISIBLE);
+                    anterior_palavra.setVisibility(View.VISIBLE);
+                    proximo_palavra.setVisibility(View.VISIBLE);
+
                     imagepiscar.setVisibility(View.INVISIBLE);
                     imagepiscar.setAnimation(null);
+
+                    mRecyclerView.setVisibility(View.VISIBLE);
+                    mRecyclerViewCheck.setVisibility(View.GONE);
+                    mRecyclerViewCheckCompleto.setVisibility(View.GONE);
+
+
+
+                } else if (position == 3) {
+
+                    diaAtipico.setVisibility(View.GONE);
+                    grau_parentesco_nome.setVisibility(View.GONE);
+                    grauParentesco.setVisibility(View.GONE);
+                    grau_parentesco_hint.setVisibility(View.GONE);
+                    diaatipico_hint.setVisibility(View.GONE);
+
+
+                    anterior.setVisibility(View.VISIBLE);
+                    proximo.setVisibility(View.VISIBLE);
+                    anterior_palavra.setVisibility(View.VISIBLE);
+                    proximo_palavra.setVisibility(View.VISIBLE);
+
+                    imagepiscar.setVisibility(View.INVISIBLE);
+                    imagepiscar.setAnimation(null);
+
                     mRecyclerView.setVisibility(View.GONE);
                     mRecyclerViewCheck.setVisibility(View.VISIBLE);
                     mRecyclerViewCheckCompleto.setVisibility(View.GONE);
+
+
+                } else if (position == 4){
+
+                    diaAtipico.setVisibility(View.GONE);
+                    grau_parentesco_nome.setVisibility(View.GONE);
+                    grauParentesco.setVisibility(View.GONE);
+                    grau_parentesco_hint.setVisibility(View.GONE);
+                    diaatipico_hint.setVisibility(View.GONE);
+
+
+                    anterior.setVisibility(View.VISIBLE);
+                    proximo.setVisibility(View.VISIBLE);
+                    anterior_palavra.setVisibility(View.VISIBLE);
+                    proximo_palavra.setVisibility(View.VISIBLE);
+
+                    imagepiscar.setVisibility(View.INVISIBLE);
+                    imagepiscar.setAnimation(null);
+
+                    mRecyclerView.setVisibility(View.GONE);
+                    mRecyclerViewCheck.setVisibility(View.GONE);
+                    mRecyclerViewCheckCompleto.setVisibility(View.VISIBLE);
+
+
                     LayoutInflater factory = LayoutInflater.from(MainActivity.this);
                     final View deleteDialogView = factory.inflate(
-                            R.layout.custom_dialog1, null);
+                            R.layout.custom_dialog10, null);
                     final AlertDialog deleteDialog1 = new AlertDialog.Builder(MainActivity.this).create();
                     deleteDialog1.setView(deleteDialogView);
 
@@ -236,34 +326,39 @@ public class MainActivity extends AppCompatActivity {
                             deleteDialog1.dismiss();
                         }
                     });
-                    deleteDialogView.findViewById(R.id.btn_no).setOnClickListener(new View.OnClickListener() {
-
-                        @Override
-                        public void onClick(View v) {
-                            deleteDialog1.dismiss();
-
-                        }
-                    });
 
                     deleteDialog1.show();
+                }else if (position == 5) {
 
-                } else if (position == 3){
+                    diaAtipico.setVisibility(View.GONE);
+                    grau_parentesco_nome.setVisibility(View.GONE);
+                    grauParentesco.setVisibility(View.GONE);
+                    grau_parentesco_hint.setVisibility(View.GONE);
+                    diaatipico_hint.setVisibility(View.GONE);
 
+
+                    anterior_palavra.setVisibility(View.VISIBLE);
+                    proximo_palavra.setVisibility(View.INVISIBLE);
                     anterior.setVisibility(View.VISIBLE);
-                    proximo.setVisibility(View.VISIBLE);
+                    proximo.setVisibility(View.INVISIBLE);
+
                     imagepiscar.setVisibility(View.INVISIBLE);
                     imagepiscar.setAnimation(null);
-                    mRecyclerView.setVisibility(View.GONE);
+
+                    mRecyclerView.setVisibility(View.VISIBLE);
                     mRecyclerViewCheck.setVisibility(View.GONE);
-                    mRecyclerViewCheckCompleto.setVisibility(View.VISIBLE);
-                  /*  LayoutInflater factory = LayoutInflater.from(MainActivity.this);
+                    mRecyclerViewCheckCompleto.setVisibility(View.GONE);
+
+
+
+                    LayoutInflater factory = LayoutInflater.from(MainActivity.this);
                     final View deleteDialogView = factory.inflate(
-                            R.layout.custom_dialog1, null);
+                            R.layout.custom_dialog10, null);
                     final AlertDialog deleteDialog1 = new AlertDialog.Builder(MainActivity.this).create();
                     deleteDialog1.setView(deleteDialogView);
 
                     TextView nTextView = (TextView) deleteDialogView.findViewById(R.id.txt_dia);
-                    nTextView.setText("ATENÇÃO!\n Coleta encerrada pode fazer a revisão, caso necessário pode iniciar os passos novamente");
+                    nTextView.setText("Agora vou ler todos os alimentos, horários e refeições realizados por " + entrevistado_nome.getText() + " ontem, para que confirme se todas as informações foram registradas corretamente" );
 
                     deleteDialogView.findViewById(R.id.btn_yes).setOnClickListener(new View.OnClickListener() {
 
@@ -272,25 +367,8 @@ public class MainActivity extends AppCompatActivity {
                             deleteDialog1.dismiss();
                         }
                     });
-                    deleteDialogView.findViewById(R.id.btn_no).setOnClickListener(new View.OnClickListener() {
 
-                        @Override
-                        public void onClick(View v) {
-                            deleteDialog1.dismiss();
-
-                        }
-                    });*/
-
-                   // deleteDialog1.show();
-                }else if (position == 4) {
-                    anterior.setVisibility(View.VISIBLE);
-                    proximo.setVisibility(View.INVISIBLE);
-                    mRecyclerView.setVisibility(View.VISIBLE);
-                    mRecyclerViewCheck.setVisibility(View.GONE);
-                    mRecyclerViewCheckCompleto.setVisibility(View.GONE);
-
-                    imagepiscar.setVisibility(View.INVISIBLE);
-                    imagepiscar.setAnimation(null);
+                    deleteDialog1.show();
 
                     if (alimentacaoAdapter.estaFaltando){
                         imagepiscar.setVisibility(View.VISIBLE);
@@ -334,10 +412,12 @@ public class MainActivity extends AppCompatActivity {
             mDataBase = new DataBase(this);
             mDb = mDataBase.getReadableDatabase();
             DbInstance.getInstance(this);
+            Entrar();
 
+            // BEBETO
             if(savedInstanceState == null){
-             //   Intent WSActivity = new Intent(this, LoginActivity.class);
-            //    startActivity(WSActivity);
+                Intent WSActivity = new Intent(this, LoginActivity.class);
+                startActivity(WSActivity);
 
             }
 
@@ -411,17 +491,18 @@ public class MainActivity extends AppCompatActivity {
 
                         LayoutInflater factory = LayoutInflater.from(MainActivity.this);
                         final View deleteDialogView = factory.inflate(
-                                R.layout.custom_dialog1, null);
+                                R.layout.custom_dialog5, null);
                         final AlertDialog deleteDialog1 = new AlertDialog.Builder(MainActivity.this).create();
                         deleteDialog1.setView(deleteDialogView);
 
                         TextView nTextView = (TextView) deleteDialogView.findViewById(R.id.txt_dia);
-                        nTextView.setText("ATENÇÃO!\n Agora eu gostaria que você me dissesse tudo que " +  NOME + " comeu ou bebeu ontem, do momento em que acordou até a hora em que foi dormir. Caso " +  NOME + "  tenha acordado de madrugada, também gostaria de saber o que ele/ela comeu ou bebeu de madrugada”.  Me informe também os horários em que a criança consumiu os alimentos e bebidas. Não se preocupe com a quantidade agora, pois falaremos dos detalhes depois.");
+                        nTextView.setText("ATENÇÃO!\n Agora eu gostaria que você me dissesse tudo que " +  NOME + " comeu ou bebeu ontem, do momento em que acordou até a hora em que foi dormir. Caso " +  NOME + "  tenha acordado de madrugada, também gostaria de saber o que ele/ela comeu ou bebeu de madrugada.  Me informe também os horários em que a criança consumiu os alimentos e bebidas. Não se preocupe com a quantidade agora, pois falaremos dos detalhes depois.");
 
                         deleteDialogView.findViewById(R.id.btn_yes).setOnClickListener(new View.OnClickListener() {
 
                             @Override
                             public void onClick(View v) {
+
                                 deleteDialog1.dismiss();
                             }
                         });
@@ -429,6 +510,37 @@ public class MainActivity extends AppCompatActivity {
 
                             @Override
                             public void onClick(View v) {
+
+                                LayoutInflater factory = LayoutInflater.from(MainActivity.this);
+                                final View deleteDialogView10 = factory.inflate(
+                                        R.layout.custom_dialog1, null);
+                                final AlertDialog deleteDialog10 = new AlertDialog.Builder(MainActivity.this).create();
+                                deleteDialog10.setView(deleteDialogView10);
+
+                                TextView nTextView = (TextView) deleteDialogView10.findViewById(R.id.txt_dia);
+                                nTextView.setText("Tem certeza que deseja interromper a entrevista?");
+
+                                deleteDialogView10.findViewById(R.id.btn_yes).setOnClickListener(new View.OnClickListener() {
+
+                                    @Override
+                                    public void onClick(View v) {
+                                        finish();
+                                        deleteDialog10.dismiss();
+                                    }
+                                });
+                                deleteDialogView10.findViewById(R.id.btn_no).setOnClickListener(new View.OnClickListener() {
+
+                                    @Override
+                                    public void onClick(View v) {
+
+                                        deleteDialog10.dismiss();
+
+                                    }
+                                });
+
+                                deleteDialog10.show();
+
+
                                 deleteDialog1.dismiss();
 
                             }
@@ -480,6 +592,8 @@ public class MainActivity extends AppCompatActivity {
         mRecyclerViewCheckCompleto = (RecyclerView) findViewById(R.id.rv_alimento_check_completo);
         mRecyclerViewCheckCompleto.setHasFixedSize(true);
         mRecyclerViewCheckCompleto.setLayoutManager(new LinearLayoutManager(this));
+
+
 
         mDataBase = new DataBase(this);
 
@@ -774,6 +888,48 @@ public class MainActivity extends AppCompatActivity {
         startActivity(intentToStartDetailActivity);
     }
 
+    private void Entrar(){
+
+
+
+
+
+            if (mDataBase.getListAlimento().size()==0) {
+                String sAssets = "backup_REC24_JORGE.db";
+                try {
+                    restaura_bkp(sAssets);
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+
+            }
+
+
+
+
+    }
+
+    private void restaura_bkp(String Origem) throws IOException{
+
+        File file = getDatabasePath(DB_NAME);
+        if (file.exists()) {
+            if (!file.getParentFile().exists()) {
+                file.getParentFile().mkdir();
+            }
+
+            InputStream inputStream = getAssets().open(Origem);
+            OutputStream outputStream = new FileOutputStream(file);
+            byte[] buffer = new byte[1024 * 8];
+            int numOfBytesToRead;
+            while((numOfBytesToRead = inputStream.read(buffer)) > 0)
+                outputStream.write(buffer, 0, numOfBytesToRead);
+            inputStream.close();
+            outputStream.close();
+        }
+
+        //db = SQLiteDatabase.openOrCreateDatabase(file, null);
+    }
+
     private class MyPagerAdapter extends FragmentPagerAdapter {
 
         public MyPagerAdapter(FragmentManager fm) {
@@ -784,21 +940,23 @@ public class MainActivity extends AppCompatActivity {
         public android.support.v4.app.Fragment getItem(int pos) {
             switch (pos) {
                 case 0:
-                    return FragmentViewPager.newInstance("Etapa 1 - Adiciona alimento","Adicionar Alimento.", R.mipmap.food, pos,USUARIO);
+                    return FragmentViewPager.newInstance("Identificação","Arraste para o lado para ir para o próxima passo.", R.mipmap.ic_id, pos,USUARIO);
                 case 1:
-                    return FragmentViewPager.newInstance("Etapa 2 - Adicionar complemento", "Clique no alimento abaixo para adicinar complemento.", R.mipmap.add,pos,USUARIO);
+                    return FragmentViewPager.newInstance("Passo 1 - Listagem rápida de alimentos","Adicionar Alimento.", R.mipmap.food, pos,USUARIO);
                 case 2:
-                    return FragmentViewPager.newInstance("Etapa 3 - Check", "Atenção! Caso tenha alimento abaixo clique para completar.",  R.mipmap.check, pos,USUARIO);
+                    return FragmentViewPager.newInstance("Passo 2 - Listagem de alimentos comumente esquecidos", "Clique no alimento abaixo para adicionar complemento.", R.mipmap.add,pos,USUARIO);
                 case 3:
-                    return FragmentViewPager.newInstance("Etapa 4 - Relatório", "Confira se faltou algum alimento.",  R.mipmap.report, pos,USUARIO);
+                    return FragmentViewPager.newInstance("Passo 3 - Definição do Horário e Refeição", "Atenção! Caso tenha alimento abaixo clique para completar.",  R.mipmap.check, pos,USUARIO);
+                case 4:
+                    return FragmentViewPager.newInstance("Passo 4 - Ciclo de detalhamento e Revisão", "Confira se faltou algum alimento.",  R.mipmap.report, pos,USUARIO);
                 default:
-                    return FragmentViewPager.newInstance("Etapa 5 - Finalizar", "Encerrar entrevista .",  R.mipmap.finish, pos,USUARIO);
+                    return FragmentViewPager.newInstance("Passo 5 - Revisão Final", "Finalizar entrevista",  R.mipmap.finish, pos,USUARIO);
             }
         }
 
         @Override
         public int getCount() {
-            return 5;
+            return 6;
         }
     }
 

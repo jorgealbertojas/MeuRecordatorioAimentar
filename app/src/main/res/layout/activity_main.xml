@@ -50,7 +50,7 @@
         <android.support.constraint.ConstraintLayout
             android:id="@+id/relativeEntrevistado"
             android:layout_width="match_parent"
-            android:layout_height="150dp"
+            android:layout_height="wrap_content"
             android:layout_centerInParent="true"
             android:background="@color/colorPrimaryDark"
             app:layout_constraintTop_toBottomOf="@+id/relativeUp">
@@ -59,86 +59,108 @@
                 android:id="@+id/entrevistado_hint"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:layout_marginLeft="8dp"
+                android:layout_marginStart="8dp"
                 android:text="Entrevistado"
                 android:textColor="@color/colorAccent"
-                android:textSize="@dimen/padding_text" />
+                android:textSize="20sp"
+                app:layout_constraintStart_toStartOf="parent" />
 
             <TextView
                 android:id="@+id/entrevistado"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:layout_marginLeft="8dp"
+                android:layout_marginStart="8dp"
+                android:layout_marginTop="8dp"
                 android:padding="@dimen/padding_text"
                 android:text="0"
                 android:textColor="@color/colorWhite"
-                android:textSize="20sp" />
+                android:textSize="20sp"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/entrevistado_hint" />
 
             <TextView
                 android:id="@+id/entrevistado_nome"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:layout_marginLeft="8dp"
+
+                android:layout_marginStart="8dp"
+                android:layout_marginTop="8dp"
                 android:padding="@dimen/padding_text"
                 android:text=""
+
+
                 android:textColor="@color/colorWhite"
                 android:textSize="20sp"
                 app:layout_constraintStart_toEndOf="@+id/entrevistado"
-
-
-                />
+                app:layout_constraintTop_toBottomOf="@+id/entrevistado_hint" />
 
 
             <TextView
                 android:id="@+id/grau_parentesco"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
+                android:layout_width="0dp"
+                android:layout_height="0dp"
                 android:layout_marginTop="8dp"
                 android:background="@color/colorPrimaryDark"
                 android:hint="                  "
+                android:text="xxsxsx"
                 android:padding="@dimen/padding_text"
-                android:text="0"
                 android:textSize="20sp"
                 app:layout_constraintTop_toBottomOf="@+id/grau_parentesco_hint" />
 
             <TextView
                 android:id="@+id/grau_parentesco_nome"
                 android:layout_width="wrap_content"
+                android:background="@drawable/rounded_corner"
                 android:layout_height="42dp"
-                android:background="@color/colorPrimaryDark"
+                android:layout_marginLeft="8dp"
+                android:layout_marginStart="8dp"
                 android:hint="                   "
                 android:padding="@dimen/padding_text"
                 android:text="0"
                 android:textSize="20sp"
-                app:layout_constraintStart_toEndOf="@+id/ocasiao_consumo"
+                app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/grau_parentesco_hint" />
 
             <TextView
                 android:id="@+id/grau_parentesco_hint"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Grau parentesco"
+                android:layout_marginLeft="8dp"
+                android:layout_marginStart="8dp"
+                android:text="Parentesco"
                 android:textColor="@color/colorAccent"
-                android:textSize="15sp"
+                android:textSize="20sp"
+                app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/entrevistado" />
 
             <TextView
                 android:id="@+id/dia_atipico"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:background="@color/colorPrimaryDark"
+                android:layout_marginLeft="8dp"
+                android:layout_marginStart="8dp"
                 android:padding="@dimen/padding_text"
-                android:text="NÃO"
+                android:background="@drawable/rounded_corner"
+                android:text="SIM"
                 android:textSize="20sp"
-                app:layout_constraintStart_toEndOf="@+id/grau_parentesco_nome"
+                app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/dia_atipico_hint" />
 
             <TextView
                 android:id="@+id/dia_atipico_hint"
                 android:layout_width="wrap_content"
-                android:layout_height="24dp"
-                android:text="Dia atípico"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="8dp"
+                android:layout_marginStart="8dp"
+                android:layout_marginTop="8dp"
+                android:text="Este foi um dia de alimentação comum da criança?"
                 android:textColor="@color/colorAccent"
-                android:textSize="15sp"
-                app:layout_constraintStart_toEndOf="@+id/grau_parentesco_nome"
-                app:layout_constraintTop_toBottomOf="@+id/entrevistado" />
+                android:textSize="20sp"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/grau_parentesco_nome" />
 
 
             <TextView
@@ -209,6 +231,23 @@
                     android:scaleType="fitStart"
 
                     android:src="@mipmap/anterior"
+                    android:visibility="invisible" />
+
+                <TextView
+                    android:id="@+id/proximo_palavra"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_centerVertical="true"
+                    android:layout_toStartOf="@+id/proximo"
+                    android:text=" Arraste " />
+
+                <TextView
+                    android:id="@+id/anterior_palavra"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_centerVertical="true"
+                    android:layout_toEndOf="@+id/anterior"
+                    android:text=" Arraste "
                     android:visibility="invisible" />
             </RelativeLayout>
 

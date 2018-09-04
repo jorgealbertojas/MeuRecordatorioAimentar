@@ -47,7 +47,7 @@ public class UnidadeActivity extends AppCompatActivity {
         /**
          * Put Name Repositorie in  title.
          */
-        this.setTitle("Unidade");
+        this.setTitle("Qual a unidade que " + mName + " comeu ou bebeu este alimento?");
 
 
         /**

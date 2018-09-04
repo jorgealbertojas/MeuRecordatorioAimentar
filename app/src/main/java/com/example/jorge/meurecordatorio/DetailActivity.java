@@ -127,8 +127,9 @@ public class DetailActivity extends AppCompatActivity {
 
     Button buttonfracao;
     Button buttonvirgula;
+    Button buttonvirgula_espessura;
 
-    TextView espessura;
+    public static EditText espessura;
     TextView espessura_hint;
 
 
@@ -194,7 +195,8 @@ public class DetailActivity extends AppCompatActivity {
         tvHoraColeta = (TextView) findViewById(R.id.hora_coleta);
         horaEditText = (EditText) findViewById(R.id.hora);
 
-        espessura = (TextView) findViewById(R.id.espessura);
+        espessura = (EditText) findViewById(R.id.espessura);
+        espessura.setInputType(InputType.TYPE_CLASS_NUMBER);
 
         minutoEditText = (TextView) findViewById(R.id.hora_minuto);
         obs = (EditText) findViewById(R.id.obs) ;
@@ -269,8 +271,10 @@ public class DetailActivity extends AppCompatActivity {
         buttonfracao.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View arg0) {
-               quantidadeEditText.setText(quantidadeEditText.getText().toString() + buttonfracao.getText().toString());
-                quantidadeEditText.setSelection(quantidadeEditText.length());
+                if (!verificaExiste(quantidadeEditText.getText().toString())) {
+                    quantidadeEditText.setText(quantidadeEditText.getText().toString() + buttonfracao.getText().toString());
+                    quantidadeEditText.setSelection(quantidadeEditText.length());
+                }
             }
         });
 
@@ -278,8 +282,21 @@ public class DetailActivity extends AppCompatActivity {
         buttonvirgula.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View arg0) {
-                quantidadeEditText.setText(quantidadeEditText.getText().toString() + buttonvirgula.getText().toString());
-                quantidadeEditText.setSelection(quantidadeEditText.length());
+                if (!verificaExiste(quantidadeEditText.getText().toString())) {
+                    quantidadeEditText.setText(quantidadeEditText.getText().toString() + buttonvirgula.getText().toString());
+                    quantidadeEditText.setSelection(quantidadeEditText.length());
+                }
+            }
+        });
+
+        buttonvirgula_espessura = (Button) findViewById(R.id.buttonvirgula_espessura);
+        buttonvirgula_espessura.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View arg0) {
+                if (!verificaExiste(espessura.getText().toString())) {
+                    espessura.setText(espessura.getText().toString() + buttonvirgula_espessura.getText().toString());
+                    espessura.setSelection(espessura.length());
+                }
             }
         });
 
@@ -839,6 +856,19 @@ public class DetailActivity extends AppCompatActivity {
             ocasiaoConsumo.setText(Modulo.ID);
         }
 
+        espessura.setVisibility(View.GONE);
+        espessura_hint.setVisibility(View.GONE);
+        buttonvirgula_espessura.setVisibility(View.GONE);
+        if (unidade_nome.getText().toString() != null){
+            if (unidade_nome.getText().length()>1) {
+                if (unidade_nome.getText().toString().substring(0,2).toString().equals("FM")) {
+                    espessura.setVisibility(View.VISIBLE);
+                    espessura_hint.setVisibility(View.VISIBLE);
+                    buttonvirgula_espessura.setVisibility(View.VISIBLE);
+                }
+            }
+        }
+
 
 
 
@@ -857,7 +887,7 @@ public class DetailActivity extends AppCompatActivity {
     private void showUnidade(){
         Class destinationClass = UnidadeActivity.class;
         Intent intentToStartDetailActivity = new Intent(getBaseContext(), destinationClass);
-        intentToStartDetailActivity.putExtra(PUT_EXTRA_ENTREVISTADO, mEntrevistado);
+        intentToStartDetailActivity.putExtra(PUT_EXTRA_ENTREVISTADO, mEntrevistadoNome);
 
         if ((novoAliemnto!= null) && novoAliemnto.equals("1")) {
             intentToStartDetailActivity.putExtra(PUT_EXTRA_ALIMENTO, "S");
@@ -902,7 +932,7 @@ public class DetailActivity extends AppCompatActivity {
     private void showLocal(){
         Class destinationClass = LocalActivity.class;
         Intent intentToStartDetailActivity = new Intent(getBaseContext(), destinationClass);
-        intentToStartDetailActivity.putExtra(PUT_EXTRA_ENTREVISTADO, mEntrevistado);
+        intentToStartDetailActivity.putExtra(PUT_EXTRA_ENTREVISTADO, mEntrevistadoNome);
         intentToStartDetailActivity.putExtra(PUT_EXTRA_ALIMENTO, alimento.getText().toString());
         startActivity(intentToStartDetailActivity);
     }
@@ -912,7 +942,7 @@ public class DetailActivity extends AppCompatActivity {
 
     private void showEtapa(int etapa) {
 
-        if (etapa == 0) {
+        if (etapa == 1) {
             colocarEtapaInvisivel();
         }
 
@@ -1034,6 +1064,17 @@ public class DetailActivity extends AppCompatActivity {
         } catch (Exception e) {
             // TODO: handle exception
         }
+    }
+
+    public boolean verificaExiste(String texto){
+
+        if ((texto.indexOf(",") >= 0) || (texto.indexOf("/") >= 0)){
+            return  true;
+        }else{
+            return  false;
+        }
+
+
     }
 
 

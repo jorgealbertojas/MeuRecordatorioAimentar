@@ -61,7 +61,7 @@ public class GrauParentescoActivity extends AppCompatActivity {
         /**
          * Put Name Repositorie in  title.
          */
-        this.setTitle("Grau parentesco");
+        this.setTitle("Parentesco");
 
 
         /**
@@ -112,17 +112,47 @@ public class GrauParentescoActivity extends AppCompatActivity {
 
             grauParentesco = new GrauParentesco();
             grauParentesco.setId("1");
-            grauParentesco.setParentesco("Mãe");
+            grauParentesco.setParentesco("MAE");
             grauParentescoList.add(grauParentesco);
 
             grauParentesco = new GrauParentesco();
             grauParentesco.setId("2");
-            grauParentesco.setParentesco("Pai");
+            grauParentesco.setParentesco("PAI");
             grauParentescoList.add(grauParentesco);
 
             grauParentesco = new GrauParentesco();
             grauParentesco.setId("3");
-            grauParentesco.setParentesco("Tia");
+            grauParentesco.setParentesco("MADRASTA");
+            grauParentescoList.add(grauParentesco);
+
+            grauParentesco = new GrauParentesco();
+            grauParentesco.setId("4");
+            grauParentesco.setParentesco("PADRASTO");
+            grauParentescoList.add(grauParentesco);
+
+            grauParentesco = new GrauParentesco();
+            grauParentesco.setId("5");
+            grauParentesco.setParentesco("TIO(A)");
+            grauParentescoList.add(grauParentesco);
+
+            grauParentesco = new GrauParentesco();
+            grauParentesco.setId("6");
+            grauParentesco.setParentesco("AVO");
+            grauParentescoList.add(grauParentesco);
+
+            grauParentesco = new GrauParentesco();
+            grauParentesco.setId("7");
+            grauParentesco.setParentesco("BISAVO");
+            grauParentescoList.add(grauParentesco);
+
+            grauParentesco = new GrauParentesco();
+            grauParentesco.setId("8");
+            grauParentesco.setParentesco("IRMAO (IRMA)");
+            grauParentescoList.add(grauParentesco);
+
+            grauParentesco = new GrauParentesco();
+            grauParentesco.setId("9");
+            grauParentesco.setParentesco("OUTRO PARENTE");
             grauParentescoList.add(grauParentesco);
 
             mDataBase = new DataBase(getApplicationContext());

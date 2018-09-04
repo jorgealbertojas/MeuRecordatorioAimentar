@@ -20,6 +20,7 @@ import java.util.List;
 
 import static com.example.jorge.meurecordatorio.MainActivity.PUT_EXTRA_ALIMENTO;
 import static com.example.jorge.meurecordatorio.MainActivity.PUT_EXTRA_ENTREVISTADO;
+import static com.example.jorge.meurecordatorio.MainActivity.PUT_EXTRA_ENTREVISTADO_NOME;
 
 public class LocalActivity extends AppCompatActivity {
 

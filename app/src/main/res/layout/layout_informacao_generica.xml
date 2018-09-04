@@ -22,7 +22,7 @@
         android:lines="3"
         android:layout_marginRight="10dp"
         android:layout_marginLeft="10dp"
-        android:textAlignment="center"
+        android:textAlignment="textStart"
         android:textSize="20sp"
         android:gravity="center"
         android:layout_gravity="center"

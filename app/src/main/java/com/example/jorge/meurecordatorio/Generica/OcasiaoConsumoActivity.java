@@ -47,7 +47,7 @@ public class OcasiaoConsumoActivity extends AppCompatActivity {
         /**
          * Put Name Repositorie in  title.
          */
-        this.setTitle("Tipo de refeição");
+        this.setTitle("Em que refeição " + mName + " comeu ou bebeu este alimento?");
 
 
         /**
