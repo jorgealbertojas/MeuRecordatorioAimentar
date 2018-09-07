@@ -173,12 +173,12 @@ public class MainActivity extends AppCompatActivity {
 
 
 
-      //  CrunchifyJSONFileWrite CrunchifyJSONFileWrite = new CrunchifyJSONFileWrite();
-      //  try {
-      //      CrunchifyJSONFileWrite.main();
-      //  } catch (IOException e) {
-      //      e.printStackTrace();
-      //  }
+     //   CrunchifyJSONFileWrite CrunchifyJSONFileWrite = new CrunchifyJSONFileWrite();
+     //   try {
+    //        CrunchifyJSONFileWrite.main(this);
+     //   } catch (IOException e) {
+    //        e.printStackTrace();
+    //   }
 
         proximo = (ImageView) findViewById(R.id.proximo);
         anterior = (ImageView) findViewById(R.id.anterior);
@@ -188,10 +188,10 @@ public class MainActivity extends AppCompatActivity {
 
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT) {
             // BEBETO
-          //  if (!getEntrevistador()){
-          //      Toast.makeText(this, "ATENÇÃO! ESTE SISTEMA SÓ PODE SER CHAMADO PELO SISTEMA DE PESQUISA CSPRO" , Toast.LENGTH_LONG).show();
-          //      this.finish();
-         //   }
+           if (!getEntrevistador()){
+                Toast.makeText(this, "ATENÇÃO! ESTE SISTEMA SÓ PODE SER CHAMADO PELO SISTEMA DE PESQUISA CSPRO" , Toast.LENGTH_LONG).show();
+                this.finish();
+            }
         }
 
         imagepiscar = (ImageView) findViewById(R.id.image);
@@ -412,14 +412,15 @@ public class MainActivity extends AppCompatActivity {
             mDataBase = new DataBase(this);
             mDb = mDataBase.getReadableDatabase();
             DbInstance.getInstance(this);
+            // bebeto
             Entrar();
 
             // BEBETO
-            if(savedInstanceState == null){
-                Intent WSActivity = new Intent(this, LoginActivity.class);
-                startActivity(WSActivity);
+           // if(savedInstanceState == null){
+             //   Intent WSActivity = new Intent(this, LoginActivity.class);
+               // startActivity(WSActivity);
 
-            }
+            //}
 
         }
 

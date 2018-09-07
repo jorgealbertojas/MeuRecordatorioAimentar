@@ -19,9 +19,9 @@ InterfaceUnidadeAlimento3 {
     @Headers({
             "Cache-Control: cache",
             "Ocp-Apim-Trace: true",
-            "Ocp-Apim-Subscription-Key: e701a890f3754280bc3adc8af66019e0"
+            "Ocp-Apim-Subscription-Key: 5330411f96544e78b4c44df85f44f5e4"
     })
    // @GET("/questions")
-    @GET("/recordatorio/unidadeunidade3")
+    @GET("/unidadeunidade3")
     Call<ListWrapper<UnidadeAlimento>> getUniadeAliemnto() ;
 }

@@ -1,10 +1,25 @@
 package com.example.jorge.meurecordatorio.Utilite;
 
 import android.annotation.TargetApi;
+import android.content.Context;
+import android.database.sqlite.SQLiteDatabase;
 import android.os.Build;
 import android.os.Environment;
 import android.support.annotation.RequiresApi;
 import android.util.Log;
+
+import com.example.jorge.meurecordatorio.ConfiguracaoActivity;
+import com.example.jorge.meurecordatorio.Model.Adicao;
+import com.example.jorge.meurecordatorio.Model.AdicaoAlimento;
+import com.example.jorge.meurecordatorio.Model.Alimento;
+import com.example.jorge.meurecordatorio.Model.Local;
+import com.example.jorge.meurecordatorio.Model.OcasiaoConsumo;
+import com.example.jorge.meurecordatorio.Model.Preparacao;
+import com.example.jorge.meurecordatorio.Model.PreparacaoAlimento;
+import com.example.jorge.meurecordatorio.Model.Unidade;
+import com.example.jorge.meurecordatorio.Model.UnidadeAlimento;
+import com.example.jorge.meurecordatorio.PersistentData.DataBase;
+import com.example.jorge.meurecordatorio.PersistentData.DbInstance;
 
 import java.io.BufferedReader;
 import java.io.File;
@@ -13,6 +28,8 @@ import java.io.FileWriter;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
+import java.util.ArrayList;
+import java.util.List;
 
 import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
@@ -24,23 +41,28 @@ import static com.example.jorge.meurecordatorio.Utilite.Modulo.storage;
  */
 
 public class CrunchifyJSONFileWrite {
-    @TargetApi(Build.VERSION_CODES.KITKAT)
+
     @SuppressWarnings("unchecked")
 
+    static Context mContext;
+    static SQLiteDatabase mDb;
+    static DataBase mDataBase;
 
+    @TargetApi(Build.VERSION_CODES.KITKAT)
+    public static void main(Context context) throws IOException {
+        mContext = context;
 
-    public static void main() throws IOException {
-        arquivo_Txt_alimento("alimentos");
+      //  arquivo_Txt_alimento("alimentos");
        // arquivo_Txt_adicao("adicao");
       //  arquivo_Txt_adicao_adicao("adicao_adicao");
-      //  arquivo_Txt_entrevistado("entrevistado");
-      //  arquivo_Txt_local("local");
-      //  arquivo_Txt_ocasiao_consumo("ocasiao_consumo");
+       // arquivo_Txt_entrevistado("entrevistado");
+        arquivo_Txt_local("local");
+        arquivo_Txt_ocasiao_consumo("ocasiao_consumo");
       //  arquivo_Txt_preparacao("preparacao");
-     //   arquivo_Txt_preparacao_preparacao("preparacao_preparacao");
+       // arquivo_Txt_preparacao_preparacao("preparacao_preparacao");
       //  arquivo_Txt_unidade("unidade");
-     //   arquivo_Txt_unidade_unidade("unidade_unidade");
-     //   arquivo_Txt_usuario("usuario");
+       // arquivo_Txt_unidade_unidade("unidade_unidade");
+      //  arquivo_Txt_usuario("usuario");
 
 
     }
@@ -48,6 +70,12 @@ public class CrunchifyJSONFileWrite {
 
     @RequiresApi(api = Build.VERSION_CODES.KITKAT)
     public static void arquivo_Txt_alimento(String nomearquivo){
+
+
+
+        mDataBase = new DataBase(mContext);
+        mDb = mDataBase.getReadableDatabase();
+        DbInstance.getInstance(mContext);
 
             StringBuilder text = new StringBuilder();
             try {
@@ -59,6 +87,8 @@ public class CrunchifyJSONFileWrite {
 
                 JSONArray items = new JSONArray();
 
+                List<Alimento> data = new ArrayList<>();
+
                 while ((line = br.readLine()) != null) {
                     text.append(line);
 
@@ -69,12 +99,20 @@ public class CrunchifyJSONFileWrite {
                     obj.put("alimento_id", id);
                     obj.put("alimento", nome);
 
+                    Alimento alimento = new Alimento();
+                    alimento.setAlimento_id(id);
+                    alimento.setAlimento(nome);
+                    data.add(alimento);
+
                     items.add(obj);
 
 
                 }
 
-                escreveJson(items,nomearquivo);
+                mDataBase = new DataBase(mContext);
+                mDataBase.insertTABLE_ALIMENTO(data);
+
+               // escreveJson(items,nomearquivo);
                 br.close();
             } catch (IOException e) {
                 e.printStackTrace();
@@ -87,6 +125,11 @@ public class CrunchifyJSONFileWrite {
     @RequiresApi(api = Build.VERSION_CODES.KITKAT)
     public static void arquivo_Txt_adicao(String nomearquivo){
 
+        mDataBase = new DataBase(mContext);
+        mDb = mDataBase.getReadableDatabase();
+        DbInstance.getInstance(mContext);
+
+
         StringBuilder text = new StringBuilder();
         try {
 
@@ -96,6 +139,7 @@ public class CrunchifyJSONFileWrite {
             String line;
 
             JSONArray items = new JSONArray();
+            List<Adicao> data = new ArrayList<>();
 
             while ((line = br.readLine()) != null) {
                 text.append(line);
@@ -107,12 +151,20 @@ public class CrunchifyJSONFileWrite {
                 obj.put("adicao_id", id);
                 obj.put("adicao", nome);
 
+                Adicao adicao = new Adicao();
+                adicao.setAdicao_id(id);
+                adicao.setAdicao(nome);
+                data.add(adicao);
+
                 items.add(obj);
 
 
             }
 
-            escreveJson(items, nomearquivo );
+            mDataBase = new DataBase(mContext);
+            mDataBase.insertTABLE_ADICAO(data);
+
+            // escreveJson(items,nomearquivo);
             br.close();
         } catch (IOException e) {
             e.printStackTrace();
@@ -125,6 +177,10 @@ public class CrunchifyJSONFileWrite {
     @RequiresApi(api = Build.VERSION_CODES.KITKAT)
     public static void arquivo_Txt_adicao_adicao(String nomearquivo){
 
+        mDataBase = new DataBase(mContext);
+        mDb = mDataBase.getReadableDatabase();
+        DbInstance.getInstance(mContext);
+
         StringBuilder text = new StringBuilder();
         try {
 
@@ -134,7 +190,7 @@ public class CrunchifyJSONFileWrite {
             String line;
 
             JSONArray items = new JSONArray();
-
+            List<AdicaoAlimento> data = new ArrayList<>();
             while ((line = br.readLine()) != null) {
                 text.append(line);
 
@@ -146,12 +202,19 @@ public class CrunchifyJSONFileWrite {
                 obj.put("adicao_adicao_id", nome);
                 obj.put("adicao_alimento_id", id);
 
-                items.add(obj);
+                AdicaoAlimento adicaoAlimento = new AdicaoAlimento();
+                adicaoAlimento.setAdicao_alimento_id(id);
+                adicaoAlimento.setAdicao_adicao_id(nome);
+                data.add(adicaoAlimento);
+
+                //items.add(obj);
 
 
             }
 
-            escreveJson(items, nomearquivo);
+            mDataBase = new DataBase(mContext);
+            mDataBase.insertTABLE_ADICAO_ALIMENTO(data);
+            //escreveJson(items, nomearquivo);
             br.close();
         } catch (IOException e) {
             e.printStackTrace();
@@ -164,6 +227,10 @@ public class CrunchifyJSONFileWrite {
 
     @RequiresApi(api = Build.VERSION_CODES.KITKAT)
     public static void arquivo_Txt_entrevistado(String nomearquivo){
+
+        mDataBase = new DataBase(mContext);
+        mDb = mDataBase.getReadableDatabase();
+        DbInstance.getInstance(mContext);
 
         StringBuilder text = new StringBuilder();
         try {
@@ -203,6 +270,10 @@ public class CrunchifyJSONFileWrite {
     @RequiresApi(api = Build.VERSION_CODES.KITKAT)
     public static void arquivo_Txt_local(String nomearquivo){
 
+        mDataBase = new DataBase(mContext);
+        mDb = mDataBase.getReadableDatabase();
+        DbInstance.getInstance(mContext);
+
         StringBuilder text = new StringBuilder();
         try {
 
@@ -212,7 +283,7 @@ public class CrunchifyJSONFileWrite {
             String line;
 
             JSONArray items = new JSONArray();
-
+            List<Local> data = new ArrayList<>();
             while ((line = br.readLine()) != null) {
                 text.append(line);
 
@@ -223,12 +294,19 @@ public class CrunchifyJSONFileWrite {
                 obj.put("local_id", id);
                 obj.put("local_id", nome);
 
-                items.add(obj);
+                Local local = new Local();
+                local.setLocal_id(id);
+                local.setLocal(nome);
+                data.add(local);
+
+                //items.add(obj);
 
 
             }
 
-            escreveJson(items, nomearquivo);
+            mDataBase = new DataBase(mContext);
+            mDataBase.insertTABLE_LOCAL(data);
+            //escreveJson(items, nomearquivo);
             br.close();
         } catch (IOException e) {
             e.printStackTrace();
@@ -240,6 +318,10 @@ public class CrunchifyJSONFileWrite {
     @RequiresApi(api = Build.VERSION_CODES.KITKAT)
     public static void arquivo_Txt_ocasiao_consumo(String nomearquivo){
 
+        mDataBase = new DataBase(mContext);
+        mDb = mDataBase.getReadableDatabase();
+        DbInstance.getInstance(mContext);
+
         StringBuilder text = new StringBuilder();
         try {
 
@@ -249,7 +331,7 @@ public class CrunchifyJSONFileWrite {
             String line;
 
             JSONArray items = new JSONArray();
-
+            List<OcasiaoConsumo> data = new ArrayList<>();
             while ((line = br.readLine()) != null) {
                 text.append(line);
 
@@ -260,12 +342,19 @@ public class CrunchifyJSONFileWrite {
                 obj.put("ocasiao_consumo_id", id);
                 obj.put("ocasiao_consumo", nome);
 
-                items.add(obj);
+                OcasiaoConsumo ocasiaoConsumo = new OcasiaoConsumo();
+                ocasiaoConsumo.setOcasiao_consumo_id(id);
+                ocasiaoConsumo.setOcasiao_consumo(nome);
+                data.add(ocasiaoConsumo);
+
+                //items.add(obj);
 
 
             }
 
-            escreveJson(items, nomearquivo);
+            mDataBase = new DataBase(mContext);
+            mDataBase.insertTABLE_OCASIAO_CONSUMO(data);
+            //escreveJson(items, nomearquivo);
             br.close();
         } catch (IOException e) {
             e.printStackTrace();
@@ -277,6 +366,10 @@ public class CrunchifyJSONFileWrite {
     @RequiresApi(api = Build.VERSION_CODES.KITKAT)
     public static void arquivo_Txt_preparacao(String nomearquivo){
 
+        mDataBase = new DataBase(mContext);
+        mDb = mDataBase.getReadableDatabase();
+        DbInstance.getInstance(mContext);
+
         StringBuilder text = new StringBuilder();
         try {
 
@@ -286,7 +379,7 @@ public class CrunchifyJSONFileWrite {
             String line;
 
             JSONArray items = new JSONArray();
-
+            List<Preparacao> data = new ArrayList<>();
             while ((line = br.readLine()) != null) {
                 text.append(line);
 
@@ -297,12 +390,19 @@ public class CrunchifyJSONFileWrite {
                 obj.put("preparacao_id", id);
                 obj.put("preparacao", nome);
 
-                items.add(obj);
+                Preparacao preparacao = new Preparacao();
+                preparacao.setPreparacao_id(id);
+                preparacao.setPreparacao(nome);
+                data.add(preparacao);
+
+                //items.add(obj);
 
 
             }
 
-            escreveJson(items, nomearquivo);
+            mDataBase = new DataBase(mContext);
+            mDataBase.insertTABLE_PREPARACAO(data);
+            //escreveJson(items, nomearquivo);
             br.close();
         } catch (IOException e) {
             e.printStackTrace();
@@ -314,6 +414,10 @@ public class CrunchifyJSONFileWrite {
     @RequiresApi(api = Build.VERSION_CODES.KITKAT)
     public static void arquivo_Txt_preparacao_preparacao(String nomearquivo){
 
+        mDataBase = new DataBase(mContext);
+        mDb = mDataBase.getReadableDatabase();
+        DbInstance.getInstance(mContext);
+
         StringBuilder text = new StringBuilder();
         try {
 
@@ -323,7 +427,7 @@ public class CrunchifyJSONFileWrite {
             String line;
 
             JSONArray items = new JSONArray();
-
+            List<PreparacaoAlimento> data = new ArrayList<>();
             while ((line = br.readLine()) != null) {
                 text.append(line);
 
@@ -334,12 +438,19 @@ public class CrunchifyJSONFileWrite {
                 obj.put("preparacao_preparacao_id", nome);
                 obj.put("preparacao_alimento_id", id);
 
-                items.add(obj);
+                PreparacaoAlimento preparacaoAlimento = new PreparacaoAlimento();
+                preparacaoAlimento.setPreparacao_alimento_id(id);
+                preparacaoAlimento.setPreparacao_preparacao_id(nome);
+                data.add(preparacaoAlimento);
+
+                //items.add(obj);
 
 
             }
 
-            escreveJson(items, nomearquivo);
+            mDataBase = new DataBase(mContext);
+            mDataBase.insertTABLE_PREPARACAO_ALIMENTO(data);
+            //escreveJson(items, nomearquivo);
             br.close();
         } catch (IOException e) {
             e.printStackTrace();
@@ -351,6 +462,10 @@ public class CrunchifyJSONFileWrite {
     @RequiresApi(api = Build.VERSION_CODES.KITKAT)
     public static void arquivo_Txt_unidade(String nomearquivo){
 
+        mDataBase = new DataBase(mContext);
+        mDb = mDataBase.getReadableDatabase();
+        DbInstance.getInstance(mContext);
+
         StringBuilder text = new StringBuilder();
         try {
 
@@ -360,7 +475,7 @@ public class CrunchifyJSONFileWrite {
             String line;
 
             JSONArray items = new JSONArray();
-
+            List<Unidade> data = new ArrayList<>();
             while ((line = br.readLine()) != null) {
                 text.append(line);
 
@@ -371,12 +486,19 @@ public class CrunchifyJSONFileWrite {
                 obj.put("unidade_id", id);
                 obj.put("unidade", nome);
 
-                items.add(obj);
+                Unidade unidade = new Unidade();
+                unidade.setUnidade_id(id);
+                unidade.setUnidade(nome);
+                data.add(unidade);
+
+                //items.add(obj);
 
 
             }
 
-            escreveJson(items, nomearquivo);
+            mDataBase = new DataBase(mContext);
+            mDataBase.insertTABLE_UNIDADE(data);
+            //escreveJson(items, nomearquivo);
             br.close();
         } catch (IOException e) {
             e.printStackTrace();
@@ -388,6 +510,10 @@ public class CrunchifyJSONFileWrite {
     @RequiresApi(api = Build.VERSION_CODES.KITKAT)
     public static void arquivo_Txt_unidade_unidade(String nomearquivo){
 
+        mDataBase = new DataBase(mContext);
+        mDb = mDataBase.getReadableDatabase();
+        DbInstance.getInstance(mContext);
+
         StringBuilder text = new StringBuilder();
         try {
 
@@ -397,7 +523,7 @@ public class CrunchifyJSONFileWrite {
             String line;
 
             JSONArray items = new JSONArray();
-
+            List<UnidadeAlimento> data = new ArrayList<>();
             while ((line = br.readLine()) != null) {
                 text.append(line);
 
@@ -408,12 +534,19 @@ public class CrunchifyJSONFileWrite {
                 obj.put("unidade_unidade_id", nome);
                 obj.put("unidade_alimento_id", id);
 
-                items.add(obj);
+                UnidadeAlimento unidadeAlimento = new UnidadeAlimento();
+                unidadeAlimento.setUnidade_alimento_id(id);
+                unidadeAlimento.setUnidade_unidade_id(nome);
+                data.add(unidadeAlimento);
+
+                //items.add(obj);
 
 
             }
 
-            escreveJson(items, nomearquivo);
+            mDataBase = new DataBase(mContext);
+            mDataBase.insertTABLE_UNIDADE_ALIMENTO(data);
+            //escreveJson(items, nomearquivo);
             br.close();
         } catch (IOException e) {
             e.printStackTrace();
@@ -424,6 +557,10 @@ public class CrunchifyJSONFileWrite {
     }
     @RequiresApi(api = Build.VERSION_CODES.KITKAT)
     public static void arquivo_Txt_usuario(String nomearquivo){
+
+        mDataBase = new DataBase(mContext);
+        mDb = mDataBase.getReadableDatabase();
+        DbInstance.getInstance(mContext);
 
         StringBuilder text = new StringBuilder();
         try {
