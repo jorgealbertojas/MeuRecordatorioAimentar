@@ -10,6 +10,7 @@ import android.support.v7.widget.RecyclerView;
 import android.text.Editable;
 import android.text.TextWatcher;
 import android.widget.EditText;
+import android.widget.TextView;
 
 import com.example.jorge.meurecordatorio.Adapter.AdicaoAdapter;
 import com.example.jorge.meurecordatorio.Adapter.GrauParentescoAdapter;

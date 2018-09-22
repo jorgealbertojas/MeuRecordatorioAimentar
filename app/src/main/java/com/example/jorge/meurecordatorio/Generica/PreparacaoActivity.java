@@ -8,6 +8,7 @@ import android.support.v7.widget.RecyclerView;
 import android.text.Editable;
 import android.text.TextWatcher;
 import android.widget.EditText;
+import android.widget.TextView;
 
 import com.example.jorge.meurecordatorio.Adapter.PreparacaoAdapter;
 import com.example.jorge.meurecordatorio.Adapter.UnidadeAdapter;
@@ -31,6 +32,8 @@ public class PreparacaoActivity extends AppCompatActivity {
 
     String mName;
     String mAlimento;
+
+    private TextView title2;
 
     public List<Preparacao> dataPersistent = null;
 

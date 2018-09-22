@@ -19,6 +19,7 @@ import com.example.jorge.meurecordatorio.Model.PreparacaoAlimento;
 import com.example.jorge.meurecordatorio.Model.Unidade;
 import com.example.jorge.meurecordatorio.Model.UnidadeAlimento;
 import com.example.jorge.meurecordatorio.PersistentData.DataBase;
+import com.example.jorge.meurecordatorio.PersistentData.DbCreate;
 import com.example.jorge.meurecordatorio.PersistentData.DbInstance;
 
 import java.io.BufferedReader;
@@ -34,6 +35,7 @@ import java.util.List;
 import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
 
+import static com.example.jorge.meurecordatorio.PersistentData.Field.FIELD_ALIMENTACAO_ID;
 import static com.example.jorge.meurecordatorio.Utilite.Modulo.storage;
 
 /**
@@ -56,7 +58,7 @@ public class CrunchifyJSONFileWrite {
        // arquivo_Txt_adicao("adicao");
       //  arquivo_Txt_adicao_adicao("adicao_adicao");
        // arquivo_Txt_entrevistado("entrevistado");
-        arquivo_Txt_local("local");
+        //arquivo_Txt_local("local");
         arquivo_Txt_ocasiao_consumo("ocasiao_consumo");
       //  arquivo_Txt_preparacao("preparacao");
        // arquivo_Txt_preparacao_preparacao("preparacao_preparacao");
@@ -75,6 +77,7 @@ public class CrunchifyJSONFileWrite {
 
         mDataBase = new DataBase(mContext);
         mDb = mDataBase.getReadableDatabase();
+
         DbInstance.getInstance(mContext);
 
             StringBuilder text = new StringBuilder();
@@ -320,6 +323,7 @@ public class CrunchifyJSONFileWrite {
 
         mDataBase = new DataBase(mContext);
         mDb = mDataBase.getReadableDatabase();
+        mDb.execSQL(" DELETE FROM " + DbCreate.TABLE_OCASIAO_CONSUMO);
         DbInstance.getInstance(mContext);
 
         StringBuilder text = new StringBuilder();

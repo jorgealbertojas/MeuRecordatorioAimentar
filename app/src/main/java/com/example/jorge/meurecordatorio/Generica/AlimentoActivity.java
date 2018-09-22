@@ -43,6 +43,8 @@ public class AlimentoActivity extends AppCompatActivity {
 
     String mName;
 
+    private TextView title2;
+
     private static CheckBox checkBoxColetados;
 
     @Override
@@ -145,6 +147,8 @@ public class AlimentoActivity extends AppCompatActivity {
          * Put Name Repositorie in  title.
          */
         this.setTitle("Alimento");
+        title2 = findViewById(R.id.title2);
+        title2.setTextSize(0);
 
 
         /**

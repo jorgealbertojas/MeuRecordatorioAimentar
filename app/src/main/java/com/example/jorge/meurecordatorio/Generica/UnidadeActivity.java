@@ -1,5 +1,6 @@
 package com.example.jorge.meurecordatorio.Generica;
 
+import android.app.ActionBar;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
@@ -7,6 +8,7 @@ import android.support.v7.widget.RecyclerView;
 import android.text.Editable;
 import android.text.TextWatcher;
 import android.widget.EditText;
+import android.widget.TextView;
 
 import com.example.jorge.meurecordatorio.Adapter.AlimentoAdapter;
 import com.example.jorge.meurecordatorio.Adapter.UnidadeAdapter;
@@ -30,6 +32,8 @@ public class UnidadeActivity extends AppCompatActivity {
     String mName;
     String mAlimento;
 
+    private TextView title2;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -47,8 +51,9 @@ public class UnidadeActivity extends AppCompatActivity {
         /**
          * Put Name Repositorie in  title.
          */
-        this.setTitle("Qual a unidade que " + mName + " comeu ou bebeu este alimento?");
-
+        this.setTitle("Cadastro unidade");
+        title2 = findViewById(R.id.title2);
+        title2.setText("Qual a unidade que " + mName + " comeu ou bebeu este alimento?");
 
         /**
          * use RecyclerView for list the PullRequest .

@@ -403,9 +403,19 @@ public class ConfiguracaoActivity extends AppCompatActivity {
                 String USUARIO = getFormatodoComEspacoDireita(20, dataPersistent.get(i).getAlimentacao_usuario());
                 String OBS = getFormatodoComEspacoDireita(130, dataPersistent.get(i).getAlimentacao_obs());
                 String ESPESSURA = getFormatodoComEspacoDireita(20, dataPersistent.get(i).getAlimentacao_espessura());
+                String GRAU_PARENTESCO = getFormatodoComEspacoDireita(20, dataPersistent.get(i).getAlimentacao_grau_parentesco_id());
+
+                String DIA_ATIPICO = dataPersistent.get(i).getAlimentacao_dia_atico();
+                if (DIA_ATIPICO.equals("sim")){
+                    DIA_ATIPICO = "1";
+                }else{
+                    DIA_ATIPICO = "2";
+                }
 
 
-                String formatado = IDENTIFICADOR + ENTREVISTADO  + SEQUENCIAL_ALIMENTO + ID_RECORDATORIO + ID_ALIMENTO + ALIMENTO_NOVO + ALIMENTO_DESCRICAO + ID_PREPARACAO + ID_UNIDADE + ID_ADICAO + ID_LOCAL + ID_CONSUMO + QUANTIDADE + HORA + HORA_COLETA + DATA_COLETA + USUARIO + OBS + ESPESSURA + "\n";
+
+
+                String formatado = IDENTIFICADOR + ENTREVISTADO  + SEQUENCIAL_ALIMENTO + ID_RECORDATORIO + ID_ALIMENTO + ALIMENTO_NOVO + ALIMENTO_DESCRICAO + ID_PREPARACAO + ID_UNIDADE + ID_ADICAO + ID_LOCAL + ID_CONSUMO + QUANTIDADE + HORA + HORA_COLETA + DATA_COLETA + USUARIO + OBS + ESPESSURA + GRAU_PARENTESCO + DIA_ATIPICO + "\n";
 
 
                 outStreamWriter.append(formatado);

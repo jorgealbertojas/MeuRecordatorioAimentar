@@ -7,6 +7,7 @@ import android.support.v7.widget.RecyclerView;
 import android.text.Editable;
 import android.text.TextWatcher;
 import android.widget.EditText;
+import android.widget.TextView;
 
 import com.example.jorge.meurecordatorio.Adapter.LocalAdapter;
 import com.example.jorge.meurecordatorio.Adapter.UnidadeAdapter;
@@ -31,6 +32,8 @@ public class LocalActivity extends AppCompatActivity {
     String mName;
     String mAlimento;
 
+    private TextView title2;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -49,8 +52,9 @@ public class LocalActivity extends AppCompatActivity {
         /**
          * Put Name Repositorie in  title.
          */
-        this.setTitle("Onde " + mName + " comeu este alimento ou bebida?");
-
+        this.setTitle("Cadastro Local");
+        title2 = findViewById(R.id.title2);
+        title2.setText("Onde " + mName + " comeu este alimento ou bebida?");
 
         /**
          * use RecyclerView for list the PullRequest .

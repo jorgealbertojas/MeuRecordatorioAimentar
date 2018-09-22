@@ -2,6 +2,7 @@ package com.example.jorge.meurecordatorio;
 
 import android.app.AlertDialog;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
@@ -103,6 +104,9 @@ public class MainActivity extends AppCompatActivity {
     private SQLiteDatabase mDb;
     private DataBase mDataBase;
 
+    public int lastposition = 0;
+    private boolean voltando = false;
+
     public List<Alimentacao> dataPersistent = null;
 
     public final static String PUT_EXTRA_ENTREVISTADO = "PUT_EXTRA_ENTREVISTADO";
@@ -117,10 +121,13 @@ public class MainActivity extends AppCompatActivity {
     public final static String PUT_EXTRA_GRAU_PARENTESCO = "PUT_EXTRA_GRAU_PARENTESCO";
     public final static String PUT_EXTRA_GRAU_PARENTESCO_NOME = "PUT_EXTRA_GRAU_PARENTESCO_NOME";
     public final static String PUT_EXTRA_DIA_ATIPICO = "PUT_EXTRA_DIA_ATIPICO";
+    public final static String PUT_EXTRA_POSITION= "PUT_EXTRA_POSITION";
 
     public RecyclerView mRecyclerView;
     public RecyclerView mRecyclerViewCheck;
     public RecyclerView mRecyclerViewCheckCompleto;
+
+    public TextView frase;
 
     public static ViewPager mViewPager;
 
@@ -166,7 +173,7 @@ public class MainActivity extends AppCompatActivity {
 
         //carregarsuario_login();
 
-
+        frase = (TextView) findViewById(R.id.frase);
 
         grau_parentesco_hint = (TextView) findViewById(R.id.grau_parentesco_hint);
         diaatipico_hint = (TextView) findViewById(R.id.dia_atipico_hint);
@@ -222,6 +229,7 @@ public class MainActivity extends AppCompatActivity {
                     proximo.setVisibility(View.VISIBLE);
                     anterior_palavra.setVisibility(View.INVISIBLE);
                     proximo_palavra.setVisibility(View.VISIBLE);
+                    frase.setVisibility(View.GONE);
                 }
 
                 else if (position == 1) {
@@ -241,7 +249,7 @@ public class MainActivity extends AppCompatActivity {
                     mRecyclerView.setVisibility(View.VISIBLE);
                     mRecyclerViewCheck.setVisibility(View.GONE);
                     mRecyclerViewCheckCompleto.setVisibility(View.GONE);
-
+                    frase.setVisibility(View.GONE);
 
 
                 } else if (position == 2) {
@@ -263,6 +271,8 @@ public class MainActivity extends AppCompatActivity {
                     mRecyclerView.setVisibility(View.VISIBLE);
                     mRecyclerViewCheck.setVisibility(View.GONE);
                     mRecyclerViewCheckCompleto.setVisibility(View.GONE);
+
+                    frase.setVisibility(View.GONE);
 
 
 
@@ -287,6 +297,8 @@ public class MainActivity extends AppCompatActivity {
                     mRecyclerViewCheck.setVisibility(View.VISIBLE);
                     mRecyclerViewCheckCompleto.setVisibility(View.GONE);
 
+                    frase.setVisibility(View.GONE);
+
 
                 } else if (position == 4){
 
@@ -308,26 +320,51 @@ public class MainActivity extends AppCompatActivity {
                     mRecyclerView.setVisibility(View.GONE);
                     mRecyclerViewCheck.setVisibility(View.GONE);
                     mRecyclerViewCheckCompleto.setVisibility(View.VISIBLE);
+                    frase.setVisibility(View.VISIBLE);
 
 
-                    LayoutInflater factory = LayoutInflater.from(MainActivity.this);
-                    final View deleteDialogView = factory.inflate(
-                            R.layout.custom_dialog10, null);
-                    final AlertDialog deleteDialog1 = new AlertDialog.Builder(MainActivity.this).create();
-                    deleteDialog1.setView(deleteDialogView);
 
-                    TextView nTextView = (TextView) deleteDialogView.findViewById(R.id.txt_dia);
-                    nTextView.setText("ATENÇÃO!\n Confira se existe alimentos imcompletos");
+                    if (voltando) {
+                        LayoutInflater factory = LayoutInflater.from(MainActivity.this);
+                        final View deleteDialogView = factory.inflate(
+                                R.layout.custom_dialog10, null);
+                        final AlertDialog deleteDialog1 = new AlertDialog.Builder(MainActivity.this).create();
+                        deleteDialog1.setView(deleteDialogView);
 
-                    deleteDialogView.findViewById(R.id.btn_yes).setOnClickListener(new View.OnClickListener() {
+                        TextView nTextView = (TextView) deleteDialogView.findViewById(R.id.txt_dia);
+                        nTextView.setText("ATENÇÃO!\n Confira se existe alimentos imcompletos");
 
-                        @Override
-                        public void onClick(View v) {
-                            deleteDialog1.dismiss();
-                        }
-                    });
+                        deleteDialogView.findViewById(R.id.btn_yes).setOnClickListener(new View.OnClickListener() {
 
-                    deleteDialog1.show();
+                            @Override
+                            public void onClick(View v) {
+                                deleteDialog1.dismiss();
+                            }
+                        });
+
+                        deleteDialog1.show();
+
+
+                        LayoutInflater factory2 = LayoutInflater.from(MainActivity.this);
+                        final View deleteDialogView2 = factory2.inflate(
+                                R.layout.custom_dialog10, null);
+                        final AlertDialog deleteDialog2 = new AlertDialog.Builder(MainActivity.this).create();
+                        deleteDialog2.setView(deleteDialogView2);
+
+                        TextView nTextView2 = (TextView) deleteDialogView2.findViewById(R.id.txt_dia);
+                        nTextView2.setText("Agora vamos falar sobre os horários e tipos de refeição (como café da manhã, almoço, lanche, jantar etc)");
+
+                        deleteDialogView2.findViewById(R.id.btn_yes).setOnClickListener(new View.OnClickListener() {
+
+                            @Override
+                            public void onClick(View v) {
+                                deleteDialog2.dismiss();
+                            }
+                        });
+
+                        deleteDialog2.show();
+                    }
+
                 }else if (position == 5) {
 
                     diaAtipico.setVisibility(View.GONE);
@@ -349,26 +386,29 @@ public class MainActivity extends AppCompatActivity {
                     mRecyclerViewCheck.setVisibility(View.GONE);
                     mRecyclerViewCheckCompleto.setVisibility(View.GONE);
 
+                    frase.setVisibility(View.GONE);
 
 
-                    LayoutInflater factory = LayoutInflater.from(MainActivity.this);
-                    final View deleteDialogView = factory.inflate(
-                            R.layout.custom_dialog10, null);
-                    final AlertDialog deleteDialog1 = new AlertDialog.Builder(MainActivity.this).create();
-                    deleteDialog1.setView(deleteDialogView);
+                    if (voltando) {
+                        LayoutInflater factory = LayoutInflater.from(MainActivity.this);
+                        final View deleteDialogView = factory.inflate(
+                                R.layout.custom_dialog10, null);
+                        final AlertDialog deleteDialog1 = new AlertDialog.Builder(MainActivity.this).create();
+                        deleteDialog1.setView(deleteDialogView);
 
-                    TextView nTextView = (TextView) deleteDialogView.findViewById(R.id.txt_dia);
-                    nTextView.setText("Agora vou ler todos os alimentos, horários e refeições realizados por " + entrevistado_nome.getText() + " ontem, para que confirme se todas as informações foram registradas corretamente" );
+                        TextView nTextView = (TextView) deleteDialogView.findViewById(R.id.txt_dia);
+                        nTextView.setText("Agora vou ler todos os alimentos, horários e refeições realizados por " + entrevistado_nome.getText() + " ontem, para que confirme se todas as informações foram registradas corretamente");
 
-                    deleteDialogView.findViewById(R.id.btn_yes).setOnClickListener(new View.OnClickListener() {
+                        deleteDialogView.findViewById(R.id.btn_yes).setOnClickListener(new View.OnClickListener() {
 
-                        @Override
-                        public void onClick(View v) {
-                            deleteDialog1.dismiss();
-                        }
-                    });
+                            @Override
+                            public void onClick(View v) {
+                                deleteDialog1.dismiss();
+                            }
+                        });
 
-                    deleteDialog1.show();
+                        deleteDialog1.show();
+                    }
 
                     if (alimentacaoAdapter.estaFaltando){
                         imagepiscar.setVisibility(View.VISIBLE);
@@ -397,7 +437,12 @@ public class MainActivity extends AppCompatActivity {
 
             @Override
             public void onPageScrollStateChanged(int state) {
-
+                if (lastposition < mViewPager.getCurrentItem()){
+                    voltando = true;
+                }else{
+                    voltando = false;
+                }
+                lastposition = mViewPager.getCurrentItem();
             }
 
         });
@@ -497,7 +542,7 @@ public class MainActivity extends AppCompatActivity {
                         deleteDialog1.setView(deleteDialogView);
 
                         TextView nTextView = (TextView) deleteDialogView.findViewById(R.id.txt_dia);
-                        nTextView.setText("ATENÇÃO!\n Agora eu gostaria que você me dissesse tudo que " +  NOME + " comeu ou bebeu ontem, do momento em que acordou até a hora em que foi dormir. Caso " +  NOME + "  tenha acordado de madrugada, também gostaria de saber o que ele/ela comeu ou bebeu de madrugada.  Me informe também os horários em que a criança consumiu os alimentos e bebidas. Não se preocupe com a quantidade agora, pois falaremos dos detalhes depois.");
+                        nTextView.setText("ATENÇÃO!\n Agora eu gostaria que você me dissesse tudo que " +  NOME + " comeu ou bebeu ontem, do momento em que acordou até a hora em que foi dormir. Caso " +  NOME + "  tenha acordado de madrugada, também gostaria de saber o que ele/ela comeu ou bebeu de madrugada. Não se preocupe com horário e quantidade agora, pois falaremos dos detalhes depois.");
 
                         deleteDialogView.findViewById(R.id.btn_yes).setOnClickListener(new View.OnClickListener() {
 
@@ -873,6 +918,7 @@ public class MainActivity extends AppCompatActivity {
         } finally {
 
         }
+        //bebeto
             fileExist.delete();
             return true;
         }else{
@@ -941,15 +987,15 @@ public class MainActivity extends AppCompatActivity {
         public android.support.v4.app.Fragment getItem(int pos) {
             switch (pos) {
                 case 0:
-                    return FragmentViewPager.newInstance("Identificação","Arraste para o lado para ir para o próxima passo.", R.mipmap.ic_id, pos,USUARIO);
+                    return FragmentViewPager.newInstance("Identificação","Arraste para o lado esquerdo para ir ao Passo 1", R.mipmap.ic_id, pos,USUARIO);
                 case 1:
                     return FragmentViewPager.newInstance("Passo 1 - Listagem rápida de alimentos","Adicionar Alimento.", R.mipmap.food, pos,USUARIO);
                 case 2:
-                    return FragmentViewPager.newInstance("Passo 2 - Listagem de alimentos comumente esquecidos", "Clique no alimento abaixo para adicionar complemento.", R.mipmap.add,pos,USUARIO);
+                    return FragmentViewPager.newInstance("Passo 2 - Listagem de alimentos comumente esquecidos", "Arraste para o lado esquerdo para ir ao Passo 3.", R.mipmap.add,pos,USUARIO);
                 case 3:
-                    return FragmentViewPager.newInstance("Passo 3 - Definição do Horário e Refeição", "Atenção! Caso tenha alimento abaixo clique para completar.",  R.mipmap.check, pos,USUARIO);
+                    return FragmentViewPager.newInstance("Passo 3 - Definição do Horário e Refeição", "Clique nos alimentos para definir horário e refeição",  R.mipmap.check, pos,USUARIO);
                 case 4:
-                    return FragmentViewPager.newInstance("Passo 4 - Ciclo de detalhamento e Revisão", "Confira se faltou algum alimento.",  R.mipmap.report, pos,USUARIO);
+                    return FragmentViewPager.newInstance("Passo 4 - Revisão do ciclo de detalhamento", "Clique nos alimentos para fazer o detalhamento",  R.mipmap.report, pos,USUARIO);
                 default:
                     return FragmentViewPager.newInstance("Passo 5 - Revisão Final", "Finalizar entrevista",  R.mipmap.finish, pos,USUARIO);
             }
@@ -959,6 +1005,33 @@ public class MainActivity extends AppCompatActivity {
         public int getCount() {
             return 6;
         }
+    }
+
+    @Override
+    public void onBackPressed() {
+        AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(this);
+        alertDialogBuilder.setTitle("Recordátorio 24h.");
+        alertDialogBuilder
+                .setMessage("Deseja sair do programa?")
+                .setCancelable(false)
+                .setPositiveButton("Sim",
+                        new DialogInterface.OnClickListener() {
+                            public void onClick(DialogInterface dialog, int id) {
+                                moveTaskToBack(true);
+                                android.os.Process.killProcess(android.os.Process.myPid());
+                                System.exit(1);
+                            }
+                        })
+
+                .setNegativeButton("Não", new DialogInterface.OnClickListener() {
+                    public void onClick(DialogInterface dialog, int id) {
+
+                        dialog.cancel();
+                    }
+                });
+
+        AlertDialog alertDialog = alertDialogBuilder.create();
+        alertDialog.show();
     }
 
 }

@@ -10,6 +10,7 @@ import android.view.View;
 import android.widget.CheckBox;
 import android.widget.CompoundButton;
 import android.widget.EditText;
+import android.widget.TextView;
 
 import com.example.jorge.meurecordatorio.Adapter.AlimentoAdapter;
 import com.example.jorge.meurecordatorio.Adapter.EntrevistadoAdapter;
@@ -35,6 +36,8 @@ public class EntrevistadoActivity extends AppCompatActivity {
 
     private static CheckBox checkBoxColetados;
 
+    private TextView title2;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -50,6 +53,8 @@ public class EntrevistadoActivity extends AppCompatActivity {
          * Put Name Repositorie in  title.
          */
         this.setTitle("Entrevistador");
+        title2 = findViewById(R.id.title2);
+        title2.setTextSize(0);
 
         checkBoxColetados = (CheckBox) findViewById(R.id.checkBoxColetados);
         checkBoxColetados.setVisibility(View.VISIBLE);

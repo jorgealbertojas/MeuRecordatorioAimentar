@@ -57,6 +57,7 @@ import static com.example.jorge.meurecordatorio.MainActivity.PUT_EXTRA_ENTREVIST
 import static com.example.jorge.meurecordatorio.MainActivity.PUT_EXTRA_ETAPA;
 import static com.example.jorge.meurecordatorio.MainActivity.PUT_EXTRA_GRAU_PARENTESCO;
 import static com.example.jorge.meurecordatorio.MainActivity.PUT_EXTRA_GRAU_PARENTESCO_NOME;
+import static com.example.jorge.meurecordatorio.MainActivity.PUT_EXTRA_POSITION;
 import static com.example.jorge.meurecordatorio.MainActivity.PUT_EXTRA_USUARIO;
 import static com.example.jorge.meurecordatorio.Utilite.Modulo.NAO_SE_APLICA;
 
@@ -71,6 +72,8 @@ public class DetailActivity extends AppCompatActivity {
     String mEntrevistado;
     String mEntrevistadoNome;
     String mUsuario;
+
+    private static int lastposition = 0;
 
     TextView entrevistado;
 
@@ -173,6 +176,8 @@ public class DetailActivity extends AppCompatActivity {
         grau_parentesco = extras.getString(PUT_EXTRA_GRAU_PARENTESCO);
         grau_parentesco_nome = extras.getString(PUT_EXTRA_GRAU_PARENTESCO_NOME);
         diaAtipico = extras.getString(PUT_EXTRA_DIA_ATIPICO);
+
+        lastposition = extras.getInt(PUT_EXTRA_POSITION);
 
 
         Bundle bundle = getIntent().getBundleExtra(PUT_EXTRA_ALIMENTACAO);
@@ -738,6 +743,16 @@ public class DetailActivity extends AppCompatActivity {
         tvHoraColeta.setText(horacompleta);
     }
 
+
+        if (lastposition == 3){
+            colocarEtapaInvisivel();
+            ocasiaoConsumo.setVisibility(View.VISIBLE);
+            ocasiaoConsumo_nome.setVisibility(View.VISIBLE);
+            ocasiaoConsumoHINT.setVisibility(View.VISIBLE);
+
+
+        }
+
     showEtapa( mEtapa);
 
 
@@ -880,7 +895,7 @@ public class DetailActivity extends AppCompatActivity {
     private void showAlimento(){
         Class destinationClass = AlimentoActivity.class;
         Intent intentToStartDetailActivity = new Intent(getBaseContext(), destinationClass);
-        intentToStartDetailActivity.putExtra(PUT_EXTRA_ENTREVISTADO, mEntrevistado);
+        intentToStartDetailActivity.putExtra(PUT_EXTRA_ENTREVISTADO, mEntrevistadoNome);
         startActivity(intentToStartDetailActivity);
     }
 
@@ -900,7 +915,7 @@ public class DetailActivity extends AppCompatActivity {
     private void showPreparacao(){
         Class destinationClass = PreparacaoActivity.class;
         Intent intentToStartDetailActivity = new Intent(getBaseContext(), destinationClass);
-        intentToStartDetailActivity.putExtra(PUT_EXTRA_ENTREVISTADO, mEntrevistado);
+        intentToStartDetailActivity.putExtra(PUT_EXTRA_ENTREVISTADO, mEntrevistadoNome);
         if ((novoAliemnto!= null) && novoAliemnto.equals("1")) {
             intentToStartDetailActivity.putExtra(PUT_EXTRA_ALIMENTO, "S");
         }else {
@@ -912,7 +927,7 @@ public class DetailActivity extends AppCompatActivity {
     private void showAdicao(){
         Class destinationClass = AdicaoActivity.class;
         Intent intentToStartDetailActivity = new Intent(getBaseContext(), destinationClass);
-        intentToStartDetailActivity.putExtra(PUT_EXTRA_ENTREVISTADO, mEntrevistado);
+        intentToStartDetailActivity.putExtra(PUT_EXTRA_ENTREVISTADO, mEntrevistadoNome);
         if ((novoAliemnto!= null) && novoAliemnto.equals("1")) {
             intentToStartDetailActivity.putExtra(PUT_EXTRA_ALIMENTO, "S");
         }else {
@@ -924,7 +939,7 @@ public class DetailActivity extends AppCompatActivity {
     private void showOcasiaoConsumo(){
         Class destinationClass = OcasiaoConsumoActivity.class;
         Intent intentToStartDetailActivity = new Intent(getBaseContext(), destinationClass);
-        intentToStartDetailActivity.putExtra(PUT_EXTRA_ENTREVISTADO, mEntrevistado);
+        intentToStartDetailActivity.putExtra(PUT_EXTRA_ENTREVISTADO, mEntrevistadoNome);
         intentToStartDetailActivity.putExtra(PUT_EXTRA_ALIMENTO, alimento.getText().toString());
         startActivity(intentToStartDetailActivity);
     }
@@ -1019,14 +1034,14 @@ public class DetailActivity extends AppCompatActivity {
         checkboxs = new ArrayList<CheckBox>();
 
         for (int i = 0; i < list.size(); i++) {
-            LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(ActionBar.LayoutParams.FILL_PARENT, ActionBar.LayoutParams.WRAP_CONTENT);
+            LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(ActionBar.LayoutParams.MATCH_PARENT, ActionBar.LayoutParams.WRAP_CONTENT);
 
             CheckBox checkbox = new CheckBox(this);
             checkbox.setText(list.get(i).toString());
             checkbox.setTypeface(null, Typeface.NORMAL);
             checkbox.setTextColor(getResources().getColor(R.color.colorWhite));
 
-            checkbox.setTextSize(TypedValue.COMPLEX_UNIT_SP, 10);
+            checkbox.setTextSize(TypedValue.COMPLEX_UNIT_SP, 16);
 
 
             ((InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE))

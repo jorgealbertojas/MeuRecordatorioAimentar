@@ -351,7 +351,7 @@ public class FragmentViewPager extends android.support.v4.app.Fragment {
                                                     deleteDialog.setView(deleteDialogView);
 
                                                     TextView nTextView = (TextView) deleteDialogView.findViewById(R.id.txt_dia);
-                                                    nTextView.setText("ATENÇÃO! Depois de encerrar não poderá mais adicionar alimentos para esses entrevistados! Tem certeza que deseja encerrar?");
+                                                    nTextView.setText("Atenção: depois de encerrar, não poderá mais adicionar alimentos para esta criança. Tem certeza que deseja encerrar?");
 
                                                     deleteDialogView.findViewById(R.id.btn_yes).setOnClickListener(new View.OnClickListener() {
 
@@ -505,10 +505,20 @@ public class FragmentViewPager extends android.support.v4.app.Fragment {
                 String DATA_COLETA = getFormatodoComEspaco(8, formatarData(dataPersistent.get(i).getAlimentacao_dia_coleta()));
                 String USUARIO = getFormatodoComEspacoDireita(20, dataPersistent.get(i).getAlimentacao_usuario());
                 String OBS = getFormatodoComEspacoDireita(130, dataPersistent.get(i).getAlimentacao_obs());
+
                 String ESPESSURA = getFormatodoComEspacoDireita(20, dataPersistent.get(i).getAlimentacao_espessura());
+                String GRAU_PARENTESCO = getFormatodoComEspacoDireita(20, dataPersistent.get(i).getAlimentacao_grau_parentesco_id());
+
+                String DIA_ATIPICO = dataPersistent.get(i).getAlimentacao_dia_atico();
+                if (DIA_ATIPICO.equals("SIM")){
+                    DIA_ATIPICO = "1";
+                }else{
+                    DIA_ATIPICO = "2";
+                }
 
 
-                String formatado = IDENTIFICADOR + ENTREVISTADO  + SEQUENCIAL_ALIMENTO + ID_RECORDATORIO + ID_ALIMENTO + ALIMENTO_NOVO + ALIMENTO_DESCRICAO + ID_PREPARACAO + ID_UNIDADE + ID_ADICAO + ID_LOCAL + ID_CONSUMO + QUANTIDADE + HORA + HORA_COLETA + DATA_COLETA + USUARIO + OBS + ESPESSURA + "\n";
+
+                String formatado = IDENTIFICADOR + ENTREVISTADO  + SEQUENCIAL_ALIMENTO + ID_RECORDATORIO + ID_ALIMENTO + ALIMENTO_NOVO + ALIMENTO_DESCRICAO + ID_PREPARACAO + ID_UNIDADE + ID_ADICAO + ID_LOCAL + ID_CONSUMO + QUANTIDADE + HORA + HORA_COLETA + DATA_COLETA + USUARIO + OBS + ESPESSURA + GRAU_PARENTESCO + DIA_ATIPICO + "\n";
 
 
                 outStreamWriter.append(formatado);

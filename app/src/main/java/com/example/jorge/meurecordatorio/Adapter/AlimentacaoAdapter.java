@@ -36,6 +36,7 @@ import static com.example.jorge.meurecordatorio.MainActivity.PUT_EXTRA_ENTREVIST
 import static com.example.jorge.meurecordatorio.MainActivity.PUT_EXTRA_ETAPA;
 import static com.example.jorge.meurecordatorio.MainActivity.PUT_EXTRA_GRAU_PARENTESCO;
 import static com.example.jorge.meurecordatorio.MainActivity.PUT_EXTRA_GRAU_PARENTESCO_NOME;
+import static com.example.jorge.meurecordatorio.MainActivity.PUT_EXTRA_POSITION;
 import static com.example.jorge.meurecordatorio.MainActivity.PUT_EXTRA_USUARIO;
 
 /**
@@ -146,6 +147,7 @@ public class AlimentacaoAdapter extends RecyclerView.Adapter<AlimentacaoAdapter.
             intentToStartDetailActivity.putExtra(PUT_EXTRA_GRAU_PARENTESCO_NOME, ((MainActivity) mContext).grau_parentesco_nome.getText().toString());
             intentToStartDetailActivity.putExtra(PUT_EXTRA_GRAU_PARENTESCO, ((MainActivity) mContext).grauParentesco.getText().toString());
             intentToStartDetailActivity.putExtra(PUT_EXTRA_DIA_ATIPICO, ((MainActivity) mContext).diaAtipico.getText().toString());
+            intentToStartDetailActivity.putExtra(PUT_EXTRA_POSITION, ((MainActivity) mContext).lastposition);
             mContext.startActivity(intentToStartDetailActivity);
 
         }

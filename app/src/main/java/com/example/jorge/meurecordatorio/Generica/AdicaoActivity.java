@@ -7,6 +7,7 @@ import android.support.v7.widget.RecyclerView;
 import android.text.Editable;
 import android.text.TextWatcher;
 import android.widget.EditText;
+import android.widget.TextView;
 
 import com.example.jorge.meurecordatorio.Adapter.AdicaoAdapter;
 import com.example.jorge.meurecordatorio.Adapter.UnidadeAdapter;
@@ -33,6 +34,8 @@ public class AdicaoActivity extends AppCompatActivity {
 
     public List<Adicao> dataPersistent = null;
 
+    private TextView title2;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -50,7 +53,9 @@ public class AdicaoActivity extends AppCompatActivity {
         /**
          * Put Name Repositorie in  title.
          */
-        this.setTitle("Foi adicionado algo a este alimento?");
+        this.setTitle("Cadastro adição");
+        title2 = findViewById(R.id.title2);
+        title2.setText("Foi adicionado algo a este alimento?");
 
 
         /**

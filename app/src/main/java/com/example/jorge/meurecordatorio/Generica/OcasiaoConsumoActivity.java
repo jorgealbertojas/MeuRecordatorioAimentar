@@ -7,6 +7,7 @@ import android.support.v7.widget.RecyclerView;
 import android.text.Editable;
 import android.text.TextWatcher;
 import android.widget.EditText;
+import android.widget.TextView;
 
 import com.example.jorge.meurecordatorio.Adapter.OcasiaoConsumoAdapter;
 import com.example.jorge.meurecordatorio.Adapter.UnidadeAdapter;
@@ -30,6 +31,8 @@ public class OcasiaoConsumoActivity extends AppCompatActivity {
     String mName;
     String mAlimento;
 
+    private TextView title2;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -47,8 +50,9 @@ public class OcasiaoConsumoActivity extends AppCompatActivity {
         /**
          * Put Name Repositorie in  title.
          */
-        this.setTitle("Em que refeição " + mName + " comeu ou bebeu este alimento?");
-
+        this.setTitle("Cadastro de refeição");
+        title2 = findViewById(R.id.title2);
+        title2.setText("Em que refeição " + mName + " comeu ou bebeu este alimento?");
 
         /**
          * use RecyclerView for list the PullRequest .
