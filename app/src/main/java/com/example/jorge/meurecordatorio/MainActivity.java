@@ -299,6 +299,27 @@ public class MainActivity extends AppCompatActivity {
 
                     frase.setVisibility(View.GONE);
 
+                    if (voltando) {
+                        LayoutInflater factory2 = LayoutInflater.from(MainActivity.this);
+                        final View deleteDialogView2 = factory2.inflate(
+                                R.layout.custom_dialog10, null);
+                        final AlertDialog deleteDialog2 = new AlertDialog.Builder(MainActivity.this).create();
+                        deleteDialog2.setView(deleteDialogView2);
+
+                        TextView nTextView2 = (TextView) deleteDialogView2.findViewById(R.id.txt_dia);
+                        nTextView2.setText("Agora vamos falar sobre os horários e tipos de refeição (como café da manhã, almoço, lanche, jantar etc)");
+
+                        deleteDialogView2.findViewById(R.id.btn_yes).setOnClickListener(new View.OnClickListener() {
+
+                            @Override
+                            public void onClick(View v) {
+                                deleteDialog2.dismiss();
+                            }
+                        });
+
+                        deleteDialog2.show();
+                    }
+
 
                 } else if (position == 4){
 
@@ -325,7 +346,7 @@ public class MainActivity extends AppCompatActivity {
 
 
                     if (voltando) {
-                        LayoutInflater factory = LayoutInflater.from(MainActivity.this);
+/*                        LayoutInflater factory = LayoutInflater.from(MainActivity.this);
                         final View deleteDialogView = factory.inflate(
                                 R.layout.custom_dialog10, null);
                         final AlertDialog deleteDialog1 = new AlertDialog.Builder(MainActivity.this).create();
@@ -342,7 +363,9 @@ public class MainActivity extends AppCompatActivity {
                             }
                         });
 
-                        deleteDialog1.show();
+                        deleteDialog1.show();*/
+
+
 
 
                         LayoutInflater factory2 = LayoutInflater.from(MainActivity.this);
@@ -352,7 +375,7 @@ public class MainActivity extends AppCompatActivity {
                         deleteDialog2.setView(deleteDialogView2);
 
                         TextView nTextView2 = (TextView) deleteDialogView2.findViewById(R.id.txt_dia);
-                        nTextView2.setText("Agora vamos falar sobre os horários e tipos de refeição (como café da manhã, almoço, lanche, jantar etc)");
+                        nTextView2.setText("Agora vamos detalhar todos os alimentos que o (a) senhor (senhora) falou: modo de preparo, quantidades e local das refeições.");
 
                         deleteDialogView2.findViewById(R.id.btn_yes).setOnClickListener(new View.OnClickListener() {
 
@@ -363,6 +386,9 @@ public class MainActivity extends AppCompatActivity {
                         });
 
                         deleteDialog2.show();
+
+
+
                     }
 
                 }else if (position == 5) {
@@ -542,7 +568,7 @@ public class MainActivity extends AppCompatActivity {
                         deleteDialog1.setView(deleteDialogView);
 
                         TextView nTextView = (TextView) deleteDialogView.findViewById(R.id.txt_dia);
-                        nTextView.setText("ATENÇÃO!\n Agora eu gostaria que você me dissesse tudo que " +  NOME + " comeu ou bebeu ontem, do momento em que acordou até a hora em que foi dormir. Caso " +  NOME + "  tenha acordado de madrugada, também gostaria de saber o que ele/ela comeu ou bebeu de madrugada. Não se preocupe com horário e quantidade agora, pois falaremos dos detalhes depois.");
+                        nTextView.setText("ATENÇÃO!\n Agora eu gostaria que o(a) Sr(a). me dissesse tudo que " +  NOME + " comeu ou bebeu ontem, do momento em que acordou até a hora em que foi dormir. Caso " +  NOME + "  tenha acordado de madrugada, também gostaria de saber o que ele/ela comeu ou bebeu de madrugada. Não se preocupe com horário e quantidade agora, pois falaremos dos detalhes depois.");
 
                         deleteDialogView.findViewById(R.id.btn_yes).setOnClickListener(new View.OnClickListener() {
 

@@ -344,7 +344,7 @@ public class DetailActivity extends AppCompatActivity {
                             data.get(0).setAlimentacao_preparacao("0");
                             data.get(0).setAlimentacao_preparacao_id("0");
                             data.get(0).setAlimentacao_obs("");
-                            data.get(0).setAlimentacao_hora("0:00");
+                            data.get(0).setAlimentacao_hora(":00");
                             data.get(0).setAlimentacao_unidade("0");
                             data.get(0).setAlimentacao_unidade_id("0");
                             data.get(0).setAlimentacao_ocasiao_consumo("0");
@@ -658,7 +658,22 @@ public class DetailActivity extends AppCompatActivity {
                         alimentacao.setAlimentacao_quantidade(quantidadeEditText.getText().toString());
                         alimentacao.setAlimentacao_espessura(espessura.getText().toString());
 
-                        alimentacao.setAlimentacao_hora(horaEditText.getText().toString() + ":" + minutoEditText.getText().toString());
+
+                        String hora = horaEditText.getText().toString();
+                        if (hora != null) {
+                            if (hora.length() == 1){
+                                hora = "0" + hora;
+                            }
+                        }
+
+                        String minuto = minutoEditText.getText().toString();
+                        if (hora != null) {
+                            if (minuto.length() == 0) {
+                                minuto = "00";
+                            }
+                        }
+
+                        alimentacao.setAlimentacao_hora(hora + ":" + minuto);
                         alimentacao.setAlimentacao_hora_coleta(tvHoraColeta.getText().toString());
 
                         Time today_fim = new Time(Time.getCurrentTimezone());

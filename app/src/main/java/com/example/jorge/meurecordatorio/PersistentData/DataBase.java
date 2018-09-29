@@ -1067,7 +1067,7 @@ public class DataBase extends SQLiteOpenHelper {
 
         mDb = this.getWritableDatabase();
 
-        Cursor cursor = mDb.rawQuery(DbSelect.GET_ALIMENTACAO + " WHERE " + Field.FIELD_ALIMENTACAO_ENTREVISTADO_ID + "  = '" + Entrevistado +"'",null);
+        Cursor cursor = mDb.rawQuery(DbSelect.GET_ALIMENTACAO + " WHERE " + Field.FIELD_ALIMENTACAO_ENTREVISTADO_ID + "  = '" + Entrevistado +"' order by " +  Field.FIELD_ALIMENTACAO_HORA + "," + Field.FIELD_ALIMENTACAO_ALIMENTO  ,null);
         cursor.moveToFirst();
         while(!cursor.isAfterLast() ){
             Alimentacao alimentacao = new Alimentacao();

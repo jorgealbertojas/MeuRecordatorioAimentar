@@ -170,7 +170,7 @@ public class AlimentacaoAdapter extends RecyclerView.Adapter<AlimentacaoAdapter.
         if (mostrar == 5) {
             v = LayoutInflater.from(parent.getContext()).inflate(R.layout.layout_alimentacao, parent, false);
         }
-        else if (mostrar < 3) {
+        else if (mostrar < 2) {
             v = LayoutInflater.from(parent.getContext()).inflate(R.layout.layout_alimentacao, parent, false);
         }else{
             v = LayoutInflater.from(parent.getContext()).inflate(R.layout.layout_alimentacao_check, parent, false);

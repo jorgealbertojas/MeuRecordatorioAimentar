@@ -129,6 +129,17 @@ public class FragmentViewPager extends android.support.v4.app.Fragment {
 
                 try {
 
+
+
+
+
+
+
+
+
+
+
+
                     LayoutInflater factory = LayoutInflater.from(getContext());
                     final View deleteDialogView = factory.inflate(
                             R.layout.custom_dialog, null);
@@ -138,7 +149,7 @@ public class FragmentViewPager extends android.support.v4.app.Fragment {
 
 
                     TextView nTextView = (TextView) deleteDialogView.findViewById(R.id.txt_dia);
-                    nTextView.setText("O(A) Sr(a). se lembra de mais alguma coisa? Bebidas como água, café, chá, refrigerante, suco?");
+                    nTextView.setText("Bebidas como café, chá, refrigerante, suco?");
 
                     deleteDialogView.findViewById(R.id.btn_no).setOnClickListener(new View.OnClickListener() {
 
@@ -155,7 +166,7 @@ public class FragmentViewPager extends android.support.v4.app.Fragment {
                             deleteDialog0.setView(deleteDialogView);
 
                             TextView nTextView = (TextView) deleteDialogView.findViewById(R.id.txt_dia);
-                            nTextView.setText("A criança tomou leite materno?");
+                            nTextView.setText("Leite materno?");
 
                             deleteDialogView.findViewById(R.id.btn_no).setOnClickListener(new View.OnClickListener() {
 
@@ -168,7 +179,7 @@ public class FragmentViewPager extends android.support.v4.app.Fragment {
                                     deleteDialog3.setView(deleteDialogView);
 
                                     TextView nTextView = (TextView) deleteDialogView.findViewById(R.id.txt_dia);
-                                    nTextView.setText("A criança comeu doces, como balas, chicletes, sobremesas?");
+                                    nTextView.setText("Doces, como balas, chicletes, sobremesas?");
 
                                     deleteDialogView.findViewById(R.id.btn_no).setOnClickListener(new View.OnClickListener() {
 
@@ -182,7 +193,7 @@ public class FragmentViewPager extends android.support.v4.app.Fragment {
                                             deleteDialog2.setView(deleteDialogView);
 
                                             TextView nTextView = (TextView) deleteDialogView.findViewById(R.id.txt_dia);
-                                            nTextView.setText("A criança comeu algum tipo de biscoito?");
+                                            nTextView.setText("Algum tipo de biscoito?");
 
                                             deleteDialogView.findViewById(R.id.btn_no).setOnClickListener(new View.OnClickListener() {
 
@@ -196,7 +207,7 @@ public class FragmentViewPager extends android.support.v4.app.Fragment {
                                                     deleteDialog5.setView(deleteDialogView);
 
                                                     TextView nTextView = (TextView) deleteDialogView.findViewById(R.id.txt_dia);
-                                                    nTextView.setText("A criança comeu alguma fruta, pão ou qualquer outro alimento, bebida ou complemento alimentar?");
+                                                    nTextView.setText("Alguma fruta, pão ou qualquer outro alimento, bebida ou complemento alimentar?");
 
                                                     deleteDialogView.findViewById(R.id.btn_no).setOnClickListener(new View.OnClickListener() {
 
@@ -210,7 +221,7 @@ public class FragmentViewPager extends android.support.v4.app.Fragment {
                                                             deleteDialog4.setView(deleteDialogView);
 
                                                             TextView nTextView = (TextView) deleteDialogView.findViewById(R.id.txt_dia);
-                                                            nTextView.setText("Houve adição de açúcar, mel ou outra substância usada com o intuito de adoçar em algum alimento ou bebida?");
+                                                            nTextView.setText("Açúcar, mel ou outra substância usada com o intuito de adoçar em algum alimento ou bebida?");
 
                                                             deleteDialogView.findViewById(R.id.btn_no).setOnClickListener(new View.OnClickListener() {
                                                                 @Override
@@ -299,6 +310,27 @@ public class FragmentViewPager extends android.support.v4.app.Fragment {
                     });
 
                     deleteDialog1.show();
+
+
+
+                    LayoutInflater factory11 = LayoutInflater.from(getContext());
+                    final View deleteDialogView11 = factory11.inflate(
+                            R.layout.custom_dialog10, null);
+                    final AlertDialog deleteDialog11 = new AlertDialog.Builder(getContext()).create();
+                    deleteDialog11.setView(deleteDialogView11);
+
+                    TextView nTextView1 = (TextView) deleteDialogView11.findViewById(R.id.txt_dia);
+                    nTextView1.setText("ATENÇÃO!\n Há alguns alimentos que às vezes são esquecidos e que fazem parte deste tipo de entrevista. Além dos alimentos e bebidas referidos pelo(a) Sr(a), a criança consumiu...");
+
+                    deleteDialogView11.findViewById(R.id.btn_yes).setOnClickListener(new View.OnClickListener() {
+
+                        @Override
+                        public void onClick(View v) {
+                            deleteDialog11.dismiss();
+                        }
+                    });
+
+                    deleteDialog11.show();
 
 
                 } catch (Exception e) {
