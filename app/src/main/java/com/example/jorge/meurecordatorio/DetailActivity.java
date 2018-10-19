@@ -623,7 +623,13 @@ public class DetailActivity extends AppCompatActivity {
             public void onClick(View arg0) {
                 try {
 
-                    if ((!alimento.getText().toString().equals("0"))) {
+                    Boolean salvar = true;
+                    if  ((mEtapa == 2) && (horaEditText.getText().toString().equals(""))){
+                        Toast.makeText(DetailActivity.this, "ATENÇÃO! Obrigatório inserir hora.", Toast.LENGTH_LONG).show();
+                        salvar = false;
+                    }
+
+                    if ((!alimento.getText().toString().equals("0")) && salvar) {
                         mDataBase = new DataBase(getApplicationContext());
                         mDb = mDataBase.getReadableDatabase();
 
@@ -714,7 +720,9 @@ public class DetailActivity extends AppCompatActivity {
                         Toast.makeText(DetailActivity.this, "Salvo alimento com sucesso!", Toast.LENGTH_SHORT).show();
                         DetailActivity.this.finish();
                     }else{
-                        Toast.makeText(DetailActivity.this, "ATENÇÃO! Obrigatório a seleção de um alimento", Toast.LENGTH_LONG).show();
+                        if (salvar) {
+                            Toast.makeText(DetailActivity.this, "ATENÇÃO! Obrigatório a seleção de um alimento", Toast.LENGTH_LONG).show();
+                        }
                     }
                 } catch(Exception e){
                     // TODO: handle exception

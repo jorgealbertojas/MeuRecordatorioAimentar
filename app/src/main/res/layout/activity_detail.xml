@@ -220,7 +220,7 @@
         android:padding="@dimen/padding_text"
         android:text="0"
         android:textSize="18sp"
-        app:layout_constraintTop_toBottomOf="@+id/local" />
+        app:layout_constraintTop_toBottomOf="@+id/quantidade" />
 
     <TextView
         android:id="@+id/unidade_nome"
@@ -233,7 +233,7 @@
         android:text="0"
         android:textSize="18sp"
         app:layout_constraintStart_toEndOf="@+id/unidade"
-        app:layout_constraintTop_toBottomOf="@+id/local" />
+        app:layout_constraintTop_toBottomOf="@+id/quantidade" />
 
     <TextView
         android:id="@+id/unidade_hint"
@@ -242,7 +242,7 @@
         android:text="UNIDADE"
         android:textColor="@color/colorAccent"
         android:textSize="13sp"
-        app:layout_constraintTop_toBottomOf="@+id/local" />
+        app:layout_constraintTop_toBottomOf="@+id/quantidade" />
 
 
     <TextView
@@ -269,7 +269,7 @@
         android:maxLength="5"
         android:background="@drawable/rounded_corner_cinza_claro"
         android:hint="Colocar quantidade"
-        app:layout_constraintTop_toBottomOf="@+id/unidade"/>
+        app:layout_constraintTop_toBottomOf="@+id/local"/>
 
     <TextView
         android:id="@+id/quantidade_hint"
@@ -278,7 +278,7 @@
         android:text="QUANTIDADE"
         android:textColor="@color/colorAccent"
         android:textSize="13sp"
-        app:layout_constraintTop_toBottomOf="@+id/unidade" />
+        app:layout_constraintTop_toBottomOf="@+id/local" />
 
     <EditText
         android:layout_width="wrap_content"
@@ -290,7 +290,7 @@
         android:layout_marginTop="2dp"
         android:background="@drawable/rounded_corner_cinza_claro"
         android:hint="Colocar espessura"
-        app:layout_constraintTop_toBottomOf="@+id/quantidade"/>
+        app:layout_constraintTop_toBottomOf="@+id/unidade"/>
 
     <TextView
         android:id="@+id/espessura_hint"
@@ -299,7 +299,7 @@
         android:text="ESPESSURA"
         android:textColor="@color/colorAccent"
         android:textSize="13sp"
-        app:layout_constraintTop_toBottomOf="@+id/quantidade" />
+        app:layout_constraintTop_toBottomOf="@+id/unidade" />
 
     <TextView
         android:id="@+id/ocasiao_consumo_nome"
@@ -524,14 +524,14 @@
         android:layout_height="40dp"
         android:text="/"
         app:layout_constraintStart_toEndOf="@+id/quantidade"
-        app:layout_constraintTop_toBottomOf="@+id/unidade_nome" />
+        app:layout_constraintTop_toBottomOf="@+id/local" />
     <Button
         android:id="@+id/buttonvirgula"
         android:layout_width="40dp"
         android:layout_height="40dp"
         android:text=","
         app:layout_constraintStart_toEndOf="@+id/buttonfracao"
-        app:layout_constraintTop_toBottomOf="@+id/unidade_nome" />
+        app:layout_constraintTop_toBottomOf="@+id/local" />
 
     <Button
         android:id="@+id/buttonvirgula_espessura"
@@ -539,6 +539,6 @@
         android:layout_height="40dp"
         android:text=","
         app:layout_constraintStart_toEndOf="@+id/espessura"
-        app:layout_constraintTop_toBottomOf="@+id/quantidade" />
+        app:layout_constraintTop_toBottomOf="@+id/unidade" />
 
 </android.support.constraint.ConstraintLayout>

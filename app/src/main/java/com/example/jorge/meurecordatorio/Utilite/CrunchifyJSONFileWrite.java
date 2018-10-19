@@ -54,17 +54,17 @@ public class CrunchifyJSONFileWrite {
     public static void main(Context context) throws IOException {
         mContext = context;
 
-      //  arquivo_Txt_alimento("alimentos");
-       // arquivo_Txt_adicao("adicao");
-      //  arquivo_Txt_adicao_adicao("adicao_adicao");
-       // arquivo_Txt_entrevistado("entrevistado");
-        //arquivo_Txt_local("local");
+        arquivo_Txt_alimento("alimentos");
+        arquivo_Txt_adicao("adicao");
+        arquivo_Txt_adicao_adicao("adicao_adicao");
+        arquivo_Txt_entrevistado("entrevistado");
+        arquivo_Txt_local("local");
         arquivo_Txt_ocasiao_consumo("ocasiao_consumo");
-      //  arquivo_Txt_preparacao("preparacao");
-       // arquivo_Txt_preparacao_preparacao("preparacao_preparacao");
-      //  arquivo_Txt_unidade("unidade");
-       // arquivo_Txt_unidade_unidade("unidade_unidade");
-      //  arquivo_Txt_usuario("usuario");
+        arquivo_Txt_preparacao("preparacao");
+        arquivo_Txt_preparacao_preparacao("preparacao_preparacao");
+        arquivo_Txt_unidade("unidade");
+        arquivo_Txt_unidade_unidade("unidade_unidade");
+        arquivo_Txt_usuario("usuario");
 
 
     }

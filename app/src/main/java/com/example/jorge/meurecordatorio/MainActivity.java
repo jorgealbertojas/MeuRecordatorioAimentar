@@ -193,13 +193,7 @@ public class MainActivity extends AppCompatActivity {
         proximo_palavra = (TextView) findViewById(R.id.proximo_palavra);
         anterior_palavra = (TextView) findViewById(R.id.anterior_palavra);
 
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT) {
-            // BEBETO
-           if (!getEntrevistador()){
-                Toast.makeText(this, "ATENÇÃO! ESTE SISTEMA SÓ PODE SER CHAMADO PELO SISTEMA DE PESQUISA CSPRO" , Toast.LENGTH_LONG).show();
-                this.finish();
-            }
-        }
+
 
         imagepiscar = (ImageView) findViewById(R.id.image);
         mViewPager = (ViewPager) findViewById(R.id.pager);
@@ -495,6 +489,14 @@ public class MainActivity extends AppCompatActivity {
 
         }
 
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT) {
+            // BEBETO
+            if (!getEntrevistador()){
+                Toast.makeText(this, "ATENÇÃO! ESTE SISTEMA SÓ PODE SER CHAMADO PELO SISTEMA DE PESQUISA CSPRO" , Toast.LENGTH_LONG).show();
+                this.finish();
+            }
+        }
+
 
 
         mMenu = (ImageView) findViewById(R.id.imageViewMenu);
@@ -519,107 +521,7 @@ public class MainActivity extends AppCompatActivity {
             public void onTextChanged(CharSequence s, int start, int before,
                                       int count) {
                 if(!s.equals("") ) {
-                    iniciaRecyclerView();
-
-                    if (dataPersistent.size() > 0){
-                        if (dataPersistent.get(0).getAlimentacao_dia_atico() == null){
-                            diaAtipico.setText("NÃO");
-                        }
-                        else if (dataPersistent.get(0).getAlimentacao_dia_atico().equals("null")){
-                            diaAtipico.setText("NÃO");
-                        }else{
-                            diaAtipico.setText(dataPersistent.get(0).getAlimentacao_dia_atico());
-                        }
-
-                        if (dataPersistent.get(0).getAlimentacao_grau_parentesco() == null) {
-                            grau_parentesco_nome.setText("0");
-                        }
-                        else if (dataPersistent.get(0).getAlimentacao_grau_parentesco().equals("null")){
-                            grau_parentesco_nome.setText("0");
-                        }else {
-                            grau_parentesco_nome.setText(dataPersistent.get(0).getAlimentacao_grau_parentesco());
-                        }
-
-                        if (dataPersistent.get(0).getAlimentacao_grau_parentesco_id() == null){
-                            grauParentesco.setText("0");
-                        }
-                        else if (dataPersistent.get(0).getAlimentacao_grau_parentesco_id().equals("null")){
-                            grauParentesco.setText("0");
-                        }else {
-                            grauParentesco.setText(dataPersistent.get(0).getAlimentacao_grau_parentesco_id());
-                        }
-
-
-
-                        mViewPager.setVisibility(View.VISIBLE);
-
-                    }
-                    else{
-                        grau_parentesco_nome.setText("0");
-                        grauParentesco.setText("NÃO");
-                        mViewPager.setVisibility(View.INVISIBLE);
-                    }
-                    if (mRecyclerView.getAdapter() == null) {
-
-                        LayoutInflater factory = LayoutInflater.from(MainActivity.this);
-                        final View deleteDialogView = factory.inflate(
-                                R.layout.custom_dialog5, null);
-                        final AlertDialog deleteDialog1 = new AlertDialog.Builder(MainActivity.this).create();
-                        deleteDialog1.setView(deleteDialogView);
-
-                        TextView nTextView = (TextView) deleteDialogView.findViewById(R.id.txt_dia);
-                        nTextView.setText("ATENÇÃO!\n Agora eu gostaria que o(a) Sr(a). me dissesse tudo que " +  NOME + " comeu ou bebeu ontem, do momento em que acordou até a hora em que foi dormir. Caso " +  NOME + "  tenha acordado de madrugada, também gostaria de saber o que ele/ela comeu ou bebeu de madrugada. Não se preocupe com horário e quantidade agora, pois falaremos dos detalhes depois.");
-
-                        deleteDialogView.findViewById(R.id.btn_yes).setOnClickListener(new View.OnClickListener() {
-
-                            @Override
-                            public void onClick(View v) {
-
-                                deleteDialog1.dismiss();
-                            }
-                        });
-                        deleteDialogView.findViewById(R.id.btn_no).setOnClickListener(new View.OnClickListener() {
-
-                            @Override
-                            public void onClick(View v) {
-
-                                LayoutInflater factory = LayoutInflater.from(MainActivity.this);
-                                final View deleteDialogView10 = factory.inflate(
-                                        R.layout.custom_dialog1, null);
-                                final AlertDialog deleteDialog10 = new AlertDialog.Builder(MainActivity.this).create();
-                                deleteDialog10.setView(deleteDialogView10);
-
-                                TextView nTextView = (TextView) deleteDialogView10.findViewById(R.id.txt_dia);
-                                nTextView.setText("Tem certeza que deseja interromper a entrevista?");
-
-                                deleteDialogView10.findViewById(R.id.btn_yes).setOnClickListener(new View.OnClickListener() {
-
-                                    @Override
-                                    public void onClick(View v) {
-                                        finish();
-                                        deleteDialog10.dismiss();
-                                    }
-                                });
-                                deleteDialogView10.findViewById(R.id.btn_no).setOnClickListener(new View.OnClickListener() {
-
-                                    @Override
-                                    public void onClick(View v) {
-
-                                        deleteDialog10.dismiss();
-
-                                    }
-                                });
-
-                                deleteDialog10.show();
-
-
-                                deleteDialog1.dismiss();
-
-                            }
-                        });
-
-                        deleteDialog1.show();
-                    }
+                    statRecyclerView();
 
                 }
             }
@@ -669,7 +571,7 @@ public class MainActivity extends AppCompatActivity {
 
         mDataBase = new DataBase(this);
 
-       // iniciaRecyclerView();
+
 
         //creamos un nuevo adpater
         //ViewPagerAdapter viewPagerAdapter = new ViewPagerAdapter(getSupportFragmentManager());
@@ -726,6 +628,7 @@ public class MainActivity extends AppCompatActivity {
             public void onClick(View arg0) {
                 try {
                     showGrauParentesco();
+                    statRecyclerView();
                     mViewPager.setVisibility(View.VISIBLE);
                 } catch (Exception e) {
                     // TODO: handle exception
@@ -737,12 +640,15 @@ public class MainActivity extends AppCompatActivity {
             public void onClick(View arg0) {
                 try {
                     showGrauParentesco();
+                    statRecyclerView();
                     mViewPager.setVisibility(View.VISIBLE);
                 } catch (Exception e) {
                     // TODO: handle exception
                 }
             }
         });
+
+
 
 
 
@@ -773,7 +679,7 @@ public class MainActivity extends AppCompatActivity {
         dataPersistent = new ArrayList<>();
         dataPersistent = mDataBase.getListAlimentacao(entrevistado.getText().toString());
 
-        if (dataPersistent.size()>0) {
+        if (dataPersistent != null ) {
             mRecyclerView.setAdapter(new AlimentacaoAdapter(dataPersistent,0));
             mRecyclerViewCheck.setAdapter(new AlimentacaoAdapter(dataPersistent,2));
             alimentacaoAdapter = (new AlimentacaoAdapter(dataPersistent,3));
@@ -814,6 +720,110 @@ public class MainActivity extends AppCompatActivity {
         }
 
     };
+
+    public void statRecyclerView(){
+        iniciaRecyclerView();
+
+        if (dataPersistent.size() > 0){
+            if (dataPersistent.get(0).getAlimentacao_dia_atico() == null){
+                diaAtipico.setText("NÃO");
+            }
+            else if (dataPersistent.get(0).getAlimentacao_dia_atico().equals("null")){
+                diaAtipico.setText("NÃO");
+            }else{
+                diaAtipico.setText(dataPersistent.get(0).getAlimentacao_dia_atico());
+            }
+
+            if (dataPersistent.get(0).getAlimentacao_grau_parentesco() == null) {
+                grau_parentesco_nome.setText("0");
+            }
+            else if (dataPersistent.get(0).getAlimentacao_grau_parentesco().equals("null")){
+                grau_parentesco_nome.setText("0");
+            }else {
+                grau_parentesco_nome.setText(dataPersistent.get(0).getAlimentacao_grau_parentesco());
+            }
+
+            if (dataPersistent.get(0).getAlimentacao_grau_parentesco_id() == null){
+                grauParentesco.setText("0");
+            }
+            else if (dataPersistent.get(0).getAlimentacao_grau_parentesco_id().equals("null")){
+                grauParentesco.setText("0");
+            }else {
+                grauParentesco.setText(dataPersistent.get(0).getAlimentacao_grau_parentesco_id());
+            }
+
+
+
+            mViewPager.setVisibility(View.VISIBLE);
+
+        }
+        else{
+            grau_parentesco_nome.setText("0");
+            grauParentesco.setText("NÃO");
+            mViewPager.setVisibility(View.INVISIBLE);
+        }
+        if (mRecyclerView.getAdapter() == null) {
+
+            LayoutInflater factory = LayoutInflater.from(MainActivity.this);
+            final View deleteDialogView = factory.inflate(
+                    R.layout.custom_dialog5, null);
+            final AlertDialog deleteDialog1 = new AlertDialog.Builder(MainActivity.this).create();
+            deleteDialog1.setView(deleteDialogView);
+
+            TextView nTextView = (TextView) deleteDialogView.findViewById(R.id.txt_dia);
+            nTextView.setText("ATENÇÃO!\n Agora eu gostaria que o(a) Sr(a). me dissesse tudo que " +  NOME + " comeu ou bebeu ontem, do momento em que acordou até a hora em que foi dormir. Caso " +  NOME + "  tenha acordado de madrugada, também gostaria de saber o que ele/ela comeu ou bebeu de madrugada. Não se preocupe com horário e quantidade agora, pois falaremos dos detalhes depois.");
+
+            deleteDialogView.findViewById(R.id.btn_yes).setOnClickListener(new View.OnClickListener() {
+
+                @Override
+                public void onClick(View v) {
+
+                    deleteDialog1.dismiss();
+                }
+            });
+            deleteDialogView.findViewById(R.id.btn_no).setOnClickListener(new View.OnClickListener() {
+
+                @Override
+                public void onClick(View v) {
+
+                    LayoutInflater factory = LayoutInflater.from(MainActivity.this);
+                    final View deleteDialogView10 = factory.inflate(
+                            R.layout.custom_dialog1, null);
+                    final AlertDialog deleteDialog10 = new AlertDialog.Builder(MainActivity.this).create();
+                    deleteDialog10.setView(deleteDialogView10);
+
+                    TextView nTextView = (TextView) deleteDialogView10.findViewById(R.id.txt_dia);
+                    nTextView.setText("Tem certeza que deseja interromper a entrevista?");
+
+                    deleteDialogView10.findViewById(R.id.btn_yes).setOnClickListener(new View.OnClickListener() {
+
+                        @Override
+                        public void onClick(View v) {
+                            finish();
+                            deleteDialog10.dismiss();
+                        }
+                    });
+                    deleteDialogView10.findViewById(R.id.btn_no).setOnClickListener(new View.OnClickListener() {
+
+                        @Override
+                        public void onClick(View v) {
+
+                            deleteDialog10.dismiss();
+
+                        }
+                    });
+
+                    deleteDialog10.show();
+
+
+                    deleteDialog1.dismiss();
+
+                }
+            });
+
+            deleteDialog1.show();
+        }
+    }
 
 
 

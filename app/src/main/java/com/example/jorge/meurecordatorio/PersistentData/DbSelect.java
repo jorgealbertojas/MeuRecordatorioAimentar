@@ -110,7 +110,7 @@ public class DbSelect {
                     " FROM " + DbCreate.TABLE_USUARIO + " WHERE " + Field.FIELD_USUARIO + " = ? AND " + Field.FIELD_SENHA + " = ? ";
 
     public static String GET_ENTREVISTADO =
-            " SELECT "
+            " SELECT distinct "
                     + Field.FIELD_ENTREVISTADO_ID  + ","
                     + Field.FIELD_ENTREVISTADO +
                     " FROM " + DbCreate.TABLE_ENTREVISTADO ;

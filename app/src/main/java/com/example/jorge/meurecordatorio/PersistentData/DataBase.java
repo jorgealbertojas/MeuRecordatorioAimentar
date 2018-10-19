@@ -973,7 +973,9 @@ public class DataBase extends SQLiteOpenHelper {
 
         boolean resultado = false;
 
-        Cursor cursor = mDb.rawQuery(DbSelect.GET_ENTREVISTADO + " where "  + Field.FIELD_ENTREVISTADO_ID + " = '" + ID + "'",null);
+
+
+        Cursor cursor = mDb.rawQuery(DbSelect.GET_ENTREVISTADO + " where "  + Field.FIELD_ENTREVISTADO_ID + " = ? ",new String[] {ID});
         cursor.moveToFirst();
         if (cursor.getCount() > 0){
             resultado = true;
@@ -1067,7 +1069,7 @@ public class DataBase extends SQLiteOpenHelper {
 
         mDb = this.getWritableDatabase();
 
-        Cursor cursor = mDb.rawQuery(DbSelect.GET_ALIMENTACAO + " WHERE " + Field.FIELD_ALIMENTACAO_ENTREVISTADO_ID + "  = '" + Entrevistado +"' order by " +  Field.FIELD_ALIMENTACAO_HORA + "," + Field.FIELD_ALIMENTACAO_ALIMENTO  ,null);
+        Cursor cursor = mDb.rawQuery(DbSelect.GET_ALIMENTACAO + " WHERE " + Field.FIELD_ALIMENTACAO_ENTREVISTADO_ID + " = ? order by " +  Field.FIELD_ALIMENTACAO_HORA + "," + Field.FIELD_ALIMENTACAO_ALIMENTO,new String[] {Entrevistado});
         cursor.moveToFirst();
         while(!cursor.isAfterLast() ){
             Alimentacao alimentacao = new Alimentacao();
