@@ -1053,9 +1053,10 @@ public class MainActivity extends AppCompatActivity {
                 .setPositiveButton("Sim",
                         new DialogInterface.OnClickListener() {
                             public void onClick(DialogInterface dialog, int id) {
-                                moveTaskToBack(true);
-                                android.os.Process.killProcess(android.os.Process.myPid());
-                                System.exit(1);
+
+                                closeApplication();
+
+
                             }
                         })
 
@@ -1068,6 +1069,17 @@ public class MainActivity extends AppCompatActivity {
 
         AlertDialog alertDialog = alertDialogBuilder.create();
         alertDialog.show();
+    }
+
+    private void closeApplication() {
+        System.out.println("closeApplication ");
+        this.finish();
+    }
+
+    @Override
+    public void onDestroy(){
+        super.onDestroy();
+
     }
 
 }
