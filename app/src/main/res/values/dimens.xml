@@ -2,4 +2,10 @@
 <resources>
     <dimen name="padding_text">8dp</dimen>
     <dimen name="size_text">15sp</dimen>
+
+    <dimen name="image_help_width">35dp</dimen>
+    <dimen name="image_help_heigth">35dp</dimen>
+
+    <dimen name="text1_list_size">16sp</dimen>
+    <dimen name="fab_margin">16dp</dimen>
 </resources>

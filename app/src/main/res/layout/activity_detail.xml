@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context="com.example.jorge.meurecordatorio.DetailActivity">
+    tools:context="com.softjads.jorge.meurecordatorio.DetailActivity">
 
 
     <TextView
@@ -251,11 +251,10 @@
         android:layout_height="wrap_content"
         android:background="@drawable/rounded_corner_cinza_claro"
         android:hint="          "
-        android:layout_marginTop="2dp"
         android:padding="@dimen/padding_text"
         android:text="0"
         android:textSize="18sp"
-        app:layout_constraintTop_toBottomOf="@+id/espessura" />
+        tools:layout_editor_absoluteY="441dp" />
 
 
 
@@ -540,5 +539,16 @@
         android:text=","
         app:layout_constraintStart_toEndOf="@+id/espessura"
         app:layout_constraintTop_toBottomOf="@+id/unidade" />
+
+    <android.support.design.widget.FloatingActionButton
+        android:id="@+id/fab"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_margin="16dp"
+        android:layout_marginEnd="8dp"
+        android:layout_marginRight="8dp"
+        android:layout_marginBottom="8dp"
+        android:src="@mipmap/ic_help"
+        app:layout_constraintEnd_toEndOf="parent" />
 
 </android.support.constraint.ConstraintLayout>

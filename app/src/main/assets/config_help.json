@@ -1,0 +1,121 @@
+{
+  "config": [
+    {
+      "key":"imageViewMenu",
+      "value":"Menu\n\n Acesso a cópia de segurança! Pode restaurar um backup, criar novas cópias e deletar copias\n\n",
+      "last":"0"
+    },
+
+    {
+      "key":"grau_parentesco_nome",
+      "value":"O grau de parentesaco\n\n A o grau de parentesco da pessoa que está respondendo o questionario em relação a pessoa que está sendo coletadas as informações\n\n",
+      "last":"0"
+    },
+    {
+      "key":"TextViewAdiciona",
+      "value":"Abas das etapas\n\n *É a identificação do entrevistado. Pode arrastar(swipe) para o lado direito. para ir para a próximo passo.\n\n* Neste 1º Passo é a para adicionar alimentos, basta clicar no botão para adicionar novos alimentos. Pode arrastar(swipe) para o lado direito. para ir para a próximo passo.\n\n* Neste 2º Passo verifica se o entrevistado esqueceu alimentos, pode arrastar para a etapa anterior caso deseje acrescentar novos alimentos. Pode arrastar(swipe) para o lado direito. para ir para a próximo passo.\n\n* Neste 3º Passo coloca o horário e quantidade. Se o entrevistado esqueceu alimentos, pode arrastar para a etapa anterior caso deseje acrescentar novos alimentos. Pode arrastar(swipe) para o lado direito. para ir para a próximo passo.\n\n*  Neste 4º Passo clica para detalhar cada alimento, isto é, seus complementos, pode arrastar para a etapa anterior caso deseje acrescentar novos alimentos. Pode arrastar(swipe) para o lado direito. para ir para a próximo passo.\n\n*   Neste 5º Passo conferirir cada alimento se está faltando algum complemento, Clique no botão para ir para próximo alimento, pode arrastar para a etapa anterior caso deseje acrescentar novos alimentos. Pode arrastar(swipe) para o lado direito. para ir para a próximo passo.\n\n*" ,
+      "last":"1"
+    },
+    {
+      "key":"tv_deletar_alimento",
+      "value":"Botão de deletar alimento\n\n Esse botão apaga o alimento do banco de dados, mas antes irá aparecer um diálogo para confirmar essa! Depois dessa operação somente cadastrando novamente esse alimento.\n\n",
+      "last":"0"
+    },
+    {
+      "key":"tv_duplicar_alimento",
+      "value":"Botão de duplicar alimento\n\n Esse botão duplica o alimento, mas antes irá aparecer um diálogo para confirmar essa! Depois dessa operação somente deletando o alimento do banco.\n\n",
+      "last":"0"
+    },
+    {
+      "key":"tv_salvar_alimento",
+      "value":"Botão salvar aliemnto\n\n Salva o alimento com todos os complementos selecionados, pode voltar neste alimento e trocar os complementos escolhidos em qualquer momento!\n\n",
+      "last":"0"
+    },
+    {
+      "key":"hora",
+      "value":"Hora e minutos\n\n Clique no campo hora e digite uma hora para esse alimento. Clique no minuto para mudar entre 00 e 30 minutos!\n\n",
+      "last":"1"
+    },
+    {
+      "key":"tv_entrar_obs",
+      "value":"Botão de OBS\n\n Pode escolher essas opções para colocar no campo observação, pode escolher mais de uma opção. Se quiser apagar basta desmarcar!\n\n",
+      "last":"1"
+    },
+    {
+      "key":"alimento",
+      "value":"Aliemnto\n\n Clique no campo alimento para abrir uma outra tela para escolher um novo alimento!\n\n",
+      "last":"0"
+    },
+    {
+      "key":"preparacao",
+      "value":"Preparação\n\n Clique no campo preparação para abrir uma outra tela para escolher uma nova preparação!\n\n",
+      "last":"0"
+    },
+    {
+      "key":"adicao",
+      "value":"Adição\n\n Clique no campo adição para abrir uma outra tela para escolher uma nova adição!\n\n",
+      "last":"0"
+    },
+    {
+      "key":"buttonvirgula",
+      "value":"Botão de vírgula\n\n Coloca virgula no texto ao lado.\n\n",
+      "last":"0"
+    },
+    {
+      "key":"buttonvirgula_espessura",
+      "value":"Botão de vígula\n\n Coloca virgula no texto ao lado.\n\n",
+      "last":"0"
+    },
+    {
+      "key":"buttonfracao",
+      "value":"Botão de fração\n\n Coloca fração no texto ao lado.\n\n",
+      "last":"0"
+    },
+    {
+      "key":"iv_close",
+      "value":"Sai do sistema\n\nE utilisado para sair da tela, voltando para a tela anterior",
+      "last":"0"
+    },
+    {
+      "key":"local",
+      "value":"Local\n\n Clique no campo local para abrir uma outra tela para escolher um novo local!\n\n",
+      "last":"0"
+    },
+    {
+      "key":"quantidade",
+      "value":"Quantidade\n\n Clique no campo quantidade e digite uma quantidade para esse alimento!\n\n",
+      "last":"0"
+    },
+    {
+      "key":"unidade",
+      "value":"Unidade\n\n Clique no campo unidade para abrir uma outra tela para escolher uma nova unidade!\n\n",
+      "last":"0"
+    },
+    {
+      "key":"quantidade",
+      "value":"Quantidade\n\n Clique no campo quantidade e digite uma quantidade para esse alimento!\n\n",
+      "last":"0"
+    },
+    {
+      "key":"obs",
+      "value":"Obs\n\n Clique no campo obs e digite uma observação para esse alimento!\n\n",
+      "last":"0"
+    },
+    {
+      "key":"espessura",
+      "value":"Espessura\n\n Clique no campo espessura para abrir uma outra tela para escolher uma nova espessura!\n\n",
+      "last":"0"
+    },
+    {
+      "key":"ocasiao_consumo_nome",
+      "value":"Tipo refeição\n\n Clique no campo tipo refeição para abrir uma outra tela para escolher um novo tipo refeição!\n\n",
+      "last":"0"
+    },
+
+    {
+      "key":"card_view",
+      "value":"Card do alimento\n\n Clique nos cards de alimentos abaixo, caso queira fazer alteração ou conferir as informações de um alimento!\n\n",
+      "last":"1"
+    }
+  ]
+}
