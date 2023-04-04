@@ -2,16 +2,17 @@ package com.softjads.jorge.meurecordatorio.Help;
 
 import android.animation.ObjectAnimator;
 import android.animation.PropertyValuesHolder;
-import android.support.constraint.ConstraintLayout;
-import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
-import android.support.v7.widget.CardView;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.Window;
 import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
+
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.cardview.widget.CardView;
+import androidx.constraintlayout.widget.ConstraintLayout;
 
 import java.lang.reflect.Field;
 
@@ -101,83 +102,83 @@ public class HelpAppActivity extends AppCompatActivity implements View.OnTouchLi
         top = (List<String>) getIntent().getSerializableExtra("HELP_TOP");
         pisitionTab = (int) getIntent().getIntExtra("HELP_POSITION_TAB",0);
 
+if (name != null) {
+    for (int i = 0; i < name.size(); i++) {
+        // Create TextView
+        CircleImageView imageHelp = new CircleImageView(this);
+        imageHelp.setX(x.get(i));
+        imageHelp.setY(y.get(i));
+        imageHelp.setCircleBackgroundColor(Common.getColorWithAlpha(newColorRed, 0.6f));
 
-        for (int i = 0; i < name.size(); i++){
-            // Create TextView
-            CircleImageView imageHelp = new CircleImageView(this);
-            imageHelp.setX(x.get(i));
-            imageHelp.setY(y.get(i));
-            imageHelp.setCircleBackgroundColor(Common.getColorWithAlpha(newColorRed, 0.6f));
+        imageHelp.setTag(Integer.toString(i));
+        ConstraintLayout.LayoutParams lm = new ConstraintLayout.LayoutParams((int) getResources().getDimension(R.dimen.image_help_width), (int) getResources().getDimension(R.dimen.image_help_width));
+        imageHelp.setLayoutParams(lm);
+        imageHelp.setImageResource(R.mipmap.ic_help);
+        imageHelp.setOnClickListener(new View.OnClickListener() {
+            public void onClick(View v) {
+                //Animation pulse = AnimationUtils.loadAnimation(((ImageView) v).getContext(), R.anim.pulse);
+                //MyBounceInterpolator interpolator = new MyBounceInterpolator(0.2, 20);
+                // pulse.setInterpolator(interpolator);
+                //((ImageView) v).startAnimation(pulse);
+                EmptyAnimation(constraintLayoutHelp);
+                ObjectAnimator scaleDown = ObjectAnimator.ofPropertyValuesHolder(
+                        ((ImageView) v),
+                        PropertyValuesHolder.ofFloat("scaleX", 1.2f),
+                        PropertyValuesHolder.ofFloat("scaleY", 1.2f));
+                scaleDown.setDuration(310);
 
-            imageHelp.setTag(Integer.toString(i));
-            ConstraintLayout.LayoutParams lm = new ConstraintLayout.LayoutParams((int) getResources().getDimension(R.dimen.image_help_width), (int) getResources().getDimension(R.dimen.image_help_width));
-            imageHelp.setLayoutParams(lm);
-            imageHelp.setImageResource(R.mipmap.ic_help);
-            imageHelp.setOnClickListener(new View.OnClickListener() {
-                public void onClick(View v) {
-                    //Animation pulse = AnimationUtils.loadAnimation(((ImageView) v).getContext(), R.anim.pulse);
-                    //MyBounceInterpolator interpolator = new MyBounceInterpolator(0.2, 20);
-                    // pulse.setInterpolator(interpolator);
-                    //((ImageView) v).startAnimation(pulse);
-                    EmptyAnimation(constraintLayoutHelp);
-                    ObjectAnimator scaleDown = ObjectAnimator.ofPropertyValuesHolder(
-                            ((ImageView) v),
-                            PropertyValuesHolder.ofFloat("scaleX", 1.2f),
-                            PropertyValuesHolder.ofFloat("scaleY", 1.2f));
-                    scaleDown.setDuration(310);
+                scaleDown.setRepeatCount(ObjectAnimator.INFINITE);
+                scaleDown.setRepeatMode(ObjectAnimator.REVERSE);
 
-                    scaleDown.setRepeatCount(ObjectAnimator.INFINITE);
-                    scaleDown.setRepeatMode(ObjectAnimator.REVERSE);
-
-                    scaleDown.start();
-
-
-                    if (name.get(Integer.parseInt(v.getTag().toString())).indexOf("*")>0){
-
-                        String temp = (name.get(Integer.parseInt(v.getTag().toString())));
-                        String temp0 = temp.substring(0, temp.indexOf("*"));
-                        temp = temp.substring(temp.indexOf("*")+1,temp.length());
+                scaleDown.start();
 
 
-                        String temp1 = temp.substring(0,temp.indexOf("*"));
-                        temp = temp.substring(temp.indexOf("*")+1,temp.length());
-                        String temp2 = temp.substring(0,temp.indexOf("*"));
-                        temp = temp.substring(temp.indexOf("*")+1,temp.length());
-                        String temp3 = temp.substring(0,temp.indexOf("*"));
-                        temp = temp.substring(temp.indexOf("*")+1,temp.length());
-                        String temp4 = temp.substring(0,temp.indexOf("*"));
-                        temp = temp.substring(temp.indexOf("*")+1,temp.length());
-                        String temp5 = temp.substring(0,temp.indexOf("*"));
-                        temp = temp.substring(temp.indexOf("*")+1,temp.length());
-                        String temp6 = temp.substring(0,temp.indexOf("*"));
+                if (name.get(Integer.parseInt(v.getTag().toString())).indexOf("*") > 0) {
+
+                    String temp = (name.get(Integer.parseInt(v.getTag().toString())));
+                    String temp0 = temp.substring(0, temp.indexOf("*"));
+                    temp = temp.substring(temp.indexOf("*") + 1, temp.length());
 
 
+                    String temp1 = temp.substring(0, temp.indexOf("*"));
+                    temp = temp.substring(temp.indexOf("*") + 1, temp.length());
+                    String temp2 = temp.substring(0, temp.indexOf("*"));
+                    temp = temp.substring(temp.indexOf("*") + 1, temp.length());
+                    String temp3 = temp.substring(0, temp.indexOf("*"));
+                    temp = temp.substring(temp.indexOf("*") + 1, temp.length());
+                    String temp4 = temp.substring(0, temp.indexOf("*"));
+                    temp = temp.substring(temp.indexOf("*") + 1, temp.length());
+                    String temp5 = temp.substring(0, temp.indexOf("*"));
+                    temp = temp.substring(temp.indexOf("*") + 1, temp.length());
+                    String temp6 = temp.substring(0, temp.indexOf("*"));
 
-                        if (pisitionTab == 0){
-                            textHelp.setText(temp0 + temp1);
-                        }else if(pisitionTab == 1){
-                            textHelp.setText(temp0 + temp2);
-                        }else if (pisitionTab == 2){
-                            textHelp.setText(temp0 + temp3);
-                        }else if (pisitionTab == 3){
-                            textHelp.setText(temp0 + temp4);
-                        }else if (pisitionTab == 4){
-                            textHelp.setText(temp0 + temp5);
-                        }else if (pisitionTab == 5){
-                            textHelp.setText(temp0 + temp6);
-                        }
 
-                    }else{
-                        textHelp.setText(name.get(Integer.parseInt(v.getTag().toString())));
+                    if (pisitionTab == 0) {
+                        textHelp.setText(temp0 + temp1);
+                    } else if (pisitionTab == 1) {
+                        textHelp.setText(temp0 + temp2);
+                    } else if (pisitionTab == 2) {
+                        textHelp.setText(temp0 + temp3);
+                    } else if (pisitionTab == 3) {
+                        textHelp.setText(temp0 + temp4);
+                    } else if (pisitionTab == 4) {
+                        textHelp.setText(temp0 + temp5);
+                    } else if (pisitionTab == 5) {
+                        textHelp.setText(temp0 + temp6);
                     }
-                    v.setTag("00");
+
+                } else {
+                    textHelp.setText(name.get(Integer.parseInt(v.getTag().toString())));
                 }
-            });
-            constraintLayoutHelp.addView(imageHelp);
-            if (top.get(i).equals("1")) {
-                cardView.setY(y.get(i)  + (cardView.getPaddingTop() * 3) );
+                v.setTag("00");
             }
+        });
+        constraintLayoutHelp.addView(imageHelp);
+        if (top.get(i).equals("1")) {
+            cardView.setY(y.get(i) + (cardView.getPaddingTop() * 3));
         }
+    }
+}
 
         loadSessionConfig();
 

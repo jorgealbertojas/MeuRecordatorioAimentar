@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
@@ -19,17 +19,25 @@
             android:background="@color/colorPrimaryDark">
 
 
-            <ImageView
-                android:id="@+id/imageViewMenu"
-                android:layout_width="50dp"
+            <TextView
+                android:id="@+id/tx_descartar"
+                android:layout_marginTop="4dp"
+                android:layout_width="wrap_content"
                 android:layout_height="50dp"
-                android:background="@color/colorPrimaryDark"
+                android:layout_alignParentStart="true"
+                android:layout_alignParentLeft="true"
+                android:layout_marginStart="4dp"
+                android:layout_marginLeft="10dp"
+                android:background="@drawable/rounded_corner_branco"
+                android:gravity="center"
                 android:src="@mipmap/ic_menu"
+                android:text="Descartar"
+                android:tag="tx_descartar"
                 android:visibility="visible" />
 
             <TextView
                 android:id="@+id/TextViewEntrevistadoButton"
-                android:layout_width="300dp"
+                android:layout_width="250dp"
                 android:layout_height="50dp"
                 android:layout_centerHorizontal="true"
                 android:layout_centerVertical="true"
@@ -44,10 +52,24 @@
 
                 />
 
+            <TextView
+                android:id="@+id/vesionEditText"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentTop="true"
+                android:layout_alignParentEnd="true"
+                android:layout_alignParentRight="true"
+                android:layout_marginTop="18dp"
+                android:layout_marginEnd="6dp"
+                android:layout_marginRight="6dp"
+                android:text="v: 36"
+                android:textColor="@color/colorWhite"
+                android:textSize="10sp" />
+
 
         </RelativeLayout>
 
-        <android.support.constraint.ConstraintLayout
+        <androidx.constraintlayout.widget.ConstraintLayout
             android:id="@+id/relativeEntrevistado"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -193,13 +215,13 @@
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toStartOf="@+id/tv_quantity"
                 app:srcCompat="@mipmap/exclamation" />
-        </android.support.constraint.ConstraintLayout>
+        </androidx.constraintlayout.widget.ConstraintLayout>
 
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content">
 
-            <android.support.v4.view.ViewPager
+            <androidx.viewpager.widget.ViewPager
                 android:id="@+id/pager"
                 android:layout_width="match_parent"
                 android:layout_height="170dp"
@@ -221,7 +243,7 @@
                     android:layout_height="30dp"
                     android:layout_alignParentRight="true"
                     android:src="@mipmap/anterior"
-                    android:visibility="visible" />
+                    android:visibility="gone" />
 
                 <ImageView
                     android:id="@+id/anterior"
@@ -230,7 +252,7 @@
                     android:layout_alignParentLeft="true"
                     android:scaleType="fitStart"
                     android:src="@mipmap/proximo"
-                    android:visibility="invisible" />
+                    android:visibility="gone" />
 
                 <TextView
                     android:id="@+id/proximo_palavra"
@@ -238,6 +260,7 @@
                     android:layout_height="wrap_content"
                     android:layout_centerVertical="true"
                     android:layout_toStartOf="@+id/proximo"
+                    android:visibility="gone"
                     android:text=" Arraste " />
 
                 <TextView
@@ -246,8 +269,8 @@
                     android:layout_height="wrap_content"
                     android:layout_centerVertical="true"
                     android:layout_toEndOf="@+id/anterior"
-                    android:text=" Arraste "
-                    android:visibility="invisible" />
+                    android:visibility="gone"
+                    android:text=" Arraste " />
             </RelativeLayout>
 
             <ScrollView
@@ -273,13 +296,13 @@
                         android:layout_centerVertical="true"
                         android:text=" Passo 4 concluído" />
 
-                    <android.support.v7.widget.RecyclerView
+                    <androidx.recyclerview.widget.RecyclerView
                         android:id="@+id/rv_alimento"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:visibility="visible" />
 
-                    <android.support.v7.widget.RecyclerView
+                    <androidx.recyclerview.widget.RecyclerView
                         android:id="@+id/rv_alimento_check"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
@@ -287,7 +310,7 @@
 
 
 
-                    <android.support.v7.widget.RecyclerView
+                    <androidx.recyclerview.widget.RecyclerView
                         android:id="@+id/rv_alimento_check_completo"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
@@ -306,9 +329,10 @@
             </ScrollView>
         </LinearLayout>
 
+
     </LinearLayout>
 
-    <android.support.design.widget.FloatingActionButton
+    <com.google.android.material.floatingactionbutton.FloatingActionButton
         android:id="@+id/fab"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -317,8 +341,30 @@
         android:layout_marginRight="8dp"
         android:layout_marginBottom="8dp"
         android:src="@mipmap/ic_help"
+        android:translationX="-45dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent" />
 
-</android.support.constraint.ConstraintLayout>
+    <TextView
+        android:id="@+id/informacao"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="8dp"
+        android:layout_marginLeft="8dp"
+        android:layout_marginEnd="8dp"
+        android:layout_marginRight="8dp"
+        android:marqueeRepeatLimit="marquee_forever"
+        android:singleLine="true"
+        android:ellipsize="marquee"
+        android:scrollHorizontally="true"
+        android:focusable="true"
+        android:focusableInTouchMode="true"
+        android:padding="@dimen/padding_text"
+        android:text="@string/informacao"
+        android:textSize="20sp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent" />
+
+</androidx.constraintlayout.widget.ConstraintLayout>
 

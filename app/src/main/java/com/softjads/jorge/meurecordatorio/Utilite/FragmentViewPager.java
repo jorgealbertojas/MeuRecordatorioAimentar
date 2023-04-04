@@ -12,6 +12,8 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import androidx.fragment.app.Fragment;
+
 import com.softjads.jorge.meurecordatorio.DetailActivity;
 import com.softjads.jorge.meurecordatorio.MainActivity;
 import com.softjads.jorge.meurecordatorio.Model.Alimentacao;
@@ -35,12 +37,13 @@ import static com.softjads.jorge.meurecordatorio.MainActivity.PUT_EXTRA_ENTREVIS
 import static com.softjads.jorge.meurecordatorio.MainActivity.PUT_EXTRA_ETAPA;
 import static com.softjads.jorge.meurecordatorio.MainActivity.PUT_EXTRA_GRAU_PARENTESCO;
 import static com.softjads.jorge.meurecordatorio.MainActivity.PUT_EXTRA_GRAU_PARENTESCO_NOME;
+import static com.softjads.jorge.meurecordatorio.MainActivity.PUT_EXTRA_POSITION;
 import static com.softjads.jorge.meurecordatorio.MainActivity.PUT_EXTRA_USUARIO;
 import static com.softjads.jorge.meurecordatorio.Utilite.Modulo.filename;
 
-public class FragmentViewPager extends android.support.v4.app.Fragment {
+public class FragmentViewPager extends Fragment {
 
-    private int mPos = 0;
+    private static int mPos = 0;
     private String mUsuario = "";
 
     private SQLiteDatabase mDb;
@@ -49,7 +52,7 @@ public class FragmentViewPager extends android.support.v4.app.Fragment {
 
     File myExternalFile;
 
-    static TextView TextViewAdiciona;
+
 
     public static boolean continua = true;
     public static int contador = 0;
@@ -67,7 +70,7 @@ public class FragmentViewPager extends android.support.v4.app.Fragment {
         TextView tv = (TextView) v.findViewById(R.id.title);
         tv.setText(getArguments().getString("text"));
 
-        TextViewAdiciona = (TextView) v.findViewById(R.id.TextViewAdiciona);
+        final TextView TextViewAdiciona = (TextView) v.findViewById(R.id.TextViewAdiciona);
         TextViewAdiciona.setText(getArguments().getString("text2"));
 
         ImageView imageView = (ImageView) v.findViewById(R.id.image);
@@ -104,6 +107,7 @@ public class FragmentViewPager extends android.support.v4.app.Fragment {
                                 intentToStartDetailActivity.putExtra(PUT_EXTRA_DIA_ATIPICO, ((MainActivity) container.getContext()).diaAtipico.getText().toString());
                                 intentToStartDetailActivity.putExtra(PUT_EXTRA_GRAU_PARENTESCO_NOME, ((MainActivity) container.getContext()).grau_parentesco_nome.getText().toString());
                                 intentToStartDetailActivity.putExtra(PUT_EXTRA_GRAU_PARENTESCO, ((MainActivity) container.getContext()).grauParentesco.getText().toString());
+                                intentToStartDetailActivity.putExtra(PUT_EXTRA_POSITION,((MainActivity) container.getContext()).mViewPager.getCurrentItem());
                                 startActivity(intentToStartDetailActivity);
 
                             } catch (Exception e) {
@@ -126,214 +130,202 @@ public class FragmentViewPager extends android.support.v4.app.Fragment {
                 contador = 0;
                 TextViewAdiciona.setBackground(null);
 
-                try {
+                if (!((MainActivity) getActivity()).voltandoNovo) {
+                    try {
 
 
+                        LayoutInflater factory = LayoutInflater.from(getContext());
+                        final View deleteDialogView = factory.inflate(
+                                R.layout.custom_dialog, null);
+                        final AlertDialog deleteDialog1 = new AlertDialog.Builder(getContext()).create();
+                        deleteDialog1.setView(deleteDialogView);
 
 
+                        TextView nTextView = (TextView) deleteDialogView.findViewById(R.id.txt_dia);
+                        nTextView.setText("Bebidas como café, chá, refrigerante, suco?");
 
+                        deleteDialogView.findViewById(R.id.btn_no).setOnClickListener(new View.OnClickListener() {
 
+                            @Override
+                            public void onClick(View v) {
 
 
+                                LayoutInflater factory = LayoutInflater.from(getContext());
+                                final View deleteDialogView = factory.inflate(
+                                        R.layout.custom_dialog, null);
+                                final AlertDialog deleteDialog0 = new AlertDialog.Builder(getContext()).create();
+                                deleteDialog0.setView(deleteDialogView);
 
+                                TextView nTextView = (TextView) deleteDialogView.findViewById(R.id.txt_dia);
+                                nTextView.setText("Leite materno?");
 
+                                deleteDialogView.findViewById(R.id.btn_no).setOnClickListener(new View.OnClickListener() {
 
+                                    @Override
+                                    public void onClick(View v) {
+                                        LayoutInflater factory = LayoutInflater.from(getContext());
+                                        final View deleteDialogView = factory.inflate(
+                                                R.layout.custom_dialog, null);
+                                        final AlertDialog deleteDialog3 = new AlertDialog.Builder(getContext()).create();
+                                        deleteDialog3.setView(deleteDialogView);
 
-                    LayoutInflater factory = LayoutInflater.from(getContext());
-                    final View deleteDialogView = factory.inflate(
-                            R.layout.custom_dialog, null);
-                    final AlertDialog deleteDialog1 = new AlertDialog.Builder(getContext()).create();
-                    deleteDialog1.setView(deleteDialogView);
+                                        TextView nTextView = (TextView) deleteDialogView.findViewById(R.id.txt_dia);
+                                        nTextView.setText("Doces como balas, chicletes e sobremesas?");
 
+                                        deleteDialogView.findViewById(R.id.btn_no).setOnClickListener(new View.OnClickListener() {
 
+                                            @Override
+                                            public void onClick(View v) {
 
-                    TextView nTextView = (TextView) deleteDialogView.findViewById(R.id.txt_dia);
-                    nTextView.setText("Bebidas como café, chá, refrigerante, suco?");
+                                                LayoutInflater factory = LayoutInflater.from(getContext());
+                                                final View deleteDialogView = factory.inflate(
+                                                        R.layout.custom_dialog, null);
+                                                final AlertDialog deleteDialog2 = new AlertDialog.Builder(getContext()).create();
+                                                deleteDialog2.setView(deleteDialogView);
 
-                    deleteDialogView.findViewById(R.id.btn_no).setOnClickListener(new View.OnClickListener() {
+                                                TextView nTextView = (TextView) deleteDialogView.findViewById(R.id.txt_dia);
+                                                nTextView.setText("Algum tipo de biscoito?");
 
-                        @Override
-                        public void onClick(View v) {
+                                                deleteDialogView.findViewById(R.id.btn_no).setOnClickListener(new View.OnClickListener() {
 
+                                                    @Override
+                                                    public void onClick(View v) {
 
+                                                        LayoutInflater factory = LayoutInflater.from(getContext());
+                                                        final View deleteDialogView = factory.inflate(
+                                                                R.layout.custom_dialog, null);
+                                                        final AlertDialog deleteDialog5 = new AlertDialog.Builder(getContext()).create();
+                                                        deleteDialog5.setView(deleteDialogView);
+
+                                                        TextView nTextView = (TextView) deleteDialogView.findViewById(R.id.txt_dia);
+                                                        nTextView.setText("Alguma fruta, pão ou qualquer outro alimento, bebida ou complemento alimentar?");
+
+                                                        deleteDialogView.findViewById(R.id.btn_no).setOnClickListener(new View.OnClickListener() {
 
+                                                            @Override
+                                                            public void onClick(View v) {
 
-                            LayoutInflater factory = LayoutInflater.from(getContext());
-                            final View deleteDialogView = factory.inflate(
-                                    R.layout.custom_dialog, null);
-                            final AlertDialog deleteDialog0 = new AlertDialog.Builder(getContext()).create();
-                            deleteDialog0.setView(deleteDialogView);
+                                                                LayoutInflater factory = LayoutInflater.from(getContext());
+                                                                final View deleteDialogView = factory.inflate(
+                                                                        R.layout.custom_dialog, null);
+                                                                final AlertDialog deleteDialog4 = new AlertDialog.Builder(getContext()).create();
+                                                                deleteDialog4.setView(deleteDialogView);
 
-                            TextView nTextView = (TextView) deleteDialogView.findViewById(R.id.txt_dia);
-                            nTextView.setText("Leite materno?");
+                                                                TextView nTextView = (TextView) deleteDialogView.findViewById(R.id.txt_dia);
+                                                                nTextView.setText("Açúcar, mel ou outro produto para adoçar algum alimento ou bebida?");
 
-                            deleteDialogView.findViewById(R.id.btn_no).setOnClickListener(new View.OnClickListener() {
+                                                                deleteDialogView.findViewById(R.id.btn_no).setOnClickListener(new View.OnClickListener() {
+                                                                    @Override
+                                                                    public void onClick(View v) {
+                                                                        deleteDialog4.dismiss();
+                                                                    }
+                                                                });
+                                                                deleteDialogView.findViewById(R.id.btn_yes).setOnClickListener(new View.OnClickListener() {
 
-                                @Override
-                                public void onClick(View v) {
-                                    LayoutInflater factory = LayoutInflater.from(getContext());
-                                    final View deleteDialogView = factory.inflate(
-                                            R.layout.custom_dialog, null);
-                                    final AlertDialog deleteDialog3 = new AlertDialog.Builder(getContext()).create();
-                                    deleteDialog3.setView(deleteDialogView);
+                                                                    @Override
+                                                                    public void onClick(View v) {
+                                                                        ((MainActivity) container.getContext()).mViewPager.setCurrentItem(1);
+                                                                        deleteDialog4.dismiss();
 
-                                    TextView nTextView = (TextView) deleteDialogView.findViewById(R.id.txt_dia);
-                                    nTextView.setText("Doces como balas, chicletes e sobremesas?");
+                                                                    }
+                                                                });
 
-                                    deleteDialogView.findViewById(R.id.btn_no).setOnClickListener(new View.OnClickListener() {
-
-                                        @Override
-                                        public void onClick(View v) {
-
-                                            LayoutInflater factory = LayoutInflater.from(getContext());
-                                            final View deleteDialogView = factory.inflate(
-                                                    R.layout.custom_dialog, null);
-                                            final AlertDialog deleteDialog2 = new AlertDialog.Builder(getContext()).create();
-                                            deleteDialog2.setView(deleteDialogView);
-
-                                            TextView nTextView = (TextView) deleteDialogView.findViewById(R.id.txt_dia);
-                                            nTextView.setText("Algum tipo de biscoito?");
-
-                                            deleteDialogView.findViewById(R.id.btn_no).setOnClickListener(new View.OnClickListener() {
-
-                                                @Override
-                                                public void onClick(View v) {
-
-                                                    LayoutInflater factory = LayoutInflater.from(getContext());
-                                                    final View deleteDialogView = factory.inflate(
-                                                            R.layout.custom_dialog, null);
-                                                    final AlertDialog deleteDialog5 = new AlertDialog.Builder(getContext()).create();
-                                                    deleteDialog5.setView(deleteDialogView);
-
-                                                    TextView nTextView = (TextView) deleteDialogView.findViewById(R.id.txt_dia);
-                                                    nTextView.setText("Alguma fruta, pão ou qualquer outro alimento, bebida ou complemento alimentar?");
-
-                                                    deleteDialogView.findViewById(R.id.btn_no).setOnClickListener(new View.OnClickListener() {
-
-                                                        @Override
-                                                        public void onClick(View v) {
-
-                                                            LayoutInflater factory = LayoutInflater.from(getContext());
-                                                            final View deleteDialogView = factory.inflate(
-                                                                    R.layout.custom_dialog, null);
-                                                            final AlertDialog deleteDialog4 = new AlertDialog.Builder(getContext()).create();
-                                                            deleteDialog4.setView(deleteDialogView);
-
-                                                            TextView nTextView = (TextView) deleteDialogView.findViewById(R.id.txt_dia);
-                                                            nTextView.setText("Açúcar, mel ou outro produto para adoçar algum alimento ou bebida?");
-
-                                                            deleteDialogView.findViewById(R.id.btn_no).setOnClickListener(new View.OnClickListener() {
-                                                                @Override
-                                                                public void onClick(View v) {
-                                                                    deleteDialog4.dismiss();
-                                                                }
-                                                            });
-                                                            deleteDialogView.findViewById(R.id.btn_yes).setOnClickListener(new View.OnClickListener() {
-
-                                                                @Override
-                                                                public void onClick(View v) {
-                                                                    ((MainActivity) container.getContext()).mViewPager.setCurrentItem(1);
-                                                                    deleteDialog4.dismiss();
-
-                                                                }
-                                                            });
-
-                                                            deleteDialog4.show();
-                                                            deleteDialog5.dismiss();
-                                                        }
-                                                    });
-                                                    deleteDialogView.findViewById(R.id.btn_yes).setOnClickListener(new View.OnClickListener() {
-
-                                                        @Override
-                                                        public void onClick(View v) {
-                                                            ((MainActivity) container.getContext()).mViewPager.setCurrentItem(1);
-                                                            deleteDialog5.dismiss();
-
-                                                        }
-                                                    });
-
-                                                    deleteDialog5.show();
-                                                    deleteDialog2.dismiss();
-                                                }
-                                            });
-                                            deleteDialogView.findViewById(R.id.btn_yes).setOnClickListener(new View.OnClickListener() {
-
-                                                @Override
-                                                public void onClick(View v) {
-                                                    ((MainActivity) container.getContext()).mViewPager.setCurrentItem(1);
-                                                    deleteDialog2.dismiss();
-
-                                                }
-                                            });
-
-                                            deleteDialog2.show();
-                                            deleteDialog3.dismiss();
-                                        }
-                                    });
-                                    deleteDialogView.findViewById(R.id.btn_yes).setOnClickListener(new View.OnClickListener() {
-
-                                        @Override
-                                        public void onClick(View v) {
-                                            ((MainActivity) container.getContext()).mViewPager.setCurrentItem(1);
-                                            deleteDialog3.dismiss();
-
-                                        }
-                                    });
-
-                                    deleteDialog3.show();
-                                    deleteDialog0.dismiss();
-                                }
-                            });
-                            deleteDialogView.findViewById(R.id.btn_yes).setOnClickListener(new View.OnClickListener() {
-
-                                @Override
-                                public void onClick(View v) {
-                                    ((MainActivity) container.getContext()).mViewPager.setCurrentItem(1);
-                                    deleteDialog0.dismiss();
-
-                                }
-                            });
-
-                            deleteDialog0.show();
-                            deleteDialog1.dismiss();
-                        }
-                    });
-                    deleteDialogView.findViewById(R.id.btn_yes).setOnClickListener(new View.OnClickListener() {
-
-                        @Override
-                        public void onClick(View v) {
-                            ((MainActivity) container.getContext()).mViewPager.setCurrentItem(1);
-                            deleteDialog1.dismiss();
-
-                        }
-                    });
-
-                    deleteDialog1.show();
-
-
-
-                    LayoutInflater factory11 = LayoutInflater.from(getContext());
-                    final View deleteDialogView11 = factory11.inflate(
-                            R.layout.custom_dialog10, null);
-                    final AlertDialog deleteDialog11 = new AlertDialog.Builder(getContext()).create();
-                    deleteDialog11.setView(deleteDialogView11);
-
-                    TextView nTextView1 = (TextView) deleteDialogView11.findViewById(R.id.txt_dia);
-                    nTextView1.setText("ATENÇÃO!\n Há alguns alimentos que às vezes são esquecidos e que fazem parte deste tipo de entrevista. Além dos alimentos e bebidas referidos pelo(a) Sr(a), a criança consumiu...");
-
-                    deleteDialogView11.findViewById(R.id.btn_yes).setOnClickListener(new View.OnClickListener() {
-
-                        @Override
-                        public void onClick(View v) {
-                            deleteDialog11.dismiss();
-                        }
-                    });
-
-                    deleteDialog11.show();
-
-
-                } catch (Exception e) {
-                    // TODO: handle exception
+                                                                deleteDialog4.show();
+                                                                deleteDialog5.dismiss();
+                                                            }
+                                                        });
+                                                        deleteDialogView.findViewById(R.id.btn_yes).setOnClickListener(new View.OnClickListener() {
+
+                                                            @Override
+                                                            public void onClick(View v) {
+                                                                ((MainActivity) container.getContext()).mViewPager.setCurrentItem(1);
+                                                                deleteDialog5.dismiss();
+
+                                                            }
+                                                        });
+
+                                                        deleteDialog5.show();
+                                                        deleteDialog2.dismiss();
+                                                    }
+                                                });
+                                                deleteDialogView.findViewById(R.id.btn_yes).setOnClickListener(new View.OnClickListener() {
+
+                                                    @Override
+                                                    public void onClick(View v) {
+                                                        ((MainActivity) container.getContext()).mViewPager.setCurrentItem(1);
+                                                        deleteDialog2.dismiss();
+
+                                                    }
+                                                });
+
+                                                deleteDialog2.show();
+                                                deleteDialog3.dismiss();
+                                            }
+                                        });
+                                        deleteDialogView.findViewById(R.id.btn_yes).setOnClickListener(new View.OnClickListener() {
+
+                                            @Override
+                                            public void onClick(View v) {
+                                                ((MainActivity) container.getContext()).mViewPager.setCurrentItem(1);
+                                                deleteDialog3.dismiss();
+
+                                            }
+                                        });
+
+                                        deleteDialog3.show();
+                                        deleteDialog0.dismiss();
+                                    }
+                                });
+                                deleteDialogView.findViewById(R.id.btn_yes).setOnClickListener(new View.OnClickListener() {
+
+                                    @Override
+                                    public void onClick(View v) {
+                                        ((MainActivity) container.getContext()).mViewPager.setCurrentItem(1);
+                                        deleteDialog0.dismiss();
+
+                                    }
+                                });
+
+                                deleteDialog0.show();
+                                deleteDialog1.dismiss();
+                            }
+                        });
+                        deleteDialogView.findViewById(R.id.btn_yes).setOnClickListener(new View.OnClickListener() {
+
+                            @Override
+                            public void onClick(View v) {
+                                ((MainActivity) container.getContext()).mViewPager.setCurrentItem(1);
+                                deleteDialog1.dismiss();
+
+                            }
+                        });
+
+                        deleteDialog1.show();
+
+
+                        LayoutInflater factory11 = LayoutInflater.from(getContext());
+                        final View deleteDialogView11 = factory11.inflate(
+                                R.layout.custom_dialog10, null);
+                        final AlertDialog deleteDialog11 = new AlertDialog.Builder(getContext()).create();
+                        deleteDialog11.setView(deleteDialogView11);
+
+                        TextView nTextView1 = (TextView) deleteDialogView11.findViewById(R.id.txt_dia);
+                        nTextView1.setText("ATENÇÃO!\n Há alguns alimentos que às vezes são esquecidos e que fazem parte deste tipo de entrevista. Além dos alimentos e bebidas referidos pelo(a) Sr(a), a criança consumiu...");
+
+                        deleteDialogView11.findViewById(R.id.btn_yes).setOnClickListener(new View.OnClickListener() {
+
+                            @Override
+                            public void onClick(View v) {
+                                deleteDialog11.dismiss();
+                            }
+                        });
+
+                        deleteDialog11.show();
+
+
+                    } catch (Exception e) {
+                        // TODO: handle exception
+                    }
                 }
 
             } else if (mPos == 4) {
@@ -351,8 +343,10 @@ public class FragmentViewPager extends android.support.v4.app.Fragment {
                         public void onClick(View arg0) {
                             if (contador < ((MainActivity) container.getContext()).mRecyclerView.getAdapter().getItemCount()-1) {
                                 ((MainActivity) container.getContext()).mRecyclerView.getAdapter().notifyItemMoved(0, ((MainActivity) container.getContext()).mRecyclerView.getAdapter().getItemCount() - 1);
+                                //((MainActivity) container.getContext()).mRecyclerView.getAdapter().notifyDataSetChanged();
                                 contador = contador + 1;
                             }else {
+                                TextViewAdiciona.setOnClickListener(null);
                                 TextViewAdiciona.setBackground(getResources().getDrawable(R.drawable.rounded_corner_red));
                                 TextViewAdiciona.setText("Finalizar entrevista");
                                 TextViewAdiciona.setOnClickListener(new View.OnClickListener() {
@@ -482,7 +476,7 @@ public class FragmentViewPager extends android.support.v4.app.Fragment {
 
         salvearquivo();
         deleteTUDO();
-        this.getActivity().finish();
+        android.os.Process.killProcess(android.os.Process.myPid());
 
     }
 

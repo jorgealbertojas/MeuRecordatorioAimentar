@@ -1,1 +1,1 @@
-include ':app', ':wcviewpager'
+include ':app'

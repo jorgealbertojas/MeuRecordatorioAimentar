@@ -4,16 +4,11 @@ import android.app.AlertDialog;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.pm.PackageManager;
 import android.database.sqlite.SQLiteDatabase;
 import android.os.Build;
-import android.support.annotation.RequiresApi;
-import android.support.v4.app.FragmentManager;
-import android.support.v4.app.FragmentPagerAdapter;
-import android.support.v4.view.ViewPager;
-import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
-import android.support.v7.widget.LinearLayoutManager;
-import android.support.v7.widget.RecyclerView;
+import android.os.Debug;
 import android.text.Editable;
 import android.text.TextWatcher;
 import android.util.Log;
@@ -27,7 +22,16 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 
-import android.support.design.widget.FloatingActionButton;
+import androidx.annotation.RequiresApi;
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentManager;
+import androidx.fragment.app.FragmentPagerAdapter;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
+import androidx.viewpager.widget.ViewPager;
+
+import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.gson.Gson;
 import com.softjads.jorge.meurecordatorio.Adapter.AlimentacaoAdapter;
 import com.softjads.jorge.meurecordatorio.Generica.EntrevistadoActivity;
@@ -40,12 +44,14 @@ import com.softjads.jorge.meurecordatorio.Model.Entrevistado;
 import com.softjads.jorge.meurecordatorio.PersistentData.DataBase;
 import com.softjads.jorge.meurecordatorio.PersistentData.DbCreate;
 import com.softjads.jorge.meurecordatorio.PersistentData.DbInstance;
+import com.softjads.jorge.meurecordatorio.Splash.SplashActivity;
 import com.softjads.jorge.meurecordatorio.Utilite.Common;
 import com.softjads.jorge.meurecordatorio.Utilite.CrunchifyJSONFileWrite;
 import com.softjads.jorge.meurecordatorio.Utilite.FragmentViewPager;
 import com.softjads.jorge.meurecordatorio.Utilite.Modulo;
 
-import org.json.simple.JSONArray;
+
+import org.json.JSONArray;
 
 import java.io.BufferedReader;
 import java.io.ByteArrayOutputStream;
@@ -72,7 +78,9 @@ public class MainActivity extends AppCompatActivity {
     public static int[] locationInScreen = new int[]{0,0};
 
     public int lastposition = 0;
-    private boolean voltando = false;
+    public boolean voltando = false;
+    public boolean voltandoNovo = false;
+    public int lastpositionNOVO = 0;
 
     public List<Alimentacao> dataPersistent = null;
 
@@ -111,7 +119,7 @@ public class MainActivity extends AppCompatActivity {
 
 
     private ImageView imagepiscar;
-    private ImageView mMenu;
+    private TextView descartar;
 
     public static String NOME = "0";
     public static String ID = "0";
@@ -130,6 +138,8 @@ public class MainActivity extends AppCompatActivity {
 
     public static Boolean mensagemInicial = true;
 
+    public static  TextView informacao;
+
 
 
     @Override
@@ -142,7 +152,13 @@ public class MainActivity extends AppCompatActivity {
 
         //carregarsuario_login();
 
-        //BEBETO
+        //1 - BEBETO
+        //Intent i = new Intent(MainActivity.this, SplashActivity.class);
+        //startActivity(i);
+        informacao = findViewById(R.id.informacao);
+        //informacao.setSelected(true);
+        informacao.setVisibility(View.GONE);
+
 
 
         frase = (TextView) findViewById(R.id.frase);
@@ -168,13 +184,13 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
-        // BEBETO
-        //CrunchifyJSONFileWrite CrunchifyJSONFileWrite = new CrunchifyJSONFileWrite();
-        //try {
-       //     CrunchifyJSONFileWrite.main(this);
-       //} catch (IOException e) {
-       //     e.printStackTrace();
-       //}
+        // 2 - BEBETO
+       //CrunchifyJSONFileWrite CrunchifyJSONFileWrite = new CrunchifyJSONFileWrite();
+      // try {
+       //    CrunchifyJSONFileWrite.main(this);
+      // } catch (IOException e) {
+      //      e.printStackTrace();
+      // }
 
         proximo = (ImageView) findViewById(R.id.proximo);
         anterior = (ImageView) findViewById(R.id.anterior);
@@ -197,6 +213,14 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onPageSelected(int position) {
 
+                if (lastpositionNOVO < position){
+
+                    voltandoNovo = false;
+                }else{
+                    voltandoNovo = true;
+                }
+                lastpositionNOVO = position;
+
 
                 if (position == 0) {
                     diaAtipico.setVisibility(View.VISIBLE);
@@ -204,14 +228,15 @@ public class MainActivity extends AppCompatActivity {
                     grauParentesco.setVisibility(View.VISIBLE);
                     grau_parentesco_hint.setVisibility(View.VISIBLE);
                     diaatipico_hint.setVisibility(View.VISIBLE);
+                    ListaEntrevistado.setVisibility(View.VISIBLE);
 
                     imagepiscar.setVisibility(View.INVISIBLE);
                     imagepiscar.setAnimation(null);
 
-                    anterior.setVisibility(View.INVISIBLE);
+/*                    anterior.setVisibility(View.INVISIBLE);
                     proximo.setVisibility(View.VISIBLE);
                     anterior_palavra.setVisibility(View.INVISIBLE);
-                    proximo_palavra.setVisibility(View.VISIBLE);
+                    proximo_palavra.setVisibility(View.VISIBLE);*/
                     frase.setVisibility(View.GONE);
                 }
 
@@ -220,13 +245,14 @@ public class MainActivity extends AppCompatActivity {
                     diaAtipico.setVisibility(View.GONE);
                     grau_parentesco_nome.setVisibility(View.GONE);
                     grauParentesco.setVisibility(View.GONE);
+                    ListaEntrevistado.setVisibility(View.GONE);
                     grau_parentesco_hint.setVisibility(View.GONE);
                     diaatipico_hint.setVisibility(View.GONE);
 
-                    anterior.setVisibility(View.VISIBLE);
+/*                    anterior.setVisibility(View.VISIBLE);
                     proximo.setVisibility(View.VISIBLE);
                     anterior_palavra.setVisibility(View.VISIBLE);
-                    proximo_palavra.setVisibility(View.VISIBLE);
+                    proximo_palavra.setVisibility(View.VISIBLE);*/
 
 
                     mRecyclerView.setVisibility(View.VISIBLE);
@@ -239,14 +265,15 @@ public class MainActivity extends AppCompatActivity {
                     diaAtipico.setVisibility(View.GONE);
                     grau_parentesco_nome.setVisibility(View.GONE);
                     grauParentesco.setVisibility(View.GONE);
+                    ListaEntrevistado.setVisibility(View.GONE);
                     grau_parentesco_hint.setVisibility(View.GONE);
                     diaatipico_hint.setVisibility(View.GONE);
 
 
-                    anterior.setVisibility(View.VISIBLE);
+/*                    anterior.setVisibility(View.VISIBLE);
                     proximo.setVisibility(View.VISIBLE);
                     anterior_palavra.setVisibility(View.VISIBLE);
-                    proximo_palavra.setVisibility(View.VISIBLE);
+                    proximo_palavra.setVisibility(View.VISIBLE);*/
 
                     imagepiscar.setVisibility(View.INVISIBLE);
                     imagepiscar.setAnimation(null);
@@ -264,14 +291,15 @@ public class MainActivity extends AppCompatActivity {
                     diaAtipico.setVisibility(View.GONE);
                     grau_parentesco_nome.setVisibility(View.GONE);
                     grauParentesco.setVisibility(View.GONE);
+                    ListaEntrevistado.setVisibility(View.GONE);
                     grau_parentesco_hint.setVisibility(View.GONE);
                     diaatipico_hint.setVisibility(View.GONE);
 
 
-                    anterior.setVisibility(View.VISIBLE);
+/*                    anterior.setVisibility(View.VISIBLE);
                     proximo.setVisibility(View.VISIBLE);
                     anterior_palavra.setVisibility(View.VISIBLE);
-                    proximo_palavra.setVisibility(View.VISIBLE);
+                    proximo_palavra.setVisibility(View.VISIBLE);*/
 
                     imagepiscar.setVisibility(View.INVISIBLE);
                     imagepiscar.setAnimation(null);
@@ -283,24 +311,28 @@ public class MainActivity extends AppCompatActivity {
                     frase.setVisibility(View.GONE);
 
                     if (voltando) {
-                        LayoutInflater factory2 = LayoutInflater.from(MainActivity.this);
-                        final View deleteDialogView2 = factory2.inflate(
-                                R.layout.custom_dialog10, null);
-                        final AlertDialog deleteDialog2 = new AlertDialog.Builder(MainActivity.this).create();
-                        deleteDialog2.setView(deleteDialogView2);
+                        if (!alimentacaoAdapter.estaFaltando) {
+                            LayoutInflater factory2 = LayoutInflater.from(MainActivity.this);
+                            final View deleteDialogView2 = factory2.inflate(
+                                    R.layout.custom_dialog10, null);
+                            final AlertDialog deleteDialog2 = new AlertDialog.Builder(MainActivity.this).create();
+                            deleteDialog2.setView(deleteDialogView2);
 
-                        TextView nTextView2 = (TextView) deleteDialogView2.findViewById(R.id.txt_dia);
-                        nTextView2.setText("Agora vamos falar sobre os horários e tipos de refeição (como café da manhã, almoço, lanche, jantar etc)");
+                            TextView nTextView2 = (TextView) deleteDialogView2.findViewById(R.id.txt_dia);
 
-                        deleteDialogView2.findViewById(R.id.btn_yes).setOnClickListener(new View.OnClickListener() {
+                            nTextView2.setText("Agora vamos falar sobre as refeições que " + NOME + " realizou (se era café da manhã, almoço, lanche, jantar etc) e incluir os horários das refeições)");
 
-                            @Override
-                            public void onClick(View v) {
-                                deleteDialog2.dismiss();
-                            }
-                        });
 
-                        deleteDialog2.show();
+                            deleteDialogView2.findViewById(R.id.btn_yes).setOnClickListener(new View.OnClickListener() {
+
+                                @Override
+                                public void onClick(View v) {
+                                    deleteDialog2.dismiss();
+                                }
+                            });
+
+                            deleteDialog2.show();
+                        }
                     }
 
 
@@ -309,6 +341,7 @@ public class MainActivity extends AppCompatActivity {
                     diaAtipico.setVisibility(View.GONE);
                     grau_parentesco_nome.setVisibility(View.GONE);
                     grauParentesco.setVisibility(View.GONE);
+                    ListaEntrevistado.setVisibility(View.GONE);
                     grau_parentesco_hint.setVisibility(View.GONE);
                     diaatipico_hint.setVisibility(View.GONE);
 
@@ -350,25 +383,27 @@ public class MainActivity extends AppCompatActivity {
 
 
 
+                        if (!alimentacaoAdapter.estaFaltando) {
+                            LayoutInflater factory2 = LayoutInflater.from(MainActivity.this);
+                            final View deleteDialogView2 = factory2.inflate(
+                                    R.layout.custom_dialog10, null);
+                            final AlertDialog deleteDialog2 = new AlertDialog.Builder(MainActivity.this).create();
+                            deleteDialog2.setView(deleteDialogView2);
 
-                        LayoutInflater factory2 = LayoutInflater.from(MainActivity.this);
-                        final View deleteDialogView2 = factory2.inflate(
-                                R.layout.custom_dialog10, null);
-                        final AlertDialog deleteDialog2 = new AlertDialog.Builder(MainActivity.this).create();
-                        deleteDialog2.setView(deleteDialogView2);
+                            TextView nTextView2 = (TextView) deleteDialogView2.findViewById(R.id.txt_dia);
+                            nTextView2.setText("Agora vamos detalhar todos os alimentos que o(a) Sr.(a) falou, em relação ao tipo de preparo, adição, quantidade e local das refeições.");
 
-                        TextView nTextView2 = (TextView) deleteDialogView2.findViewById(R.id.txt_dia);
-                        nTextView2.setText("Agora vamos detalhar todos os alimentos que o(a) Sr.(a) falou, em relação ao tipo de preparo, adição, quantidade e local das refeições.");
 
-                        deleteDialogView2.findViewById(R.id.btn_yes).setOnClickListener(new View.OnClickListener() {
+                            deleteDialogView2.findViewById(R.id.btn_yes).setOnClickListener(new View.OnClickListener() {
 
-                            @Override
-                            public void onClick(View v) {
-                                deleteDialog2.dismiss();
-                            }
-                        });
+                                @Override
+                                public void onClick(View v) {
+                                    deleteDialog2.dismiss();
+                                }
+                            });
 
-                        deleteDialog2.show();
+                            deleteDialog2.show();
+                        }
 
 
 
@@ -379,6 +414,7 @@ public class MainActivity extends AppCompatActivity {
                     diaAtipico.setVisibility(View.GONE);
                     grau_parentesco_nome.setVisibility(View.GONE);
                     grauParentesco.setVisibility(View.GONE);
+                    ListaEntrevistado.setVisibility(View.GONE);
                     grau_parentesco_hint.setVisibility(View.GONE);
                     diaatipico_hint.setVisibility(View.GONE);
 
@@ -406,7 +442,7 @@ public class MainActivity extends AppCompatActivity {
                         deleteDialog1.setView(deleteDialogView);
 
                         TextView nTextView = (TextView) deleteDialogView.findViewById(R.id.txt_dia);
-                        nTextView.setText("Agora vou ler todos os alimentos, horários e refeições realizados por " + entrevistado_nome.getText() + " ontem, para que confirme se todas as informações foram registradas corretamente");
+                        nTextView.setText("Agora eu vou ler todos os alimentos, horários e refeições realizados por " + entrevistado_nome.getText() + " ontem, para que a/o Sra(Sr) confirme se tudo foi registrado corretamente.");
 
                         deleteDialogView.findViewById(R.id.btn_yes).setOnClickListener(new View.OnClickListener() {
 
@@ -466,12 +502,12 @@ public class MainActivity extends AppCompatActivity {
             mDataBase = new DataBase(this);
             mDb = mDataBase.getReadableDatabase();
             DbInstance.getInstance(this);
-            // bebeto
+            // 3 - BEBETO
             Entrar();
 
 
 
-            // BEBETO
+            // 4 - BEBETO
            // if(savedInstanceState == null){
              //   Intent WSActivity = new Intent(this, LoginActivity.class);
                // startActivity(WSActivity);
@@ -481,26 +517,77 @@ public class MainActivity extends AppCompatActivity {
         }
 
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT) {
-            // BEBETO
+            // 5 - BEBETO
             if (!getEntrevistador()){
                 Toast.makeText(this, "ATENÇÃO! ESTE SISTEMA SÓ PODE SER CHAMADO PELO SISTEMA DE PESQUISA CSPRO" , Toast.LENGTH_LONG).show();
                 this.finish();
             }
+
+            // 6 - BEBETO
+            //insereEntrevistadoDemostracao();
+
         }
 
-        //BEBETO
-        //mDataBase.deleteentrevistadoTESTE();
+        //7 - BEBETO
+      // mDataBase.deleteentrevistadoTESTE();
 
 
 
-        mMenu = (ImageView) findViewById(R.id.imageViewMenu);
-        mMenu.setOnClickListener(new View.OnClickListener() {
+        descartar = (TextView) findViewById(R.id.tx_descartar);
+        descartar.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View arg0) {
                 try {
-                    Class destinationClass = ConfiguracaoActivity.class;
+/*                    Class destinationClass = ConfiguracaoActivity.class;
                     Intent intentToStartConfiguracaoActivity= new Intent(getBaseContext(), destinationClass);
-                    startActivity(intentToStartConfiguracaoActivity);
+                    startActivity(intentToStartConfiguracaoActivity);*/
+                    AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(MainActivity.this);
+                    alertDialogBuilder.setTitle("Recordatório 24h.");
+                    alertDialogBuilder
+                            .setMessage("Você tem certeza que quer descartar o recordatório de 24h que está sendo preenchido?")
+                            .setCancelable(false)
+                            .setPositiveButton("Sim",
+                                    new DialogInterface.OnClickListener() {
+                                        public void onClick(DialogInterface dialog, int id) {
+
+                                            AlertDialog.Builder alertDialogBuilder2 = new AlertDialog.Builder(MainActivity.this);
+                                            alertDialogBuilder2.setTitle("Recordatório 24h.");
+                                            alertDialogBuilder2
+                                                    .setMessage("Ao descartar, você não poderá recuperar os alimentos que foram incluídos até agora. Tem certeza que deseja descartar?")
+                                                    .setCancelable(false)
+                                                    .setPositiveButton("Sim",
+                                                            new DialogInterface.OnClickListener() {
+                                                                public void onClick(DialogInterface dialog, int id) {
+
+                                                                    closeApplication();
+
+
+                                                                }
+                                                            })
+
+                                                    .setNegativeButton("Não", new DialogInterface.OnClickListener() {
+                                                        public void onClick(DialogInterface dialog, int id) {
+
+                                                            dialog.cancel();
+                                                        }
+                                                    });
+
+                                            AlertDialog alertDialog2 = alertDialogBuilder2.create();
+                                            alertDialog2.show();
+
+
+                                        }
+                                    })
+
+                            .setNegativeButton("Não", new DialogInterface.OnClickListener() {
+                                public void onClick(DialogInterface dialog, int id) {
+
+                                    dialog.cancel();
+                                }
+                            });
+
+                    AlertDialog alertDialog = alertDialogBuilder.create();
+                    alertDialog.show();
                 } catch (Exception e) {
                     // TODO: handle exception
                 }
@@ -948,13 +1035,62 @@ public class MainActivity extends AppCompatActivity {
         } finally {
 
         }
-        //bebeto
-         //  fileExist.delete();
+        // 8 - BEBETO
+        if (!BuildConfig.DEBUG){
+           fileExist.delete();
+        }
+
             return true;
         }else{
             return false;
 
         }
+    }
+
+
+    public void insereEntrevistadoDemostracao() {
+
+
+
+
+        Entrevistado entrevistado1 = new Entrevistado();
+        entrevistado1.setEntrevistado_id("1");
+        entrevistado1.setEntrevistado("ENTREVISTADO 1");
+
+        Entrevistado entrevistado2 = new Entrevistado();
+        entrevistado2.setEntrevistado_id("2");
+        entrevistado2.setEntrevistado("ENTREVISTADO 2");
+
+        Entrevistado entrevistado3 = new Entrevistado();
+        entrevistado3.setEntrevistado_id("3");
+        entrevistado3.setEntrevistado("ENTREVISTADO 3");
+
+
+        List<Entrevistado> data = new ArrayList<>();
+        data.add(entrevistado1);
+        data.add(entrevistado2);
+        data.add(entrevistado3);
+
+        // Persistent Data for SQLLite
+        mDataBase = new DataBase(this);
+
+        if (!(mDataBase.getListEntrevistadoEXISTE(entrevistado1.getEntrevistado_id()))) {
+            mDataBase.insertTABLE_ENTREVISTADO(data);
+        }
+
+
+
+
+        Modulo.OPCAO = "ENTREVISTADO";
+        Modulo.NOME = entrevistado1.getEntrevistado();
+        Modulo.ID = entrevistado1.getEntrevistado_id();
+
+        NOME = entrevistado1.getEntrevistado();
+        ID = entrevistado1.getEntrevistado_id();
+        USUARIO = "SOFTJADS";
+
+
+
     }
 
 
@@ -1014,7 +1150,7 @@ public class MainActivity extends AppCompatActivity {
         }
 
         @Override
-        public android.support.v4.app.Fragment getItem(int pos) {
+        public Fragment getItem(int pos) {
             switch (pos) {
                 case 0:
                     return FragmentViewPager.newInstance("Identificação","Arraste para o lado esquerdo para ir ao Passo 1", R.mipmap.ic_id, pos,USUARIO);
@@ -1040,18 +1176,18 @@ public class MainActivity extends AppCompatActivity {
     @Override
     public void onBackPressed() {
         AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(this);
-        alertDialogBuilder.setTitle("Recordátorio 24h.");
+        alertDialogBuilder.setTitle("Recordatório 24h.");
         alertDialogBuilder
-                .setMessage("Finalizou o recordatorio?")
+                .setMessage("Quer descartar esse recordatório de 24h?")
                 .setCancelable(false)
                 .setPositiveButton("Sim",
                         new DialogInterface.OnClickListener() {
                             public void onClick(DialogInterface dialog, int id) {
 
                                 AlertDialog.Builder alertDialogBuilder2 = new AlertDialog.Builder(MainActivity.this);
-                                alertDialogBuilder2.setTitle("Recordátorio 24h.");
+                                alertDialogBuilder2.setTitle("Recordatório 24h.");
                                 alertDialogBuilder2
-                                        .setMessage("O sistema será fechado! Tem certeza que deseja finalizar? Todas as informações não finalizadas serão perdidas!")
+                                        .setMessage("Todos os alimentos incluídos serão perdidos. Tem certeza que deseja descartar?")
                                         .setCancelable(false)
                                         .setPositiveButton("Sim",
                                                 new DialogInterface.OnClickListener() {
@@ -1091,11 +1227,11 @@ public class MainActivity extends AppCompatActivity {
     private void closeApplication() {
         System.out.println("closeApplication ");
 
-
+        // 9 - BEBETO
         deleteTUDO();
 
+        android.os.Process.killProcess(android.os.Process.myPid());
 
-        this.finish();
     }
 
     @Override
@@ -1124,7 +1260,8 @@ public class MainActivity extends AppCompatActivity {
         int i = 0;
         for (Help help : helpList) {
             int valueID = 0;
-            valueID = Common.getResourceString(help.getMkey());
+            int id_view = getResources().getIdentifier(help.getMkey(), "id", getPackageName());
+            valueID = Common.getResourceString(help.getMkey(), id_view );
             if (valueID != 0) {
                 View vievHelp2 = (View) root.findViewById(valueID);
 
@@ -1205,12 +1342,36 @@ public class MainActivity extends AppCompatActivity {
                 helpList.add(help);
             }
 
-
-
             mDataBase.insertTABLE_HELP(helpList);
         } catch (Exception e) {
             //   errorLog(e.toString());
         }
     }
+
+
+
+/*    @Override
+    public void onRequestPermissionsResult(int requestCode, String[] permissions,
+                                           int[] grantResults) {
+        switch (requestCode) {
+            case PERMISSION_REQUEST_CODE:
+                // If request is cancelled, the result arrays are empty.
+                if (grantResults.length > 0 &&
+                        grantResults[0] == PackageManager.PERMISSION_GRANTED) {
+                    // Permission is granted. Continue the action or workflow
+                    // in your app.
+                }  else {
+                    // Explain to the user that the feature is unavailable because
+                    // the feature requires a permission that the user has denied.
+                    // At the same time, respect the user's decision. Don't link to
+                    // system settings in an effort to convince the user to change
+                    // their decision.
+                }
+                return;
+        }
+        // Other 'case' lines to check for other
+        // permissions this app might request.
+    }*/
+
 
 }

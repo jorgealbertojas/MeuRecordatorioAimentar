@@ -1,15 +1,16 @@
 package com.softjads.jorge.meurecordatorio.Generica;
 
 import android.os.Bundle;
-import android.support.v7.app.AppCompatActivity;
-import android.support.v7.widget.LinearLayoutManager;
-import android.support.v7.widget.RecyclerView;
 import android.text.Editable;
 import android.text.TextWatcher;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.ProgressBar;
 import android.widget.TextView;
+
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
 import com.softjads.jorge.meurecordatorio.Adapter.UnidadeAdapter;
 import com.softjads.jorge.meurecordatorio.Model.Unidade;
@@ -102,6 +103,9 @@ public class UnidadeActivity extends AppCompatActivity {
             dataPersistent = mDataBase.getListUnidade(mAlimento);
         }
 
+        if (dataPersistent.size()==0) {
+            dataPersistent = mDataBase.getListUnidade();
+        }
 
         if (dataPersistent.size()>0) {
             mRecyclerView.setAdapter(new UnidadeAdapter(dataPersistent));

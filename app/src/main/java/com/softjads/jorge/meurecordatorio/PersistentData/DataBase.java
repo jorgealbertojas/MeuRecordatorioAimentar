@@ -654,19 +654,25 @@ public class DataBase extends SQLiteOpenHelper {
 
         mDb = this.getWritableDatabase();
 
+        String temp = "TESTE";
+
         Cursor cursor = mDb.rawQuery(DbSelect.GET_UNIDADE + " AND UA." + Field.FIELD_UNIDADE_ALIMENTO_ID + " =  ? AND U."+ Field.FIELD_UNIDADE + " LIKE '%" + partNome + "%'",new String[] {(alimento)});
         cursor.moveToFirst();
         while(!cursor.isAfterLast() ){
             Unidade unidade = new Unidade();
 
             try {
-                unidade.setUnidade_id(cursor.getString(cursor.getColumnIndex(Field.FIELD_UNIDADE_ID)));
-                unidade.setUnidade(cursor.getString(cursor.getColumnIndex(Field.FIELD_UNIDADE)));
+                if (!temp.equals(cursor.getString(cursor.getColumnIndex(Field.FIELD_UNIDADE_ID)))) {
+                    unidade.setUnidade_id(cursor.getString(cursor.getColumnIndex(Field.FIELD_UNIDADE_ID)));
+                    unidade.setUnidade(cursor.getString(cursor.getColumnIndex(Field.FIELD_UNIDADE)));
+                    unidadeList.add(unidade);
+                }
+                temp = cursor.getString(cursor.getColumnIndex(Field.FIELD_UNIDADE_ID));
 
             } catch (Exception e) {
                 System.out.println(e.getMessage());
             }
-            unidadeList.add(unidade);
+
             cursor.moveToNext();
         }
         cursor.close();

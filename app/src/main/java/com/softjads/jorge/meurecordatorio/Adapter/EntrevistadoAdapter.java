@@ -2,11 +2,12 @@ package com.softjads.jorge.meurecordatorio.Adapter;
 
 import android.app.Activity;
 import android.content.Context;
-import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
+
+import androidx.recyclerview.widget.RecyclerView;
 
 import com.softjads.jorge.meurecordatorio.Model.Entrevistado;
 import com.softjads.jorge.meurecordatorio.R;

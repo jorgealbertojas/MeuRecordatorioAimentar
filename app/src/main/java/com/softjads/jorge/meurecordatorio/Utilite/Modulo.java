@@ -25,9 +25,14 @@ public class Modulo {
 
     public static String storage = "/storage/emulated/0/";
 
+    // 10 - BEBETO
     public static String storageCliente = "/storage/emulated/0/csentry/inani/";
 
+    //public static String storageCliente = "/storage/emulated/0/";
+
+    // 11 - BEBETO
     public static String filename  = "inaniR.txt";
+    //public static String filename  = "recordatorio24h.txt";
 
     public static String NomeCopia = "backup_";
 

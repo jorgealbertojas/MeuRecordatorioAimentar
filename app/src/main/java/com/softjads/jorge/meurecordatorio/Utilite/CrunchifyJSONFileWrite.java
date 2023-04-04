@@ -4,8 +4,9 @@ import android.annotation.TargetApi;
 import android.content.Context;
 import android.database.sqlite.SQLiteDatabase;
 import android.os.Build;
-import android.support.annotation.RequiresApi;
 import android.util.Log;
+
+import androidx.annotation.RequiresApi;
 
 import com.softjads.jorge.meurecordatorio.Model.Adicao;
 import com.softjads.jorge.meurecordatorio.Model.AdicaoAlimento;
@@ -20,6 +21,11 @@ import com.softjads.jorge.meurecordatorio.PersistentData.DataBase;
 import com.softjads.jorge.meurecordatorio.PersistentData.DbCreate;
 import com.softjads.jorge.meurecordatorio.PersistentData.DbInstance;
 
+
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
+
 import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileReader;
@@ -28,8 +34,6 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
-import org.json.simple.JSONArray;
-import org.json.simple.JSONObject;
 
 import static com.softjads.jorge.meurecordatorio.Utilite.Modulo.storage;
 
@@ -83,7 +87,7 @@ public class CrunchifyJSONFileWrite {
                 BufferedReader br = new BufferedReader(new FileReader(file));
                 String line;
 
-                JSONArray items = new JSONArray();
+                JSONArray items = new       JSONArray();
 
                 List<Alimento> data = new ArrayList<>();
 
@@ -102,7 +106,7 @@ public class CrunchifyJSONFileWrite {
                     alimento.setAlimento(nome);
                     data.add(alimento);
 
-                    items.add(obj);
+                    items.put(obj);
 
 
                 }
@@ -112,7 +116,7 @@ public class CrunchifyJSONFileWrite {
 
                // escreveJson(items,nomearquivo);
                 br.close();
-            } catch (IOException e) {
+            } catch (IOException | JSONException e) {
                 e.printStackTrace();
 
             } finally {
@@ -154,7 +158,7 @@ public class CrunchifyJSONFileWrite {
                 adicao.setAdicao(nome);
                 data.add(adicao);
 
-                items.add(obj);
+                items.put(obj);
 
 
             }
@@ -164,7 +168,7 @@ public class CrunchifyJSONFileWrite {
 
             // escreveJson(items,nomearquivo);
             br.close();
-        } catch (IOException e) {
+        } catch (IOException | JSONException e) {
             e.printStackTrace();
 
         } finally {
@@ -214,7 +218,7 @@ public class CrunchifyJSONFileWrite {
             mDataBase.insertTABLE_ADICAO_ALIMENTO(data);
             //escreveJson(items, nomearquivo);
             br.close();
-        } catch (IOException e) {
+        } catch (IOException | JSONException e) {
             e.printStackTrace();
 
         } finally {
@@ -250,14 +254,14 @@ public class CrunchifyJSONFileWrite {
                 obj.put("entrevistado_id", id);
                 obj.put("entrevistado_id", nome);
 
-                items.add(obj);
+                items.put(obj);
 
 
             }
 
             escreveJson(items, nomearquivo);
             br.close();
-        } catch (IOException e) {
+        } catch (IOException | JSONException e) {
             e.printStackTrace();
 
         } finally {
@@ -306,7 +310,7 @@ public class CrunchifyJSONFileWrite {
             mDataBase.insertTABLE_LOCAL(data);
             //escreveJson(items, nomearquivo);
             br.close();
-        } catch (IOException e) {
+        } catch (IOException | JSONException e) {
             e.printStackTrace();
 
         } finally {
@@ -355,7 +359,7 @@ public class CrunchifyJSONFileWrite {
             mDataBase.insertTABLE_OCASIAO_CONSUMO(data);
             //escreveJson(items, nomearquivo);
             br.close();
-        } catch (IOException e) {
+        } catch (IOException | JSONException e) {
             e.printStackTrace();
 
         } finally {
@@ -403,7 +407,7 @@ public class CrunchifyJSONFileWrite {
             mDataBase.insertTABLE_PREPARACAO(data);
             //escreveJson(items, nomearquivo);
             br.close();
-        } catch (IOException e) {
+        } catch (IOException | JSONException e) {
             e.printStackTrace();
 
         } finally {
@@ -451,7 +455,7 @@ public class CrunchifyJSONFileWrite {
             mDataBase.insertTABLE_PREPARACAO_ALIMENTO(data);
             //escreveJson(items, nomearquivo);
             br.close();
-        } catch (IOException e) {
+        } catch (IOException | JSONException e) {
             e.printStackTrace();
 
         } finally {
@@ -499,7 +503,7 @@ public class CrunchifyJSONFileWrite {
             mDataBase.insertTABLE_UNIDADE(data);
             //escreveJson(items, nomearquivo);
             br.close();
-        } catch (IOException e) {
+        } catch (IOException | JSONException e) {
             e.printStackTrace();
 
         } finally {
@@ -547,7 +551,7 @@ public class CrunchifyJSONFileWrite {
             mDataBase.insertTABLE_UNIDADE_ALIMENTO(data);
             //escreveJson(items, nomearquivo);
             br.close();
-        } catch (IOException e) {
+        } catch (IOException | JSONException e) {
             e.printStackTrace();
 
         } finally {
@@ -581,14 +585,14 @@ public class CrunchifyJSONFileWrite {
                 obj.put("usuario", id);
                 obj.put("senha", nome);
 
-                items.add(obj);
+                items.put(obj);
 
 
             }
 
             escreveJson(items, nomearquivo);
             br.close();
-        } catch (IOException e) {
+        } catch (IOException | JSONException e) {
             e.printStackTrace();
 
         } finally {
@@ -599,7 +603,7 @@ public class CrunchifyJSONFileWrite {
 
 
     @RequiresApi(api = Build.VERSION_CODES.KITKAT)
-    public static void escreveJson(JSONArray items, String partNameFile){
+    public static void escreveJson(JSONArray items, String partNameFile) throws JSONException {
 
         JSONObject obj = new JSONObject();
 
@@ -607,7 +611,7 @@ public class CrunchifyJSONFileWrite {
 
         // try-with-resources statement based on post comment below :)
         try (FileWriter file = new FileWriter(storage + partNameFile + "file.txt")) {
-            file.write(obj.toJSONString());
+            file.write(obj.toString());
             System.out.println("Successfully Copied JSON Object to File...");
             System.out.println("\nJSON Object: " + obj);
         } catch (IOException e) {

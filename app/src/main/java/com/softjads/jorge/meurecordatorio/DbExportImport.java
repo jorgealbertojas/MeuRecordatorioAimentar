@@ -4,9 +4,6 @@ import android.Manifest;
 import android.content.pm.PackageManager;
 import android.graphics.Typeface;
 import android.os.Build;
-import android.support.v4.app.ActivityCompat;
-import android.support.v4.content.ContextCompat;
-import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.text.format.Time;
 import android.view.MotionEvent;
@@ -17,7 +14,14 @@ import android.widget.ImageButton;
 import android.widget.LinearLayout;
 import android.widget.Toast;
 
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.app.ActivityCompat;
+import androidx.core.content.ContextCompat;
+
 import com.softjads.jorge.meurecordatorio.Utilite.Modulo;
+import com.softjads.jorge.meurecordatorio.Utilite.testeJorge;
+
+import org.json.JSONException;
 
 import java.io.File;
 import java.io.FileInputStream;
@@ -122,6 +126,29 @@ public class DbExportImport extends AppCompatActivity {
                     if (!bkp_selecionado.toString().equals("")){
                         String nomeRestauracao = bkp_selecionado;
                         restaura_bkp( Modulo.storage+nomeRestauracao,Modulo.caminhobanco);
+
+
+
+                        // 2 - BEBETO
+                        testeJorge CrunchifyJSONFileWrite = new testeJorge();
+                        try {
+                            CrunchifyJSONFileWrite.main(getApplicationContext(),"DUDA_"+ nomeRestauracao);
+                        } catch (IOException e) {
+                            e.printStackTrace();
+                        } catch (JSONException e) {
+                            e.printStackTrace();
+                        }
+
+
+                        if (!bkp_selecionado.toString().equals("")){
+                            DeleteBKP(Modulo.storage+nomeRestauracao);
+                            ll.removeAllViewsInLayout();
+                            PreencherBKP(Modulo.storage,NomeCopia);
+
+                       }
+
+
+
                         Toast.makeText(DbExportImport.this, "Restauração com sucesso!" , Toast.LENGTH_LONG).show();
 
                     }else
@@ -145,6 +172,9 @@ public class DbExportImport extends AppCompatActivity {
                     DeleteBKP(Modulo.storage+nomeRestauracao);
                     ll.removeAllViewsInLayout();
                     PreencherBKP(Modulo.storage,NomeCopia);
+
+
+
                     Toast.makeText(DbExportImport.this, "Excluido com sucesso!" , Toast.LENGTH_LONG).show();
 
                 }else

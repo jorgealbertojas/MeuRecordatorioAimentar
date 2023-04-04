@@ -1,12 +1,12 @@
 <?xml version="1.0" encoding="utf-8"?>
-<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:layout_marginTop="8dp">
 
-    <android.support.v7.widget.CardView xmlns:card_view="http://schemas.android.com/apk/res-auto"
+    <androidx.cardview.widget.CardView
         android:id="@+id/card_view"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -14,47 +14,45 @@
         android:layout_marginLeft="8dp"
         android:layout_marginTop="8dp"
         android:layout_marginRight="8dp"
-        card_view:cardCornerRadius="4dp"
-        card_view:cardElevation="5dp"
-        card_view:cardMaxElevation="5dp"
-        card_view:contentPadding="5dp"
-        card_view:layout_constraintLeft_toLeftOf="parent"
-        card_view:layout_constraintTop_toTopOf="parent">
+        app:cardCornerRadius="4dp"
+        app:cardElevation="5dp"
+        app:cardMaxElevation="5dp"
+        app:contentPadding="5dp"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
 
-        <android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
-            xmlns:app="http://schemas.android.com/apk/res-auto"
-            xmlns:tools="http://schemas.android.com/tools"
+        <androidx.constraintlayout.widget.ConstraintLayout
             android:id="@+id/constraintLayout_alimento"
             android:layout_width="match_parent"
             android:layout_height="wrap_content">
 
             <TextView
                 android:id="@+id/tv_alimento"
-                android:layout_width="296dp"
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:layout_marginStart="10dp"
                 android:lines="2"
-                android:paddingLeft="10dp"
-                android:paddingTop="10dp"
-                android:text="tv_alimento"
+                android:paddingTop="2dp"
+                android:text="0"
                 android:textColor="@color/colorPrimary"
                 android:textSize="18sp"
                 android:textStyle="bold"
-                app:layout_constraintEnd_toStartOf="@+id/rl_RelativeLayout"
-                app:layout_constraintTop_toBottomOf="@+id/tv_hora" />
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/tv_local" />
 
             <TextView
 
                 android:id="@+id/tv_local"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:layout_below="@+id/tv_alimento"
+                android:layout_below="@+id/tv_ocasiao_consumo"
                 android:layout_marginEnd="8dp"
                 android:layout_marginStart="8dp"
-                android:layout_marginTop="8dp"
+                android:layout_marginTop="2dp"
                 android:layout_toRightOf="@+id/space"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/tv_alimento" />
+                app:layout_constraintTop_toBottomOf="@+id/tv_ocasiao_consumo" />
 
             <TextView
 
@@ -68,7 +66,7 @@
                 android:layout_toRightOf="@+id/space"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/tv_local" />
+                app:layout_constraintTop_toBottomOf="@+id/tv_hora" />
 
             <TextView
 
@@ -76,13 +74,13 @@
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_below="@+id/tv_alimento"
-                android:layout_marginEnd="8dp"
                 android:layout_marginStart="8dp"
-                android:layout_marginTop="8dp"
+                android:layout_marginEnd="8dp"
+                android:layout_marginTop="2dp"
                 android:layout_toRightOf="@+id/space"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/tv_ocasiao_consumo" />
+                app:layout_constraintTop_toBottomOf="@+id/tv_quantidade" />
 
             <TextView
 
@@ -90,13 +88,13 @@
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_below="@+id/tv_alimento"
-                android:layout_marginEnd="8dp"
                 android:layout_marginStart="8dp"
-                android:layout_marginTop="8dp"
+                android:layout_marginEnd="8dp"
+                android:layout_marginTop="2dp"
                 android:layout_toRightOf="@+id/space"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/tv_unidade" />
+                app:layout_constraintTop_toBottomOf="@+id/tv_preparacao" />
 
             <TextView
 
@@ -106,11 +104,11 @@
                 android:layout_below="@+id/tv_alimento"
                 android:layout_marginEnd="8dp"
                 android:layout_marginStart="8dp"
-                android:layout_marginTop="8dp"
+                android:layout_marginTop="2dp"
                 android:layout_toRightOf="@+id/space"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/tv_adicao" />
+                app:layout_constraintTop_toBottomOf="@+id/tv_alimento" />
 
 
             <TextView
@@ -125,7 +123,7 @@
                 android:textColor="@color/colorPrimary"
                 android:textStyle="bold"
                 app:layout_constraintLeft_toRightOf="@+id/iv_dia_coleta"
-                app:layout_constraintTop_toBottomOf="@+id/tv_preparacao" />
+                app:layout_constraintTop_toBottomOf="@+id/tv_unidade" />
 
             <TextView
                 android:id="@+id/tv_hora_coleta"
@@ -139,7 +137,7 @@
                 android:textColor="@color/colorPrimary"
                 android:textStyle="bold"
                 app:layout_constraintLeft_toRightOf="@+id/iv_hora_coleta"
-                app:layout_constraintTop_toBottomOf="@+id/tv_preparacao" />
+                app:layout_constraintTop_toBottomOf="@+id/tv_unidade" />
 
             <TextView
                 android:id="@+id/tv_usuario"
@@ -153,7 +151,7 @@
                 android:textColor="@color/colorPrimary"
                 android:textStyle="bold"
                 app:layout_constraintLeft_toRightOf="@+id/iv_usuario"
-                app:layout_constraintTop_toBottomOf="@+id/tv_preparacao" />
+                app:layout_constraintTop_toBottomOf="@+id/tv_unidade" />
 
             <TextView
 
@@ -168,7 +166,7 @@
                 android:textColor="@color/colorPrimary"
                 android:textStyle="bold"
                 app:layout_constraintLeft_toRightOf="@+id/iv_responsavel"
-                app:layout_constraintTop_toBottomOf="@+id/tv_preparacao" />
+                app:layout_constraintTop_toBottomOf="@+id/tv_unidade" />
 
             <ImageView
                 android:id="@+id/iv_dia_coleta"
@@ -178,7 +176,7 @@
                 android:layout_marginLeft="8dp"
                 android:layout_marginTop="8dp"
                 app:layout_constraintLeft_toRightOf="@+id/tv_hora_coleta"
-                app:layout_constraintTop_toBottomOf="@+id/tv_preparacao"
+                app:layout_constraintTop_toBottomOf="@+id/tv_unidade"
                 app:srcCompat="@mipmap/ic_day" />
 
             <ImageView
@@ -190,7 +188,7 @@
                 android:layout_marginTop="8dp"
                 android:scaleType="centerInside"
                 app:layout_constraintLeft_toLeftOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/tv_preparacao"
+                app:layout_constraintTop_toBottomOf="@+id/tv_unidade"
                 app:srcCompat="@mipmap/ic_hour" />
 
             <ImageView
@@ -201,7 +199,7 @@
                 android:layout_marginLeft="8dp"
                 android:layout_marginTop="8dp"
                 app:layout_constraintLeft_toRightOf="@+id/tv_dia_coleta"
-                app:layout_constraintTop_toBottomOf="@+id/tv_preparacao"
+                app:layout_constraintTop_toBottomOf="@+id/tv_unidade"
                 app:srcCompat="@mipmap/ic_user" />
 
             <ImageView
@@ -212,7 +210,7 @@
                 android:layout_marginLeft="8dp"
                 android:layout_marginTop="8dp"
                 app:layout_constraintLeft_toRightOf="@+id/tv_usuario"
-                app:layout_constraintTop_toBottomOf="@+id/tv_preparacao"
+                app:layout_constraintTop_toBottomOf="@+id/tv_unidade"
                 app:srcCompat="@mipmap/ic_responsavel" />
 
             <RelativeLayout
@@ -254,9 +252,12 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="0"
+                android:paddingLeft="10dp"
                 android:textAlignment="center"
                 android:textColor="@color/colorAccent"
-                android:textStyle="bold" />
+                android:textStyle="bold"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
 
             <TextView
                 android:id="@+id/tv_quantidade"
@@ -264,14 +265,17 @@
                 android:layout_height="wrap_content"
                 android:paddingLeft="10dp"
                 android:text="0"
+                android:layout_marginTop="2dp"
                 android:textAlignment="center"
                 android:textColor="@color/colorPrimary"
                 android:textStyle="bold"
-                app:layout_constraintLeft_toRightOf="@+id/tv_hora" />
+                app:layout_constraintLeft_toRightOf="@+id/tv_hora"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/tv_adicao" />
 
 
-        </android.support.constraint.ConstraintLayout>
-    </android.support.v7.widget.CardView>
+        </androidx.constraintlayout.widget.ConstraintLayout>
+    </androidx.cardview.widget.CardView>
 
 
-</android.support.constraint.ConstraintLayout>
+</androidx.constraintlayout.widget.ConstraintLayout>

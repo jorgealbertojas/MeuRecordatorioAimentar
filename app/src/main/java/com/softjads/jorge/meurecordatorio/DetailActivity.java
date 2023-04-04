@@ -7,8 +7,6 @@ import android.content.Context;
 import android.content.Intent;
 import android.database.sqlite.SQLiteDatabase;
 import android.graphics.Typeface;
-import android.support.design.widget.FloatingActionButton;
-import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.text.Editable;
 import android.text.InputType;
@@ -23,9 +21,13 @@ import android.widget.CheckBox;
 import android.widget.CompoundButton;
 import android.widget.EditText;
 import android.widget.LinearLayout;
+import android.widget.RadioButton;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import androidx.appcompat.app.AppCompatActivity;
+
+import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.softjads.jorge.meurecordatorio.Generica.AdicaoActivity;
 import com.softjads.jorge.meurecordatorio.Generica.AlimentoActivity;
 import com.softjads.jorge.meurecordatorio.Generica.LocalActivity;
@@ -109,6 +111,10 @@ public class DetailActivity extends AppCompatActivity {
     EditText horaEditText;
     TextView minutoEditText;
     public static EditText quantidadeEditText;
+    public static EditText quantidadeEditText2;
+    public static RadioButton rbFotoManual;
+    public static RadioButton rbMedidaCaseira;
+    public static RadioButton rbGramaMl;
 
     TextView tv_deletar_alimento;
     TextView tv_duplicar_alimento;
@@ -128,7 +134,11 @@ public class DetailActivity extends AppCompatActivity {
     TextView tv_entrar_obs;
 
     Button buttonfracao;
-    Button buttonvirgula;
+    Button buttonfracao2;
+    Button buttonfracao3;
+    Button buttonfracao4;
+    Button buttonfracao5;
+
     Button buttonvirgula_espessura;
 
     public static EditText espessura;
@@ -223,6 +233,58 @@ public class DetailActivity extends AppCompatActivity {
         quantidadeEditText = (EditText) findViewById(R.id.quantidade);
         quantidadeEditText.setInputType(InputType.TYPE_CLASS_NUMBER);
 
+        quantidadeEditText2 = (EditText) findViewById(R.id.quantidade2);
+        quantidadeEditText2.setInputType(InputType.TYPE_CLASS_NUMBER);
+
+        rbFotoManual = (RadioButton) findViewById(R.id.rb_foto_manual);
+        rbMedidaCaseira = (RadioButton) findViewById(R.id.rb_medida_caseira);
+        rbGramaMl = (RadioButton) findViewById(R.id.rb_grama_ou_ml);
+
+        rbFotoManual.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View arg0) {
+                rbFotoManual.setChecked(true);
+                rbMedidaCaseira.setChecked(false);
+                rbGramaMl.setChecked(false);
+
+                buttonfracao.setVisibility(View.VISIBLE);
+                buttonfracao2.setVisibility(View.VISIBLE);
+                buttonfracao3.setVisibility(View.VISIBLE);
+                buttonfracao4.setVisibility(View.VISIBLE);
+                buttonfracao5.setVisibility(View.VISIBLE);
+            }
+        });
+
+        rbMedidaCaseira.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View arg0) {
+                rbFotoManual.setChecked(false);
+                rbMedidaCaseira.setChecked(true);
+                rbGramaMl.setChecked(false);
+
+                buttonfracao.setVisibility(View.VISIBLE);
+                buttonfracao2.setVisibility(View.VISIBLE);
+                buttonfracao3.setVisibility(View.VISIBLE);
+                buttonfracao4.setVisibility(View.VISIBLE);
+                buttonfracao5.setVisibility(View.VISIBLE);
+            }
+        });
+
+        rbGramaMl.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View arg0) {
+                rbFotoManual.setChecked(false);
+                rbMedidaCaseira.setChecked(false);
+                rbGramaMl.setChecked(true);
+
+                buttonfracao.setVisibility(View.GONE);
+                buttonfracao2.setVisibility(View.GONE);
+                buttonfracao3.setVisibility(View.GONE);
+                buttonfracao4.setVisibility(View.GONE);
+                buttonfracao5.setVisibility(View.GONE);
+            }
+        });
+
 
         /// HINT
         quantidadeEditTextHINT  =  (TextView) findViewById(R.id.quantidade_hint);
@@ -291,20 +353,62 @@ public class DetailActivity extends AppCompatActivity {
         buttonfracao.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View arg0) {
-                if (!verificaExiste(quantidadeEditText.getText().toString())) {
-                    quantidadeEditText.setText(quantidadeEditText.getText().toString() + buttonfracao.getText().toString());
-                    quantidadeEditText.setSelection(quantidadeEditText.length());
+//                if (!verificaExiste(quantidadeEditText.getText().toString())) {
+//                    quantidadeEditText.setText(quantidadeEditText.getText().toString() + buttonfracao.getText().toString());
+//                    quantidadeEditText.setSelection(quantidadeEditText.length());
+//                }
+                if (quantidadeEditText.hasFocus()) {
+                    quantidadeEditText.setText(buttonfracao.getText().toString());
+                }else{
+                    quantidadeEditText2.setText(buttonfracao.getText().toString());
                 }
             }
         });
 
-        buttonvirgula = (Button) findViewById(R.id.buttonvirgula);
-        buttonvirgula.setOnClickListener(new View.OnClickListener() {
+        buttonfracao2 = (Button) findViewById(R.id.buttonfracao2);
+        buttonfracao2.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View arg0) {
-                if (!verificaExiste(quantidadeEditText.getText().toString())) {
-                    quantidadeEditText.setText(quantidadeEditText.getText().toString() + buttonvirgula.getText().toString());
-                    quantidadeEditText.setSelection(quantidadeEditText.length());
+                if (quantidadeEditText.hasFocus()) {
+                    quantidadeEditText.setText(buttonfracao2.getText().toString());
+                }else{
+                    quantidadeEditText2.setText(buttonfracao2.getText().toString());
+                }
+            }
+        });
+
+        buttonfracao3 = (Button) findViewById(R.id.buttonfracao3);
+        buttonfracao3.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View arg0) {
+                if (quantidadeEditText.hasFocus()) {
+                    quantidadeEditText.setText(buttonfracao3.getText().toString());
+                }else{
+                    quantidadeEditText2.setText(buttonfracao3.getText().toString());
+                }
+            }
+        });
+
+        buttonfracao4 = (Button) findViewById(R.id.buttonfracao4);
+        buttonfracao4.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View arg0) {
+                if (quantidadeEditText.hasFocus()) {
+                    quantidadeEditText.setText(buttonfracao4.getText().toString());
+                }else{
+                    quantidadeEditText2.setText(buttonfracao4.getText().toString());
+                }
+            }
+        });
+
+        buttonfracao5 = (Button) findViewById(R.id.buttonfracao5);
+        buttonfracao5.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View arg0) {
+                if (quantidadeEditText.hasFocus()) {
+                    quantidadeEditText.setText(buttonfracao5.getText().toString());
+                }else{
+                    quantidadeEditText2.setText(buttonfracao5.getText().toString());
                 }
             }
         });
@@ -639,7 +743,7 @@ public class DetailActivity extends AppCompatActivity {
                 try {
 
                     Boolean salvar = true;
-                    if  ((mEtapa == 2) && (horaEditText.getText().toString().equals(""))){
+                    if  ((lastposition == 2) && (horaEditText.getText().toString().equals(""))){
                         Toast.makeText(DetailActivity.this, "ATENÇÃO! Obrigatório inserir hora.", Toast.LENGTH_LONG).show();
                         salvar = false;
                     }
@@ -755,6 +859,7 @@ public class DetailActivity extends AppCompatActivity {
         tv_deletar_alimento.setVisibility(View.GONE);
         tv_duplicar_alimento.setVisibility(View.GONE);
         quantidadeEditText.setText("");
+        quantidadeEditText2.setText("");
         espessura.setText("");
         minutoEditText.setText("00");
         horaEditText.setText("");
@@ -782,7 +887,7 @@ public class DetailActivity extends AppCompatActivity {
     }
 
 
-        if (lastposition == 3){
+        if (lastposition < 3){
             colocarEtapaInvisivel();
             ocasiaoConsumo.setVisibility(View.VISIBLE);
             ocasiaoConsumo_nome.setVisibility(View.VISIBLE);
@@ -791,7 +896,7 @@ public class DetailActivity extends AppCompatActivity {
 
         }
 
-    showEtapa( mEtapa);
+    showEtapa( lastposition);
 
 
         CheckComOpcoesOBS();
@@ -807,9 +912,14 @@ public class DetailActivity extends AppCompatActivity {
         alimento.setTypeface(null, Typeface.BOLD);
         tv_deletar_alimento.setVisibility(View.VISIBLE);
         tv_duplicar_alimento.setVisibility(View.VISIBLE);
+        if (mAlimentacao.getAlimentacao_dia_coleta() != null){
+            tvDiaColeta.setText(mAlimentacao.getAlimentacao_dia_coleta());
+        }
 
-        tvDiaColeta.setText(mAlimentacao.getAlimentacao_dia_coleta());
-        tvHoraColeta.setText(mAlimentacao.getAlimentacao_hora_coleta());
+        if (mAlimentacao.getAlimentacao_hora_coleta() != null) {
+            tvHoraColeta.setText(mAlimentacao.getAlimentacao_hora_coleta());
+        }
+
         quantidadeEditText.setText(mAlimentacao.getAlimentacao_quantidade());
         espessura.setText(mAlimentacao.getAlimentacao_espessura());
         minutoEditText.setText(pegarSoMinuto(mAlimentacao.getAlimentacao_hora()));
@@ -1007,6 +1117,12 @@ public class DetailActivity extends AppCompatActivity {
 
     private void colocarEtapaInvisivel(){
         quantidadeEditText.setVisibility(View.GONE);
+        quantidadeEditText2.setVisibility(View.GONE);
+
+        rbFotoManual.setVisibility(View.GONE);
+        rbMedidaCaseira.setVisibility(View.GONE);
+        rbGramaMl.setVisibility(View.GONE);
+
         espessura.setVisibility(View.GONE);
         preparacao.setVisibility(View.GONE);
         preparacao_nome.setVisibility(View.GONE);
@@ -1033,8 +1149,10 @@ public class DetailActivity extends AppCompatActivity {
         espessura_hint.setVisibility(View.GONE);
 
         buttonfracao.setVisibility(View.GONE);
-
-        buttonvirgula.setVisibility(View.GONE);
+        buttonfracao2.setVisibility(View.GONE);
+        buttonfracao3.setVisibility(View.GONE);
+        buttonfracao4.setVisibility(View.GONE);
+        buttonfracao5.setVisibility(View.GONE);
 
     }
 
@@ -1142,7 +1260,8 @@ public class DetailActivity extends AppCompatActivity {
         int i = 0;
         for (Help help : helpList) {
             int valueID = 0;
-            valueID = Common.getResourceString(help.getMkey());
+            int id_view = getResources().getIdentifier(help.getMkey(), "id", getPackageName());
+            valueID = Common.getResourceString(help.getMkey(), id_view);
             if (valueID != 0) {
                 View vievHelp2 = (View) root.findViewById(valueID);
 

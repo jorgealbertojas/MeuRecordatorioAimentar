@@ -59,7 +59,7 @@ public class Common {
     /**
      * Get Component Screen for
      */
-    public static Integer getResourceString(String name) {
+    public static Integer getResourceString(String name, int value) {
 
 
         //  if(lastFldId == null) {
@@ -67,25 +67,25 @@ public class Common {
         String fldName = "";
         Field[] flds = R.id.class.getDeclaredFields();
 
-        R.id inst = new R.id();
+        //R.id inst = new R.id();
 
         for (int i = 0; i < flds.length; i++) {
             Field fld = flds[i];
 
-            try {
-                int value = fld.getInt(inst);
+         //   try {
+              //  int value = fld.getInt(inst);
 
                 if (value > maxFld) {
                     maxFld = value;
-                    fldName = fld.getName();
+                    fldName = "tx_descartar";
                 }
                 if (name.equals(fld.getName())){
                     return value;
                 }
 
-            } catch (IllegalAccessException e) {
+          //  } catch (IllegalAccessException e) {
 
-            }
+          //  }
         }
         lastFldId = new Integer(maxFld);
         //  }

@@ -8,7 +8,6 @@ import android.database.sqlite.SQLiteDatabase;
 import android.os.Environment;
 import android.os.Handler;
 import android.os.StatFs;
-import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.text.format.Time;
 import android.util.Log;
@@ -16,6 +15,8 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.TextView;
 import android.widget.Toast;
+
+import androidx.appcompat.app.AppCompatActivity;
 
 import com.softjads.jorge.meurecordatorio.Adapter.AdicaoAdapter;
 import com.softjads.jorge.meurecordatorio.Adapter.AlimentoAdapter;
@@ -63,8 +64,11 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.OutputStream;
 import java.io.OutputStreamWriter;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
+import java.util.Locale;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 
@@ -398,6 +402,12 @@ public class ConfiguracaoActivity extends AppCompatActivity {
                 String OBS = getFormatodoComEspacoDireita(130, dataPersistent.get(i).getAlimentacao_obs());
                 String ESPESSURA = getFormatodoComEspacoDireita(20, dataPersistent.get(i).getAlimentacao_espessura());
                 String GRAU_PARENTESCO = getFormatodoComEspacoDireita(20, dataPersistent.get(i).getAlimentacao_grau_parentesco_id());
+
+                // bebeto Data inio e fim
+//                String HORA_COLETA_FIM = getFormatodoComEspaco(6, formataHora(dataPersistent.get(i).getAlimentacao_hora_coleta_fim()));
+//
+//                String date = new SimpleDateFormat("yyyy-MM-dd", Locale.getDefault()).format(new Date());
+//                String DATA_COLETA_FIM = getFormatodoComEspaco(8, date );
 
                 String DIA_ATIPICO = dataPersistent.get(i).getAlimentacao_dia_atico();
                 if (DIA_ATIPICO.equals("sim")){

@@ -212,6 +212,6 @@ public class DbSelect {
                     }*/
 
 
-
+    public static String GET_teste_duda = " select R.ID_ALUNO, R.valor from resposta r where id_pergunta = 13  ";
 
 }

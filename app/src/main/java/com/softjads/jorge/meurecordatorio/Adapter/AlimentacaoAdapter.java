@@ -3,14 +3,17 @@ package com.softjads.jorge.meurecordatorio.Adapter;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
-import android.support.v7.widget.CardView;
-import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
+import androidx.cardview.widget.CardView;
+import androidx.recyclerview.widget.RecyclerView;
+
+import com.softjads.jorge.meurecordatorio.ConfiguracaoActivity;
 import com.softjads.jorge.meurecordatorio.DetailActivity;
 import com.softjads.jorge.meurecordatorio.MainActivity;
 import com.softjads.jorge.meurecordatorio.Model.Alimentacao;
@@ -44,6 +47,7 @@ public class AlimentacaoAdapter extends RecyclerView.Adapter<AlimentacaoAdapter.
     private Context mContext;
 
     public static boolean estaFaltando = false;
+    public static boolean estaFaltando2 = false;
 
 
     /*
@@ -126,21 +130,25 @@ public class AlimentacaoAdapter extends RecyclerView.Adapter<AlimentacaoAdapter.
             int adapterPosition = getAdapterPosition();
             Alimentacao alimentacao = data.get(adapterPosition);
 
-            Class destinationClass = DetailActivity.class;
-            Intent intentToStartDetailActivity = new Intent(mContext, destinationClass);
-            Modulo.OPCAO = "0";
-            Bundle bundle = new Bundle();
-            bundle.putSerializable(PUT_BUNDLE_ALIMENTACAO, alimentacao);
-            intentToStartDetailActivity.putExtra(PUT_EXTRA_ALIMENTACAO, bundle);
-            intentToStartDetailActivity.putExtra(PUT_EXTRA_ENTREVISTADO, alimentacao.getAlimentacao_entrevistado_id());
-            intentToStartDetailActivity.putExtra(PUT_EXTRA_ENTREVISTADO_NOME, alimentacao.getAlimentacao_entrevistado());
-            intentToStartDetailActivity.putExtra(PUT_EXTRA_USUARIO, alimentacao.getAlimentacao_usuario());
-            intentToStartDetailActivity.putExtra(PUT_EXTRA_ETAPA, 2);
-            intentToStartDetailActivity.putExtra(PUT_EXTRA_GRAU_PARENTESCO_NOME, ((MainActivity) mContext).grau_parentesco_nome.getText().toString());
-            intentToStartDetailActivity.putExtra(PUT_EXTRA_GRAU_PARENTESCO, ((MainActivity) mContext).grauParentesco.getText().toString());
-            intentToStartDetailActivity.putExtra(PUT_EXTRA_DIA_ATIPICO, ((MainActivity) mContext).diaAtipico.getText().toString());
-            intentToStartDetailActivity.putExtra(PUT_EXTRA_POSITION, ((MainActivity) mContext).lastposition);
-            mContext.startActivity(intentToStartDetailActivity);
+            if (((MainActivity) mContext).lastposition != 5) {
+                Class destinationClass = DetailActivity.class;
+                Intent intentToStartDetailActivity = new Intent(mContext, destinationClass);
+                Modulo.OPCAO = "0";
+                Bundle bundle = new Bundle();
+                bundle.putSerializable(PUT_BUNDLE_ALIMENTACAO, alimentacao);
+                intentToStartDetailActivity.putExtra(PUT_EXTRA_ALIMENTACAO, bundle);
+                intentToStartDetailActivity.putExtra(PUT_EXTRA_ENTREVISTADO, alimentacao.getAlimentacao_entrevistado_id());
+                intentToStartDetailActivity.putExtra(PUT_EXTRA_ENTREVISTADO_NOME, alimentacao.getAlimentacao_entrevistado());
+                intentToStartDetailActivity.putExtra(PUT_EXTRA_USUARIO, alimentacao.getAlimentacao_usuario());
+                intentToStartDetailActivity.putExtra(PUT_EXTRA_ETAPA, 2);
+                intentToStartDetailActivity.putExtra(PUT_EXTRA_GRAU_PARENTESCO_NOME, ((MainActivity) mContext).grau_parentesco_nome.getText().toString());
+                intentToStartDetailActivity.putExtra(PUT_EXTRA_GRAU_PARENTESCO, ((MainActivity) mContext).grauParentesco.getText().toString());
+                intentToStartDetailActivity.putExtra(PUT_EXTRA_DIA_ATIPICO, ((MainActivity) mContext).diaAtipico.getText().toString());
+                intentToStartDetailActivity.putExtra(PUT_EXTRA_POSITION, ((MainActivity) mContext).lastposition);
+                mContext.startActivity(intentToStartDetailActivity);
+            }else{
+                Toast.makeText(((MainActivity) mContext), "Volte ao Passo 2 para fazer alterações!", Toast.LENGTH_SHORT).show();
+            }
 
         }
 
@@ -151,6 +159,7 @@ public class AlimentacaoAdapter extends RecyclerView.Adapter<AlimentacaoAdapter.
     /** create lit de Adapter Travel**/
     public AlimentacaoAdapter(List<Alimentacao> data, int mostrar) {
         estaFaltando = false;
+        estaFaltando2 = false;
         this.mostrar = mostrar;
         this.data = data;
     }
@@ -260,18 +269,27 @@ public class AlimentacaoAdapter extends RecyclerView.Adapter<AlimentacaoAdapter.
 
 
 
+        if (mostrar < 2) {
+            holder.iv_check.setImageResource(R.mipmap.ic_check);
+            holder.iv_check.setVisibility(View.GONE);
+        }
 
 
         if (check) {
             holder.iv_check.setImageResource(R.mipmap.ic_check);
             if (mostrar == 3) {
-                holder.card_view.setVisibility(View.GONE);
+              //  holder.card_view.setVisibility(View.GONE);
             }
         }else{
             holder.iv_check.setImageResource(R.mipmap.ic_no_check);
-            estaFaltando = true;
+            if (mostrar != 0 && (mostrar == 2 )) {
+                estaFaltando = true;
+            }
+            if (mostrar != 0 && (mostrar == 3 )) {
+                estaFaltando2 = true;
+            }
             if (mostrar == 4) {
-                holder.card_view.setVisibility(View.GONE);
+              //  holder.card_view.setVisibility(View.GONE);
             }
         }
 
@@ -280,6 +298,22 @@ public class AlimentacaoAdapter extends RecyclerView.Adapter<AlimentacaoAdapter.
     /** Returns the total Adapter**/
     @Override
     public int getItemCount() {
+        if (mostrar == 3){
+            if (estaFaltando) {
+                (((MainActivity) mContext)).mViewPager.setCurrentItem(3);
+                if (mContext != null) {
+                    Toast.makeText(mContext, "você deve finalizar todos os alimentos", Toast.LENGTH_SHORT).show();
+                }
+            }
+        }
+        if (mostrar == 0){
+            if (estaFaltando2) {
+                (((MainActivity) mContext)).mViewPager.setCurrentItem(4);
+                if (mContext != null) {
+                    Toast.makeText(mContext, "você deve finalizar todos os alimentos", Toast.LENGTH_SHORT).show();
+                }
+            }
+        }
         return data.size();
     }
 

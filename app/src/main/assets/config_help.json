@@ -8,7 +8,7 @@
 
     {
       "key":"grau_parentesco_nome",
-      "value":"O grau de parentesaco\n\n A o grau de parentesco da pessoa que está respondendo o questionario em relação a pessoa que está sendo coletadas as informações\n\n",
+      "value":"O grau de parentesaco\n\n ATENÇÃO! Essa campo tem que ser preenchido primeiro, para que possa liberar o inicio da coleta. O grau de parentesco da pessoa que está respondendo o questionario em relação a pessoa que está sendo coletadas as informações\n\n",
       "last":"0"
     },
     {

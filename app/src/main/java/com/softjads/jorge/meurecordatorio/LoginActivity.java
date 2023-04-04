@@ -3,7 +3,6 @@ package com.softjads.jorge.meurecordatorio;
 import android.content.Context;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
-import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
@@ -11,6 +10,8 @@ import android.view.Window;
 import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
+
+import androidx.appcompat.app.AppCompatActivity;
 
 import com.softjads.jorge.meurecordatorio.Interface.InterfaceUsuario;
 import com.softjads.jorge.meurecordatorio.Model.ListWrapper;

@@ -1,13 +1,14 @@
 package com.softjads.jorge.meurecordatorio.Generica;
 
 import android.os.Bundle;
-import android.support.v7.app.AppCompatActivity;
-import android.support.v7.widget.LinearLayoutManager;
-import android.support.v7.widget.RecyclerView;
 import android.text.Editable;
 import android.text.TextWatcher;
 import android.widget.EditText;
 import android.widget.TextView;
+
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
 import com.softjads.jorge.meurecordatorio.Adapter.AdicaoAdapter;
 import com.softjads.jorge.meurecordatorio.Model.Adicao;
@@ -110,6 +111,10 @@ public class AdicaoActivity extends AppCompatActivity {
             dataPersistent = mDataBase.getListAdicao();
         }else{
             dataPersistent = mDataBase.getListAdicao(mAlimento);
+        }
+
+        if (dataPersistent.size()==0) {
+            dataPersistent = mDataBase.getListAdicao();
         }
 
         if (dataPersistent.size()>0) {
