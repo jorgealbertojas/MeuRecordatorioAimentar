@@ -44,7 +44,7 @@
         <activity
             android:exported="true"
             android:name=".DetailActivity"
-            android:label="Cadastro de Alimento"
+            android:label="Voltar"
             android:launchMode="singleTop"
             android:noHistory="false"
             android:parentActivityName=".DetailActivity"
@@ -57,7 +57,7 @@
         <activity
             android:exported="true"
             android:name=".Generica.AlimentoActivity"
-            android:label="Cadastro de Alimento"
+            android:label="Voltar"
             android:launchMode="singleTop"
             android:noHistory="false"
             android:parentActivityName=".Generica.AlimentoActivity"
@@ -83,7 +83,7 @@
         <activity
             android:exported="true"
             android:name=".Generica.EntrevistadoActivity"
-            android:label="Cadastro de Alimento"
+            android:label="Voltar"
             android:launchMode="singleTop"
             android:noHistory="false"
             android:parentActivityName=".Generica.AlimentoActivity"
@@ -96,7 +96,7 @@
         <activity
             android:exported="true"
             android:name=".Generica.AdicaoActivity"
-            android:label="Cadastro de Alimento"
+            android:label="Voltar"
             android:launchMode="singleTop"
             android:noHistory="false"
             android:parentActivityName=".Generica.AlimentoActivity"
@@ -109,7 +109,7 @@
         <activity
             android:exported="true"
             android:name=".Generica.OcasiaoConsumoActivity"
-            android:label="Cadastro de Alimento"
+            android:label="voltar"
             android:launchMode="singleTop"
             android:noHistory="false"
             android:parentActivityName=".Generica.AlimentoActivity"

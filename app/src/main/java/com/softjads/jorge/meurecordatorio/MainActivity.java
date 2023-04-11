@@ -1,5 +1,7 @@
 package com.softjads.jorge.meurecordatorio;
 
+import android.Manifest;
+import android.annotation.TargetApi;
 import android.app.AlertDialog;
 import android.content.Context;
 import android.content.DialogInterface;
@@ -24,6 +26,7 @@ import android.widget.Toast;
 
 import androidx.annotation.RequiresApi;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.content.ContextCompat;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentPagerAdapter;
@@ -149,6 +152,8 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
+        solicitarPermisos();
+
 
         //carregarsuario_login();
 
@@ -221,6 +226,7 @@ public class MainActivity extends AppCompatActivity {
                 }
                 lastpositionNOVO = position;
 
+                ImageView iv_check = mRecyclerViewCheck.findViewById(R.id.iv_check);
 
                 if (position == 0) {
                     diaAtipico.setVisibility(View.VISIBLE);
@@ -238,6 +244,11 @@ public class MainActivity extends AppCompatActivity {
                     anterior_palavra.setVisibility(View.INVISIBLE);
                     proximo_palavra.setVisibility(View.VISIBLE);*/
                     frase.setVisibility(View.GONE);
+
+                    mRecyclerView.setVisibility(View.VISIBLE);
+                    mRecyclerViewCheck.setVisibility(View.GONE);
+                    mRecyclerViewCheckCompleto.setVisibility(View.GONE);
+
                 }
 
                 else if (position == 1) {
@@ -255,11 +266,16 @@ public class MainActivity extends AppCompatActivity {
                     proximo_palavra.setVisibility(View.VISIBLE);*/
 
 
-                    mRecyclerView.setVisibility(View.VISIBLE);
-                    mRecyclerViewCheck.setVisibility(View.GONE);
+                    mRecyclerView.setVisibility(View.GONE);
+                    mRecyclerViewCheck.setVisibility(View.VISIBLE);
                     mRecyclerViewCheckCompleto.setVisibility(View.GONE);
+
                     frase.setVisibility(View.GONE);
 
+
+                    if (iv_check != null) {
+                        iv_check.setVisibility(View.GONE);
+                    }
 
                 } else if (position == 2) {
                     diaAtipico.setVisibility(View.GONE);
@@ -278,12 +294,11 @@ public class MainActivity extends AppCompatActivity {
                     imagepiscar.setVisibility(View.INVISIBLE);
                     imagepiscar.setAnimation(null);
 
-                    mRecyclerView.setVisibility(View.VISIBLE);
-                    mRecyclerViewCheck.setVisibility(View.GONE);
+                    mRecyclerView.setVisibility(View.GONE);
+                    mRecyclerViewCheck.setVisibility(View.VISIBLE);
                     mRecyclerViewCheckCompleto.setVisibility(View.GONE);
 
                     frase.setVisibility(View.GONE);
-
 
 
                 } else if (position == 3) {
@@ -362,28 +377,8 @@ public class MainActivity extends AppCompatActivity {
 
 
                     if (voltando) {
-/*                        LayoutInflater factory = LayoutInflater.from(MainActivity.this);
-                        final View deleteDialogView = factory.inflate(
-                                R.layout.custom_dialog10, null);
-                        final AlertDialog deleteDialog1 = new AlertDialog.Builder(MainActivity.this).create();
-                        deleteDialog1.setView(deleteDialogView);
 
-                        TextView nTextView = (TextView) deleteDialogView.findViewById(R.id.txt_dia);
-                        nTextView.setText("ATENÇÃO!\n Confira se existe alimentos imcompletos");
-
-                        deleteDialogView.findViewById(R.id.btn_yes).setOnClickListener(new View.OnClickListener() {
-
-                            @Override
-                            public void onClick(View v) {
-                                deleteDialog1.dismiss();
-                            }
-                        });
-
-                        deleteDialog1.show();*/
-
-
-
-                        if (!alimentacaoAdapter.estaFaltando) {
+                        if (alimentacaoAdapter.estaFaltando && alimentacaoAdapter.estaFaltando2) {
                             LayoutInflater factory2 = LayoutInflater.from(MainActivity.this);
                             final View deleteDialogView2 = factory2.inflate(
                                     R.layout.custom_dialog10, null);
@@ -418,7 +413,6 @@ public class MainActivity extends AppCompatActivity {
                     grau_parentesco_hint.setVisibility(View.GONE);
                     diaatipico_hint.setVisibility(View.GONE);
 
-
                     anterior_palavra.setVisibility(View.VISIBLE);
                     proximo_palavra.setVisibility(View.INVISIBLE);
                     anterior.setVisibility(View.VISIBLE);
@@ -433,8 +427,7 @@ public class MainActivity extends AppCompatActivity {
 
                     frase.setVisibility(View.GONE);
 
-
-                    if (voltando) {
+                    if (voltando && !alimentacaoAdapter.estaFaltando && !alimentacaoAdapter.estaFaltando2) {
                         LayoutInflater factory = LayoutInflater.from(MainActivity.this);
                         final View deleteDialogView = factory.inflate(
                                 R.layout.custom_dialog10, null);
@@ -453,6 +446,25 @@ public class MainActivity extends AppCompatActivity {
                         });
 
                         deleteDialog1.show();
+                    }else{
+                        LayoutInflater factory = LayoutInflater.from(MainActivity.this);
+                        final View deleteDialogView = factory.inflate(
+                            R.layout.custom_dialog10, null);
+                        final AlertDialog deleteDialog1 = new AlertDialog.Builder(MainActivity.this).create();
+                        deleteDialog1.setView(deleteDialogView);
+
+                        TextView nTextView = (TextView) deleteDialogView.findViewById(R.id.txt_dia);
+                        nTextView.setText("você deve finalizar todos os alimentos");
+
+                        deleteDialogView.findViewById(R.id.btn_yes).setOnClickListener(new View.OnClickListener() {
+
+                        @Override
+                        public void onClick(View v) {
+                            deleteDialog1.dismiss();
+                        }
+                    });
+
+                    deleteDialog1.show();
                     }
 
                     if (alimentacaoAdapter.estaFaltando){
@@ -470,13 +482,6 @@ public class MainActivity extends AppCompatActivity {
                         // fade back in
                         imagepiscar.startAnimation(animation);
                     }
-
-
-
-
-
-
-
                 }
             }
 
@@ -934,7 +939,26 @@ public class MainActivity extends AppCompatActivity {
     }
 */
 
+    @TargetApi(29)
+    void solicitarPermisos() {
+        if (checkSelfPermission(Manifest.permission.READ_EXTERNAL_STORAGE)
+                != PackageManager.PERMISSION_GRANTED) {
 
+            // Should we show an explanation?
+            if (shouldShowRequestPermissionRationale(
+                    Manifest.permission.READ_EXTERNAL_STORAGE)) {
+                // Explain to the user why we need to read the contacts
+            }
+
+            requestPermissions(new String[]{Manifest.permission.READ_EXTERNAL_STORAGE},
+                    1);
+
+            // MY_PERMISSIONS_REQUEST_READ_EXTERNAL_STORAGE is an
+            // app-defined int constant that should be quite unique
+
+            return;
+        }
+    }
 
 
     @RequiresApi(api = Build.VERSION_CODES.KITKAT)
@@ -968,31 +992,36 @@ public class MainActivity extends AppCompatActivity {
             String nome_mae = "0";
             String nome_USUARIO = "0";
 
-            while ((line = br.readLine()) != null) {
+            if (!BuildConfig.DEBUG) {
+                while ((line = br.readLine()) != null) {
 
 
-                if (!line.isEmpty()) {
-                    i++;
+                    if (!line.isEmpty()) {
+                        i++;
+                    }
+
+
+                    if ((i == 1) && (!line.isEmpty())) {
+                        id = line;
+                    } else if ((i == 2 && (!line.isEmpty()))) {
+                        id_crianca = line;
+                    } else if ((i == 3 && (!line.isEmpty()))) {
+                        nome_crianca = line;
+                    } else if (i == 4 && (!line.isEmpty())) {
+                        nome_mae = line;
+                    } else if (i == 5 && (!line.isEmpty())) {
+                        nome_USUARIO = line;
+                    }
+                    text.append(line);
+
+
                 }
-
-
-                if ((i == 1) && (!line.isEmpty())){
-                    id = line;
-                }else if ((i == 2 && (!line.isEmpty()))){
-                    id_crianca = line;
-                }else if ((i == 3 && (!line.isEmpty()))){
-                    nome_crianca = line;
-                }else if (i == 4 && (!line.isEmpty())){
-                    nome_mae = line;
-                }else if (i == 5 && (!line.isEmpty())){
-                    nome_USUARIO = line;
-                }
-                text.append(line);
-
-
-
-
-
+            }else{
+                id = "0000000000000000000000001";
+                id_crianca = "1";
+                nome_crianca = "nometeste";
+                nome_mae = "nometeste";
+                nome_USUARIO = "usuarioteste";
             }
 
             Entrevistado entrevistado = new Entrevistado();
@@ -1019,8 +1048,9 @@ public class MainActivity extends AppCompatActivity {
             USUARIO = nome_USUARIO;
 
 
-
-            br.close();
+            if (!BuildConfig.DEBUG) {
+                br.close();
+            }
 
 
 
@@ -1155,7 +1185,7 @@ public class MainActivity extends AppCompatActivity {
                 case 0:
                     return FragmentViewPager.newInstance("Identificação","Arraste para o lado esquerdo para ir ao Passo 1", R.mipmap.ic_id, pos,USUARIO);
                 case 1:
-                    return FragmentViewPager.newInstance("Passo 1 - Listagem rápida de alimentos","Adicionar Alimento.", R.mipmap.food, pos,USUARIO);
+                    return FragmentViewPager.newInstance("Passo 1 - Listagem rápida de alimentos","Adicionar Alimento", R.mipmap.food, pos,USUARIO);
                 case 2:
                     return FragmentViewPager.newInstance("Passo 2 - Listagem de alimentos comumente esquecidos", "Arraste para o lado esquerdo para ir ao Passo 3.", R.mipmap.add,pos,USUARIO);
                 case 3:

@@ -81,6 +81,8 @@ public class FragmentViewPager extends Fragment {
 
 
 
+
+
         try {
 
             if (mPos == 0){
@@ -139,7 +141,7 @@ public class FragmentViewPager extends Fragment {
                                 R.layout.custom_dialog, null);
                         final AlertDialog deleteDialog1 = new AlertDialog.Builder(getContext()).create();
                         deleteDialog1.setView(deleteDialogView);
-
+                        deleteDialog1.setCancelable(false);
 
                         TextView nTextView = (TextView) deleteDialogView.findViewById(R.id.txt_dia);
                         nTextView.setText("Bebidas como café, chá, refrigerante, suco?");
@@ -158,7 +160,7 @@ public class FragmentViewPager extends Fragment {
 
                                 TextView nTextView = (TextView) deleteDialogView.findViewById(R.id.txt_dia);
                                 nTextView.setText("Leite materno?");
-
+                                deleteDialog0.setCancelable(false);
                                 deleteDialogView.findViewById(R.id.btn_no).setOnClickListener(new View.OnClickListener() {
 
                                     @Override
@@ -171,7 +173,7 @@ public class FragmentViewPager extends Fragment {
 
                                         TextView nTextView = (TextView) deleteDialogView.findViewById(R.id.txt_dia);
                                         nTextView.setText("Doces como balas, chicletes e sobremesas?");
-
+                                        deleteDialog3.setCancelable(false);
                                         deleteDialogView.findViewById(R.id.btn_no).setOnClickListener(new View.OnClickListener() {
 
                                             @Override
@@ -185,7 +187,7 @@ public class FragmentViewPager extends Fragment {
 
                                                 TextView nTextView = (TextView) deleteDialogView.findViewById(R.id.txt_dia);
                                                 nTextView.setText("Algum tipo de biscoito?");
-
+                                                deleteDialog2.setCancelable(false);
                                                 deleteDialogView.findViewById(R.id.btn_no).setOnClickListener(new View.OnClickListener() {
 
                                                     @Override
@@ -199,7 +201,7 @@ public class FragmentViewPager extends Fragment {
 
                                                         TextView nTextView = (TextView) deleteDialogView.findViewById(R.id.txt_dia);
                                                         nTextView.setText("Alguma fruta, pão ou qualquer outro alimento, bebida ou complemento alimentar?");
-
+                                                        deleteDialog5.setCancelable(false);
                                                         deleteDialogView.findViewById(R.id.btn_no).setOnClickListener(new View.OnClickListener() {
 
                                                             @Override
@@ -213,7 +215,7 @@ public class FragmentViewPager extends Fragment {
 
                                                                 TextView nTextView = (TextView) deleteDialogView.findViewById(R.id.txt_dia);
                                                                 nTextView.setText("Açúcar, mel ou outro produto para adoçar algum alimento ou bebida?");
-
+                                                                deleteDialog4.setCancelable(false);
                                                                 deleteDialogView.findViewById(R.id.btn_no).setOnClickListener(new View.OnClickListener() {
                                                                     @Override
                                                                     public void onClick(View v) {
@@ -307,10 +309,11 @@ public class FragmentViewPager extends Fragment {
                         final View deleteDialogView11 = factory11.inflate(
                                 R.layout.custom_dialog10, null);
                         final AlertDialog deleteDialog11 = new AlertDialog.Builder(getContext()).create();
+                        deleteDialog1.setCancelable(false);
                         deleteDialog11.setView(deleteDialogView11);
 
                         TextView nTextView1 = (TextView) deleteDialogView11.findViewById(R.id.txt_dia);
-                        nTextView1.setText("ATENÇÃO!\n Há alguns alimentos que às vezes são esquecidos e que fazem parte deste tipo de entrevista. Além dos alimentos e bebidas referidos pelo(a) Sr(a), a criança consumiu...");
+                        nTextView1.setText("ATENÇÃO!\n Há alguns alimentos que às vezes são esquecidos e que fazem parte deste tipo de entrevista. Além dos alimentos e bebidas referidos pelo(a) Sr(a), a criança consumiu.");
 
                         deleteDialogView11.findViewById(R.id.btn_yes).setOnClickListener(new View.OnClickListener() {
 
@@ -359,6 +362,7 @@ public class FragmentViewPager extends Fragment {
                                                     R.layout.custom_dialog, null);
                                             final AlertDialog deleteDialog1 = new AlertDialog.Builder(getContext()).create();
                                             deleteDialog1.setView(deleteDialogView);
+                                            deleteDialog1.setCancelable(false);
 
                                             TextView nTextView = (TextView) deleteDialogView.findViewById(R.id.txt_dia);
                                             nTextView.setText("Tem certeza que deseja finalizar a entrevista?");

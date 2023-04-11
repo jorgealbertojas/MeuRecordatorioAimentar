@@ -62,7 +62,7 @@
                 android:layout_marginTop="18dp"
                 android:layout_marginEnd="6dp"
                 android:layout_marginRight="6dp"
-                android:text="v: 36"
+                android:text="v: 37"
                 android:textColor="@color/colorWhite"
                 android:textSize="10sp" />
 
@@ -83,7 +83,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="8dp"
                 android:layout_marginStart="8dp"
-                android:text="Entrevistado"
+                android:text="Entrevistado:"
                 android:textColor="@color/colorAccent"
                 android:textSize="20sp"
                 app:layout_constraintStart_toStartOf="parent" />
@@ -92,11 +92,11 @@
                 android:id="@+id/entrevistado"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginLeft="8dp"
                 android:layout_marginStart="8dp"
+                android:layout_marginLeft="8dp"
                 android:layout_marginTop="8dp"
                 android:padding="@dimen/padding_text"
-                android:text="0"
+                android:text=""
                 android:textColor="@color/colorWhite"
                 android:textSize="20sp"
                 app:layout_constraintStart_toStartOf="parent"
@@ -106,18 +106,15 @@
                 android:id="@+id/entrevistado_nome"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginLeft="8dp"
-
-                android:layout_marginStart="8dp"
-                android:layout_marginTop="8dp"
-                android:padding="@dimen/padding_text"
-                android:text=""
+                android:layout_marginStart="20dp"
+                android:text="ytytytytytytytyttytytyttytyty tytyt"
 
 
                 android:textColor="@color/colorWhite"
                 android:textSize="20sp"
-                app:layout_constraintStart_toEndOf="@+id/entrevistado"
-                app:layout_constraintTop_toBottomOf="@+id/entrevistado_hint" />
+                app:layout_constraintStart_toEndOf="@+id/entrevistado_hint"
+                app:layout_constraintTop_toTopOf="parent"
+                android:layout_marginLeft="8dp" />
 
 
             <TextView

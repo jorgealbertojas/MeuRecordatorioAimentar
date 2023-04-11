@@ -132,6 +132,7 @@ public class DetailActivity extends AppCompatActivity {
     TextView hora_ponto;
     TextView hora_minuto_coleta_hint;
     TextView tv_entrar_obs;
+    TextView tv_quantificacao;
 
     Button buttonfracao;
     Button buttonfracao2;
@@ -225,6 +226,8 @@ public class DetailActivity extends AppCompatActivity {
         tvHoraColeta = (TextView) findViewById(R.id.hora_coleta);
         horaEditText = (EditText) findViewById(R.id.hora);
 
+        tv_quantificacao = (TextView) findViewById(R.id.tv_quantificacao);
+
         espessura = (EditText) findViewById(R.id.espessura);
         espessura.setInputType(InputType.TYPE_CLASS_NUMBER);
 
@@ -252,6 +255,7 @@ public class DetailActivity extends AppCompatActivity {
                 buttonfracao3.setVisibility(View.VISIBLE);
                 buttonfracao4.setVisibility(View.VISIBLE);
                 buttonfracao5.setVisibility(View.VISIBLE);
+                tv_quantificacao.setVisibility(View.VISIBLE);
             }
         });
 
@@ -267,6 +271,7 @@ public class DetailActivity extends AppCompatActivity {
                 buttonfracao3.setVisibility(View.VISIBLE);
                 buttonfracao4.setVisibility(View.VISIBLE);
                 buttonfracao5.setVisibility(View.VISIBLE);
+                tv_quantificacao.setVisibility(View.VISIBLE);
             }
         });
 
@@ -282,6 +287,7 @@ public class DetailActivity extends AppCompatActivity {
                 buttonfracao3.setVisibility(View.GONE);
                 buttonfracao4.setVisibility(View.GONE);
                 buttonfracao5.setVisibility(View.GONE);
+                tv_quantificacao.setVisibility(View.GONE);
             }
         });
 
@@ -887,7 +893,7 @@ public class DetailActivity extends AppCompatActivity {
     }
 
 
-        if (lastposition < 3){
+        if (lastposition < 4){
             colocarEtapaInvisivel();
             ocasiaoConsumo.setVisibility(View.VISIBLE);
             ocasiaoConsumo_nome.setVisibility(View.VISIBLE);
@@ -1153,6 +1159,8 @@ public class DetailActivity extends AppCompatActivity {
         buttonfracao3.setVisibility(View.GONE);
         buttonfracao4.setVisibility(View.GONE);
         buttonfracao5.setVisibility(View.GONE);
+
+        tv_quantificacao.setVisibility(View.GONE);
 
     }
 

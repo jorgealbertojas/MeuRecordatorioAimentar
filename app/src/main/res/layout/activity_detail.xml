@@ -35,14 +35,15 @@
     android:layout_height="wrap_content">
     <TextView
         android:id="@+id/alimento"
-        android:layout_width="wrap_content"
+        android:layout_width="2dp"
         android:layout_height="wrap_content"
         android:background="@drawable/rounded_corner_cinza_claro"
         android:hint="          "
-        android:lines="3"
+
+        android:visibility="invisible"
         android:padding="@dimen/padding_text"
-        android:text="0"
-        android:textSize="18sp"
+        android:text="0 "
+        android:textSize="1sp"
  />
 
     <TextView
@@ -53,9 +54,9 @@
         android:layout_marginLeft="8dp"
         android:background="@drawable/rounded_corner_cinza_claro"
         android:hint="          "
-        android:lines="3"
+
         android:padding="@dimen/padding_text"
-        android:text="0"
+        android:text="0 "
         android:textSize="18sp" />
 </LinearLayout>
 
@@ -124,9 +125,8 @@
         android:layout_height="wrap_content"
         android:background="@drawable/rounded_corner_cinza_claro"
         android:hint="          "
-        android:layout_marginTop="2dp"
         android:padding="@dimen/padding_text"
-        android:text="0"
+        android:text="NAO SE APLICA"
         android:textSize="18sp"
         app:layout_constraintStart_toEndOf="@+id/preparacao"
         app:layout_constraintTop_toBottomOf="@+id/linearLayout" />
@@ -138,12 +138,13 @@
         android:text="PREPARAÇÃO"
         android:textColor="@color/colorAccent"
         android:textSize="13sp"
+        app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/linearLayout" />
 
 
     <TextView
         android:id="@+id/adicao"
-        android:layout_height="wrap_content"
+        android:layout_height="0dp"
         android:background="@drawable/rounded_corner_cinza_claro"
         android:layout_marginTop="2dp"
         android:hint="          "
@@ -152,6 +153,7 @@
         android:textSize="18sp"
         android:layout_width="1dp"
         android:visibility="invisible"
+        app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/preparacao" />
 
     <TextView
@@ -160,12 +162,11 @@
         android:layout_height="wrap_content"
         android:background="@drawable/rounded_corner_cinza_claro"
         android:hint="          "
-        android:layout_marginTop="2dp"
         android:padding="@dimen/padding_text"
         android:text="0"
         android:textSize="18sp"
-        app:layout_constraintStart_toEndOf="@+id/adicao"
-        app:layout_constraintTop_toBottomOf="@+id/preparacao" />
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/preparacao_nome" />
 
     <TextView
         android:id="@+id/adicao_hint"
@@ -174,7 +175,7 @@
         android:text="ADIÇÃO"
         android:textColor="@color/colorAccent"
         android:textSize="13sp"
-        app:layout_constraintTop_toBottomOf="@+id/preparacao" />
+        app:layout_constraintTop_toBottomOf="@+id/preparacao_nome"  />
 
 
     <TextView
@@ -192,16 +193,17 @@
 
     <TextView
         android:id="@+id/local_nome"
-        android:layout_width="wrap_content"
+        android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:background="@drawable/rounded_corner_cinza_claro"
         android:hint="          "
-        android:layout_marginTop="2dp"
         android:padding="@dimen/padding_text"
+        android:layout_marginEnd="10dp"
         android:text="0"
         android:textSize="18sp"
+        app:layout_constraintEnd_toStartOf="@+id/tv_duplicar_alimento"
         app:layout_constraintStart_toEndOf="@+id/local"
-        app:layout_constraintTop_toBottomOf="@+id/adicao" />
+        app:layout_constraintTop_toBottomOf="@+id/adicao_nome" />
 
     <TextView
         android:id="@+id/local_hint"
@@ -210,7 +212,8 @@
         android:text="LOCAL"
         android:textColor="@color/colorAccent"
         android:textSize="13sp"
-        app:layout_constraintTop_toBottomOf="@+id/adicao" />
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/adicao_nome" />
 
 
     <TextView
@@ -265,7 +268,7 @@
         android:id="@+id/tv_quantificacao"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Quantificação"
+        android:text="TIPOS DE UNIDADE"
         android:textColor="@color/colorAccent"
         android:textSize="13sp"
         app:layout_constraintTop_toBottomOf="@+id/local_nome" />
@@ -302,12 +305,12 @@
 
     <RadioButton
         android:id="@+id/rb_grama_ou_ml"
-        android:layout_width="110dp"
+        android:layout_width="140dp"
         android:layout_height="60dp"
         android:layout_centerHorizontal="true"
         android:layout_margin="10dp"
         android:gravity="center"
-        android:text="Grama (g) ou ml"
+        android:text="Grama ou mililitro"
         android:textAlignment="center"
         android:textColor="@color/colorPrimary"
         android:textSize="18sp"
@@ -322,8 +325,8 @@
         android:id="@+id/quantidade"
         android:layout_marginTop="2dp"
         android:cursorVisible="false"
-        android:maxLength="5"
-        android:background="@drawable/rounded_corner_cinza_claro"
+        android:maxLength="3"
+        android:background="@color/colorPrimary"
 
         app:layout_constraintTop_toBottomOf="@+id/unidade_nome"/>
 
@@ -332,7 +335,7 @@
         android:layout_width="50dp"
         android:layout_height="50dp"
         android:layout_marginTop="2dp"
-        android:background="@drawable/rounded_corner_cinza_claro"
+        android:background="@color/colorPrimary"
         android:cursorVisible="false"
         android:maxLength="5"
         android:padding="@dimen/padding_text"
@@ -455,6 +458,7 @@
         android:padding="@dimen/padding_text"
         android:id="@+id/usuario"
         android:text="0"
+        android:visibility="gone"
         android:background="@drawable/rounded_corner_cinza"
         android:textColor="@color/colorPrimary"
         app:layout_constraintStart_toEndOf="@+id/hora_minuto_coleta_hint"

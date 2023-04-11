@@ -53,8 +53,7 @@ public class PreparacaoActivity extends AppCompatActivity {
          * Put Name Repositorie in  title.
          */
         this.setTitle("Preparação");
-        title2 = findViewById(R.id.title2);
-        title2.setText("Qual a preparação que " + mName + " comeu ou bebeu este alimento?");
+        title2 = findViewById(R.id.title2);title2.setText("Qual a preparação que " + mName + " comeu ou bebeu este alimento?");
 
 
         /**

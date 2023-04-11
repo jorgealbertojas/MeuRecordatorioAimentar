@@ -1,5 +1,6 @@
 package com.softjads.jorge.meurecordatorio.Adapter;
 
+import android.app.AlertDialog;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
@@ -7,6 +8,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -86,6 +88,7 @@ public class AlimentacaoAdapter extends RecyclerView.Adapter<AlimentacaoAdapter.
         TextView tv_usuario;
         ImageView iv_check;
         TextView tv_grau_parentesco;
+        TextView tv_quantificacao;
 
         CardView card_view;
 
@@ -107,6 +110,9 @@ public class AlimentacaoAdapter extends RecyclerView.Adapter<AlimentacaoAdapter.
             tv_ocasiao_consumo  = (TextView) v.findViewById(R.id.tv_ocasiao_consumo);
 
             tv_hora  = (TextView) v.findViewById(R.id.tv_hora);
+
+            tv_quantificacao = (TextView) v.findViewById(R.id.tv_quantificacao);
+
 
 
 
@@ -130,7 +136,7 @@ public class AlimentacaoAdapter extends RecyclerView.Adapter<AlimentacaoAdapter.
             int adapterPosition = getAdapterPosition();
             Alimentacao alimentacao = data.get(adapterPosition);
 
-            if (((MainActivity) mContext).lastposition != 5) {
+            if (((MainActivity) mContext).lastposition != 5 && ((MainActivity) mContext).lastposition != 2) {
                 Class destinationClass = DetailActivity.class;
                 Intent intentToStartDetailActivity = new Intent(mContext, destinationClass);
                 Modulo.OPCAO = "0";
@@ -146,7 +152,10 @@ public class AlimentacaoAdapter extends RecyclerView.Adapter<AlimentacaoAdapter.
                 intentToStartDetailActivity.putExtra(PUT_EXTRA_DIA_ATIPICO, ((MainActivity) mContext).diaAtipico.getText().toString());
                 intentToStartDetailActivity.putExtra(PUT_EXTRA_POSITION, ((MainActivity) mContext).lastposition);
                 mContext.startActivity(intentToStartDetailActivity);
-            }else{
+            }else  if (((MainActivity) mContext).lastposition == 2) {
+                Toast.makeText(((MainActivity) mContext), "No próximo passo pode fazer alterações!", Toast.LENGTH_SHORT).show();
+
+            } else {
                 Toast.makeText(((MainActivity) mContext), "Volte ao Passo 2 para fazer alterações!", Toast.LENGTH_SHORT).show();
             }
 
@@ -293,16 +302,21 @@ public class AlimentacaoAdapter extends RecyclerView.Adapter<AlimentacaoAdapter.
             }
         }
 
+        if (mostrar == 1) {
+            holder.iv_check.setVisibility(View.GONE);
+        }
+
     }
 
     /** Returns the total Adapter**/
     @Override
     public int getItemCount() {
-        if (mostrar == 3){
+        if (mostrar == 4){
             if (estaFaltando) {
                 (((MainActivity) mContext)).mViewPager.setCurrentItem(3);
                 if (mContext != null) {
-                    Toast.makeText(mContext, "você deve finalizar todos os alimentos", Toast.LENGTH_SHORT).show();
+                    //Toast.makeText(mContext, "você deve finalizar todos os alimentos", Toast.LENGTH_SHORT).show();
+
                 }
             }
         }
@@ -310,7 +324,8 @@ public class AlimentacaoAdapter extends RecyclerView.Adapter<AlimentacaoAdapter.
             if (estaFaltando2) {
                 (((MainActivity) mContext)).mViewPager.setCurrentItem(4);
                 if (mContext != null) {
-                    Toast.makeText(mContext, "você deve finalizar todos os alimentos", Toast.LENGTH_SHORT).show();
+                   // Toast.makeText(mContext, "você deve finalizar todos os alimentos", Toast.LENGTH_SHORT).show();
+
                 }
             }
         }
