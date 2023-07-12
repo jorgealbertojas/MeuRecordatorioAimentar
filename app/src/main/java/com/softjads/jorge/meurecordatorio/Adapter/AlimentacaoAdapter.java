@@ -89,6 +89,7 @@ public class AlimentacaoAdapter extends RecyclerView.Adapter<AlimentacaoAdapter.
         ImageView iv_check;
         TextView tv_grau_parentesco;
         TextView tv_quantificacao;
+        ImageView iv_check2;
 
         CardView card_view;
 
@@ -123,6 +124,7 @@ public class AlimentacaoAdapter extends RecyclerView.Adapter<AlimentacaoAdapter.
             tv_usuario  = (TextView) v.findViewById(R.id.tv_usuario);
 
             iv_check = (ImageView) v.findViewById(R.id.iv_check);
+            iv_check2 = (ImageView) v.findViewById(R.id.iv_check2);
 
             tv_grau_parentesco = (TextView) v.findViewById(R.id.tv_grau_parentesco);
 
@@ -280,30 +282,34 @@ public class AlimentacaoAdapter extends RecyclerView.Adapter<AlimentacaoAdapter.
 
         if (mostrar < 2) {
             holder.iv_check.setImageResource(R.mipmap.ic_check);
-            holder.iv_check.setVisibility(View.GONE);
+            holder.iv_check.setVisibility(View.INVISIBLE);
+            holder.iv_check2.setImageResource(R.mipmap.ic_check);
+            holder.iv_check2.setVisibility(View.INVISIBLE);
         }
 
 
         if (check) {
             holder.iv_check.setImageResource(R.mipmap.ic_check);
+            holder.iv_check2.setImageResource(R.mipmap.ic_check);
             if (mostrar == 3) {
               //  holder.card_view.setVisibility(View.GONE);
             }
         }else{
             holder.iv_check.setImageResource(R.mipmap.ic_no_check);
+            holder.iv_check2.setImageResource(R.mipmap.ic_no_check);
             if (mostrar != 0 && (mostrar == 2 )) {
                 estaFaltando = true;
             }
             if (mostrar != 0 && (mostrar == 3 )) {
                 estaFaltando2 = true;
             }
-            if (mostrar == 4) {
-              //  holder.card_view.setVisibility(View.GONE);
+            if (mostrar != 0 && mostrar == 4) {
+                estaFaltando2 = true;
             }
         }
 
         if (mostrar == 1) {
-            holder.iv_check.setVisibility(View.GONE);
+            holder.iv_check.setVisibility(View.INVISIBLE);
         }
 
     }

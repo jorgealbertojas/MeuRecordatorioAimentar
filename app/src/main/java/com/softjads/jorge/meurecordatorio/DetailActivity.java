@@ -111,10 +111,11 @@ public class DetailActivity extends AppCompatActivity {
     EditText horaEditText;
     TextView minutoEditText;
     public static EditText quantidadeEditText;
-    public static EditText quantidadeEditText2;
+    public static TextView quantidadeEditText2;
     public static RadioButton rbFotoManual;
     public static RadioButton rbMedidaCaseira;
     public static RadioButton rbGramaMl;
+    public static TextView fracao_hint;
 
     TextView tv_deletar_alimento;
     TextView tv_duplicar_alimento;
@@ -236,12 +237,14 @@ public class DetailActivity extends AppCompatActivity {
         quantidadeEditText = (EditText) findViewById(R.id.quantidade);
         quantidadeEditText.setInputType(InputType.TYPE_CLASS_NUMBER);
 
-        quantidadeEditText2 = (EditText) findViewById(R.id.quantidade2);
-        quantidadeEditText2.setInputType(InputType.TYPE_CLASS_NUMBER);
+        quantidadeEditText2 = (TextView) findViewById(R.id.quantidade2);
+        fracao_hint = (TextView) findViewById(R.id.fracao_hint);
 
         rbFotoManual = (RadioButton) findViewById(R.id.rb_foto_manual);
         rbMedidaCaseira = (RadioButton) findViewById(R.id.rb_medida_caseira);
         rbGramaMl = (RadioButton) findViewById(R.id.rb_grama_ou_ml);
+
+
 
         rbFotoManual.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -256,6 +259,8 @@ public class DetailActivity extends AppCompatActivity {
                 buttonfracao4.setVisibility(View.VISIBLE);
                 buttonfracao5.setVisibility(View.VISIBLE);
                 tv_quantificacao.setVisibility(View.VISIBLE);
+                quantidadeEditText2.setVisibility(View.VISIBLE);
+                fracao_hint.setVisibility(View.VISIBLE);
             }
         });
 
@@ -272,6 +277,8 @@ public class DetailActivity extends AppCompatActivity {
                 buttonfracao4.setVisibility(View.VISIBLE);
                 buttonfracao5.setVisibility(View.VISIBLE);
                 tv_quantificacao.setVisibility(View.VISIBLE);
+                quantidadeEditText2.setVisibility(View.VISIBLE);
+                fracao_hint.setVisibility(View.VISIBLE);
             }
         });
 
@@ -282,13 +289,9 @@ public class DetailActivity extends AppCompatActivity {
                 rbMedidaCaseira.setChecked(false);
                 rbGramaMl.setChecked(true);
 
-                buttonfracao.setVisibility(View.GONE);
-                buttonfracao2.setVisibility(View.GONE);
-                buttonfracao3.setVisibility(View.GONE);
-                buttonfracao4.setVisibility(View.GONE);
-                buttonfracao5.setVisibility(View.GONE);
-                tv_quantificacao.setVisibility(View.GONE);
+               putFotoManualvisible();
             }
+
         });
 
 
@@ -303,6 +306,7 @@ public class DetailActivity extends AppCompatActivity {
         obsHINT  =  (TextView) findViewById(R.id.obs_hint);
         hora_ponto   =  (TextView) findViewById(R.id.hora_ponto);
         hora_minuto_coleta_hint   =  (TextView) findViewById(R.id.hora_minuto_coleta_hint);
+
 
         espessura_hint = (TextView) findViewById(R.id.espessura_hint);
 
@@ -359,15 +363,8 @@ public class DetailActivity extends AppCompatActivity {
         buttonfracao.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View arg0) {
-//                if (!verificaExiste(quantidadeEditText.getText().toString())) {
-//                    quantidadeEditText.setText(quantidadeEditText.getText().toString() + buttonfracao.getText().toString());
-//                    quantidadeEditText.setSelection(quantidadeEditText.length());
-//                }
-                if (quantidadeEditText.hasFocus()) {
-                    quantidadeEditText.setText(buttonfracao.getText().toString());
-                }else{
-                    quantidadeEditText2.setText(buttonfracao.getText().toString());
-                }
+                quantidadeEditText2.setText(buttonfracao.getText().toString());
+
             }
         });
 
@@ -375,11 +372,8 @@ public class DetailActivity extends AppCompatActivity {
         buttonfracao2.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View arg0) {
-                if (quantidadeEditText.hasFocus()) {
-                    quantidadeEditText.setText(buttonfracao2.getText().toString());
-                }else{
-                    quantidadeEditText2.setText(buttonfracao2.getText().toString());
-                }
+                quantidadeEditText2.setText(buttonfracao2.getText().toString());
+
             }
         });
 
@@ -387,11 +381,8 @@ public class DetailActivity extends AppCompatActivity {
         buttonfracao3.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View arg0) {
-                if (quantidadeEditText.hasFocus()) {
-                    quantidadeEditText.setText(buttonfracao3.getText().toString());
-                }else{
-                    quantidadeEditText2.setText(buttonfracao3.getText().toString());
-                }
+                quantidadeEditText2.setText(buttonfracao3.getText().toString());
+
             }
         });
 
@@ -399,11 +390,8 @@ public class DetailActivity extends AppCompatActivity {
         buttonfracao4.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View arg0) {
-                if (quantidadeEditText.hasFocus()) {
-                    quantidadeEditText.setText(buttonfracao4.getText().toString());
-                }else{
-                    quantidadeEditText2.setText(buttonfracao4.getText().toString());
-                }
+                quantidadeEditText2.setText(buttonfracao4.getText().toString());
+
             }
         });
 
@@ -411,11 +399,8 @@ public class DetailActivity extends AppCompatActivity {
         buttonfracao5.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View arg0) {
-                if (quantidadeEditText.hasFocus()) {
-                    quantidadeEditText.setText(buttonfracao5.getText().toString());
-                }else{
-                    quantidadeEditText2.setText(buttonfracao5.getText().toString());
-                }
+                quantidadeEditText2.setText(buttonfracao5.getText().toString());
+
             }
         });
 
@@ -787,7 +772,16 @@ public class DetailActivity extends AppCompatActivity {
                         alimentacao.setAlimentacao_ocasiao_consumo_id(ocasiaoConsumo.getText().toString());
                         alimentacao.setAlimentacao_ocasiao_consumo(ocasiaoConsumo_nome.getText().toString());
                         alimentacao.setAlimentacao_quantidade(quantidadeEditText.getText().toString());
+                        alimentacao.setAlimentacao_fracao(quantidadeEditText2.getText().toString());
                         alimentacao.setAlimentacao_espessura(espessura.getText().toString());
+
+                        if (rbGramaMl.isChecked()){
+                            alimentacao.setAlimentacao_quantificacao("3");
+                        } else if (rbMedidaCaseira.isChecked()){
+                            alimentacao.setAlimentacao_quantificacao("2");
+                        } else {
+                            alimentacao.setAlimentacao_quantificacao("1");
+                        }
 
 
                         String hora = horaEditText.getText().toString();
@@ -866,6 +860,7 @@ public class DetailActivity extends AppCompatActivity {
         tv_duplicar_alimento.setVisibility(View.GONE);
         quantidadeEditText.setText("");
         quantidadeEditText2.setText("");
+        rbFotoManual.setChecked(true);
         espessura.setText("");
         minutoEditText.setText("00");
         horaEditText.setText("");
@@ -927,6 +922,19 @@ public class DetailActivity extends AppCompatActivity {
         }
 
         quantidadeEditText.setText(mAlimentacao.getAlimentacao_quantidade());
+        quantidadeEditText2.setText(mAlimentacao.getAlimentacao_fracao());
+        quantidadeEditText2.setText(mAlimentacao.getAlimentacao_fracao());
+
+        if (mAlimentacao.getAlimentacao_quantificacao().equals("3")) {
+            rbGramaMl.setChecked(true);
+            putFotoManualvisible();
+        } else if (mAlimentacao.getAlimentacao_quantificacao().equals("2")) {
+            rbMedidaCaseira.setChecked(true);
+        } else {
+            rbFotoManual.setChecked(true);
+        }
+
+
         espessura.setText(mAlimentacao.getAlimentacao_espessura());
         minutoEditText.setText(pegarSoMinuto(mAlimentacao.getAlimentacao_hora()));
         horaEditText.setText(pegarSoHora(mAlimentacao.getAlimentacao_hora()));
@@ -1309,6 +1317,18 @@ public class DetailActivity extends AppCompatActivity {
 
         context.startActivity(intent);
 
+    }
+
+    private void putFotoManualvisible() {
+        buttonfracao.setVisibility(View.GONE);
+        buttonfracao2.setVisibility(View.GONE);
+        buttonfracao3.setVisibility(View.GONE);
+        buttonfracao4.setVisibility(View.GONE);
+        buttonfracao5.setVisibility(View.GONE);
+        tv_quantificacao.setVisibility(View.GONE);
+        quantidadeEditText2.setVisibility(View.GONE);
+        fracao_hint.setVisibility(View.GONE);
+        quantidadeEditText2.setText("");
     }
 
 

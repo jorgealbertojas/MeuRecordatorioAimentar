@@ -33,6 +33,25 @@ public class Alimentacao implements Serializable {
     private String alimentacao_grau_parentesco_id;
     private String alimentacao_grau_parentesco;
     private String alimentacao_dia_atico;
+    private String alimentacao_fracao;
+    private String alimentacao_quantificacao;
+
+    public String getAlimentacao_quantificacao() {
+        return alimentacao_quantificacao == null ? "1" : alimentacao_quantificacao ;
+    }
+
+    public void setAlimentacao_quantificacao(String alimentacao_quantificacao) {
+        this.alimentacao_quantificacao = alimentacao_quantificacao;
+    }
+
+    public String getAlimentacao_fracao() {
+        return alimentacao_fracao;
+    }
+
+    public void setAlimentacao_fracao(String alimentacao_fracao) {
+        this.alimentacao_fracao = alimentacao_fracao;
+    }
+
 
 
     private String alimentacao_espessura;

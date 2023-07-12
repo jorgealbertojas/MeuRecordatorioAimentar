@@ -26,7 +26,7 @@ public class Modulo {
     public static String storage = "/storage/emulated/0/";
 
     // 10 - BEBETO
-    public static String storageCliente = "/storage/emulated/0/csentry/inani/";
+    public static String storageCliente = "/storage/emulated/0/carcsentry/inani/";
 
     //public static String storageCliente = "/storage/emulated/0/";
 

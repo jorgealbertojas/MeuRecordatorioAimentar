@@ -152,7 +152,7 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        solicitarPermisos();
+        //solicitarPermisos();
 
 
         //carregarsuario_login();
@@ -326,7 +326,7 @@ public class MainActivity extends AppCompatActivity {
                     frase.setVisibility(View.GONE);
 
                     if (voltando) {
-                        if (!alimentacaoAdapter.estaFaltando) {
+                       // if (!alimentacaoAdapter.estaFaltando) {
                             LayoutInflater factory2 = LayoutInflater.from(MainActivity.this);
                             final View deleteDialogView2 = factory2.inflate(
                                     R.layout.custom_dialog10, null);
@@ -347,7 +347,7 @@ public class MainActivity extends AppCompatActivity {
                             });
 
                             deleteDialog2.show();
-                        }
+                      //  }
                     }
 
 
@@ -378,7 +378,7 @@ public class MainActivity extends AppCompatActivity {
 
                     if (voltando) {
 
-                        if (alimentacaoAdapter.estaFaltando && alimentacaoAdapter.estaFaltando2) {
+                        if (alimentacaoAdapter.estaFaltando) {
                             LayoutInflater factory2 = LayoutInflater.from(MainActivity.this);
                             final View deleteDialogView2 = factory2.inflate(
                                     R.layout.custom_dialog10, null);
@@ -939,7 +939,7 @@ public class MainActivity extends AppCompatActivity {
     }
 */
 
-    @TargetApi(29)
+/*    @TargetApi(29)
     void solicitarPermisos() {
         if (checkSelfPermission(Manifest.permission.READ_EXTERNAL_STORAGE)
                 != PackageManager.PERMISSION_GRANTED) {
@@ -958,7 +958,7 @@ public class MainActivity extends AppCompatActivity {
 
             return;
         }
-    }
+    }*/
 
 
     @RequiresApi(api = Build.VERSION_CODES.KITKAT)
@@ -967,7 +967,7 @@ public class MainActivity extends AppCompatActivity {
         String fileName = "chave.txt";
 
         File fileExist = new File(storageCliente, "chave.txt");
-        if (fileExist.exists()){
+        if (fileExist.exists() || BuildConfig.DEBUG){
 
 
         StringBuilder text = new StringBuilder();

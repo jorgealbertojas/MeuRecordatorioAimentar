@@ -32,11 +32,6 @@
       "last":"0"
     },
     {
-      "key":"hora",
-      "value":"Hora e minutos\n\n Clique no campo hora e digite uma hora para esse alimento. Clique no minuto para mudar entre 00 e 30 minutos!\n\n",
-      "last":"1"
-    },
-    {
       "key":"tv_entrar_obs",
       "value":"Botão de OBS\n\n Pode escolher essas opções para colocar no campo observação, pode escolher mais de uma opção. Se quiser apagar basta desmarcar!\n\n",
       "last":"1"
@@ -106,12 +101,6 @@
       "value":"Espessura\n\n Clique no campo espessura para abrir uma outra tela para escolher uma nova espessura!\n\n",
       "last":"0"
     },
-    {
-      "key":"ocasiao_consumo_nome",
-      "value":"Tipo refeição\n\n Clique no campo tipo refeição para abrir uma outra tela para escolher um novo tipo refeição!\n\n",
-      "last":"0"
-    },
-
     {
       "key":"card_view",
       "value":"Card do alimento\n\n Clique nos cards de alimentos abaixo, caso queira fazer alteração ou conferir as informações de um alimento!\n\n",

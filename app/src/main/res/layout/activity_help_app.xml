@@ -36,12 +36,6 @@
             android:layout_height="wrap_content">
 
             <ImageView
-                android:id="@+id/ic_move_down_up"
-                android:layout_width="50dp"
-                android:layout_height="50dp"
-                android:src="@mipmap/ic_move_down_up" />
-
-            <ImageView
                 android:id="@+id/ic_close"
                 android:layout_width="50dp"
                 android:layout_height="50dp"

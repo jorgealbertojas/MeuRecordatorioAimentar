@@ -81,9 +81,9 @@ public class HelpAppActivity extends AppCompatActivity implements View.OnTouchLi
         cardView = (CardView) findViewById(R.id.cardViewHelp);
 
 
-        ic_move_down_up = (ImageView) findViewById(R.id.ic_move_down_up);
+       // ic_move_down_up = (ImageView) findViewById(R.id.ic_move_down_up);
 
-        ic_move_down_up.setOnTouchListener(this);
+      //  ic_move_down_up.setOnTouchListener(this);
         ic_close = (ImageView) findViewById(R.id.ic_close);
         ic_close.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {

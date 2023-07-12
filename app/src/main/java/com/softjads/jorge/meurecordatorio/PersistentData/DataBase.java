@@ -306,6 +306,8 @@ public class DataBase extends SQLiteOpenHelper {
             obj.put(Field.FIELD_ALIMENTACAO_ADICAO_ID, alimentacaoList.get(i).getAlimentacao_adicao_id());
             obj.put(Field.FIELD_ALIMENTACAO_ADICAO, alimentacaoList.get(i).getAlimentacao_adicao());
             obj.put(Field.FIELD_ALIMENTACAO_QUANTIDADE, alimentacaoList.get(i).getAlimentacao_quantidade());
+            obj.put(Field.FIELD_ALIMENTACAO_FRACAO, alimentacaoList.get(i).getAlimentacao_fracao());
+            obj.put(Field.FIELD_ALIMENTACAO_QUANTIFICACAO, alimentacaoList.get(i).getAlimentacao_quantificacao());
             obj.put(Field.FIELD_ALIMENTACAO_HORA, alimentacaoList.get(i).getAlimentacao_hora());
             obj.put(Field.FIELD_ALIMENTACAO_USUARIO, alimentacaoList.get(i).getAlimentacao_usuario());
             obj.put(Field.FIELD_ALIMENTACAO_ENTREVISTADO_ID, alimentacaoList.get(i).getAlimentacao_entrevistado_id());
@@ -1145,6 +1147,8 @@ public class DataBase extends SQLiteOpenHelper {
                 alimentacao.setAlimentacao_adicao_id(cursor.getString(cursor.getColumnIndex(Field.FIELD_ALIMENTACAO_ADICAO_ID)));
                 alimentacao.setAlimentacao_adicao(cursor.getString(cursor.getColumnIndex(Field.FIELD_ALIMENTACAO_ADICAO)));
                 alimentacao.setAlimentacao_quantidade(cursor.getString(cursor.getColumnIndex(Field.FIELD_ALIMENTACAO_QUANTIDADE)));
+                alimentacao.setAlimentacao_fracao(cursor.getString(cursor.getColumnIndex(Field.FIELD_ALIMENTACAO_FRACAO)));
+                alimentacao.setAlimentacao_quantificacao(cursor.getString(cursor.getColumnIndex(Field.FIELD_ALIMENTACAO_QUANTIFICACAO)));
                 alimentacao.setAlimentacao_hora(cursor.getString(cursor.getColumnIndex(Field.FIELD_ALIMENTACAO_HORA)));
                 alimentacao.setAlimentacao_usuario(cursor.getString(cursor.getColumnIndex(Field.FIELD_ALIMENTACAO_USUARIO)));
                 alimentacao.setAlimentacao_entrevistado_id(cursor.getString(cursor.getColumnIndex(Field.FIELD_ALIMENTACAO_ENTREVISTADO_ID)));
@@ -1198,6 +1202,8 @@ public class DataBase extends SQLiteOpenHelper {
                 alimentacao.setAlimentacao_adicao_id(cursor.getString(cursor.getColumnIndex(Field.FIELD_ALIMENTACAO_ADICAO_ID)));
                 alimentacao.setAlimentacao_adicao(cursor.getString(cursor.getColumnIndex(Field.FIELD_ALIMENTACAO_ADICAO)));
                 alimentacao.setAlimentacao_quantidade(cursor.getString(cursor.getColumnIndex(Field.FIELD_ALIMENTACAO_QUANTIDADE)));
+                alimentacao.setAlimentacao_fracao(cursor.getString(cursor.getColumnIndex(Field.FIELD_ALIMENTACAO_FRACAO)));
+                alimentacao.setAlimentacao_quantificacao(cursor.getString(cursor.getColumnIndex(Field.FIELD_ALIMENTACAO_QUANTIFICACAO)));
                 alimentacao.setAlimentacao_hora(cursor.getString(cursor.getColumnIndex(Field.FIELD_ALIMENTACAO_HORA)));
                 alimentacao.setAlimentacao_usuario(cursor.getString(cursor.getColumnIndex(Field.FIELD_ALIMENTACAO_USUARIO)));
                 alimentacao.setAlimentacao_entrevistado_id(cursor.getString(cursor.getColumnIndex(Field.FIELD_ALIMENTACAO_ENTREVISTADO_ID)));
@@ -1251,6 +1257,8 @@ public class DataBase extends SQLiteOpenHelper {
                 alimentacao.setAlimentacao_adicao_id(cursor.getString(cursor.getColumnIndex(Field.FIELD_ALIMENTACAO_ADICAO_ID)));
                 alimentacao.setAlimentacao_adicao(cursor.getString(cursor.getColumnIndex(Field.FIELD_ALIMENTACAO_ADICAO)));
                 alimentacao.setAlimentacao_quantidade(cursor.getString(cursor.getColumnIndex(Field.FIELD_ALIMENTACAO_QUANTIDADE)));
+                alimentacao.setAlimentacao_fracao(cursor.getString(cursor.getColumnIndex(Field.FIELD_ALIMENTACAO_FRACAO)));
+                alimentacao.setAlimentacao_quantificacao(cursor.getString(cursor.getColumnIndex(Field.FIELD_ALIMENTACAO_QUANTIFICACAO)));
                 alimentacao.setAlimentacao_hora(cursor.getString(cursor.getColumnIndex(Field.FIELD_ALIMENTACAO_HORA)));
                 alimentacao.setAlimentacao_usuario(cursor.getString(cursor.getColumnIndex(Field.FIELD_ALIMENTACAO_USUARIO)));
                 alimentacao.setAlimentacao_entrevistado_id(cursor.getString(cursor.getColumnIndex(Field.FIELD_ALIMENTACAO_ENTREVISTADO_ID)));

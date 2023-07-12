@@ -87,6 +87,7 @@ public class DbCreate {
                     Field.FIELD_ALIMENTACAO_ADICAO_ID + " INTEGER," +
                     Field.FIELD_ALIMENTACAO_ADICAO + " VARCHAR(500)," +
                     Field.FIELD_ALIMENTACAO_QUANTIDADE + "  VARCHAR(100)," +
+                    Field.FIELD_ALIMENTACAO_FRACAO + "  VARCHAR(100)," +
                     Field.FIELD_ALIMENTACAO_HORA + "  VARCHAR(10)," +
                     Field.FIELD_ALIMENTACAO_USUARIO + "  VARCHAR(100)," +
                     Field.FIELD_ALIMENTACAO_ENTREVISTADO_ID + "  VARCHAR(100)," +

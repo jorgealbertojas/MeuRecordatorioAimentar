@@ -232,6 +232,13 @@
                     android:layout_centerHorizontal="true"
                     android:src="@mipmap/ic_check" />
 
+                <ImageView xmlns:app="http://schemas.android.com/apk/res-auto"
+                    android:id="@+id/iv_check2"
+                    android:layout_width="50dp"
+                    android:layout_height="50dp"
+                    android:layout_centerHorizontal="true"
+                    android:src="@mipmap/ic_close" />
+
             </RelativeLayout>
 
             <Space
@@ -245,7 +252,7 @@
                 app:layout_constraintHorizontal_bias="0.0"
                 app:layout_constraintLeft_toRightOf="@+id/tv_preparacao"
                 app:layout_constraintRight_toLeftOf="@+id/rl_RelativeLayout"
-                tools:layout_editor_absoluteY="97dp" />
+                 />
 
             <TextView
                 android:id="@+id/tv_hora"
