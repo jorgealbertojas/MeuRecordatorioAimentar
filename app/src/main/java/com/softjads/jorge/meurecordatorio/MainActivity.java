@@ -71,7 +71,6 @@ import java.util.ArrayList;
 import java.util.List;
 
 import static com.softjads.jorge.meurecordatorio.PersistentData.DbCreate.DB_NAME;
-import static com.softjads.jorge.meurecordatorio.Utilite.Modulo.storageCliente;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -966,14 +965,14 @@ public class MainActivity extends AppCompatActivity {
 
         String fileName = "chave.txt";
 
-        File fileExist = new File(storageCliente, "chave.txt");
-        if (fileExist.exists() || BuildConfig.DEBUG){
-
+        File fileExist = new File(Modulo.getSDCardPath(this) , "chave.txt");
+       // if (fileExist.exists() || BuildConfig.DEBUG){
+        if (fileExist.exists()) {
 
         StringBuilder text = new StringBuilder();
         try {
 
-            File file = new File(storageCliente, "chave.txt");
+            File file = new File(Modulo.getSDCardPath(this), "chave.txt");
 
             BufferedReader br = null;
             try {
@@ -992,7 +991,7 @@ public class MainActivity extends AppCompatActivity {
             String nome_mae = "0";
             String nome_USUARIO = "0";
 
-            if (!BuildConfig.DEBUG) {
+           // if (!BuildConfig.DEBUG) {
                 while ((line = br.readLine()) != null) {
 
 
@@ -1016,13 +1015,13 @@ public class MainActivity extends AppCompatActivity {
 
 
                 }
-            }else{
+           /* }else{
                 id = "0000000000000000000000001";
                 id_crianca = "1";
                 nome_crianca = "nometeste";
                 nome_mae = "nometeste";
                 nome_USUARIO = "usuarioteste";
-            }
+            }*/
 
             Entrevistado entrevistado = new Entrevistado();
             entrevistado.setEntrevistado_id(id + id_crianca);
@@ -1048,9 +1047,9 @@ public class MainActivity extends AppCompatActivity {
             USUARIO = nome_USUARIO;
 
 
-            if (!BuildConfig.DEBUG) {
+         //   if (!BuildConfig.DEBUG) {
                 br.close();
-            }
+        //    }
 
 
 
@@ -1066,9 +1065,9 @@ public class MainActivity extends AppCompatActivity {
 
         }
         // 8 - BEBETO
-        if (!BuildConfig.DEBUG){
+      //  if (!BuildConfig.DEBUG){
            fileExist.delete();
-        }
+      //  }
 
             return true;
         }else{

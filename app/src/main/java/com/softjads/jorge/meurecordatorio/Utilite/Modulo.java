@@ -1,5 +1,9 @@
 package com.softjads.jorge.meurecordatorio.Utilite;
 
+import android.content.Context;
+import android.os.Environment;
+import android.widget.Toast;
+
 import static com.softjads.jorge.meurecordatorio.PersistentData.DbCreate.DB_NAME;
 
 /**
@@ -26,7 +30,9 @@ public class Modulo {
     public static String storage = "/storage/emulated/0/";
 
     // 10 - BEBETO
-    public static String storageCliente = "/storage/emulated/0/carcsentry/inani/";
+   // public static String storageCliente = "/storage/emulated/0/carcsentry/inani/";
+
+   // public static String storageCliente = "/storage/emulated/0/carcsentry/inani/";
 
     //public static String storageCliente = "/storage/emulated/0/";
 
@@ -44,5 +50,16 @@ public class Modulo {
     public static boolean Liberado = true;
 
     public static String nomeArquivoINI = "/data/data/com.softjads.jorge.meurecordatorio/configuracao.properties";
+
+    public static String getSDCardPath(Context context) {
+        // Verifica se o cartão SD está disponível
+        if (Environment.getExternalStorageState().equals(Environment.MEDIA_MOUNTED)) {
+            // Obter o caminho do diretório raiz do cartão SD
+            return Environment.getExternalStorageDirectory().getAbsolutePath();
+        } else {
+            Toast.makeText(context, "ATENÇÃO! Cartão não diponivel" , Toast.LENGTH_LONG).show();
+            return "0";
+        }
+    }
 
 }

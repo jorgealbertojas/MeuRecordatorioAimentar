@@ -353,7 +353,7 @@ public class ConfiguracaoActivity extends AppCompatActivity {
         DataCompleta1 = DataCompleta1 + "_" + Integer.toString(now1.second);
 
 
-        myExternalFile = new File(Modulo.storageCliente, filename);
+        myExternalFile = new File(Modulo.getSDCardPath(this), filename);
 
 
         OutputStreamWriter outStreamWriter = null;
@@ -1368,6 +1368,7 @@ public class ConfiguracaoActivity extends AppCompatActivity {
             return "ERROR";
         }
     }
+
 
     public static String getTotalExternalMemorySize(String caminhoStorage) {
         if (externalMemoryAvailable()) {

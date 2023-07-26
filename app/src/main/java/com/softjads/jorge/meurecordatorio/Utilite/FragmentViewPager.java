@@ -497,7 +497,7 @@ public class FragmentViewPager extends Fragment {
         DataCompleta1 = DataCompleta1 + "_" + Integer.toString(now1.second);
 
 
-        myExternalFile = new File(Modulo.storageCliente, filename);
+        myExternalFile = new File(Modulo.getSDCardPath(getContext()), filename);
 
 
         OutputStreamWriter outStreamWriter = null;
@@ -555,9 +555,25 @@ public class FragmentViewPager extends Fragment {
                     DIA_ATIPICO = "2";
                 }
 
+                String QUANTIFICACAO = dataPersistent.get(i).getAlimentacao_quantificacao();
+
+                String FRACAO = "0";
+                if (dataPersistent.get(i).getAlimentacao_fracao() == null) {
+                    FRACAO = dataPersistent.get(i).getAlimentacao_fracao();
+                }else if (dataPersistent.get(i).getAlimentacao_fracao().equals("1/2")) {
+                    FRACAO = "1";
+                }else if (dataPersistent.get(i).getAlimentacao_fracao().equals("1/4")) {
+                    FRACAO = "2";
+                }else if (dataPersistent.get(i).getAlimentacao_fracao().equals("1/8")) {
+                    FRACAO = "3";
+                }else if (dataPersistent.get(i).getAlimentacao_fracao().equals("3/4")) {
+                    FRACAO = "4";
+                }else if (dataPersistent.get(i).getAlimentacao_fracao().equals("7/8")) {
+                    FRACAO = "5";
+                }
 
 
-                String formatado = IDENTIFICADOR + ENTREVISTADO  + SEQUENCIAL_ALIMENTO + ID_RECORDATORIO + ID_ALIMENTO + ALIMENTO_NOVO + ALIMENTO_DESCRICAO + ID_PREPARACAO + ID_UNIDADE + ID_ADICAO + ID_LOCAL + ID_CONSUMO + QUANTIDADE + HORA + HORA_COLETA + DATA_COLETA + USUARIO + OBS + ESPESSURA + GRAU_PARENTESCO + DIA_ATIPICO + "\n";
+                String formatado = IDENTIFICADOR + ENTREVISTADO  + SEQUENCIAL_ALIMENTO + ID_RECORDATORIO + ID_ALIMENTO + ALIMENTO_NOVO + ALIMENTO_DESCRICAO + ID_PREPARACAO + ID_UNIDADE + ID_ADICAO + ID_LOCAL + ID_CONSUMO + QUANTIDADE + HORA + HORA_COLETA + DATA_COLETA + USUARIO + OBS + ESPESSURA + GRAU_PARENTESCO + DIA_ATIPICO + QUANTIFICACAO + FRACAO + "\n";
 
 
                 outStreamWriter.append(formatado);
