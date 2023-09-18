@@ -26,6 +26,7 @@ import android.widget.Toast;
 
 import androidx.annotation.RequiresApi;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
@@ -71,6 +72,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import static com.softjads.jorge.meurecordatorio.PersistentData.DbCreate.DB_NAME;
+import static com.softjads.jorge.meurecordatorio.Utilite.Modulo.storageCliente;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -151,7 +153,9 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        //solicitarPermisos();
+/*        if (ContextCompat.checkSelfPermission(this, Manifest.permission.READ_EXTERNAL_STORAGE) != PackageManager.PERMISSION_GRANTED) {
+            ActivityCompat.requestPermissions(this, new String[]{Manifest.permission.READ_EXTERNAL_STORAGE}, 1);
+        };*/
 
 
         //carregarsuario_login();
@@ -965,14 +969,14 @@ public class MainActivity extends AppCompatActivity {
 
         String fileName = "chave.txt";
 
-        File fileExist = new File(Modulo.getSDCardPath(this) , "chave.txt");
+        File fileExist = new File(Modulo.getSDCardPath(this) , storageCliente + "chave.txt");
        // if (fileExist.exists() || BuildConfig.DEBUG){
         if (fileExist.exists()) {
 
         StringBuilder text = new StringBuilder();
         try {
 
-            File file = new File(Modulo.getSDCardPath(this), "chave.txt");
+            File file = new File(Modulo.getSDCardPath(this), storageCliente + "chave.txt");
 
             BufferedReader br = null;
             try {
@@ -1380,26 +1384,14 @@ public class MainActivity extends AppCompatActivity {
 
 
 /*    @Override
-    public void onRequestPermissionsResult(int requestCode, String[] permissions,
-                                           int[] grantResults) {
-        switch (requestCode) {
-            case PERMISSION_REQUEST_CODE:
-                // If request is cancelled, the result arrays are empty.
-                if (grantResults.length > 0 &&
-                        grantResults[0] == PackageManager.PERMISSION_GRANTED) {
-                    // Permission is granted. Continue the action or workflow
-                    // in your app.
-                }  else {
-                    // Explain to the user that the feature is unavailable because
-                    // the feature requires a permission that the user has denied.
-                    // At the same time, respect the user's decision. Don't link to
-                    // system settings in an effort to convince the user to change
-                    // their decision.
-                }
-                return;
+    public void onRequestPermissionsResult(int requestCode, String[] permissions, int[] grantResults) {
+        if (requestCode == requestCode) {
+            if (grantResults.length > 0 && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
+                // A permissão foi concedida, execute a operação desejada.
+            } else {
+                // A permissão foi negada, informe ao usuário.
+            }
         }
-        // Other 'case' lines to check for other
-        // permissions this app might request.
     }*/
 
 

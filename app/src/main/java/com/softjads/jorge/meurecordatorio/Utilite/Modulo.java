@@ -36,6 +36,8 @@ public class Modulo {
 
     //public static String storageCliente = "/storage/emulated/0/";
 
+     public static String storageCliente = "csentry/inani/";
+
     // 11 - BEBETO
     public static String filename  = "inaniR.txt";
     //public static String filename  = "recordatorio24h.txt";

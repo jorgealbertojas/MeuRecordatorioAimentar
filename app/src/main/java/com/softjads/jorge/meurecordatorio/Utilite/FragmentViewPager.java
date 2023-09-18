@@ -313,7 +313,8 @@ public class FragmentViewPager extends Fragment {
                         deleteDialog11.setView(deleteDialogView11);
 
                         TextView nTextView1 = (TextView) deleteDialogView11.findViewById(R.id.txt_dia);
-                        nTextView1.setText("ATENÇÃO!\n Há alguns alimentos que às vezes são esquecidos e que fazem parte deste tipo de entrevista. Além dos alimentos e bebidas referidos pelo(a) Sr(a), a criança consumiu.");
+                       // nTextView1.setText("ATENÇÃO!\n Há alguns alimentos que às vezes são esquecidos e que fazem parte deste tipo de entrevista. Além dos alimentos e bebidas referidos pelo(a) Sr(a), a criança consumiu.");
+                        nTextView1.setText("ATENÇÃO!\n Listagem de alimentos esquecidos.");
 
                         deleteDialogView11.findViewById(R.id.btn_yes).setOnClickListener(new View.OnClickListener() {
 
@@ -574,7 +575,6 @@ public class FragmentViewPager extends Fragment {
 
 
                 String formatado = IDENTIFICADOR + ENTREVISTADO  + SEQUENCIAL_ALIMENTO + ID_RECORDATORIO + ID_ALIMENTO + ALIMENTO_NOVO + ALIMENTO_DESCRICAO + ID_PREPARACAO + ID_UNIDADE + ID_ADICAO + ID_LOCAL + ID_CONSUMO + QUANTIDADE + HORA + HORA_COLETA + DATA_COLETA + USUARIO + OBS + ESPESSURA + GRAU_PARENTESCO + DIA_ATIPICO + QUANTIFICACAO + FRACAO + "\n";
-
 
                 outStreamWriter.append(formatado);
                 outStreamWriter.flush();

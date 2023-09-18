@@ -9,6 +9,7 @@ import android.database.sqlite.SQLiteDatabase;
 import android.graphics.Typeface;
 import android.os.Bundle;
 import android.text.Editable;
+import android.text.InputFilter;
 import android.text.InputType;
 import android.text.TextWatcher;
 import android.text.format.Time;
@@ -20,6 +21,7 @@ import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.CompoundButton;
 import android.widget.EditText;
+import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.RadioButton;
 import android.widget.TextView;
@@ -116,6 +118,7 @@ public class DetailActivity extends AppCompatActivity {
     public static RadioButton rbMedidaCaseira;
     public static RadioButton rbGramaMl;
     public static TextView fracao_hint;
+    public static ImageView imageview_trash;
 
     TextView tv_deletar_alimento;
     TextView tv_duplicar_alimento;
@@ -243,8 +246,14 @@ public class DetailActivity extends AppCompatActivity {
         rbFotoManual = (RadioButton) findViewById(R.id.rb_foto_manual);
         rbMedidaCaseira = (RadioButton) findViewById(R.id.rb_medida_caseira);
         rbGramaMl = (RadioButton) findViewById(R.id.rb_grama_ou_ml);
+        imageview_trash = (ImageView) findViewById(R.id.imageview_trash);
 
-
+        imageview_trash.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View arg0) {
+                quantidadeEditText2.setText("");
+            }
+        });
 
         rbFotoManual.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -259,8 +268,13 @@ public class DetailActivity extends AppCompatActivity {
                 buttonfracao4.setVisibility(View.VISIBLE);
                 buttonfracao5.setVisibility(View.VISIBLE);
                 tv_quantificacao.setVisibility(View.VISIBLE);
+                putSizeLenght(2);
                 quantidadeEditText2.setVisibility(View.VISIBLE);
                 fracao_hint.setVisibility(View.VISIBLE);
+                imageview_trash.setVisibility(View.VISIBLE);
+                unidade.setVisibility(View.VISIBLE);
+                unidadeHINT.setVisibility(View.VISIBLE);
+                unidade_nome.setVisibility(View.VISIBLE);
             }
         });
 
@@ -270,7 +284,7 @@ public class DetailActivity extends AppCompatActivity {
                 rbFotoManual.setChecked(false);
                 rbMedidaCaseira.setChecked(true);
                 rbGramaMl.setChecked(false);
-
+                putSizeLenght(2);
                 buttonfracao.setVisibility(View.VISIBLE);
                 buttonfracao2.setVisibility(View.VISIBLE);
                 buttonfracao3.setVisibility(View.VISIBLE);
@@ -278,7 +292,12 @@ public class DetailActivity extends AppCompatActivity {
                 buttonfracao5.setVisibility(View.VISIBLE);
                 tv_quantificacao.setVisibility(View.VISIBLE);
                 quantidadeEditText2.setVisibility(View.VISIBLE);
+                imageview_trash.setVisibility(View.VISIBLE);
                 fracao_hint.setVisibility(View.VISIBLE);
+
+                unidade.setVisibility(View.VISIBLE);
+                unidadeHINT.setVisibility(View.VISIBLE);
+                unidade_nome.setVisibility(View.VISIBLE);
             }
         });
 
@@ -288,8 +307,11 @@ public class DetailActivity extends AppCompatActivity {
                 rbFotoManual.setChecked(false);
                 rbMedidaCaseira.setChecked(false);
                 rbGramaMl.setChecked(true);
-
-               putFotoManualvisible();
+                putSizeLenght(3);
+                putFotoManualvisible();
+                unidade.setVisibility(View.GONE);
+                unidadeHINT.setVisibility(View.GONE);
+                unidade_nome.setVisibility(View.GONE);
             }
 
         });
@@ -462,7 +484,7 @@ public class DetailActivity extends AppCompatActivity {
                             data.get(0).setAlimentacao_local("0");
                             data.get(0).setAlimentacao_local_id("0");
                             data.get(0).setAlimentacao_quantidade("");
-
+                            data.get(0).setAlimentacao_fracao("");
 
                             mDataBase.insertTABLE_ALIMENTACAO(data);
 
@@ -1132,6 +1154,7 @@ public class DetailActivity extends AppCompatActivity {
     private void colocarEtapaInvisivel(){
         quantidadeEditText.setVisibility(View.GONE);
         quantidadeEditText2.setVisibility(View.GONE);
+        imageview_trash.setVisibility(View.GONE);
 
         rbFotoManual.setVisibility(View.GONE);
         rbMedidaCaseira.setVisibility(View.GONE);
@@ -1325,10 +1348,19 @@ public class DetailActivity extends AppCompatActivity {
         buttonfracao3.setVisibility(View.GONE);
         buttonfracao4.setVisibility(View.GONE);
         buttonfracao5.setVisibility(View.GONE);
-        tv_quantificacao.setVisibility(View.GONE);
+       // tv_quantificacao.setVisibility(View.GONE);
         quantidadeEditText2.setVisibility(View.GONE);
+        imageview_trash.setVisibility(View.GONE);
         fracao_hint.setVisibility(View.GONE);
         quantidadeEditText2.setText("");
+    }
+
+    private void putSizeLenght(int novoMaxLength){
+        // Crie um filtro para limitar o comprimento do texto
+        InputFilter.LengthFilter lengthFilter = new InputFilter.LengthFilter(novoMaxLength);
+        // Aplique o filtro ao EditText
+        quantidadeEditText.setFilters(new InputFilter[]{lengthFilter});
+        quantidadeEditText.setText("");
     }
 
 
