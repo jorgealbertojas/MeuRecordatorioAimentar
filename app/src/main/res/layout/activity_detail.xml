@@ -356,8 +356,8 @@
         android:layout_width="30dp"
         android:layout_height="30dp"
         android:src="@drawable/ic_trash"
-        app:layout_constraintBottom_toTopOf="@+id/quantidade2"
-        app:layout_constraintStart_toEndOf="@+id/quantidade2">
+        app:layout_constraintBottom_toBottomOf="@+id/buttonfracao5"
+        app:layout_constraintStart_toEndOf="@+id/buttonfracao5">
 
     </ImageView>
     <TextView

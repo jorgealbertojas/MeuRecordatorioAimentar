@@ -267,6 +267,13 @@ public class DetailActivity extends AppCompatActivity {
                 buttonfracao3.setVisibility(View.VISIBLE);
                 buttonfracao4.setVisibility(View.VISIBLE);
                 buttonfracao5.setVisibility(View.VISIBLE);
+
+                buttonfracao.setText("1/2");
+                buttonfracao2.setText("1/4");
+                buttonfracao3.setText("1/8");
+                buttonfracao4.setText("3/4");
+                buttonfracao5.setText("7/8");
+
                 tv_quantificacao.setVisibility(View.VISIBLE);
                 putSizeLenght(2);
                 quantidadeEditText2.setVisibility(View.VISIBLE);
@@ -290,6 +297,13 @@ public class DetailActivity extends AppCompatActivity {
                 buttonfracao3.setVisibility(View.VISIBLE);
                 buttonfracao4.setVisibility(View.VISIBLE);
                 buttonfracao5.setVisibility(View.VISIBLE);
+
+                buttonfracao.setText("1/2");
+                buttonfracao2.setText("1/3");
+                buttonfracao3.setText("1/4");
+                buttonfracao4.setText("2/3");
+                buttonfracao5.setText("3/4");
+
                 tv_quantificacao.setVisibility(View.VISIBLE);
                 quantidadeEditText2.setVisibility(View.VISIBLE);
                 imageview_trash.setVisibility(View.VISIBLE);
@@ -800,8 +814,19 @@ public class DetailActivity extends AppCompatActivity {
                         if (rbGramaMl.isChecked()){
                             alimentacao.setAlimentacao_quantificacao("3");
                         } else if (rbMedidaCaseira.isChecked()){
+                            buttonfracao.setText("1/2");
+                            buttonfracao2.setText("1/4");
+                            buttonfracao3.setText("1/8");
+                            buttonfracao4.setText("3/4");
+                            buttonfracao5.setText("7/8");
                             alimentacao.setAlimentacao_quantificacao("2");
                         } else {
+
+                            buttonfracao.setText("1/2");
+                            buttonfracao2.setText("1/3");
+                            buttonfracao3.setText("1/4");
+                            buttonfracao4.setText("2/3");
+                            buttonfracao5.setText("3/4");
                             alimentacao.setAlimentacao_quantificacao("1");
                         }
 
@@ -952,10 +977,19 @@ public class DetailActivity extends AppCompatActivity {
             putFotoManualvisible();
         } else if (mAlimentacao.getAlimentacao_quantificacao().equals("2")) {
             rbMedidaCaseira.setChecked(true);
+            buttonfracao.setText("1/2");
+            buttonfracao2.setText("1/3");
+            buttonfracao3.setText("1/4");
+            buttonfracao4.setText("2/3");
+            buttonfracao5.setText("3/4");
         } else {
             rbFotoManual.setChecked(true);
+            buttonfracao.setText("1/2");
+            buttonfracao2.setText("1/4");
+            buttonfracao3.setText("1/8");
+            buttonfracao4.setText("3/4");
+            buttonfracao5.setText("7/8");
         }
-
 
         espessura.setText(mAlimentacao.getAlimentacao_espessura());
         minutoEditText.setText(pegarSoMinuto(mAlimentacao.getAlimentacao_hora()));
@@ -1348,7 +1382,9 @@ public class DetailActivity extends AppCompatActivity {
         buttonfracao3.setVisibility(View.GONE);
         buttonfracao4.setVisibility(View.GONE);
         buttonfracao5.setVisibility(View.GONE);
-       // tv_quantificacao.setVisibility(View.GONE);
+        unidade.setVisibility(View.GONE);
+        unidade_nome.setVisibility(View.GONE);
+        unidadeHINT.setVisibility(View.GONE);
         quantidadeEditText2.setVisibility(View.GONE);
         imageview_trash.setVisibility(View.GONE);
         fracao_hint.setVisibility(View.GONE);

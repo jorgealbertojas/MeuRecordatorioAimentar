@@ -313,8 +313,8 @@ public class FragmentViewPager extends Fragment {
                         deleteDialog11.setView(deleteDialogView11);
 
                         TextView nTextView1 = (TextView) deleteDialogView11.findViewById(R.id.txt_dia);
-                       // nTextView1.setText("ATENÇÃO!\n Há alguns alimentos que às vezes são esquecidos e que fazem parte deste tipo de entrevista. Além dos alimentos e bebidas referidos pelo(a) Sr(a), a criança consumiu.");
-                        nTextView1.setText("ATENÇÃO!\n Listagem de alimentos esquecidos.");
+                        nTextView1.setText("ATENÇÃO!\n Há alguns alimentos que às vezes são esquecidos e que fazem parte deste tipo de entrevista. Além dos alimentos e bebidas referidos pelo(a) Sr(a), a criança consumiu.");
+                        //nTextView1.setText("ATENÇÃO!\n Listagem de alimentos esquecidos.");
 
                         deleteDialogView11.findViewById(R.id.btn_yes).setOnClickListener(new View.OnClickListener() {
 
@@ -563,14 +563,18 @@ public class FragmentViewPager extends Fragment {
                     FRACAO = dataPersistent.get(i).getAlimentacao_fracao();
                 }else if (dataPersistent.get(i).getAlimentacao_fracao().equals("1/2")) {
                     FRACAO = "1";
-                }else if (dataPersistent.get(i).getAlimentacao_fracao().equals("1/4")) {
+                }else if (dataPersistent.get(i).getAlimentacao_fracao().equals("1/3")) {
                     FRACAO = "2";
-                }else if (dataPersistent.get(i).getAlimentacao_fracao().equals("1/8")) {
+                }else if (dataPersistent.get(i).getAlimentacao_fracao().equals("1/4")) {
                     FRACAO = "3";
-                }else if (dataPersistent.get(i).getAlimentacao_fracao().equals("3/4")) {
+                }else if (dataPersistent.get(i).getAlimentacao_fracao().equals("1/8")) {
                     FRACAO = "4";
-                }else if (dataPersistent.get(i).getAlimentacao_fracao().equals("7/8")) {
+                }else if (dataPersistent.get(i).getAlimentacao_fracao().equals("2/3")) {
                     FRACAO = "5";
+                }else if (dataPersistent.get(i).getAlimentacao_fracao().equals("3/4")) {
+                    FRACAO = "6";
+                }else if (dataPersistent.get(i).getAlimentacao_fracao().equals("7/8")) {
+                    FRACAO = "7";
                 }
 
 

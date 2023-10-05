@@ -259,7 +259,7 @@ public class AlimentacaoAdapter extends RecyclerView.Adapter<AlimentacaoAdapter.
                 check = false;
             } else if (alimentacao.getAlimentacao_adicao_id().toString().equals("") || alimentacao.getAlimentacao_adicao_id().toString().equals("0")) {
                 check = false;
-            } else if (alimentacao.getAlimentacao_unidade_id().toString().equals("") || alimentacao.getAlimentacao_unidade_id().toString().equals("0")) {
+            } else if (alimentacao.getAlimentacao_unidade_id().toString().equals("") || alimentacao.getAlimentacao_unidade_id().toString().equals("0") && (alimentacao.getAlimentacao_fracao().toString().equals("") || alimentacao.getAlimentacao_fracao().toString().equals("0") ) && (alimentacao.getAlimentacao_quantidade().toString().equals("")) || alimentacao.getAlimentacao_quantidade().toString().equals("0") ) {
                 check = false;
             } else if (alimentacao.getAlimentacao_local_id().toString().equals("") || alimentacao.getAlimentacao_local_id().toString().equals("0")) {
                 check = false;

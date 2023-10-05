@@ -457,7 +457,7 @@ public class MainActivity extends AppCompatActivity {
                         deleteDialog1.setView(deleteDialogView);
 
                         TextView nTextView = (TextView) deleteDialogView.findViewById(R.id.txt_dia);
-                        nTextView.setText("você deve finalizar todos os alimentos");
+                        nTextView.setText("Você deve finalizar todos os alimentos");
 
                         deleteDialogView.findViewById(R.id.btn_yes).setOnClickListener(new View.OnClickListener() {
 
@@ -1070,7 +1070,7 @@ public class MainActivity extends AppCompatActivity {
         }
         // 8 - BEBETO
       //  if (!BuildConfig.DEBUG){
-           fileExist.delete();
+ //          fileExist.delete();
       //  }
 
             return true;
@@ -1190,7 +1190,7 @@ public class MainActivity extends AppCompatActivity {
                 case 1:
                     return FragmentViewPager.newInstance("Passo 1 - Listagem rápida de alimentos","Adicionar Alimento", R.mipmap.food, pos,USUARIO);
                 case 2:
-                    return FragmentViewPager.newInstance("Passo 2 - Listagem de alimentos comumente esquecidos", "Arraste para o lado esquerdo para ir ao Passo 3.", R.mipmap.add,pos,USUARIO);
+                    return FragmentViewPager.newInstance("Passo 2 - Listagem de alimentos esquecidos", "Arraste para o lado esquerdo para ir ao Passo 3.", R.mipmap.add,pos,USUARIO);
                 case 3:
                     return FragmentViewPager.newInstance("Passo 3 – Definição de horário e tipo de refeição", "Clique nos alimentos para definir horário e refeição",  R.mipmap.check, pos,USUARIO);
                 case 4:
