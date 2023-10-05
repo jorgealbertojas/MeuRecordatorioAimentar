@@ -1070,7 +1070,7 @@ public class MainActivity extends AppCompatActivity {
         }
         // 8 - BEBETO
       //  if (!BuildConfig.DEBUG){
- //          fileExist.delete();
+           fileExist.delete();
       //  }
 
             return true;
