@@ -267,7 +267,7 @@ public class AlimentacaoAdapter extends RecyclerView.Adapter<AlimentacaoAdapter.
                 check = false;
             } else if (alimentacao.getAlimentacao_hora().toString().equals("") || alimentacao.getAlimentacao_hora().toString().equals("0") || alimentacao.getAlimentacao_hora().toString().equals("0:00")) {
                 check = false;
-            } else if ((alimentacao.getAlimentacao_quantidade().toString().equals("")) || alimentacao.getAlimentacao_quantidade().toString().equals("0") && (alimentacao.getAlimentacao_fracao().toString().equals("") || alimentacao.getAlimentacao_fracao().toString().equals("0") )) {
+            } else if ((alimentacao.getAlimentacao_quantidade().toString().equals("")) && (alimentacao.getAlimentacao_fracao().toString().equals("") )) {
                 check = false;
             }
         }else{
