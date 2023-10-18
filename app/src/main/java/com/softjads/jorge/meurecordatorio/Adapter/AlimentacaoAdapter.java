@@ -158,7 +158,7 @@ public class AlimentacaoAdapter extends RecyclerView.Adapter<AlimentacaoAdapter.
                 Toast.makeText(((MainActivity) mContext), "No próximo passo pode fazer alterações!", Toast.LENGTH_SHORT).show();
 
             } else {
-                Toast.makeText(((MainActivity) mContext), "Volte ao Passo 2 para fazer alterações!", Toast.LENGTH_SHORT).show();
+                Toast.makeText(((MainActivity) mContext), "Volte ao Passo 4 para fazer alterações.", Toast.LENGTH_SHORT).show();
             }
 
         }

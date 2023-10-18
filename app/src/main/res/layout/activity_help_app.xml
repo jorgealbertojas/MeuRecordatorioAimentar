@@ -25,7 +25,7 @@
                 android:id="@+id/text_explanation"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="Clicar no botão ajuda \n\n Você pode clicar no boão de ajuda para saber explicação sobre a funcionalidade\n\n"
+                android:text="Clique no botão de ajuda  \n\n Clique no botão de ajuda para obter explicação sobre a funcionalidade do recurso\n\n"
                 android:textAlignment="center"
                 android:textColor="@color/colorWhite"
                 android:textSize="@dimen/text1_list_size" />

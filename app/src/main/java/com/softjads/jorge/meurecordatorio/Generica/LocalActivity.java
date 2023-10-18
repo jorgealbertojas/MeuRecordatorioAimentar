@@ -52,7 +52,7 @@ public class LocalActivity extends AppCompatActivity {
          */
         this.setTitle("Cadastro Local");
         title2 = findViewById(R.id.title2);
-        title2.setText("Onde " + mName + " comeu este alimento ou bebida?");
+        title2.setText("Onde " + mName + " comeu ou bebeu este alimento?");
 
         /**
          * use RecyclerView for list the PullRequest .

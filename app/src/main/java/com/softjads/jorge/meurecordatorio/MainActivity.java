@@ -381,7 +381,7 @@ public class MainActivity extends AppCompatActivity {
 
                     if (voltando) {
 
-                        if (alimentacaoAdapter.estaFaltando) {
+                  //      if (alimentacaoAdapter.estaFaltando) {
                             LayoutInflater factory2 = LayoutInflater.from(MainActivity.this);
                             final View deleteDialogView2 = factory2.inflate(
                                     R.layout.custom_dialog10, null);
@@ -401,7 +401,7 @@ public class MainActivity extends AppCompatActivity {
                             });
 
                             deleteDialog2.show();
-                        }
+                  //      }
 
 
 
@@ -1186,11 +1186,11 @@ public class MainActivity extends AppCompatActivity {
         public Fragment getItem(int pos) {
             switch (pos) {
                 case 0:
-                    return FragmentViewPager.newInstance("Identificação","Arraste para o lado esquerdo para ir ao Passo 1", R.mipmap.ic_id, pos,USUARIO);
+                    return FragmentViewPager.newInstance("Identificação","Deslize para a esquerda para avançar para o próximo passo. Deslize para a direita até chegar ao Passo 1, para adicionar mais alimentos.", R.mipmap.ic_id, pos,USUARIO);
                 case 1:
                     return FragmentViewPager.newInstance("Passo 1 - Listagem rápida de alimentos","Adicionar Alimento", R.mipmap.food, pos,USUARIO);
                 case 2:
-                    return FragmentViewPager.newInstance("Passo 2 - Listagem de alimentos esquecidos", "Arraste para o lado esquerdo para ir ao Passo 3.", R.mipmap.add,pos,USUARIO);
+                    return FragmentViewPager.newInstance("Passo 2 - Listagem de alimentos esquecidos", "Deslize para a esquerda para avançar para o próximo passo. Deslize para a direita até chegar ao Passo 1, para adicionar mais alimentos.", R.mipmap.add,pos,USUARIO);
                 case 3:
                     return FragmentViewPager.newInstance("Passo 3 – Definição de horário e tipo de refeição", "Clique nos alimentos para definir horário e refeição",  R.mipmap.check, pos,USUARIO);
                 case 4:

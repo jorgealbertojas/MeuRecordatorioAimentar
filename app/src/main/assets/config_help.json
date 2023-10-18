@@ -13,21 +13,21 @@
     },
     {
       "key":"TextViewAdiciona",
-      "value":"Abas das etapas\n\n *É a identificação do entrevistado. Pode arrastar(swipe) para o lado direito. para ir para a próximo passo.\n\n* Neste 1º Passo é a para adicionar alimentos, basta clicar no botão para adicionar novos alimentos. Pode arrastar(swipe) para o lado direito. para ir para a próximo passo.\n\n* Neste 2º Passo verifica se o entrevistado esqueceu alimentos, pode arrastar para a etapa anterior caso deseje acrescentar novos alimentos. Pode arrastar(swipe) para o lado direito. para ir para a próximo passo.\n\n* Neste 3º Passo coloca o horário e quantidade. Se o entrevistado esqueceu alimentos, pode arrastar para a etapa anterior caso deseje acrescentar novos alimentos. Pode arrastar(swipe) para o lado direito. para ir para a próximo passo.\n\n*  Neste 4º Passo clica para detalhar cada alimento, isto é, seus complementos, pode arrastar para a etapa anterior caso deseje acrescentar novos alimentos. Pode arrastar(swipe) para o lado direito. para ir para a próximo passo.\n\n*   Neste 5º Passo conferirir cada alimento se está faltando algum complemento, Clique no botão para ir para próximo alimento, pode arrastar para a etapa anterior caso deseje acrescentar novos alimentos. Pode arrastar(swipe) para o lado direito. para ir para a próximo passo.\n\n*" ,
+      "value":"Abas das etapas\n\n *É a identificação do entrevistado. Pode arrastar(swipe) para o lado direito. para ir para a próximo passo.\n\n* Neste 1º Passo é a para adicionar alimentos, basta clicar no botão para adicionar novos alimentos. Pode arrastar(swipe) para o lado direito. para ir para a próximo passo.\n\n* Neste 2º Passo verifica se o entrevistado esqueceu alimentos, pode arrastar para a etapa anterior caso deseje acrescentar novos alimentos. Pode arrastar(swipe) para o lado direito. para ir para a próximo passo.\n\n* Neste 3º Passo coloca o horário e quantidade. Se o entrevistado esqueceu alimentos, pode arrastar para a etapa anterior caso deseje acrescentar novos alimentos. Pode arrastar(swipe) para o lado direito. para ir para a próximo passo.\n\n*  Neste 4º Passo clica para detalhar cada alimento, isto é, seus complementos, pode arrastar para a etapa anterior caso deseje acrescentar novos alimentos. Pode arrastar(swipe) para o lado direito. para ir para a próximo passo.\n\n*    Revisão dos alimentos - Clique aqui para revisar o próximo alimento\n\n*" ,
       "last":"1"
     },
     {
       "key":"tv_deletar_alimento",
-      "value":"Botão de deletar alimento\n\n Esse botão apaga o alimento do banco de dados, mas antes irá aparecer um diálogo para confirmar essa! Depois dessa operação somente cadastrando novamente esse alimento.\n\n",
+      "value":"Deletar Alimento\n\n Clique para apagar um alimento. Para incluir de novo o alimento, vá para o Passo 1.\n\n",
       "last":"0"
     },
     {
       "key":"tv_duplicar_alimento",
-      "value":"Botão de duplicar alimento\n\n Esse botão duplica o alimento, mas antes irá aparecer um diálogo para confirmar essa! Depois dessa operação somente deletando o alimento do banco.\n\n",
+      "value":"Duplicar alimento\n\n Clique para duplicar um alimento.\n\n",
       "last":"0"
     },
     {
-      "key":"tv_salvar_alimento",
+      "key":"tv_salvar_1alimento1",
       "value":"Botão salvar aliemnto\n\n Salva o alimento com todos os complementos selecionados, pode voltar neste alimento e trocar os complementos escolhidos em qualquer momento!\n\n",
       "last":"0"
     },
@@ -63,7 +63,7 @@
     },
     {
       "key":"buttonfracao",
-      "value":"Botão de fração\n\n Coloca fração no texto ao lado.\n\n",
+      "value":"Botão de fração\n\n Escolha uma das frações existentes. Use a lixeira para apagar uma fração.\n\n",
       "last":"0"
     },
     {
@@ -103,7 +103,7 @@
     },
     {
       "key":"card_view",
-      "value":"Card do alimento\n\n Clique nos cards de alimentos abaixo, caso queira fazer alteração ou conferir as informações de um alimento!\n\n",
+      "value":"Card do alimento\n\n Para modificar um alimento, volte para o Passo 4. Para incluir alimentos, volte para o Passo.\n\n",
       "last":"1"
     }
   ]

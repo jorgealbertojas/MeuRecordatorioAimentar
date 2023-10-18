@@ -54,7 +54,8 @@ public class UnidadeActivity extends AppCompatActivity {
          */
         this.setTitle("Cadastro unidade");
         title2 = findViewById(R.id.title2);
-        title2.setText("Qual a unidade que " + mName + " comeu ou bebeu este alimento?");
+       // title2.setText("Qual a unidade que " + mName + " comeu ou bebeu este alimento?");
+        title2.setText("Escolha a unidade relatada pela(o) entrevistada(o).");
 
         /**
          * use RecyclerView for list the PullRequest .

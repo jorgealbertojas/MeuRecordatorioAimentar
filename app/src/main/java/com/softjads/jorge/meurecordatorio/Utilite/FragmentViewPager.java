@@ -313,7 +313,7 @@ public class FragmentViewPager extends Fragment {
                         deleteDialog11.setView(deleteDialogView11);
 
                         TextView nTextView1 = (TextView) deleteDialogView11.findViewById(R.id.txt_dia);
-                        nTextView1.setText("ATENÇÃO!\n Há alguns alimentos que às vezes são esquecidos e que fazem parte deste tipo de entrevista. Além dos alimentos e bebidas referidos pelo(a) Sr(a), a criança consumiu.");
+                        nTextView1.setText("ATENÇÃO!\n Há alguns alimentos que às vezes são esquecidos e que fazem parte deste tipo de entrevista. Além dos alimentos e bebidas referidos pelo(a) Sr(a), a criança consumiu:");
                         //nTextView1.setText("ATENÇÃO!\n Listagem de alimentos esquecidos.");
 
                         deleteDialogView11.findViewById(R.id.btn_yes).setOnClickListener(new View.OnClickListener() {

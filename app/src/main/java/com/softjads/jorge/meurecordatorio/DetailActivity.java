@@ -1096,9 +1096,9 @@ public class DetailActivity extends AppCompatActivity {
         if (unidade_nome.getText().toString() != null){
             if (unidade_nome.getText().length()>1) {
                 if (unidade_nome.getText().toString().substring(0,2).toString().equals("FM")) {
-                    espessura.setVisibility(View.VISIBLE);
-                    espessura_hint.setVisibility(View.VISIBLE);
-                    buttonvirgula_espessura.setVisibility(View.VISIBLE);
+                   // espessura.setVisibility(View.VISIBLE);
+                  //  espessura_hint.setVisibility(View.VISIBLE);
+                  //  buttonvirgula_espessura.setVisibility(View.VISIBLE);
                 }
             }
         }
