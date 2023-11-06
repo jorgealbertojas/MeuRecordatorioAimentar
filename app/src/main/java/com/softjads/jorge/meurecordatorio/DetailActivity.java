@@ -972,9 +972,70 @@ public class DetailActivity extends AppCompatActivity {
         quantidadeEditText2.setText(mAlimentacao.getAlimentacao_fracao());
         quantidadeEditText2.setText(mAlimentacao.getAlimentacao_fracao());
 
+        quantidadeEditText.addTextChangedListener(new TextWatcher() {
+
+            public void onTextChanged(CharSequence s, int start, int before,
+                                      int count) {
+                if(!s.equals("")  ) {
+                    if(s.length() > 0) {
+
+
+                        // 3) Para Fotos do manual
+                        if (rbFotoManual.isChecked()){
+                            // - se fotos de medidores e de colher infantil --> 10
+                            if ((Integer.parseInt(s.toString())) > 10) {
+                                Toast.makeText(mContext , "Digite de novo a quantidade deste alimento!", Toast.LENGTH_SHORT).show();
+                            // - se fotos de mamadeira --> 3
+                            } else if ((Integer.parseInt(s.toString())) > 3) {
+                                Toast.makeText(mContext , "Digite de novo a quantidade deste alimento!", Toast.LENGTH_SHORT).show();
+                            // - para todas as outras fotos - 5
+                            } else if ((Integer.parseInt(s.toString())) > 5) {
+                                Toast.makeText(mContext , "Digite de novo a quantidade deste alimento!", Toast.LENGTH_SHORT).show();
+                            }
+
+                        } else if (rbGramaMl.isChecked()){
+                            //1) Para Grama ou mililitro --> 500
+                            if ((Integer.parseInt(s.toString())) > 500) {
+                                Toast.makeText(mContext , "Digite de novo a quantidade deste alimento!", Toast.LENGTH_SHORT).show();
+                            }
+
+                        } else if (rbMedidaCaseira.isChecked()){
+                            //  2) Para Medidas caseiras
+
+                            // - se for colher de chá, colher infantil, medidor - 10
+                            if ((Integer.parseInt(s.toString())) > 10) {
+                                Toast.makeText(mContext , "Digite de novo a quantidade deste alimento!", Toast.LENGTH_SHORT).show();
+                            // - se for mamadeira - 3
+                            } else if ((Integer.parseInt(s.toString())) > 3) {
+                                Toast.makeText(mContext , "Digite de novo a quantidade deste alimento!", Toast.LENGTH_SHORT).show();
+                            // - para todos os outros alimentos - 5
+                            } else if ((Integer.parseInt(s.toString())) > 5) {
+                                Toast.makeText(mContext , "Digite de novo a quantidade deste alimento!", Toast.LENGTH_SHORT).show();
+                            }
+
+                        }
+
+                    }
+
+                }
+            }
+
+
+
+            public void beforeTextChanged(CharSequence s, int start, int count,
+                                          int after) {
+
+            }
+
+            public void afterTextChanged(Editable s) {
+
+            }
+        });
+
         if (mAlimentacao.getAlimentacao_quantificacao().equals("3")) {
             rbGramaMl.setChecked(true);
             putFotoManualvisible();
+            putSizeLenght(3);
         } else if (mAlimentacao.getAlimentacao_quantificacao().equals("2")) {
             rbMedidaCaseira.setChecked(true);
             buttonfracao.setText("1/2");
@@ -982,6 +1043,7 @@ public class DetailActivity extends AppCompatActivity {
             buttonfracao3.setText("1/4");
             buttonfracao4.setText("2/3");
             buttonfracao5.setText("3/4");
+            putSizeLenght(2);
         } else {
             rbFotoManual.setChecked(true);
             buttonfracao.setText("1/2");
@@ -989,6 +1051,7 @@ public class DetailActivity extends AppCompatActivity {
             buttonfracao3.setText("1/8");
             buttonfracao4.setText("3/4");
             buttonfracao5.setText("7/8");
+            putSizeLenght(2);
         }
 
         espessura.setText(mAlimentacao.getAlimentacao_espessura());

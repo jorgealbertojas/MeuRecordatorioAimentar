@@ -75,6 +75,27 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
 
+        <TextView
+            android:id="@+id/proximo_palavra"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:layout_toStartOf="@+id/proximo"
+            android:text=" Arraste "
+            android:visibility="visible"
+            app:layout_constraintTop_toBottomOf="@+id/proximo" />
+
+        <TextView
+            android:id="@+id/anterior_palavra"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:layout_toEndOf="@+id/anterior"
+            android:text=" Arraste "
+            android:visibility="visible"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/anterior" />
+
     </androidx.constraintlayout.widget.ConstraintLayout>
 
 

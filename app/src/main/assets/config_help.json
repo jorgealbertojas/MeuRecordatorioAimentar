@@ -13,16 +13,16 @@
     },
     {
       "key":"TextViewAdiciona",
-      "value":"Abas das etapas\n\n *É a identificação do entrevistado. Pode arrastar(swipe) para o lado direito. para ir para a próximo passo.\n\n* Neste 1º Passo é a para adicionar alimentos, basta clicar no botão para adicionar novos alimentos. Pode arrastar(swipe) para o lado direito. para ir para a próximo passo.\n\n* Neste 2º Passo verifica se o entrevistado esqueceu alimentos, pode arrastar para a etapa anterior caso deseje acrescentar novos alimentos. Pode arrastar(swipe) para o lado direito. para ir para a próximo passo.\n\n* Neste 3º Passo coloca o horário e quantidade. Se o entrevistado esqueceu alimentos, pode arrastar para a etapa anterior caso deseje acrescentar novos alimentos. Pode arrastar(swipe) para o lado direito. para ir para a próximo passo.\n\n*  Neste 4º Passo clica para detalhar cada alimento, isto é, seus complementos, pode arrastar para a etapa anterior caso deseje acrescentar novos alimentos. Pode arrastar(swipe) para o lado direito. para ir para a próximo passo.\n\n*    Revisão dos alimentos - Clique aqui para revisar o próximo alimento\n\n*" ,
+      "value":"Abas das etapas\n\n *É a identificação do entrevistado. Pode arrastar(swipe) para o lado esquerdo. para ir para a próximo passo.\n\n* Neste 1º Passo é a para adicionar alimentos, basta clicar no botão para adicionar novos alimentos. Pode arrastar(swipe) para o lado esquerdo. para ir para a próximo passo.\n\n* Neste 2º Passo verifica se o entrevistado esqueceu alimentos, pode arrastar para a etapa anterior caso deseje acrescentar novos alimentos. Pode arrastar(swipe) para o lado esquerdo. para ir para a próximo passo.\n\n* No Passo 3 se coloca tipo de refeição e horário. Para adicionar mais alimentos, volte ao Passo 1.\n\n*  Neste 4º Passo clica para detalhar cada alimento, isto é, seus complementos, pode arrastar para a etapa anterior caso deseje acrescentar novos alimentos. Pode arrastar(swipe) para o lado esquerdo. para ir para a próximo passo.\n\n*    Revisão dos alimentos - Clique aqui para revisar o próximo alimento\n\n*" ,
       "last":"1"
     },
     {
-      "key":"tv_deletar_alimento",
+      "key":"tv_deletar_alimento1",
       "value":"Deletar Alimento\n\n Clique para apagar um alimento. Para incluir de novo o alimento, vá para o Passo 1.\n\n",
       "last":"0"
     },
     {
-      "key":"tv_duplicar_alimento",
+      "key":"tv_duplicar_alimento1",
       "value":"Duplicar alimento\n\n Clique para duplicar um alimento.\n\n",
       "last":"0"
     },
@@ -103,7 +103,7 @@
     },
     {
       "key":"card_view",
-      "value":"Card do alimento\n\n Para modificar um alimento, volte para o Passo 4. Para incluir alimentos, volte para o Passo.\n\n",
+      "value":"Card do alimento\n\n O Passo 1 permite adicionar alimentos clicando neste botão. Deslize para a esquerda para ir ao próximo passo.\n\n",
       "last":"1"
     }
   ]

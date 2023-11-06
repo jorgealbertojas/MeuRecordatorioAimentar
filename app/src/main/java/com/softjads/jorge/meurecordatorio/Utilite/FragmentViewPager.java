@@ -498,7 +498,7 @@ public class FragmentViewPager extends Fragment {
         DataCompleta1 = DataCompleta1 + "_" + Integer.toString(now1.second);
 
 
-        myExternalFile = new File(Modulo.getSDCardPath(getContext()), filename);
+        myExternalFile = new File(Modulo.getSDCardPathNew(getContext()), filename);
 
 
         OutputStreamWriter outStreamWriter = null;

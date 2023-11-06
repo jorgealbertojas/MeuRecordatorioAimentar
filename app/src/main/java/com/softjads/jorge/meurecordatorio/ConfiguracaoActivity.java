@@ -353,7 +353,7 @@ public class ConfiguracaoActivity extends AppCompatActivity {
         DataCompleta1 = DataCompleta1 + "_" + Integer.toString(now1.second);
 
 
-        myExternalFile = new File(Modulo.getSDCardPath(this), filename);
+        myExternalFile = new File(Modulo.getSDCardPathNew(this), filename);
 
 
         OutputStreamWriter outStreamWriter = null;

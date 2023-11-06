@@ -29,7 +29,7 @@ public class Common {
     }
 
     public static boolean eLeitematerno(String nomeAlimento){
-        if (nomeAlimento.toString().toUpperCase().toString().contains("LEITE MATERNO")) {
+        if (false) {
             return true;
         }else{
             return false;

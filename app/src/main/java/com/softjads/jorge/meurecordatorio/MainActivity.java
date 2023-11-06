@@ -338,7 +338,7 @@ public class MainActivity extends AppCompatActivity {
 
                             TextView nTextView2 = (TextView) deleteDialogView2.findViewById(R.id.txt_dia);
 
-                            nTextView2.setText("Agora vamos falar sobre as refeições que " + NOME + " realizou (se era café da manhã, almoço, lanche, jantar etc) e incluir os horários das refeições)");
+                            nTextView2.setText("Agora vamos falar sobre as refeições que " + NOME + " realizou (se era café da manhã, almoço, lanche, jantar etc) e incluir os horários das refeições");
 
 
                             deleteDialogView2.findViewById(R.id.btn_yes).setOnClickListener(new View.OnClickListener() {
@@ -364,8 +364,8 @@ public class MainActivity extends AppCompatActivity {
                     diaatipico_hint.setVisibility(View.GONE);
 
 
-                    anterior.setVisibility(View.VISIBLE);
-                    proximo.setVisibility(View.VISIBLE);
+                  //  anterior.setVisibility(View.VISIBLE);
+                 //   proximo.setVisibility(View.VISIBLE);
                     anterior_palavra.setVisibility(View.VISIBLE);
                     proximo_palavra.setVisibility(View.VISIBLE);
 
@@ -418,8 +418,8 @@ public class MainActivity extends AppCompatActivity {
 
                     anterior_palavra.setVisibility(View.VISIBLE);
                     proximo_palavra.setVisibility(View.INVISIBLE);
-                    anterior.setVisibility(View.VISIBLE);
-                    proximo.setVisibility(View.INVISIBLE);
+                    //anterior.setVisibility(View.VISIBLE);
+                    //proximo.setVisibility(View.INVISIBLE);
 
                     imagepiscar.setVisibility(View.INVISIBLE);
                     imagepiscar.setAnimation(null);
@@ -1186,13 +1186,13 @@ public class MainActivity extends AppCompatActivity {
         public Fragment getItem(int pos) {
             switch (pos) {
                 case 0:
-                    return FragmentViewPager.newInstance("Identificação","Deslize para a esquerda para avançar para o próximo passo. Deslize para a direita até chegar ao Passo 1, para adicionar mais alimentos.", R.mipmap.ic_id, pos,USUARIO);
+                    return FragmentViewPager.newInstance("Identificação","Deslize para a esquerda para avançar para o próximo passo.", R.mipmap.ic_id, pos,USUARIO);
                 case 1:
                     return FragmentViewPager.newInstance("Passo 1 - Listagem rápida de alimentos","Adicionar Alimento", R.mipmap.food, pos,USUARIO);
                 case 2:
-                    return FragmentViewPager.newInstance("Passo 2 - Listagem de alimentos esquecidos", "Deslize para a esquerda para avançar para o próximo passo. Deslize para a direita até chegar ao Passo 1, para adicionar mais alimentos.", R.mipmap.add,pos,USUARIO);
+                    return FragmentViewPager.newInstance("Passo 2 - Listagem de alimentos esquecidos", "Deslize para a esquerda para avançar para o próximo passo. ", R.mipmap.add,pos,USUARIO);
                 case 3:
-                    return FragmentViewPager.newInstance("Passo 3 – Definição de horário e tipo de refeição", "Clique nos alimentos para definir horário e refeição",  R.mipmap.check, pos,USUARIO);
+                    return FragmentViewPager.newInstance("Passo 3 - Definição de horário e tipo de refeição", "Clique nos alimentos para definir horário e refeição",  R.mipmap.check, pos,USUARIO);
                 case 4:
                     return FragmentViewPager.newInstance("Passo 4 - Detalhamento dos alimentos", "Clique nos alimentos para fazer o detalhamento",  R.mipmap.report, pos,USUARIO);
                 default:

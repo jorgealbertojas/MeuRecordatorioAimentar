@@ -4,6 +4,8 @@ import android.content.Context;
 import android.os.Environment;
 import android.widget.Toast;
 
+import java.io.File;
+
 import static com.softjads.jorge.meurecordatorio.PersistentData.DbCreate.DB_NAME;
 
 /**
@@ -62,6 +64,12 @@ public class Modulo {
             Toast.makeText(context, "ATENÇÃO! Cartão não diponivel" , Toast.LENGTH_LONG).show();
             return "0";
         }
+    }
+
+    public static String getSDCardPathNew(Context context) {
+
+        return Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DOWNLOADS).getAbsolutePath();
+
     }
 
 }
