@@ -35,6 +35,7 @@ public class Alimentacao implements Serializable {
     private String alimentacao_dia_atico;
     private String alimentacao_fracao;
     private String alimentacao_quantificacao;
+    private String alimentacao_marca;
 
     public String getAlimentacao_quantificacao() {
         return alimentacao_quantificacao == null ? "1" : alimentacao_quantificacao ;
@@ -264,4 +265,11 @@ public class Alimentacao implements Serializable {
         this.alimentacao_espessura = alimentacao_espessura;
     }
 
+    public String getAlimentacao_marca() {
+        return alimentacao_marca;
+    }
+
+    public void setAlimentacao_marca(String alimentacao_marca) {
+        this.alimentacao_marca = alimentacao_marca;
+    }
 }

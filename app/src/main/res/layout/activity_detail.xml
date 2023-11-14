@@ -125,7 +125,7 @@
         android:layout_height="70dp"
         android:background="@drawable/rounded_corner_cinza_claro"
         android:hint=""
-
+        android:maxLength="30"
         android:text=""
         android:padding="@dimen/padding_text"
         android:textSize="18sp"

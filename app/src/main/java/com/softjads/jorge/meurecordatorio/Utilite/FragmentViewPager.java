@@ -549,6 +549,8 @@ public class FragmentViewPager extends Fragment {
                 String ESPESSURA = getFormatodoComEspacoDireita(20, dataPersistent.get(i).getAlimentacao_espessura());
                 String GRAU_PARENTESCO = getFormatodoComEspacoDireita(20, dataPersistent.get(i).getAlimentacao_grau_parentesco_id());
 
+                String MARCA = getFormatodoComEspacoDireita(30, dataPersistent.get(i).getAlimentacao_marca());
+
                 String DIA_ATIPICO = dataPersistent.get(i).getAlimentacao_dia_atico();
                 if (DIA_ATIPICO.equals("SIM")){
                     DIA_ATIPICO = "1";
@@ -578,7 +580,7 @@ public class FragmentViewPager extends Fragment {
                 }
 
 
-                String formatado = IDENTIFICADOR + ENTREVISTADO  + SEQUENCIAL_ALIMENTO + ID_RECORDATORIO + ID_ALIMENTO + ALIMENTO_NOVO + ALIMENTO_DESCRICAO + ID_PREPARACAO + ID_UNIDADE + ID_ADICAO + ID_LOCAL + ID_CONSUMO + QUANTIDADE + HORA + HORA_COLETA + DATA_COLETA + USUARIO + OBS + ESPESSURA + GRAU_PARENTESCO + DIA_ATIPICO + QUANTIFICACAO + FRACAO + "\n";
+                String formatado = IDENTIFICADOR + ENTREVISTADO  + SEQUENCIAL_ALIMENTO + ID_RECORDATORIO + ID_ALIMENTO + ALIMENTO_NOVO + ALIMENTO_DESCRICAO + ID_PREPARACAO + ID_UNIDADE + ID_ADICAO + ID_LOCAL + ID_CONSUMO + QUANTIDADE + HORA + HORA_COLETA + DATA_COLETA + USUARIO + OBS + ESPESSURA + GRAU_PARENTESCO + MARCA + DIA_ATIPICO + QUANTIFICACAO + FRACAO + "\n";
 
                 outStreamWriter.append(formatado);
                 outStreamWriter.flush();

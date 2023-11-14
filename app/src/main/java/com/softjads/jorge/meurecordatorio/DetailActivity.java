@@ -97,6 +97,8 @@ public class DetailActivity extends AppCompatActivity {
     TextView preparacao;
     TextView preparacao_nome;
 
+    TextView marca_nome;
+
     TextView adicao;
     TextView adicao_nome;
 
@@ -504,6 +506,7 @@ public class DetailActivity extends AppCompatActivity {
                             data.get(0).setAlimentacao_local_id("0");
                             data.get(0).setAlimentacao_quantidade("");
                             data.get(0).setAlimentacao_fracao("");
+                            data.get(0).setAlimentacao_marca("");
 
                             mDataBase.insertTABLE_ALIMENTACAO(data);
 
@@ -654,6 +657,8 @@ public class DetailActivity extends AppCompatActivity {
                 }
             }
         });
+
+        marca_nome = (TextView)  findViewById(R.id.marca_nome);
 
         // Preparacao
         preparacao_nome = (TextView)  findViewById(R.id.preparacao_nome);
@@ -834,6 +839,7 @@ public class DetailActivity extends AppCompatActivity {
                         alimentacao.setAlimentacao_quantidade(quantidadeEditText.getText().toString());
                         alimentacao.setAlimentacao_fracao(quantidadeEditText2.getText().toString());
                         alimentacao.setAlimentacao_espessura(espessura.getText().toString());
+                        alimentacao.setAlimentacao_marca(marca_nome.getText().toString());
 
                         if (rbGramaMl.isChecked()){
                             alimentacao.setAlimentacao_quantificacao("3");
@@ -949,6 +955,7 @@ public class DetailActivity extends AppCompatActivity {
         ocasiaoConsumo.setText("0");
         ocasiaoConsumo_nome.setText("0");
         obs.setText("");
+        marca_nome.setText("");
 
         Modulo.NOME = "0";
         Modulo.ID = "0";
@@ -1025,21 +1032,23 @@ public class DetailActivity extends AppCompatActivity {
                 if(!s.equals("")  ) {
                     if(s.length() > 0) {
 
-                        if (rbFotoManual.isChecked() && LimiteUnidade.getTipo_unidade().contains("FOTO DO MANUAL")){
-                            if ((Integer.parseInt(s.toString())) > LimiteUnidade.getLimite()) {
-                                Toast.makeText(mContext , "Digite de novo a quantidade deste alimento!", Toast.LENGTH_SHORT).show();
-                            }
+                        if (LimiteUnidade != null && LimiteUnidade.getTipo_unidade() != null) {
+                            if (rbFotoManual.isChecked() && LimiteUnidade.getTipo_unidade().contains("FOTO DO MANUAL")) {
+                                if ((Integer.parseInt(s.toString())) > LimiteUnidade.getLimite()) {
+                                    Toast.makeText(mContext, "Digite de novo a quantidade deste alimento!", Toast.LENGTH_SHORT).show();
+                                }
 
-                        } else if (rbGramaMl.isChecked() && LimiteUnidade.getTipo_unidade().contains("GRAMA OU MILILITRO")){
-                            if ((Integer.parseInt(s.toString())) > LimiteUnidade.getLimite()) {
-                                Toast.makeText(mContext , "Digite de novo a quantidade deste alimento!", Toast.LENGTH_SHORT).show();
-                            }
+                            } else if (rbGramaMl.isChecked() && LimiteUnidade.getTipo_unidade().contains("GRAMA OU MILILITRO")) {
+                                if ((Integer.parseInt(s.toString())) > LimiteUnidade.getLimite()) {
+                                    Toast.makeText(mContext, "Digite de novo a quantidade deste alimento!", Toast.LENGTH_SHORT).show();
+                                }
 
-                        } else if (rbMedidaCaseira.isChecked() && LimiteUnidade.getTipo_unidade().contains("MEDIDA CASEIRA")){
-                            if ((Integer.parseInt(s.toString())) > LimiteUnidade.getLimite()) {
-                                Toast.makeText(mContext , "Digite de novo a quantidade deste alimento!", Toast.LENGTH_SHORT).show();
-                            }
+                            } else if (rbMedidaCaseira.isChecked() && LimiteUnidade.getTipo_unidade().contains("MEDIDA CASEIRA")) {
+                                if ((Integer.parseInt(s.toString())) > LimiteUnidade.getLimite()) {
+                                    Toast.makeText(mContext, "Digite de novo a quantidade deste alimento!", Toast.LENGTH_SHORT).show();
+                                }
 
+                            }
                         }
 
                     }
@@ -1068,6 +1077,7 @@ public class DetailActivity extends AppCompatActivity {
         alimento_nome.setText(mAlimentacao.getAlimentacao_alimento());
         preparacao.setText(mAlimentacao.getAlimentacao_preparacao_id());
         preparacao_nome.setText(mAlimentacao.getAlimentacao_preparacao());
+        marca_nome.setText(mAlimentacao.getAlimentacao_marca());
         adicao.setText(mAlimentacao.getAlimentacao_adicao_id());
         adicao_nome.setText(mAlimentacao.getAlimentacao_adicao());
         unidade.setText(mAlimentacao.getAlimentacao_unidade_id());

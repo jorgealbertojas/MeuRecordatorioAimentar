@@ -115,6 +115,7 @@ public class DbSelect {
                     + Field.FIELD_ALIMENTACAO_GRAU_PARENTESCO_ID  + ","
                     + Field.FIELD_ALIMENTACAO_GRAU_PARENTESCO  + ","
                     + Field.FIELD_ALIMENTACAO_DIA_ATIPICO + ","
+                    + Field.FIELD_ALIMENTACAO_MARCA+ ","
                     + Field.FIELD_ALIMENTACAO_ESPESSURA +
                     " FROM " + DbCreate.TABLE_ALIMENTACAO ;
 
@@ -146,6 +147,7 @@ public class DbSelect {
                     + Field.FIELD_ALIMENTACAO_GRAU_PARENTESCO_ID  + ","
                     + Field.FIELD_ALIMENTACAO_GRAU_PARENTESCO  + ","
                     + Field.FIELD_ALIMENTACAO_DIA_ATIPICO + ","
+                    + Field.FIELD_ALIMENTACAO_MARCA + ","
                     + Field.FIELD_ALIMENTACAO_ESPESSURA +
                     " FROM " + DbCreate.TABLE_ALIMENTACAO ;
 
