@@ -137,7 +137,7 @@ public class LoginActivity extends AppCompatActivity {
             usuario = cusrsorlogin.getString(0).toString();
 
             if (mDataBase.getListAlimento().size()==0) {
-                String sAssets = "backup_REC24_JORGE.db";
+                String sAssets = "backup__teste_REC24_JORGE.db";
                 try {
                     restaura_bkp(sAssets);
                 } catch (IOException e) {

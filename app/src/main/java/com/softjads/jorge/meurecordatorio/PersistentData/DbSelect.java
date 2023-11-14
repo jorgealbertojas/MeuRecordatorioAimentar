@@ -40,9 +40,14 @@ public class DbSelect {
 
     public static String GET_UNIDADE =
             " SELECT  "
-                    + Field.FIELD_UNIDADE_ID  + ","
-                    + Field.FIELD_UNIDADE +
+                    + Field.FIELD_UNIDADE_ID  + "," + Field.FIELD_UNIDADE + "," + Field.FIELD_TIPO_UNIDADE + "," + Field.FIELD_LIMITE +
                     " FROM " + DbCreate.TABLE_UNIDADE + " U, " + DbCreate.TABLE_UNIDADE_ALIMENTO  + " UA WHERE U." + Field.FIELD_UNIDADE_ID + " = UA." + Field.FIELD_UNIDADE_UNIDADE_ID    ;
+
+    public static String GET_UNIDADE_ID =
+            " SELECT  "
+                    + Field.FIELD_UNIDADE_ID  + "," + Field.FIELD_UNIDADE + "," + Field.FIELD_TIPO_UNIDADE + "," + Field.FIELD_LIMITE +
+                    " FROM " + DbCreate.TABLE_UNIDADE + " where "    ;
+
 
 
     public static String GET_UNIDADE_NOVA =

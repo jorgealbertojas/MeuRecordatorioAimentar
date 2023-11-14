@@ -30,6 +30,7 @@ import android.widget.Toast;
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
+import com.softjads.jorge.meurecordatorio.Adapter.AdicaoAdapter;
 import com.softjads.jorge.meurecordatorio.Generica.AdicaoActivity;
 import com.softjads.jorge.meurecordatorio.Generica.AlimentoActivity;
 import com.softjads.jorge.meurecordatorio.Generica.LocalActivity;
@@ -38,8 +39,10 @@ import com.softjads.jorge.meurecordatorio.Generica.PreparacaoActivity;
 import com.softjads.jorge.meurecordatorio.Generica.UnidadeActivity;
 import com.softjads.jorge.meurecordatorio.Help.Help;
 import com.softjads.jorge.meurecordatorio.Help.HelpAppActivity;
+import com.softjads.jorge.meurecordatorio.Model.Adicao;
 import com.softjads.jorge.meurecordatorio.Model.Alimentacao;
 import com.softjads.jorge.meurecordatorio.Model.Alimento;
+import com.softjads.jorge.meurecordatorio.Model.Unidade;
 import com.softjads.jorge.meurecordatorio.PersistentData.DataBase;
 import com.softjads.jorge.meurecordatorio.PersistentData.DbInstance;
 import com.softjads.jorge.meurecordatorio.Utilite.Common;
@@ -71,6 +74,8 @@ public class DetailActivity extends AppCompatActivity {
 
     private SQLiteDatabase mDb;
     private DataBase mDataBase;
+
+   private Unidade LimiteUnidade;
 
     String mEntrevistado;
     String mEntrevistadoNome;
@@ -631,6 +636,25 @@ public class DetailActivity extends AppCompatActivity {
             }
         });
 
+        unidade_nome.addTextChangedListener(new TextWatcher() {
+
+            public void afterTextChanged(Editable s) {}
+
+            public void beforeTextChanged(CharSequence s, int start,
+                                          int count, int after) {
+            }
+
+            public void onTextChanged(CharSequence s, int start,
+                                      int before, int count) {
+
+
+                if (!unidade.getText().toString().equals("")) {
+                    unidade.getText().toString();
+                    LimiteUnidade = mDataBase.getUnidade(unidade.getText().toString());
+                }
+            }
+        });
+
         // Preparacao
         preparacao_nome = (TextView)  findViewById(R.id.preparacao_nome);
         preparacao = (TextView)  findViewById(R.id.preparacao);
@@ -968,70 +992,6 @@ public class DetailActivity extends AppCompatActivity {
             tvHoraColeta.setText(mAlimentacao.getAlimentacao_hora_coleta());
         }
 
-        quantidadeEditText.setText(mAlimentacao.getAlimentacao_quantidade());
-        quantidadeEditText2.setText(mAlimentacao.getAlimentacao_fracao());
-        quantidadeEditText2.setText(mAlimentacao.getAlimentacao_fracao());
-
-        quantidadeEditText.addTextChangedListener(new TextWatcher() {
-
-            public void onTextChanged(CharSequence s, int start, int before,
-                                      int count) {
-                if(!s.equals("")  ) {
-                    if(s.length() > 0) {
-
-
-                        // 3) Para Fotos do manual
-                        if (rbFotoManual.isChecked()){
-                            // - se fotos de medidores e de colher infantil --> 10
-                            if ((Integer.parseInt(s.toString())) > 10) {
-                                Toast.makeText(mContext , "Digite de novo a quantidade deste alimento!", Toast.LENGTH_SHORT).show();
-                            // - se fotos de mamadeira --> 3
-                            } else if ((Integer.parseInt(s.toString())) > 3) {
-                                Toast.makeText(mContext , "Digite de novo a quantidade deste alimento!", Toast.LENGTH_SHORT).show();
-                            // - para todas as outras fotos - 5
-                            } else if ((Integer.parseInt(s.toString())) > 5) {
-                                Toast.makeText(mContext , "Digite de novo a quantidade deste alimento!", Toast.LENGTH_SHORT).show();
-                            }
-
-                        } else if (rbGramaMl.isChecked()){
-                            //1) Para Grama ou mililitro --> 500
-                            if ((Integer.parseInt(s.toString())) > 500) {
-                                Toast.makeText(mContext , "Digite de novo a quantidade deste alimento!", Toast.LENGTH_SHORT).show();
-                            }
-
-                        } else if (rbMedidaCaseira.isChecked()){
-                            //  2) Para Medidas caseiras
-
-                            // - se for colher de chá, colher infantil, medidor - 10
-                            if ((Integer.parseInt(s.toString())) > 10) {
-                                Toast.makeText(mContext , "Digite de novo a quantidade deste alimento!", Toast.LENGTH_SHORT).show();
-                            // - se for mamadeira - 3
-                            } else if ((Integer.parseInt(s.toString())) > 3) {
-                                Toast.makeText(mContext , "Digite de novo a quantidade deste alimento!", Toast.LENGTH_SHORT).show();
-                            // - para todos os outros alimentos - 5
-                            } else if ((Integer.parseInt(s.toString())) > 5) {
-                                Toast.makeText(mContext , "Digite de novo a quantidade deste alimento!", Toast.LENGTH_SHORT).show();
-                            }
-
-                        }
-
-                    }
-
-                }
-            }
-
-
-
-            public void beforeTextChanged(CharSequence s, int start, int count,
-                                          int after) {
-
-            }
-
-            public void afterTextChanged(Editable s) {
-
-            }
-        });
-
         if (mAlimentacao.getAlimentacao_quantificacao().equals("3")) {
             rbGramaMl.setChecked(true);
             putFotoManualvisible();
@@ -1053,6 +1013,51 @@ public class DetailActivity extends AppCompatActivity {
             buttonfracao5.setText("7/8");
             putSizeLenght(2);
         }
+
+        quantidadeEditText.setText(mAlimentacao.getAlimentacao_quantidade());
+        quantidadeEditText2.setText(mAlimentacao.getAlimentacao_fracao());
+        quantidadeEditText2.setText(mAlimentacao.getAlimentacao_fracao());
+
+        quantidadeEditText.addTextChangedListener(new TextWatcher() {
+
+            public void onTextChanged(CharSequence s, int start, int before,
+                                      int count) {
+                if(!s.equals("")  ) {
+                    if(s.length() > 0) {
+
+                        if (rbFotoManual.isChecked() && LimiteUnidade.getTipo_unidade().contains("FOTO DO MANUAL")){
+                            if ((Integer.parseInt(s.toString())) > LimiteUnidade.getLimite()) {
+                                Toast.makeText(mContext , "Digite de novo a quantidade deste alimento!", Toast.LENGTH_SHORT).show();
+                            }
+
+                        } else if (rbGramaMl.isChecked() && LimiteUnidade.getTipo_unidade().contains("GRAMA OU MILILITRO")){
+                            if ((Integer.parseInt(s.toString())) > LimiteUnidade.getLimite()) {
+                                Toast.makeText(mContext , "Digite de novo a quantidade deste alimento!", Toast.LENGTH_SHORT).show();
+                            }
+
+                        } else if (rbMedidaCaseira.isChecked() && LimiteUnidade.getTipo_unidade().contains("MEDIDA CASEIRA")){
+                            if ((Integer.parseInt(s.toString())) > LimiteUnidade.getLimite()) {
+                                Toast.makeText(mContext , "Digite de novo a quantidade deste alimento!", Toast.LENGTH_SHORT).show();
+                            }
+
+                        }
+
+                    }
+
+                }
+            }
+
+
+
+            public void beforeTextChanged(CharSequence s, int start, int count,
+                                          int after) {
+
+            }
+
+            public void afterTextChanged(Editable s) {
+
+            }
+        });
 
         espessura.setText(mAlimentacao.getAlimentacao_espessura());
         minutoEditText.setText(pegarSoMinuto(mAlimentacao.getAlimentacao_hora()));

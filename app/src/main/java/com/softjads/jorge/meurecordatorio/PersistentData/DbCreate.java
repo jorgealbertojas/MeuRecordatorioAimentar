@@ -43,7 +43,9 @@ public class DbCreate {
     public static String CREATE_TABLE_UNIDADE =
             "CREATE TABLE IF NOT EXISTS " + TABLE_UNIDADE +  "(" +
                     Field.FIELD_UNIDADE_ID + " INTEGER PRIMARY KEY," +
-                    Field.FIELD_UNIDADE + " TEXT COLLATE NOCASE " +
+                    Field.FIELD_UNIDADE + " TEXT COLLATE NOCASE, " +
+                    Field.FIELD_TIPO_UNIDADE + " VARCHAR(500), " +
+                    Field.FIELD_LIMITE + " INTEGER" +
                     ");";
 
     public static String CREATE_INDEX_TABLE_UNIDADE =

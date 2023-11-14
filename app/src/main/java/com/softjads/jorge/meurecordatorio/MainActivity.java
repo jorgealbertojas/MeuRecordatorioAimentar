@@ -1,16 +1,12 @@
 package com.softjads.jorge.meurecordatorio;
 
-import android.Manifest;
-import android.annotation.TargetApi;
 import android.app.AlertDialog;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
-import android.content.pm.PackageManager;
 import android.database.sqlite.SQLiteDatabase;
 import android.os.Build;
 import android.os.Bundle;
-import android.os.Debug;
 import android.text.Editable;
 import android.text.TextWatcher;
 import android.util.Log;
@@ -26,8 +22,6 @@ import android.widget.Toast;
 
 import androidx.annotation.RequiresApi;
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.core.app.ActivityCompat;
-import androidx.core.content.ContextCompat;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentPagerAdapter;
@@ -48,9 +42,7 @@ import com.softjads.jorge.meurecordatorio.Model.Entrevistado;
 import com.softjads.jorge.meurecordatorio.PersistentData.DataBase;
 import com.softjads.jorge.meurecordatorio.PersistentData.DbCreate;
 import com.softjads.jorge.meurecordatorio.PersistentData.DbInstance;
-import com.softjads.jorge.meurecordatorio.Splash.SplashActivity;
 import com.softjads.jorge.meurecordatorio.Utilite.Common;
-import com.softjads.jorge.meurecordatorio.Utilite.CrunchifyJSONFileWrite;
 import com.softjads.jorge.meurecordatorio.Utilite.FragmentViewPager;
 import com.softjads.jorge.meurecordatorio.Utilite.Modulo;
 

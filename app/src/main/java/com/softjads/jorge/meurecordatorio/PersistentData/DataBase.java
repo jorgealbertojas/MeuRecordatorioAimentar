@@ -637,6 +637,8 @@ public class DataBase extends SQLiteOpenHelper {
             try {
                 unidade.setUnidade_id(cursor.getString(cursor.getColumnIndex(Field.FIELD_UNIDADE_ID)));
                 unidade.setUnidade(cursor.getString(cursor.getColumnIndex(Field.FIELD_UNIDADE)));
+                unidade.setTipo_unidade(cursor.getString(cursor.getColumnIndex(Field.FIELD_TIPO_UNIDADE)));
+                unidade.setLimite(cursor.getInt(cursor.getColumnIndex(Field.FIELD_LIMITE)));
 
             } catch (Exception e) {
                 System.out.println(e.getMessage());
@@ -646,6 +648,33 @@ public class DataBase extends SQLiteOpenHelper {
         }
         cursor.close();
         return unidadeList;
+
+    }
+
+    public Unidade getUnidade(String unidadeId) {
+        Unidade unidade = new Unidade();
+
+        mDb = this.getWritableDatabase();
+
+        Cursor cursor = mDb.rawQuery(DbSelect.GET_UNIDADE_ID + " " + Field.FIELD_UNIDADE_ID + " = '" + unidadeId  + "'",null);
+        cursor.moveToFirst();
+        while(!cursor.isAfterLast() ){
+
+
+            try {
+                unidade.setUnidade_id(cursor.getString(cursor.getColumnIndex(Field.FIELD_UNIDADE_ID)));
+                unidade.setUnidade(cursor.getString(cursor.getColumnIndex(Field.FIELD_UNIDADE)));
+                unidade.setTipo_unidade(cursor.getString(cursor.getColumnIndex(Field.FIELD_TIPO_UNIDADE)));
+                unidade.setLimite(cursor.getInt(cursor.getColumnIndex(Field.FIELD_LIMITE)));
+
+            } catch (Exception e) {
+                System.out.println(e.getMessage());
+            }
+
+            cursor.moveToNext();
+        }
+        cursor.close();
+        return unidade;
 
     }
 

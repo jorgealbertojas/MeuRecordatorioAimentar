@@ -27,6 +27,8 @@ public class Field {
     // TABELA UNIDADE
     public final static String FIELD_UNIDADE_ID = "UNIDADE_ID";
     public final static String FIELD_UNIDADE = "UNIDADE";
+    public final static String FIELD_TIPO_UNIDADE = "TIPO_UNIDADE";
+    public final static String FIELD_LIMITE = "LIMITE";
 
     // TABELA ADICAO
     public final static String FIELD_ADICAO_ID = "ADICAO_ID";
