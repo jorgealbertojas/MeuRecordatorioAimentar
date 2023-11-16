@@ -13,6 +13,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.fragment.app.Fragment;
+import androidx.recyclerview.widget.LinearLayoutManager;
 
 import com.softjads.jorge.meurecordatorio.DetailActivity;
 import com.softjads.jorge.meurecordatorio.MainActivity;
@@ -56,6 +57,7 @@ public class FragmentViewPager extends Fragment {
 
     public static boolean continua = true;
     public static int contador = 0;
+    public static int contadorAdapter = 0;
 
     private String filtro_desc_pesquisa = "REC24";
 
@@ -78,6 +80,8 @@ public class FragmentViewPager extends Fragment {
 
         mPos = getArguments().getInt("pos");
         mUsuario = getArguments().getString("usuario");
+
+      //  contadorAdapter = ((MainActivity) container.getContext()).mRecyclerView.getAdapter().getItemCount();
 
 
 
@@ -346,8 +350,11 @@ public class FragmentViewPager extends Fragment {
                         @Override
                         public void onClick(View arg0) {
                             if (contador < ((MainActivity) container.getContext()).mRecyclerView.getAdapter().getItemCount()-1) {
-                                ((MainActivity) container.getContext()).mRecyclerView.getAdapter().notifyItemMoved(0, ((MainActivity) container.getContext()).mRecyclerView.getAdapter().getItemCount() - 1);
-                                //((MainActivity) container.getContext()).mRecyclerView.getAdapter().notifyDataSetChanged();
+                                ((MainActivity) container.getContext()).mRecyclerView.getAdapter().notifyItemMoved(0, contador +1);
+                                LinearLayoutManager layoutManager = (LinearLayoutManager) ((MainActivity) container.getContext()).mRecyclerView.getLayoutManager();
+                                if(layoutManager != null) {
+                                    layoutManager.scrollToPosition(0);
+                                }
                                 contador = contador + 1;
                             }else {
                                 TextViewAdiciona.setOnClickListener(null);
@@ -546,7 +553,7 @@ public class FragmentViewPager extends Fragment {
                 String USUARIO = getFormatodoComEspacoDireita(20, dataPersistent.get(i).getAlimentacao_usuario());
                 String OBS = getFormatodoComEspacoDireita(130, dataPersistent.get(i).getAlimentacao_obs());
 
-                String ESPESSURA = getFormatodoComEspacoDireita(20, dataPersistent.get(i).getAlimentacao_espessura());
+              //  String ESPESSURA = getFormatodoComEspacoDireita(20, dataPersistent.get(i).getAlimentacao_espessura());
                 String GRAU_PARENTESCO = getFormatodoComEspacoDireita(20, dataPersistent.get(i).getAlimentacao_grau_parentesco_id());
 
                 String MARCA = getFormatodoComEspacoDireita(30, dataPersistent.get(i).getAlimentacao_marca());
@@ -580,7 +587,7 @@ public class FragmentViewPager extends Fragment {
                 }
 
 
-                String formatado = IDENTIFICADOR + ENTREVISTADO  + SEQUENCIAL_ALIMENTO + ID_RECORDATORIO + ID_ALIMENTO + ALIMENTO_NOVO + ALIMENTO_DESCRICAO + ID_PREPARACAO + ID_UNIDADE + ID_ADICAO + ID_LOCAL + ID_CONSUMO + QUANTIDADE + HORA + HORA_COLETA + DATA_COLETA + USUARIO + OBS + ESPESSURA + GRAU_PARENTESCO + MARCA + DIA_ATIPICO + QUANTIFICACAO + FRACAO + "\n";
+                String formatado = IDENTIFICADOR + ENTREVISTADO  + SEQUENCIAL_ALIMENTO + ID_RECORDATORIO + ID_ALIMENTO + ALIMENTO_NOVO + ALIMENTO_DESCRICAO + ID_PREPARACAO + ID_UNIDADE + ID_ADICAO + ID_LOCAL + ID_CONSUMO + QUANTIDADE + HORA + HORA_COLETA + DATA_COLETA + USUARIO + OBS + GRAU_PARENTESCO + MARCA + DIA_ATIPICO + QUANTIFICACAO + FRACAO + "\n";
 
                 outStreamWriter.append(formatado);
                 outStreamWriter.flush();

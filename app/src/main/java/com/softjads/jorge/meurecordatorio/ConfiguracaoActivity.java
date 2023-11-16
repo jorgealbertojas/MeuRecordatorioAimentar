@@ -400,7 +400,7 @@ public class ConfiguracaoActivity extends AppCompatActivity {
                 String DATA_COLETA = getFormatodoComEspaco(8, formatarData(dataPersistent.get(i).getAlimentacao_dia_coleta()));
                 String USUARIO = getFormatodoComEspacoDireita(20, dataPersistent.get(i).getAlimentacao_usuario());
                 String OBS = getFormatodoComEspacoDireita(130, dataPersistent.get(i).getAlimentacao_obs());
-                String ESPESSURA = getFormatodoComEspacoDireita(20, dataPersistent.get(i).getAlimentacao_espessura());
+               // String ESPESSURA = getFormatodoComEspacoDireita(20, dataPersistent.get(i).getAlimentacao_espessura());
                 String GRAU_PARENTESCO = getFormatodoComEspacoDireita(20, dataPersistent.get(i).getAlimentacao_grau_parentesco_id());
                 String MARCA = getFormatodoComEspacoDireita(30, dataPersistent.get(i).getAlimentacao_marca());
 
@@ -420,7 +420,7 @@ public class ConfiguracaoActivity extends AppCompatActivity {
 
 
 
-                String formatado = IDENTIFICADOR + ENTREVISTADO  + SEQUENCIAL_ALIMENTO + ID_RECORDATORIO + ID_ALIMENTO + ALIMENTO_NOVO + ALIMENTO_DESCRICAO + ID_PREPARACAO + ID_UNIDADE + ID_ADICAO + ID_LOCAL + ID_CONSUMO + QUANTIDADE + HORA + HORA_COLETA + DATA_COLETA + USUARIO + OBS + ESPESSURA + GRAU_PARENTESCO + MARCA + DIA_ATIPICO + "\n";
+                String formatado = IDENTIFICADOR + ENTREVISTADO  + SEQUENCIAL_ALIMENTO + ID_RECORDATORIO + ID_ALIMENTO + ALIMENTO_NOVO + ALIMENTO_DESCRICAO + ID_PREPARACAO + ID_UNIDADE + ID_ADICAO + ID_LOCAL + ID_CONSUMO + QUANTIDADE + HORA + HORA_COLETA + DATA_COLETA + USUARIO + OBS + GRAU_PARENTESCO + MARCA + DIA_ATIPICO + "\n";
 
 
                 outStreamWriter.append(formatado);

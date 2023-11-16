@@ -77,6 +77,7 @@ public class MainActivity extends AppCompatActivity {
     public boolean voltando = false;
     public boolean voltandoNovo = false;
     public int lastpositionNOVO = 0;
+    public int lastpositionNOVOMSG = 0;
 
     public List<Alimentacao> dataPersistent = null;
 
@@ -220,6 +221,7 @@ public class MainActivity extends AppCompatActivity {
                     voltandoNovo = true;
                 }
                 lastpositionNOVO = position;
+
 
                 ImageView iv_check = mRecyclerViewCheck.findViewById(R.id.iv_check);
 
@@ -371,7 +373,7 @@ public class MainActivity extends AppCompatActivity {
 
 
 
-                    if (voltando) {
+                    if (voltando && (lastpositionNOVOMSG == 3)) {
 
                   //      if (alimentacaoAdapter.estaFaltando) {
                             LayoutInflater factory2 = LayoutInflater.from(MainActivity.this);
@@ -478,6 +480,7 @@ public class MainActivity extends AppCompatActivity {
                         imagepiscar.startAnimation(animation);
                     }
                 }
+                lastpositionNOVOMSG = position;
             }
 
             @Override

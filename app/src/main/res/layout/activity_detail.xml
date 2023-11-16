@@ -107,7 +107,7 @@
 
     <TextView
         android:id="@+id/marca"
-        android:layout_height="70dp"
+        android:layout_height="50dp"
         android:background="@drawable/rounded_corner_cinza_claro"
         android:hint="          "
         android:layout_marginTop="2dp"
@@ -122,11 +122,12 @@
         android:id="@+id/marca_nome"
         android:layout_width="150dp"
 
-        android:layout_height="70dp"
+        android:layout_height="50dp"
         android:background="@drawable/rounded_corner_cinza_claro"
         android:hint=""
         android:maxLength="30"
         android:text=""
+
         android:padding="@dimen/padding_text"
         android:textSize="18sp"
         app:layout_constraintStart_toEndOf="@+id/marca"

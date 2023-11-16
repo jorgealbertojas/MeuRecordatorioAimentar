@@ -97,6 +97,7 @@ public class DetailActivity extends AppCompatActivity {
     TextView preparacao;
     TextView preparacao_nome;
 
+    TextView marca;
     TextView marca_nome;
 
     TextView adicao;
@@ -658,6 +659,7 @@ public class DetailActivity extends AppCompatActivity {
             }
         });
 
+        marca = (TextView)  findViewById(R.id.marca);
         marca_nome = (TextView)  findViewById(R.id.marca_nome);
 
         // Preparacao
@@ -946,6 +948,8 @@ public class DetailActivity extends AppCompatActivity {
         alimento_nome.setText("0");
         preparacao.setText("0");
         preparacao_nome.setText("0");
+        marca.setText("");marca_nome.setText("");
+        marca_nome.setText("0");marca_nome.setText("");
         adicao.setText("0");
         adicao_nome.setText("0");
         unidade.setText("0");
@@ -1275,6 +1279,8 @@ public class DetailActivity extends AppCompatActivity {
         espessura.setVisibility(View.GONE);
         preparacao.setVisibility(View.GONE);
         preparacao_nome.setVisibility(View.GONE);
+        marca.setVisibility(View.GONE);
+        marca_nome.setVisibility(View.GONE);
         adicao.setVisibility(View.GONE);
         adicao_nome.setVisibility(View.GONE);
         unidade.setVisibility(View.GONE);
