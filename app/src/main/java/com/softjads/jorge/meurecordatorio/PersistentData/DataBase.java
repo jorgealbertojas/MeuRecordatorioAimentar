@@ -625,12 +625,12 @@ public class DataBase extends SQLiteOpenHelper {
 
     }
 
-    public List<Unidade> getListUnidade(String alimento) {
+    public List<Unidade> getListUnidadeWithtype(String alimento, String tipo) {
         List<Unidade> unidadeList = new ArrayList<Unidade>();
 
         mDb = this.getWritableDatabase();
 
-        Cursor cursor = mDb.rawQuery(DbSelect.GET_UNIDADE + " AND UA." + Field.FIELD_UNIDADE_ALIMENTO_ID + " = '" + alimento  + "'",null);
+        Cursor cursor = mDb.rawQuery(DbSelect.GET_UNIDADE + " AND UA." + Field.FIELD_UNIDADE_ALIMENTO_ID + " = '" + alimento  + "'" + " AND U." + Field.FIELD_TIPO_UNIDADE + " like '%" + tipo  + "%'",null);
         cursor.moveToFirst();
         while(!cursor.isAfterLast() ){
             Unidade unidade = new Unidade();

@@ -62,6 +62,7 @@ import static com.softjads.jorge.meurecordatorio.MainActivity.PUT_EXTRA_ETAPA;
 import static com.softjads.jorge.meurecordatorio.MainActivity.PUT_EXTRA_GRAU_PARENTESCO;
 import static com.softjads.jorge.meurecordatorio.MainActivity.PUT_EXTRA_GRAU_PARENTESCO_NOME;
 import static com.softjads.jorge.meurecordatorio.MainActivity.PUT_EXTRA_POSITION;
+import static com.softjads.jorge.meurecordatorio.MainActivity.PUT_EXTRA_UNIDADE_TIPO;
 import static com.softjads.jorge.meurecordatorio.MainActivity.PUT_EXTRA_USUARIO;
 import static com.softjads.jorge.meurecordatorio.Utilite.Modulo.NAO_SE_APLICA;
 
@@ -290,6 +291,8 @@ public class DetailActivity extends AppCompatActivity {
                 unidade.setVisibility(View.VISIBLE);
                 unidadeHINT.setVisibility(View.VISIBLE);
                 unidade_nome.setVisibility(View.VISIBLE);
+
+                putNullUnit();
             }
         });
 
@@ -320,6 +323,8 @@ public class DetailActivity extends AppCompatActivity {
                 unidade.setVisibility(View.VISIBLE);
                 unidadeHINT.setVisibility(View.VISIBLE);
                 unidade_nome.setVisibility(View.VISIBLE);
+
+                putNullUnit();
             }
         });
 
@@ -334,6 +339,8 @@ public class DetailActivity extends AppCompatActivity {
                 unidade.setVisibility(View.GONE);
                 unidadeHINT.setVisibility(View.GONE);
                 unidade_nome.setVisibility(View.GONE);
+
+                putNullUnit();
             }
 
         });
@@ -910,7 +917,7 @@ public class DetailActivity extends AppCompatActivity {
 
 
 
-                        if (Common.eLeitematerno(alimento_nome.getText().toString())){
+                        if (Common.eLeitematernoNew(alimento_nome.getText().toString())){
                             alimentacao = naoSeaplica(alimentacao);
                         }
 
@@ -979,7 +986,18 @@ public class DetailActivity extends AppCompatActivity {
 
         }
 
-    showEtapa( lastposition);
+        showEtapa( lastposition);
+
+        if (Common.eLeitematernoNew(alimento_nome.getText().toString())) {
+            ocasiaoConsumo.setText("999");
+            ocasiaoConsumo_nome.setText("999");
+            preparacao.setText("999");
+            preparacao_nome.setText("999");
+            unidade.setText("999");
+            unidade_nome.setText("999");
+            adicao.setText("999");
+            adicao_nome.setText("999");
+        }
 
 
         CheckComOpcoesOBS();
@@ -1039,17 +1057,17 @@ public class DetailActivity extends AppCompatActivity {
                         if (LimiteUnidade != null && LimiteUnidade.getTipo_unidade() != null) {
                             if (rbFotoManual.isChecked() && LimiteUnidade.getTipo_unidade().contains("FOTO DO MANUAL")) {
                                 if ((Integer.parseInt(s.toString())) > LimiteUnidade.getLimite()) {
-                                    Toast.makeText(mContext, "Digite de novo a quantidade deste alimento!", Toast.LENGTH_SHORT).show();
+                                    chamadialoLimite();
                                 }
 
                             } else if (rbGramaMl.isChecked() && LimiteUnidade.getTipo_unidade().contains("GRAMA OU MILILITRO")) {
                                 if ((Integer.parseInt(s.toString())) > LimiteUnidade.getLimite()) {
-                                    Toast.makeText(mContext, "Digite de novo a quantidade deste alimento!", Toast.LENGTH_SHORT).show();
+                                    chamadialoLimite();
                                 }
 
                             } else if (rbMedidaCaseira.isChecked() && LimiteUnidade.getTipo_unidade().contains("MEDIDA CASEIRA")) {
                                 if ((Integer.parseInt(s.toString())) > LimiteUnidade.getLimite()) {
-                                    Toast.makeText(mContext, "Digite de novo a quantidade deste alimento!", Toast.LENGTH_SHORT).show();
+                                    chamadialoLimite();
                                 }
 
                             }
@@ -1158,6 +1176,7 @@ public class DetailActivity extends AppCompatActivity {
         }else if (Modulo.OPCAO.equals("UNIDADE")){
             unidade_nome.setText(Modulo.NOME);
             unidade.setText(Modulo.ID);
+            LimiteUnidade = mDataBase.getUnidade(unidade.getText().toString());
         }else if (Modulo.OPCAO.equals("PREPARACAO")){
             preparacao_nome.setText(Modulo.NOME);
             preparacao.setText(Modulo.ID);
@@ -1207,10 +1226,19 @@ public class DetailActivity extends AppCompatActivity {
 
         if ((novoAliemnto!= null) && novoAliemnto.equals("1")) {
             intentToStartDetailActivity.putExtra(PUT_EXTRA_ALIMENTO, "S");
-        }else{
+        }else {
             intentToStartDetailActivity.putExtra(PUT_EXTRA_ALIMENTO, alimento.getText().toString());
         }
-        startActivity(intentToStartDetailActivity);
+
+         String tipoUnidade = "FOTO DO MANUAL";
+         if (rbGramaMl.isChecked()) {
+             tipoUnidade = "GRAMA OU MILILITRO";
+         } else if (rbMedidaCaseira.isChecked()) {
+             tipoUnidade = "MEDIDA CASEIRA";
+         }
+
+         intentToStartDetailActivity.putExtra(PUT_EXTRA_UNIDADE_TIPO, tipoUnidade);
+         startActivity(intentToStartDetailActivity);
     }
 
     private void showPreparacao(){
@@ -1481,6 +1509,33 @@ public class DetailActivity extends AppCompatActivity {
         // Aplique o filtro ao EditText
         quantidadeEditText.setFilters(new InputFilter[]{lengthFilter});
         quantidadeEditText.setText("");
+    }
+
+    private void putNullUnit(){
+        LimiteUnidade = null;
+        unidade.setText("0");
+        unidade_nome.setText("0");
+    }
+
+    private void chamadialoLimite(){
+        LayoutInflater factory2 = LayoutInflater.from(this);
+        final View deleteDialogView2 = factory2.inflate(
+                R.layout.custom_dialog10, null);
+        final AlertDialog deleteDialog2 = new AlertDialog.Builder(this).create();
+        deleteDialog2.setView(deleteDialogView2);
+
+        TextView nTextView2 = (TextView) deleteDialogView2.findViewById(R.id.txt_dia);
+        nTextView2.setText("Digite de novo a quantidade deste alimento!");
+
+        deleteDialogView2.findViewById(R.id.btn_yes).setOnClickListener(new View.OnClickListener() {
+
+            @Override
+            public void onClick(View v) {
+                deleteDialog2.dismiss();
+            }
+        });
+
+        deleteDialog2.show();
     }
 
 

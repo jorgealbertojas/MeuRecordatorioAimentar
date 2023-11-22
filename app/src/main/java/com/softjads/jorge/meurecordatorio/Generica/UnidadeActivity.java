@@ -16,12 +16,14 @@ import com.softjads.jorge.meurecordatorio.Adapter.UnidadeAdapter;
 import com.softjads.jorge.meurecordatorio.Model.Unidade;
 import com.softjads.jorge.meurecordatorio.PersistentData.DataBase;
 import com.softjads.jorge.meurecordatorio.R;
+import com.softjads.jorge.meurecordatorio.Utilite.Modulo;
 
 import java.util.ArrayList;
 import java.util.List;
 
 import static com.softjads.jorge.meurecordatorio.MainActivity.PUT_EXTRA_ALIMENTO;
 import static com.softjads.jorge.meurecordatorio.MainActivity.PUT_EXTRA_ENTREVISTADO;
+import static com.softjads.jorge.meurecordatorio.MainActivity.PUT_EXTRA_UNIDADE_TIPO;
 
 public class UnidadeActivity extends AppCompatActivity {
 
@@ -31,8 +33,11 @@ public class UnidadeActivity extends AppCompatActivity {
 
     String mName;
     String mAlimento;
+    String munidadeTipo;
 
     private TextView title2;
+
+    List<Unidade> dataPersistent;
 
 
     @Override
@@ -47,6 +52,7 @@ public class UnidadeActivity extends AppCompatActivity {
 
         mName = extras.getString(PUT_EXTRA_ENTREVISTADO);
         mAlimento = extras.getString(PUT_EXTRA_ALIMENTO);
+        munidadeTipo = extras.getString(PUT_EXTRA_UNIDADE_TIPO);
 
 
         /**
@@ -67,6 +73,15 @@ public class UnidadeActivity extends AppCompatActivity {
         mDataBase = new DataBase(this);
 
         iniciaRecyclerView();
+
+        if (dataPersistent != null) {
+            if (dataPersistent.size() == 1) {
+                Modulo.OPCAO = "UNIDADE";
+                Modulo.NOME = dataPersistent.get(0).getUnidade();
+                Modulo.ID = dataPersistent.get(0).getUnidade_id();
+                this.finish();
+            }
+        }
 
         final EditText tv_buscar =  (EditText) findViewById(R.id.tv_buscar);
         tv_buscar.addTextChangedListener(new TextWatcher() {
@@ -96,12 +111,12 @@ public class UnidadeActivity extends AppCompatActivity {
 
 
     private void iniciaRecyclerView(){
-        List<Unidade> dataPersistent = new ArrayList<>();
+        dataPersistent = new ArrayList<>();
 
         if (mAlimento.equals("S")){
             dataPersistent = mDataBase.getListUnidade();
         }else{
-            dataPersistent = mDataBase.getListUnidade(mAlimento);
+            dataPersistent = mDataBase.getListUnidadeWithtype(mAlimento, munidadeTipo);
         }
 
         if (dataPersistent.size()==0) {

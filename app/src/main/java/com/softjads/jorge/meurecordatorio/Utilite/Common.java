@@ -36,6 +36,14 @@ public class Common {
         }
     }
 
+    public static boolean eLeitematernoNew(String nomeAlimento){
+        if (nomeAlimento.toString().toUpperCase().toString().contains("LEITE MATERNO")) {
+            return true;
+        }else{
+            return false;
+        }
+    }
+
     public static int getColorWithAlpha(int color, float ratio) {
         int newColor = 0;
         int alpha = Math.round(Color.alpha(color) * ratio);

@@ -350,12 +350,13 @@ public class FragmentViewPager extends Fragment {
                         @Override
                         public void onClick(View arg0) {
                             if (contador < ((MainActivity) container.getContext()).mRecyclerView.getAdapter().getItemCount()-1) {
-                                ((MainActivity) container.getContext()).mRecyclerView.getAdapter().notifyItemMoved(0, contador +1);
+                               // ((MainActivity) container.getContext()).mRecyclerView.getAdapter().notifyItemMoved(0, contador +1);
+                                contador = contador + 1;
                                 LinearLayoutManager layoutManager = (LinearLayoutManager) ((MainActivity) container.getContext()).mRecyclerView.getLayoutManager();
                                 if(layoutManager != null) {
-                                    layoutManager.scrollToPosition(0);
+                                    layoutManager.scrollToPosition(contador);
                                 }
-                                contador = contador + 1;
+
                             }else {
                                 TextViewAdiciona.setOnClickListener(null);
                                 TextViewAdiciona.setBackground(getResources().getDrawable(R.drawable.rounded_corner_red));

@@ -86,6 +86,7 @@ public class MainActivity extends AppCompatActivity {
     public final static String PUT_EXTRA_USUARIO = "PUT_EXTRA_USUARIO";
     public final static String PUT_EXTRA_ALIMENTO = "PUT_EXTRA_ALIMENTO";
     public final static String PUT_EXTRA_ETAPA = "PUT_EXTRA_ETAPA";
+    public final static String PUT_EXTRA_UNIDADE_TIPO = "PUT_EXTRA_UNIDADE_TIPO";
 
     public final static String PUT_BUNDLE_ALIMENTACAO = "PUT_BUNDLE_ALIMENTACAO";
     public final static String PUT_EXTRA_ALIMENTACAO = "PUT_EXTRA_ALIMENTACAO";
@@ -1065,7 +1066,7 @@ public class MainActivity extends AppCompatActivity {
         }
         // 8 - BEBETO
       //  if (!BuildConfig.DEBUG){
-           fileExist.delete();
+   //        fileExist.delete();
       //  }
 
             return true;
