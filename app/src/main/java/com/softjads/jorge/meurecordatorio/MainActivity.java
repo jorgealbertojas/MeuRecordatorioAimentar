@@ -123,7 +123,7 @@ public class MainActivity extends AppCompatActivity {
     public static String ID = "0";
     public static String USUARIO = "0";
 
-    AlimentacaoAdapter alimentacaoAdapter;
+    public AlimentacaoAdapter alimentacaoAdapter;
 
     public static ImageView proximo;
     public static ImageView anterior;
@@ -1066,7 +1066,7 @@ public class MainActivity extends AppCompatActivity {
         }
         // 8 - BEBETO
       //  if (!BuildConfig.DEBUG){
-   //        fileExist.delete();
+           fileExist.delete();
       //  }
 
             return true;

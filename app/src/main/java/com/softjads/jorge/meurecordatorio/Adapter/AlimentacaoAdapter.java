@@ -1,6 +1,5 @@
 package com.softjads.jorge.meurecordatorio.Adapter;
 
-import android.app.AlertDialog;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
@@ -8,14 +7,12 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
-import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.cardview.widget.CardView;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.softjads.jorge.meurecordatorio.ConfiguracaoActivity;
 import com.softjads.jorge.meurecordatorio.DetailActivity;
 import com.softjads.jorge.meurecordatorio.MainActivity;
 import com.softjads.jorge.meurecordatorio.Model.Alimentacao;
@@ -23,6 +20,7 @@ import com.softjads.jorge.meurecordatorio.R;
 import com.softjads.jorge.meurecordatorio.Utilite.Common;
 import com.softjads.jorge.meurecordatorio.Utilite.Modulo;
 
+import java.util.Collections;
 import java.util.List;
 
 import static com.softjads.jorge.meurecordatorio.MainActivity.PUT_BUNDLE_ALIMENTACAO;
@@ -69,6 +67,9 @@ public class AlimentacaoAdapter extends RecyclerView.Adapter<AlimentacaoAdapter.
         mClickHandler = clickHandler;
         data = null;
     }
+
+    private List<Alimentacao> itemList; // Sua lista de itens
+
 
 
 
@@ -163,16 +164,31 @@ public class AlimentacaoAdapter extends RecyclerView.Adapter<AlimentacaoAdapter.
 
         }
 
+    }
 
+    public List<Alimentacao>  trocarItens(int moveTo) {
+        if (itemList.size() >= 2) {
+            // Troca os itens da primeira e segunda posição
+            Collections.swap(itemList, moveTo, 0);
 
+            // Notifica o adapter sobre a mudança nas posições dos itens
+            notifyItemMoved(moveTo, 0);
+
+        }
+
+        return itemList;
     }
 
     /** create lit de Adapter Travel**/
     public AlimentacaoAdapter(List<Alimentacao> data, int mostrar) {
+
+        itemList = data;
+
         estaFaltando = false;
         estaFaltando2 = false;
         this.mostrar = mostrar;
         this.data = data;
+
     }
 
     /** Create information View holder**/

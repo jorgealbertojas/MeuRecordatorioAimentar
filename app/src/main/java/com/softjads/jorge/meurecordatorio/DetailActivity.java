@@ -1071,6 +1071,11 @@ public class DetailActivity extends AppCompatActivity {
                                 }
 
                             }
+                        } else if (rbGramaMl.isChecked() && ((Integer.parseInt(s.toString())) > 500)) {
+                            if ((Integer.parseInt(s.toString())) > LimiteUnidade.getLimite()) {
+                                chamadialoLimite();
+                            }
+
                         }
 
                     }

@@ -15,6 +15,7 @@ import android.widget.Toast;
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 
+import com.softjads.jorge.meurecordatorio.Adapter.AlimentacaoAdapter;
 import com.softjads.jorge.meurecordatorio.DetailActivity;
 import com.softjads.jorge.meurecordatorio.MainActivity;
 import com.softjads.jorge.meurecordatorio.Model.Alimentacao;
@@ -350,12 +351,17 @@ public class FragmentViewPager extends Fragment {
                         @Override
                         public void onClick(View arg0) {
                             if (contador < ((MainActivity) container.getContext()).mRecyclerView.getAdapter().getItemCount()-1) {
-                               // ((MainActivity) container.getContext()).mRecyclerView.getAdapter().notifyItemMoved(0, contador +1);
-                                contador = contador + 1;
+                                /*((MainActivity) container.getContext()).mRecyclerView.getAdapter().notifyItemMoved(contador +1, 0);
+
+
                                 LinearLayoutManager layoutManager = (LinearLayoutManager) ((MainActivity) container.getContext()).mRecyclerView.getLayoutManager();
                                 if(layoutManager != null) {
-                                    layoutManager.scrollToPosition(contador);
-                                }
+                                    layoutManager.scrollToPosition(0);
+                                }*/
+
+                                contador = contador + 1;
+                                ((MainActivity) container.getContext()).mRecyclerView.setAdapter(new AlimentacaoAdapter((((MainActivity) container.getContext()).alimentacaoAdapter.trocarItens(contador) ),0));
+
 
                             }else {
                                 TextViewAdiciona.setOnClickListener(null);
