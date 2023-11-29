@@ -38,7 +38,7 @@ public class Modulo {
 
     //public static String storageCliente = "/storage/emulated/0/";
 
-     public static String storageCliente = "csentry/inani/";
+     public static String storageCliente = "/inani/";
 
     // 11 - BEBETO
     public static String filename  = "inaniR.txt";
@@ -55,7 +55,7 @@ public class Modulo {
 
     public static String nomeArquivoINI = "/data/data/com.softjads.jorge.meurecordatorio/configuracao.properties";
 
-    public static String getSDCardPath(Context context) {
+  /*  public static String getSDCardPath(Context context) {
         // Verifica se o cartão SD está disponível
         if (Environment.getExternalStorageState().equals(Environment.MEDIA_MOUNTED)) {
             // Obter o caminho do diretório raiz do cartão SD
@@ -64,7 +64,7 @@ public class Modulo {
             Toast.makeText(context, "ATENÇÃO! Cartão não diponivel" , Toast.LENGTH_LONG).show();
             return "0";
         }
-    }
+    }*/
 
     public static String getSDCardPathNew(Context context) {
 

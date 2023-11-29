@@ -965,14 +965,14 @@ public class MainActivity extends AppCompatActivity {
 
         String fileName = "chave.txt";
 
-        File fileExist = new File(Modulo.getSDCardPath(this) , storageCliente + "chave.txt");
+        File fileExist = new File(Modulo.getSDCardPathNew(this) , storageCliente + "chave.txt");
        // if (fileExist.exists() || BuildConfig.DEBUG){
         if (fileExist.exists()) {
 
         StringBuilder text = new StringBuilder();
         try {
 
-            File file = new File(Modulo.getSDCardPath(this), storageCliente + "chave.txt");
+            File file = new File(Modulo.getSDCardPathNew(this), storageCliente + "chave.txt");
 
             BufferedReader br = null;
             try {
