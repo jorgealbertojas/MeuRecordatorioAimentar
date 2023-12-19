@@ -5,6 +5,7 @@ import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.Intent;
 import android.database.sqlite.SQLiteDatabase;
+import android.os.Build;
 import android.os.Environment;
 import android.os.Handler;
 import android.os.StatFs;
@@ -78,7 +79,8 @@ import retrofit2.Response;
 import retrofit2.Retrofit;
 import retrofit2.converter.gson.GsonConverterFactory;
 
-import static com.softjads.jorge.meurecordatorio.Utilite.Modulo.filename;
+import static com.softjads.jorge.meurecordatorio.Utilite.Modulo.fileAnswerName;
+
 
 public class ConfiguracaoActivity extends AppCompatActivity {
 
@@ -353,7 +355,9 @@ public class ConfiguracaoActivity extends AppCompatActivity {
         DataCompleta1 = DataCompleta1 + "_" + Integer.toString(now1.second);
 
 
-        myExternalFile = new File(Modulo.getSDCardPathNew(this), filename);
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
+            myExternalFile = new File(Modulo.getSDCardPathNew(this), fileAnswerName);
+        }
 
 
         OutputStreamWriter outStreamWriter = null;
@@ -404,23 +408,41 @@ public class ConfiguracaoActivity extends AppCompatActivity {
                 String GRAU_PARENTESCO = getFormatodoComEspacoDireita(20, dataPersistent.get(i).getAlimentacao_grau_parentesco_id());
                 String MARCA = getFormatodoComEspacoDireita(30, dataPersistent.get(i).getAlimentacao_marca());
 
-                // bebeto Data inio e fim
-//                String HORA_COLETA_FIM = getFormatodoComEspaco(6, formataHora(dataPersistent.get(i).getAlimentacao_hora_coleta_fim()));
-//
-//                String date = new SimpleDateFormat("yyyy-MM-dd", Locale.getDefault()).format(new Date());
-//                String DATA_COLETA_FIM = getFormatodoComEspaco(8, date );
-
                 String DIA_ATIPICO = dataPersistent.get(i).getAlimentacao_dia_atico();
-                if (DIA_ATIPICO.equals("sim")){
+                if (DIA_ATIPICO.equals("SIM")){
                     DIA_ATIPICO = "1";
                 }else{
                     DIA_ATIPICO = "2";
                 }
 
+                String QUANTIFICACAO = "0";
+                if (dataPersistent.get(i).getAlimentacao_quantificacao() != null && !dataPersistent.get(i).getAlimentacao_quantificacao().equals("")) {
+                    QUANTIFICACAO = dataPersistent.get(i).getAlimentacao_quantificacao();
+                }
+
+
+                String FRACAO = "0";
+                if (dataPersistent.get(i).getAlimentacao_fracao() == null) {
+                    FRACAO = dataPersistent.get(i).getAlimentacao_fracao();
+                }else if (dataPersistent.get(i).getAlimentacao_fracao().equals("1/2")) {
+                    FRACAO = "1";
+                }else if (dataPersistent.get(i).getAlimentacao_fracao().equals("1/3")) {
+                    FRACAO = "2";
+                }else if (dataPersistent.get(i).getAlimentacao_fracao().equals("1/4")) {
+                    FRACAO = "3";
+                }else if (dataPersistent.get(i).getAlimentacao_fracao().equals("1/8")) {
+                    FRACAO = "4";
+                }else if (dataPersistent.get(i).getAlimentacao_fracao().equals("2/3")) {
+                    FRACAO = "5";
+                }else if (dataPersistent.get(i).getAlimentacao_fracao().equals("3/4")) {
+                    FRACAO = "6";
+                }else if (dataPersistent.get(i).getAlimentacao_fracao().equals("7/8")) {
+                    FRACAO = "7";
+                }
 
 
 
-                String formatado = IDENTIFICADOR + ENTREVISTADO  + SEQUENCIAL_ALIMENTO + ID_RECORDATORIO + ID_ALIMENTO + ALIMENTO_NOVO + ALIMENTO_DESCRICAO + ID_PREPARACAO + ID_UNIDADE + ID_ADICAO + ID_LOCAL + ID_CONSUMO + QUANTIDADE + HORA + HORA_COLETA + DATA_COLETA + USUARIO + OBS + GRAU_PARENTESCO + MARCA + DIA_ATIPICO + "\n";
+                String formatado = IDENTIFICADOR + ENTREVISTADO  + SEQUENCIAL_ALIMENTO + ID_RECORDATORIO + ID_ALIMENTO + ALIMENTO_NOVO + ALIMENTO_DESCRICAO + ID_PREPARACAO + ID_UNIDADE + ID_ADICAO + ID_LOCAL + ID_CONSUMO + QUANTIDADE + HORA + HORA_COLETA + DATA_COLETA + USUARIO + OBS + GRAU_PARENTESCO + MARCA + DIA_ATIPICO + QUANTIFICACAO + FRACAO + "\n";
 
 
                 outStreamWriter.append(formatado);
@@ -545,7 +567,6 @@ public class ConfiguracaoActivity extends AppCompatActivity {
         FileInputStream fis = new FileInputStream(dbFile);
 
 
-        //String outFileName = Environment.getExternalStoragePublicDirectory()+"/database_copy.db";
         String outFileName = Destino;
 
         // Open the empty db as the output stream

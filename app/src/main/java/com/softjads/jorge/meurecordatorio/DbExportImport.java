@@ -261,7 +261,6 @@ public class DbExportImport extends AppCompatActivity {
 
 
 
-        //String outFileName = Environment.getExternalStoragePublicDirectory()+"/database_copy.db";
         String outFileName = Destino;
 
         // Open the empty db as the output stream
@@ -287,7 +286,6 @@ public class DbExportImport extends AppCompatActivity {
         File dbFile = new File(inFileName);
         FileInputStream fis = new FileInputStream(dbFile);
 
-        //String outFileName = Environment.getExternalStoragePublicDirectory()+"/database_copy.db";
         String outFileName =  Destino;
 
         // Open the empty db as the output stream

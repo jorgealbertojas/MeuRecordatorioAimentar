@@ -1,10 +1,17 @@
 package com.softjads.jorge.meurecordatorio.Utilite;
 
 import android.content.Context;
+import android.os.Build;
 import android.os.Environment;
+import android.os.storage.StorageManager;
+import android.os.storage.StorageVolume;
 import android.widget.Toast;
 
+import androidx.annotation.RequiresApi;
+
 import java.io.File;
+import java.util.Arrays;
+import java.util.List;
 
 import static com.softjads.jorge.meurecordatorio.PersistentData.DbCreate.DB_NAME;
 
@@ -38,11 +45,11 @@ public class Modulo {
 
     //public static String storageCliente = "/storage/emulated/0/";
 
-     public static String storageCliente = "/inani/";
+     public static String storageCliente = "/ENANI2/";
 
     // 11 - BEBETO
-    public static String filename  = "inaniR.txt";
-    //public static String filename  = "recordatorio24h.txt";
+    public static String fileAnswerName  = "inaniR.txt";
+
 
     public static String NomeCopia = "backup_";
 
@@ -55,21 +62,41 @@ public class Modulo {
 
     public static String nomeArquivoINI = "/data/data/com.softjads.jorge.meurecordatorio/configuracao.properties";
 
-  /*  public static String getSDCardPath(Context context) {
-        // Verifica se o cartão SD está disponível
-        if (Environment.getExternalStorageState().equals(Environment.MEDIA_MOUNTED)) {
-            // Obter o caminho do diretório raiz do cartão SD
-            return Environment.getExternalStorageDirectory().getAbsolutePath();
-        } else {
-            Toast.makeText(context, "ATENÇÃO! Cartão não diponivel" , Toast.LENGTH_LONG).show();
-            return "0";
-        }
-    }*/
-
+    @RequiresApi(api = Build.VERSION_CODES.N)
     public static String getSDCardPathNew(Context context) {
 
-        return Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DOWNLOADS).getAbsolutePath();
+        if (isExternalStorageWritable()) {
 
+            File sdCard = null;
+
+            StorageManager storageManager = (StorageManager) context.getSystemService(Context.STORAGE_SERVICE);
+
+            if (storageManager != null) {
+                List<StorageVolume> storageVolumes = storageManager.getStorageVolumes();
+
+                for (StorageVolume volume : storageVolumes) {
+
+                    String path = volume.getUuid();
+                    if (!volume.isPrimary() ) {
+                        sdCard = new File(path, storageCliente);
+                    }
+                }
+            }
+            if (sdCard != null ) {
+                return "/storage" + sdCard.getAbsolutePath();
+            }else {
+                return Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DOWNLOADS).getAbsolutePath();
+            }
+
+        } else {
+            return Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DOWNLOADS).getAbsolutePath();
+        }
+
+    }
+
+    private static boolean isExternalStorageWritable() {
+        String state = Environment.getExternalStorageState();
+        return Environment.MEDIA_MOUNTED.equals(state);
     }
 
 }

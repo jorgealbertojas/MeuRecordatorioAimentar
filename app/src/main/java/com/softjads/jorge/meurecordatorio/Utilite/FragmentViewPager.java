@@ -3,6 +3,7 @@ package com.softjads.jorge.meurecordatorio.Utilite;
 import android.app.AlertDialog;
 import android.content.Intent;
 import android.database.sqlite.SQLiteDatabase;
+import android.os.Build;
 import android.os.Bundle;
 import android.text.format.Time;
 import android.view.LayoutInflater;
@@ -41,7 +42,8 @@ import static com.softjads.jorge.meurecordatorio.MainActivity.PUT_EXTRA_GRAU_PAR
 import static com.softjads.jorge.meurecordatorio.MainActivity.PUT_EXTRA_GRAU_PARENTESCO_NOME;
 import static com.softjads.jorge.meurecordatorio.MainActivity.PUT_EXTRA_POSITION;
 import static com.softjads.jorge.meurecordatorio.MainActivity.PUT_EXTRA_USUARIO;
-import static com.softjads.jorge.meurecordatorio.Utilite.Modulo.filename;
+import static com.softjads.jorge.meurecordatorio.Utilite.Modulo.fileAnswerName;
+
 
 public class FragmentViewPager extends Fragment {
 
@@ -512,7 +514,9 @@ public class FragmentViewPager extends Fragment {
         DataCompleta1 = DataCompleta1 + "_" + Integer.toString(now1.second);
 
 
-        myExternalFile = new File(Modulo.getSDCardPathNew(getContext()), filename);
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
+            myExternalFile = new File(Modulo.getSDCardPathNew(getContext()), fileAnswerName);
+        }
 
 
         OutputStreamWriter outStreamWriter = null;
@@ -542,7 +546,7 @@ public class FragmentViewPager extends Fragment {
 
 
                 String IDENTIFICADOR = getFormatodoComEspaco(2, "50");
-                String ENTREVISTADO = getFormatodoComEspaco(32, dataPersistent.get(i).getAlimentacao_entrevistado_id());
+                String ENTREVISTADO = getFormatodoComEspaco(33, dataPersistent.get(i).getAlimentacao_entrevistado_id());
                 String SEQUENCIAL_ALIMENTO = getFormatodoComEspaco(3, Integer.toString(contadorDiferente));
                 String ID_RECORDATORIO = getFormatodoComEspaco(3, dataPersistent.get(i).getAlimentacao_id());
                 String ID_ALIMENTO  = getFormatodoComEspaco(8, dataPersistent.get(i).getAlimentacao_alimento_id());
@@ -572,7 +576,11 @@ public class FragmentViewPager extends Fragment {
                     DIA_ATIPICO = "2";
                 }
 
-                String QUANTIFICACAO = dataPersistent.get(i).getAlimentacao_quantificacao();
+                String QUANTIFICACAO = "0";
+                if (dataPersistent.get(i).getAlimentacao_quantificacao() != null && !dataPersistent.get(i).getAlimentacao_quantificacao().equals("")) {
+                    QUANTIFICACAO = dataPersistent.get(i).getAlimentacao_quantificacao();
+                }
+
 
                 String FRACAO = "0";
                 if (dataPersistent.get(i).getAlimentacao_fracao() == null) {
